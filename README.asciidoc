@@ -1,0 +1,45 @@
+== flowmetrics
+
+=== Project Setup
+
+==== Enable GitHooks
+
+[source,sh]
+----
+git config --local core.hooksPath .githooks/
+----
+
+==== Install packages
+
+[source,sh]
+----
+npm install
+----
+
+==== Compile and Hot-Reload for Development
+
+[source,sh]
+----
+npm run dev
+----
+
+==== Type-Check, Compile and Minify for Production
+
+[source,sh]
+----
+npm run build
+----
+
+==== Run Unit Tests with https://vitest.dev/[Vitest]
+
+[source,sh]
+----
+npm run test:unit
+----
+
+==== Lint with https://eslint.org/[ESLint]
+
+[source,sh]
+----
+npm run lint
+----
