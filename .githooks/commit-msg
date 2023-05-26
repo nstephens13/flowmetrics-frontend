@@ -23,7 +23,6 @@ async function checkCommitMessage() {
   if (!BRANCH_CONTRACT.test(branchName)) {
     handleBadBranchName();
   }
-  const ticketID = getTicketIDFromBranch(branchName);
 
   const commitMsgFile = process.argv[2];
   const message = fs.readFileSync(commitMsgFile, 'utf8').trim();
@@ -35,12 +34,24 @@ async function checkCommitMessage() {
     handleBadCommitMessage(COMMIT_CONTRACT, ticketID, message);
     
   }
+
+  const ticketID = getTicketIDFromString(branchName);
+  const messageID = getTicketIDFromString(message);
+
+  if(ticketID != messageID){
+    handleBadCommitMessage(COMMIT_CONTRACT, ticketID, message);
+  }
+
+
   process.exit(0);
 }
 
-function getTicketIDFromBranch(branchName) {
+
+
+
+function getTicketIDFromString(string) {
   const TICKET_ID = /[0-9]{1,6}/;
-  let ticketID = branchName.match(TICKET_ID);
+  let ticketID = string.match(TICKET_ID);
   if (ticketID == null) {
     return "[0-9]{1,6}";
   }
