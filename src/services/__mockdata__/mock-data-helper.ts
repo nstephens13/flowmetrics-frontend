@@ -17,7 +17,7 @@ export function loadDataFromFile<T>(filePath: string): T[] {
 }
 
 //give out a fake project
-export function getMockData(dataset: number = 1): Project {
+export function getMockData(dataset: number = 2): Project {
     const employees: Employee[] = loadDataFromFile<Employee>('src/services/__mockdata__/Employees.json');
     const issues: Issue[] = loadDataFromFile<Issue>('src/services/__mockdata__/Issues.json');
     const milestones: Milestone[] = loadDataFromFile<Milestone>('src/services/__mockdata__/Milestones.json');
