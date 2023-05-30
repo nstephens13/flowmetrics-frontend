@@ -4,7 +4,7 @@ import type {Employee} from "@/model/Employee";
 import type {Issue} from "@/model/Issue";
 import type {Milestone} from "@/model/Milestone";
 
-function loadDataFromFile<T>(filePath: string): T[] {
+export function loadDataFromFile<T>(filePath: string): T[] {
     try {
         const fileData = fs.readFileSync(filePath, 'utf-8');
         const data = JSON.parse(fileData) as T[];
@@ -22,15 +22,38 @@ export function getMockData(dataset: number = 1): Project {
     const issues: Issue[] = loadDataFromFile<Issue>('src/services/__mockdata__/Issues.json');
     const milestones: Milestone[] = loadDataFromFile<Milestone>('src/services/__mockdata__/Milestones.json');
 
+    function assignIssueToEmployee(issueNumber: number, employeeNumber: number) {
+        issues[issueNumber].assignedTo = employees[employeeNumber];
+         employees[employeeNumber].assignedIssues.push(issues[issueNumber]);
+    }
+    function assignIssueToMilestone(issueNumber: number, milestoneNumber: number) {
+        milestones[milestoneNumber].issues.push(issues[issueNumber]);
+    }
+
     switch (dataset) {
 
         case 1: {
-            issues[1].assignedTo = employees[1];
-            const issuesFromEmployee: Issue[] = employees[1].assignedIssues;
-            issuesFromEmployee.push(issues[1]);
+            assignIssueToEmployee(1,1);
+            return {
+                id: 1, name: "Mocking Bird", description: "first mock dataset", milestones, issues
+            }
+        }
+        case 2: {
+            assignIssueToEmployee(0, 0);
+            assignIssueToEmployee(1,1);
+            assignIssueToEmployee(2,1);
+            assignIssueToEmployee(3,2);
+            assignIssueToEmployee(4,2);
+            assignIssueToEmployee(5,2);
+            assignIssueToEmployee(6,3);
+
+            assignIssueToMilestone(0, 0);
+            assignIssueToMilestone(1, 0);
+            assignIssueToMilestone(2,1);
+            assignIssueToMilestone(3,1)
 
             return {
-                id: 5, name: "Mocking Bird", description: "a test project for the mock data creator", milestones, issues
+                id: 2, name: "Mocking Bird", description: "second mock dataset", milestones, issues
             }
         }
         default: {
@@ -39,6 +62,4 @@ export function getMockData(dataset: number = 1): Project {
             }
         }
     }
-    // Assign issues to respective employees
-
 }

@@ -16,5 +16,17 @@
     "firstName": "Mike",
     "lastName": "Johnson",
     "assignedIssues": []
+  },
+  {
+    "id": 4,
+    "firstName": "Max",
+    "lastName": "Mustermann",
+    "assignedIssues": []
+  },
+  {
+    "id": 5,
+    "firstName": "Martha",
+    "lastName": "Musterfrau",
+    "assignedIssues": []
   }
 ]
