@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "name": "Milestone 1",
+    "description": "description Milestone 1",
+    "issues": []
+  },
+  {
+    "id": 2,
+    "name": "Milestone 2",
+    "description": "description Milestone 2",
+    "issues": []
+  }
+]

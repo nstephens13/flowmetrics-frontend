@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "name": "Issue 1",
+    "description": "Description for Issue 1",
+    "assignedTo": []
+  },
+  {
+    "id": 2,
+    "name": "Issue 2",
+    "description": "Description for Issue 2",
+    "assignedTo": []
+  },
+  {
+    "id": 3,
+    "name": "Issue 3",
+    "description": "Description for Issue 3",
+    "assignedTo": []
+  }
+]

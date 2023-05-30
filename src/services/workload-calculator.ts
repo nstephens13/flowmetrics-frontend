@@ -2,7 +2,7 @@ import type {Project} from "@/model/Project";
 import type {Employee} from "@/model/Employee";
 import type {Issue} from "@/model/Issue";
 //just temporary import
-import {getMockData} from "@/services/__tests__/test-workload-calculator";
+import {getMockData} from "@/services/__mockdata__/mock-data-helper";
 
 export function calculateWorkload(project: Project): Map<Employee, number> {
     const employeeMap: Map<Employee, number> = new Map([])
