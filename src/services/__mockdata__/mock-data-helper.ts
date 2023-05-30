@@ -56,6 +56,22 @@ export function getMockData(dataset: number = 2): Project {
                 id: 2, name: "Mocking Bird", description: "second mock dataset", milestones, issues
             }
         }
+
+        //only test cases
+        case 53: {
+
+
+            return {
+                id: 53, name: "Mocking Bird", description: "project without issues and milestones", issues: [], milestones:[]
+            }
+        }
+        case 54: {
+
+
+            return {
+                id: 54, name: "Mocking Bird", description: "project only with milestones", milestones, issues:[]
+            }
+        }
         default: {
             return {
                 id: 0, name: "default", description: "a empty project", milestones: [], issues: []

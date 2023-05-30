@@ -112,3 +112,40 @@ describe('Workload Calculator should calculate Workload correctly for Mock Data 
         expect(workload.get(employee)).eq(1)
     });
 })
+describe('Workload Calculator should calculate Workload correctly for Mock Data Set 53 ', () => {
+    //given
+    const project = getMockData(53);
+    const employees: Employee[] = loadDataFromFile<Employee>('src/services/__mockdata__/Employees.json');
+
+    // when
+    const workload = calculateWorkload(project);
+
+
+    // then
+    test('workload should be a Map', () => {
+        expect(workload).instanceof(Map);
+    });
+
+    test('map should be empty', () => {
+        expect(workload.size).eq(0);
+    })
+})
+
+describe('Workload Calculator should calculate Workload correctly for Mock Data Set 54 ', () => {
+    //given
+    const project = getMockData(54);
+    const employees: Employee[] = loadDataFromFile<Employee>('src/services/__mockdata__/Employees.json');
+
+    // when
+    const workload = calculateWorkload(project);
+
+
+    // then
+    test('workload should be a Map', () => {
+        expect(workload).instanceof(Map);
+    });
+
+    test('map should be empty', () => {
+        expect(workload.size).eq(0);
+    })
+})
