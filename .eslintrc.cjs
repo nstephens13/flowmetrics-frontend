@@ -6,10 +6,18 @@ module.exports = {
   'extends': [
     'plugin:vue/vue3-essential',
     'eslint:recommended',
-    '@vue/eslint-config-typescript',
-    '@vue/eslint-config-prettier/skip-formatting'
+    'airbnb-base',
+    '@vue/eslint-config-typescript'
   ],
   parserOptions: {
     ecmaVersion: 'latest'
+  },
+  "rules": {
+    "@typescript-eslint/indent": ["error", 2],
+    "@typescript-eslint/no-unused-vars": "error",
+    "@typescript-eslint/no-explicit-any": "error",
+    "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
+    "no-shadow": "off",
+    "@typescript-eslint/no-shadow": "warn",
   }
 }
