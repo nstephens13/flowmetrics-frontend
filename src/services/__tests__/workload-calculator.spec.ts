@@ -50,7 +50,7 @@ describe('Workload Calculator should calculate Workload correctly for Mock Data 
     assignIssue(project, employees,6,3);
 
     // when
-    const workload: Map<Employee, number> = calculateWorkload(project);
+    const workload: Map<Employee, { openIssues: number, closedIssues: number }> = calculateWorkload(project);
 
 
     //then
@@ -67,16 +67,16 @@ describe('Workload Calculator should calculate Workload correctly for Mock Data 
         for (const [employee, value] of workload.entries()) {
             if (employee.id === employees[0].id) {
                 assert.deepEqual<Employee>(employee, employees[0])
-                expect(workload.get(employee)).eq(1)
+                expect(workload.get(employee)?.openIssues).eq(1)
             } else if(employee.id === employees[1].id) {
                 assert.deepEqual<Employee>(employee, employees[1])
-                expect(workload.get(employee)).eq(2)
+                expect(workload.get(employee)?.openIssues).eq(2)
             } else if ((employee.id === employees[2].id)) {
                 assert.deepEqual<Employee>(employee, employees[2])
-                expect(workload.get(employee)).eq(3)
+                expect(workload.get(employee)?.openIssues).eq(3)
             } else if (employee.id === employees[3].id) {
                 assert.deepEqual<Employee>(employee, employees[3])
-                expect(workload.get(employee)).eq(1)
+                expect(workload.get(employee)?.openIssues).eq(1)
             }
         }
     });
@@ -109,7 +109,7 @@ describe('Workload Calculator should calculate Workload correctly for Mock Data 
     //then
     test('workload should contain correct values', () => {
         assert.deepEqual<Employee>(employee, employees[1])
-        expect(workload.get(employee)).eq(1)
+        expect(workload.get(employee)?.openIssues).eq(1)
     });
 })
 describe('Workload Calculator should calculate Workload correctly for Mock Data Set 53 ', () => {

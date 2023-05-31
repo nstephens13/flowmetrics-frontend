@@ -12,4 +12,6 @@ export interface Issue {
     name: string;
     description: string;
     assignedTo: Employee;
+    createdAt: Date;
+    closedAt: Date;
 }
