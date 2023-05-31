@@ -22,11 +22,11 @@ export function calculateWorkload(project: Project): Map<Employee, { openIssues:
             let numberOpenTickets: number;
             let numberClosedTickets: number;
 
-            const tupel: { openIssues: number, closedIssues: number } | undefined = employeeMap.get(issue.assignedTo);
+            const tuple: { openIssues: number, closedIssues: number } | undefined = employeeMap.get(issue.assignedTo);
 
-            if (tupel !== undefined) {
-                numberOpenTickets = tupel.openIssues
-                numberClosedTickets = tupel.closedIssues
+            if (tuple !== undefined) {
+                numberOpenTickets = tuple.openIssues
+                numberClosedTickets = tuple.closedIssues
             } else {
                 numberOpenTickets = 0;
                 numberClosedTickets = 0;
