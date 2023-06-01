@@ -1,5 +1,5 @@
-import type { Issue } from './Issue'
-import type { Milestone } from './Milestone'
+import type { Issue } from './Issue';
+import type { Milestone } from './Milestone';
 
 /**
  *
