@@ -1,4 +1,4 @@
-import type {Issue} from "./Issue";
+import type { Issue } from './Issue';
 
 /**
  *
@@ -8,8 +8,8 @@ import type {Issue} from "./Issue";
  * @prop {Issue[]} issues a array of Issues - objects that are assigned to this milestone
  */
 export interface Milestone {
-    id: number;
-    name: string;
-    description: string;
-    issues: Issue[];
+  id: number;
+  name: string;
+  description: string;
+  issues: Issue[];
 }
