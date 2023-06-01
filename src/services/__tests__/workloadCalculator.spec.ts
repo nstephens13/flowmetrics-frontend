@@ -1,8 +1,8 @@
 import {
   assert, expect, test, describe,
 } from 'vitest';
-import { getMockData, loadDataFromFile } from '../__mockdata__/mock-data-helper';
-import calculateWorkload from '../workload-calculator';
+import { getMockData, loadDataFromFile } from '../__mockdata__/mockDataComposer';
+import calculateWorkload from '../workloadCalculator';
 import type { Employee } from '../../model/Employee';
 import type { Project } from '../../model/Project';
 import type { Issue } from '../../model/Issue';
@@ -90,19 +90,13 @@ describe('Workload Calculator should calculate Workload correctly for Mock Data 
   // the actual value is from the result
   test('workload should contain correct key value pairs', () => {
     workload.forEach((tuple:{openIssues:number, closedIssues:number}, employee:Employee) => {
-      if (employee.id === employees[0].id) {
-        assert.deepEqual<Employee>(employee, employees[0]);
-        expect(tuple.openIssues).eq(1);
-      } else if (employee.id === employees[1].id) {
-        assert.deepEqual<Employee>(employee, employees[1]);
-        expect(tuple.openIssues).eq(2);
-      } else if (employee.id === employees[2].id) {
-        assert.deepEqual<Employee>(employee, employees[2]);
-        expect(tuple.openIssues).eq(3);
-      } else if (employee.id === employees[3].id) {
-        assert.deepEqual<Employee>(employee, employees[3]);
-        expect(tuple.openIssues).eq(1);
-      }
+      const openIssuesList = [1, 2, 3, 1]; // expected values for open issues from json file
+      employees.forEach((emp) => {
+        if (employee.id === emp.id) {
+          assert.deepEqual<Employee>(employee, emp);
+          expect(tuple.openIssues).eq(openIssuesList[employee.id - 1]);
+        }
+      });
     });
   });
 });

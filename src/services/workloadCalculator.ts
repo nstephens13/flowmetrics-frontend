@@ -3,7 +3,7 @@ import type { Employee } from '@/model/Employee';
 import type { Issue } from '@/model/Issue';
 
 // just temporary import
-import { getMockData } from './__mockdata__/mock-data-helper';
+import { getMockData } from './__mockdata__/mockDataComposer';
 
 /**
  * This function calculate the workload from a project team, and give the
