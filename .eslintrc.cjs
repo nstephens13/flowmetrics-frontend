@@ -22,6 +22,7 @@ module.exports = {
     '@typescript-eslint/no-shadow': 'warn',
     'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
     'import/no-unresolved': 0,
+    'linebreak-style': ["error", "unix"],
     'import/extensions': [
       'error',
       'ignorePackages',
