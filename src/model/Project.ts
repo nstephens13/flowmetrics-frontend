@@ -1,5 +1,5 @@
-import type { Issue } from './Issue';
-import type { Milestone } from './Milestone';
+import type { Issue } from './Issue'
+import type { Milestone } from './Milestone'
 
 /**
  *
@@ -11,9 +11,9 @@ import type { Milestone } from './Milestone';
  * but not to a milestone
  */
 export interface Project {
-  id: number;
-  name: string;
-  description: string;
-  milestones: Milestone[];
-  issues: Issue[];
+  id: number
+  name: string
+  description: string
+  milestones: Milestone[]
+  issues: Issue[]
 }
