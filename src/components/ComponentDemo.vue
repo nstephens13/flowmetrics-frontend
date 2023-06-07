@@ -1,7 +1,7 @@
 <template>
   <h1>{{ msg }}</h1>
   <div class="card flex justify-content-center">
-    <Button class="p-button-sm" label="Submit"></Button>
+    <Button label="Submit"></Button>
     <Calendar v-model="date"></Calendar>
   </div>
 </template>
