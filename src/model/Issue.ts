@@ -10,10 +10,10 @@ import type { Employee } from './Employee';
  * @prop {Date} closedAt the Date when the issue was closed
  */
 export interface Issue {
-  id: number
-  name: string
-  description: string
-  assignedTo: Employee
-  createdAt: Date
-  closedAt: Date
+  id: number;
+  name: string;
+  description: string;
+  assignedTo: Employee;
+  createdAt: Date;
+  closedAt: Date;
 }
