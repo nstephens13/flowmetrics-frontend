@@ -13,9 +13,10 @@ import { getMockData } from './__mockdata__/mockDataComposer';
  * @param project Project Object that should be calculated
  * @returns {Map} key:Employee, value:{openIssues:number, closedIssues:number}
  */
-function calculateWorkload(project: Project): Map<Employee,
-{ openIssues: number, closedIssues: number }> {
-  const mapToReturn: Map<Employee, { openIssues: number, closedIssues: number }> = new Map([]);
+function calculateWorkload(
+  project: Project,
+): Map<Employee, { openIssues: number; closedIssues: number }> {
+  const mapToReturn: Map<Employee, { openIssues: number; closedIssues: number }> = new Map([]);
   const issueSet: Set<Issue> = new Set<Issue>();
   let projectToCalculate: Project;
 
@@ -33,8 +34,9 @@ function calculateWorkload(project: Project): Map<Employee,
       let numberClosedTickets: number;
 
       // checking if the employee is already with values in the map
-      const tuple:
-      { openIssues: number, closedIssues: number } | undefined = mapToReturn.get(issue.assignedTo);
+      const tuple: { openIssues: number; closedIssues: number } | undefined = mapToReturn.get(
+        issue.assignedTo,
+      );
 
       // setting the values to zero if the employee isn't in the map already
       if (tuple !== undefined) {

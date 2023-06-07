@@ -23,7 +23,7 @@ describe('When mock data helper is asked for mock data, there should be correctl
   // given and when togehter, scroll to next test to see a better example
   // given+when
   const project: Project = getMockData(1);
-  const loadedIssues:Issue[] = project.issues;
+  const loadedIssues: Issue[] = project.issues;
 
   // investigate the result
   // then
@@ -39,8 +39,8 @@ describe('When mock data helper is asked for mock data, there should be correctl
     loadedIssues.forEach((issue: Issue) => {
       if (
         typeof issue.id === 'number'
-                && typeof issue.name === 'string'
-                && typeof issue.description === 'string'
+        && typeof issue.name === 'string'
+        && typeof issue.description === 'string'
       ) {
         check = true;
       } else {
@@ -58,7 +58,9 @@ describe('Workload Calculator should calculate Workload correctly for Mock Data 
 
   // given
   const project = getMockData(2);
-  const employees: Employee[] = loadDataFromFile<Employee>('src/services/__mockdata__/Employees.json');
+  const employees: Employee[] = loadDataFromFile<Employee>(
+    'src/services/__mockdata__/Employees.json',
+  );
 
   // assigning the issues to my own employee array as in dataset 2 just for deep equal comparison
   assignIssue(project, employees, 0, 0);
@@ -89,7 +91,7 @@ describe('Workload Calculator should calculate Workload correctly for Mock Data 
   // checking the calculations, the expected value come from the prepared employees array,
   // the actual value is from the result
   test('workload should contain correct key value pairs', () => {
-    workload.forEach((tuple:{openIssues:number, closedIssues:number}, employee:Employee) => {
+    workload.forEach((tuple: { openIssues: number; closedIssues: number }, employee: Employee) => {
       const openIssuesList = [1, 2, 3, 1]; // expected values for open issues from json file
       employees.forEach((emp) => {
         if (employee.id === emp.id) {
@@ -107,7 +109,9 @@ describe('Workload Calculator should calculate Workload correctly for Mock Data 
 describe('Workload Calculator should calculate Workload correctly for Mock Data Set 1 ', () => {
   // given
   const project = getMockData(1);
-  const employees: Employee[] = loadDataFromFile<Employee>('src/services/__mockdata__/Employees.json');
+  const employees: Employee[] = loadDataFromFile<Employee>(
+    'src/services/__mockdata__/Employees.json',
+  );
 
   // when
   const workload = calculateWorkload(project);
