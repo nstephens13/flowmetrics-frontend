@@ -39,7 +39,6 @@ Frontend-Lint:
 "Frontend-Build":
   stage: Build
   script:
-    - cd code/frontend/
     - npm ci
     - npm run build
   extends:
