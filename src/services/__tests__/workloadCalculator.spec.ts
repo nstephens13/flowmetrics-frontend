@@ -33,8 +33,8 @@ describe('When mock data helper is asked for mock data, there should be correctl
   });
 
   test('Each item in loadedIssues should be a valid Issue object', () => {
-    let check: boolean = false;
-    let oneFail: boolean = false;
+    let check = false;
+    let oneFail = false;
 
     loadedIssues.forEach((issue: Issue) => {
       if (
