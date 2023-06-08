@@ -1,4 +1,4 @@
-import type { Issue } from './Issue'
+import type { Issue } from './Issue';
 
 /**
  *
@@ -12,4 +12,5 @@ export interface Employee {
   firstName: string
   lastName: string
   assignedIssues: Issue[]
+
 }
