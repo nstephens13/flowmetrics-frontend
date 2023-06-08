@@ -4,8 +4,8 @@ import {
 import { getMockData, loadDataFromFile } from '../__mockdata__/mockDataComposer';
 import calculateWorkload from '../workloadCalculator';
 import type { Employee } from '../../model/Employee';
-import type { Project } from '../../model/Project';
-import type { Issue } from '../../model/Issue';
+import type { Project } from '../../model/ProjectIF';
+import type { Issue } from '../../model/IssueIF';
 
 // Just a Helper Function to create my expected Values to compare with real values
 function assignIssue(

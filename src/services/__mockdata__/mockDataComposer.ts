@@ -1,8 +1,8 @@
 import fs from 'fs';
-import type { Project } from '@/model/Project';
+import type { Project } from '@/model/ProjectIF';
 import type { Employee } from '@/model/Employee';
-import type { Issue } from '@/model/Issue';
-import type { Milestone } from '@/model/Milestone';
+import type { Issue } from '@/model/IssueIF';
+import type { Milestone } from '@/model/MilestoneIF';
 
 export function loadDataFromFile<T>(filePath: string): T[] {
   try {

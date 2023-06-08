@@ -1,6 +1,6 @@
-import type { Project } from '@/model/Project';
+import type { Project } from '@/model/ProjectIF';
 import type { Employee } from '@/model/Employee';
-import type { Issue } from '@/model/Issue';
+import type { Issue } from '@/model/IssueIF';
 
 // just temporary import
 import { getMockData } from './__mockdata__/mockDataComposer';
