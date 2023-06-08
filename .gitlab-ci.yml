@@ -11,16 +11,13 @@ stages:
     - if: '$CI_COMMIT_REF_NAME == "development"'
     - if: '($CI_MERGE_REQUEST_TITLE != null)'
       when: never
-    - if: '($CI_PIPELINE_SOURCE == "merge_request_event")'
-      exists:
+    - if: '$CI_MERGE_REQUEST_DRAFT == "false"'
+    - exists:
         - "$CI_MERGE_REQUEST_TARGET_BRANCH_NAME"
-      when: delayed
     - changes:
         - "./*"
     - changes:
         - ".gitlab-ci.yml"
-
-
 
 ######## Frontend
 Frontend-Test:
