@@ -1,0 +1,46 @@
+stages:
+  - Test+Lint
+  - Build
+
+.frontendJob:
+  image: node:20.2.0-alpine3.18
+  rules:
+    - if: '$SCHEDULED == "true"'
+      when: never
+    - if: "$CI_COMMIT_REF_NAME == 'main'"
+    - if: '$CI_COMMIT_REF_NAME == "development"'
+    - if: '($CI_MERGE_REQUEST_TITLE != null)'
+      when: never
+    - if: '($CI_PIPELINE_SOURCE == "merge_request_event")'
+    - changes:
+        - "./*"
+    - changes:
+        - ".gitlab-ci.yml"
+
+
+
+######## Frontend
+Frontend-Test:
+  stage: Test+Lint+Doc
+  script:
+    - npm ci
+    - npm run test:unit
+  extends:
+    - .frontendJob
+
+Frontend-Lint:
+  stage: Test+Lint+Doc
+  script:
+    - npm ci
+    - npm run lint:no-fix
+  extends:
+    - .frontendJob
+
+"Frontend-Build":
+  stage: Build
+  script:
+    - cd code/frontend/
+    - npm ci
+    - npm run build
+  extends:
+    - .frontendJob
