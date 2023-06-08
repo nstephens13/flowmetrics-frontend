@@ -13,6 +13,6 @@ const app = createApp(App);
 app.use(PrimeVue);
 app.use(router);
 
-app.component('MyCalendar', Calendar);
-app.component('MyButton', Button);
+app.component('Calendar', Calendar);
+app.component('Button', Button);
 app.mount('#app');
