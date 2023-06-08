@@ -10,7 +10,7 @@ import type { MilestoneIF } from './MilestoneIF';
  * @prop {IssueIF[]} issues a array of Issues - objects that are assigned to the project
  * but not to a milestone
  */
-export interface Project {
+export interface ProjectIF {
   id: number;
   name: string;
   description: string;

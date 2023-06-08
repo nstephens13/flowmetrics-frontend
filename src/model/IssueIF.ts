@@ -1,4 +1,4 @@
-import type { EmployeeIF } from './Employee';
+import type { EmployeeIF } from './EmployeeIF';
 
 /**
  *
@@ -11,14 +11,13 @@ import type { EmployeeIF } from './Employee';
  * @prop {Date| null} closedAt the Date when the issue was closed
  * @prop {Date| null} dueTo Due date for the Issue
  * @prop {Status} Status status of ticket-progress
- * @function remainTime calculates remain time from now until due date
- */
+  */
 
 enum Status{
   Open,
   Closed,
-  InWork,
-  Resolved,
+  InProgress,
+  // Resolved,
   // Zombie
 }
 
@@ -33,5 +32,5 @@ export interface IssueIF {
   closedAt: Date| null;
   dueTo: Date| null;
   status: Status;
-  remainTime(): number| null;
+  // remainTime(): number| null;
 }

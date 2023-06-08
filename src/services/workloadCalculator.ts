@@ -1,6 +1,6 @@
-import type { Project } from '@/model/ProjectIF';
-import type { Employee } from '@/model/Employee';
-import type { Issue } from '@/model/IssueIF';
+import type { ProjectIF } from '@/model/ProjectIF';
+import type { EmployeeIF } from '@/model/EmployeeIF';
+import type { IssueIF } from '@/model/IssueIF';
 
 // just temporary import
 import { getMockData } from './__mockdata__/mockDataComposer';
@@ -10,15 +10,15 @@ import { getMockData } from './__mockdata__/mockDataComposer';
  * result as a Map, where a Employee is the key and as the value a tuple,
  * the amount of open and closed assigned Issues.
  *
- * @param project Project Object that should be calculated
+ * @param project ProjectIF Object that should be calculated
  * @returns {Map} key:Employee, value:{openIssues:number, closedIssues:number}
  */
 function calculateWorkload(
-  project: Project,
-): Map<Employee, { openIssues: number; closedIssues: number }> {
-  const mapToReturn: Map<Employee, { openIssues: number; closedIssues: number }> = new Map([]);
-  const issueSet: Set<Issue> = new Set<Issue>();
-  let projectToCalculate: Project;
+  project: ProjectIF,
+): Map<EmployeeIF, { openIssues: number; closedIssues: number }> {
+  const mapToReturn: Map<EmployeeIF, { openIssues: number; closedIssues: number }> = new Map([]);
+  const issueSet: Set<IssueIF> = new Set<IssueIF>();
+  let projectToCalculate: ProjectIF;
 
   // ToDo: decouple the mock data when everything is setup
   if (project === undefined || project === null) {
@@ -27,7 +27,7 @@ function calculateWorkload(
     projectToCalculate = project;
   }
 
-  function extractEmployeeAndUpdateEmployeeMap(issue: Issue) {
+  function extractEmployeeAndUpdateEmployeeMap(issue: IssueIF) {
     // checking if the issue is already done, with a set, and if somebody is assigned
     if (!issueSet.has(issue) && issue.assignedTo !== null && issue.assignedTo !== undefined) {
       let numberOpenTickets: number;
