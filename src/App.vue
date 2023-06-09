@@ -82,11 +82,5 @@ nav a:first-of-type {
     padding: 1rem 0;
     margin-top: 1rem;
   }
-
-  .link {
-    font-family: Arial, sans-serif; /* Font of Routerlink elements */
-    font-size: 16px; /* Size of Routerlink elements */
-    /* Add any other desired styles for the links */
-  }
 }
 </style>

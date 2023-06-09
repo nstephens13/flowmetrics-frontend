@@ -1,21 +1,13 @@
 <template>
   <Card class="background-card">
-    <!-- <template #title>
-      <h1></h1>
-    </template> -->
+    <template #title>Employee Overview</template>
 
-    <template #header>
-      <h1>Employee Overview</h1>
-      <span class="pi pi-user"></span>
+    <template #content>
+      <div class="icon-container">
+        <div class="icon-background"></div>
+        <span class="pi pi-user user-size"></span>
+      </div>
     </template>
-
-    <div class="card-content">
-      <h1>Card content goes here.</h1>
-    </div>
-
-    <!-- <template #footer>
-      <p></p>
-    </template> -->
   </Card>
 </template>
 
@@ -36,10 +28,27 @@ export default defineComponent({
 <style>
 .background-card {
   width: 1440px; /* Set the width to match the MacBook Air 13'' screen width */
-  height: 900px; /* Set the height to match the MacBook Air 13'' screen height */
+  height: 700px;
 }
-.card-content {
-  padding: 20px; /* Adjust the padding as needed */
-  color: #a72222; /* Adjust the text color for better visibility */
+.card-title {
+  font-size: 20px;
+}
+.icon-container {
+  position: relative;
+  top: 20px;
+  left: 30px;
+}
+.icon-background {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  background-color: rgba(128, 128, 128, 0.5); /* RGB values and opacity */
+  border-radius: 10%; /* Change roundness of edges */
+}
+.user-size {
+  font-size: 70px;
+  color: white;
+  position: absolute;
+  transform: translate(21%, 20%); /* Center icon in icon-background */
 }
 </style>
