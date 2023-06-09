@@ -1,51 +1,64 @@
-
 <template>
-        <Menubar :model="items" label="FM" class="mr-2" size="large">
+        <Menubar>
             <template #start >
-                <h2 id="productName">FlowMetrics</h2>
+                <div class="container">
+                    <div class="sidebarButton"><Button text icon="pi pi-bars" style="color: var(--primary-color-text)" aria-label="Submit" @click="visible = true"></Button></div>
+                    <div class="productname"><h2 id="productName">FlowMetrics</h2></div>
+                </div>
+                    <Sidebar v-model:visible="visible"> 
+                        <div>
+                            <Menu :model="items"></Menu>
+                        </div>   
+                    </Sidebar>
             </template>
+            <!--
+                Options Button
             <template #end>
                 <Button rounded text icon="pi pi-ellipsis-v" style="color: var(--primary-color-text)" aria-label="Submit"></Button>
             </template>
+            -->
         </Menubar>
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
 
+import { ref } from 'vue';
+const visible = ref();
 const items = ref([
-    {
-        label: 'Project Overview',
-        icon: 'pi pi-fw pi-file',
-        to: '/about'
-    },
-    {
-        label: 'Employee Overview',
-        icon: 'pi pi-fw pi-pencil',
-        to: '/'
-    },
-    {
-        label: 'New Rule',
-        icon: 'pi pi-fw pi-user',
-    }
+  {
+    label: 'Project Overview',
+    icon: 'pi pi-fw pi-book',
+    to: '/about',
+  },
+  {
+    label: 'Employee Overview',
+    icon: 'pi pi-fw pi-users',
+    to: '/',
+  },
+  {
+    label: 'Create Rules',
+    icon: 'pi pi-fw pi-filter',
+  },
 ]);
+
 </script>
 
 <style scoped>
 .p-menubar{
-     background-color:#2196f3; 
+     background-color:#2196f3;
      color: #ffffff;
      border: 0;
      border-radius: 0%;
 }
-
+.p-menu{
+    border: 0;
+    border-radius: 0%;
+}
 #productName{
-    margin: 1rem;
+    margin: 0.3rem;
+}
+.container {
+    display: flex;
 }
 
-#options{ 
-     color: #ffffff;
-     border: 0;
-     border-radius: 50%;
-}
 </style>
