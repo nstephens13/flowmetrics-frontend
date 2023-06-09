@@ -5,7 +5,7 @@ import { getMockData, loadDataFromFile } from '../__mockdata__/mockDataComposer'
 import calculateWorkload from '../workloadCalculator';
 import type { Employee } from '../../model/Employee';
 import type { Project } from '../../model/Project';
-import type { Issue } from '../../model/Issue';
+import type { IssueIF } from '../../model/IssueIF';
 
 // Just a Helper Function to create my expected Values to compare with real values
 function assignIssue(
@@ -23,7 +23,7 @@ describe('When mock data helper is asked for mock data, there should be correctl
   // given and when togehter, scroll to next test to see a better example
   // given+when
   const project: Project = getMockData(1);
-  const loadedIssues: Issue[] = project.issues;
+  const loadedIssues: IssueIF[] = project.issues;
 
   // investigate the result
   // then
@@ -36,7 +36,7 @@ describe('When mock data helper is asked for mock data, there should be correctl
     let check = false;
     let oneFail = false;
 
-    loadedIssues.forEach((issue: Issue) => {
+    loadedIssues.forEach((issue: IssueIF) => {
       if (
         typeof issue.id === 'number'
         && typeof issue.name === 'string'

@@ -1,4 +1,4 @@
-import type { Issue } from './Issue';
+import type { IssueIF } from './IssueIF';
 
 /**
  *
@@ -11,6 +11,6 @@ export interface Employee {
   id: number
   firstName: string
   lastName: string
-  assignedIssues: Issue[]
+  assignedIssues: IssueIF[]
 
 }

@@ -1,4 +1,4 @@
-import type { Issue } from './Issue';
+import type { IssueIF } from './IssueIF';
 
 /**
  *
@@ -11,5 +11,5 @@ export interface Milestone {
   id: number
   name: string
   description: string
-  issues: Issue[]
+  issues: IssueIF[]
 }

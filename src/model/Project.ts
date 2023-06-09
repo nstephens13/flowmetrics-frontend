@@ -1,4 +1,4 @@
-import type { Issue } from './Issue';
+import type { IssueIF } from './IssueIF';
 import type { Milestone } from './Milestone';
 
 /**
@@ -15,5 +15,5 @@ export interface Project {
   name: string
   description: string
   milestones: Milestone[]
-  issues: Issue[]
+  issues: IssueIF[]
 }
