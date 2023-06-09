@@ -7,9 +7,13 @@ import { RouterLink, RouterView } from 'vue-router'
     <div class="wrapper">
       <HelloWorld msg="You did it!" />
       <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-        <RouterLink to="/employee-overview">Employee Overview</RouterLink>
+        <RouterLink to="/" style="font-family: Arial, sans-serif; font-size: 16px">Home</RouterLink>
+        <RouterLink to="/about" style="font-family: Arial, sans-serif; font-size: 16px"
+          >About</RouterLink
+        >
+        <RouterLink to="/employee-overview" style="font-family: Arial, sans-serif; font-size: 16px"
+          >Employee Overview</RouterLink
+        >
       </nav>
     </div>
   </header>
@@ -77,6 +81,12 @@ nav a:first-of-type {
 
     padding: 1rem 0;
     margin-top: 1rem;
+  }
+
+  .link {
+    font-family: Arial, sans-serif; /* Font of Routerlink elements */
+    font-size: 16px; /* Size of Routerlink elements */
+    /* Add any other desired styles for the links */
   }
 }
 </style>

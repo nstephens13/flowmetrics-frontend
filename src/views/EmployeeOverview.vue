@@ -1,18 +1,35 @@
 <template>
   <Card class="background-card">
-    <div class="card-content">
-      <h1>This is the employee overview page</h1>
+    <!-- <template #title>
+      <h1></h1>
+    </template> -->
+
+    <template #header>
+      <h1>Employee Overview</h1>
       <span class="pi pi-user"></span>
+    </template>
+
+    <div class="card-content">
+      <h1>Card content goes here.</h1>
     </div>
+
+    <!-- <template #footer>
+      <p></p>
+    </template> -->
   </Card>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import Card from 'primevue/card'
 
 export default defineComponent({
-  name: 'EmployeeOverview'
+  name: 'EmployeeOverview',
   // Component options and logic
+  components: {
+    Card
+  }
+  // Other component and logic
 })
 </script>
 
@@ -22,7 +39,7 @@ export default defineComponent({
   height: 900px; /* Set the height to match the MacBook Air 13'' screen height */
 }
 .card-content {
-  padding: 500px; /* Adjust the padding as needed */
-  color: #000000; /* Adjust the text color for better visibility */
+  padding: 20px; /* Adjust the padding as needed */
+  color: #a72222; /* Adjust the text color for better visibility */
 }
 </style>
