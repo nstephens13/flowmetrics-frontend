@@ -14,6 +14,12 @@
           <div class="user-name">John Doe</div>
         </div>
       </div>
+
+      <div class="statistics-container">
+        <div class="open"></div>
+        <div class="in-progress"></div>
+        <div class="closed"></div>
+      </div>
     </template>
   </Card>
 </template>
@@ -82,5 +88,44 @@ export default defineComponent({
   font-size: 13px;
   color: white;
   position: absolute;
+}
+
+/* Statistics */
+.statistics-container {
+  position: relative;
+  bottom: -40px;
+  left: 150px;
+  display: flex;
+  align-items: flex-end; /* Allign items to the bottom */
+}
+
+.open {
+  width: 20px;
+  height: 80px;
+  background-color: grey;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+}
+
+.in-progress {
+  width: 20px;
+  height: 80px;
+  background-color: grey;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+}
+
+.closed {
+  width: 20px;
+  height: 80px;
+  background-color: grey;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
 }
 </style>
