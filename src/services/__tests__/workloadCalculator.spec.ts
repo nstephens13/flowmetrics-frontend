@@ -103,6 +103,60 @@ describe('Workload Calculator should calculate Workload correctly for Mock Data 
   });
 });
 
+describe('Workload Calculator should calculate Workload correctly for Mock Data Set 55', () => {
+  // preparing my data structure that I need as a parameter in the tested function
+
+  // given
+  const project = getMockData(55);
+  const employees: Employee[] = loadDataFromFile<Employee>('src/services/__mockdata__/Employees.json');
+
+  // assigning the issues to my own employee array as in dataset 2 just for deep equal comparison
+  assignIssue(project, employees, 0, 0);
+  assignIssue(project, employees, 1, 1);
+  assignIssue(project, employees, 2, 1);
+  assignIssue(project, employees, 3, 2);
+  assignIssue(project, employees, 4, 2);
+  assignIssue(project, employees, 5, 2);
+  assignIssue(project, employees, 6, 3);
+
+  // calling the function that is being tested
+
+  // when
+  const workload = calculateWorkload(project);
+
+  // inspecting the result
+
+  // then
+
+  test('workload should be a Map', () => {
+    expect(workload).toBeInstanceOf(Map);
+  });
+
+  test('map should only contain four key-value pairs', () => {
+    expect(workload.size).toBe(4);
+  });
+
+  // checking the calculations, the expected value comes from the prepared employees array,
+  // the actual value is from the result
+  test('workload should contain correct key-value pairs', () => {
+    workload.forEach(
+      (tuple: { openIssues: number; inProgressIssues: number; closedIssues: number }, employee: Employee) => {
+        const openIssuesList = [0, 1, 0, 0]; // expected values for open issues from json file
+        const inProgressIssuesList = [1, 0, 1, 0]; // expected values for in-progress issues from json file
+        const closedIssuesList = [0, 1, 2, 1]; // expected values for closed issues from json file
+
+        employees.forEach((emp) => {
+          if (employee.id === emp.id) {
+            expect(employee).toEqual(emp);
+            expect(tuple.openIssues).toBe(openIssuesList[employee.id - 1]);
+            expect(tuple.inProgressIssues).toBe(inProgressIssuesList[employee.id - 1]);
+            expect(tuple.closedIssues).toBe(closedIssuesList[employee.id - 1]);
+          }
+        });
+      },
+    );
+  });
+});
 // Write at least tests that fixes the expected behaviour,
 // that you can see when changes in code broke something
 

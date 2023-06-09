@@ -1,5 +1,15 @@
 import type { Employee } from './Employee';
 
+
+
+export enum Status{
+  Open,
+  Closed,
+  InProgress,
+  // Resolved,
+  // Zombie
+}
+
 /**
  *
  * @prop {number} id issue id
@@ -10,17 +20,8 @@ import type { Employee } from './Employee';
  * @prop {Date} createdAt the Date when the issue was created
  * @prop {Date| null} closedAt the Date when the issue was closed
  * @prop {Date| null} dueTo Due date for the Issue
- * @prop {Status} Status status of ticket-progress
-  */
-
-export enum Status{
-  Open,
-  Closed,
-  InProgress,
-  // Resolved,
-  // Zombie
-}
-
+ * @prop {Status} status the Status of ticket-progress
+ */
 export interface IssueIF {
 
   id: number;
@@ -31,6 +32,6 @@ export interface IssueIF {
   createdAt: Date;
   closedAt: Date| null;
   dueTo: Date| null;
-  status: Status;
+  status: Status | null;
   // remainTime(): number| null;
 }

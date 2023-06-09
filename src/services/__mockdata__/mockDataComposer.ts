@@ -117,6 +117,33 @@ export function getMockData(dataset = 3): Project {
         issues: [],
       };
     }
+    case 55: {
+      assignIssueToEmployee(0, 0);
+      assignIssueToEmployee(1, 1);
+      assignIssueToEmployee(2, 1);
+      assignIssueToEmployee(3, 2);
+      assignIssueToEmployee(4, 2);
+      assignIssueToEmployee(5, 2);
+      assignIssueToEmployee(6, 3);
+
+      issues[0].status = Status.InProgress;
+      issues[2].status = Status.Closed;
+      issues[2].closedAt = new Date(); // Set the specific closedAt date
+      issues[3].status = Status.Closed;
+      issues[3].closedAt = new Date(); // Set the specific closedAt date
+      issues[4].status = Status.Closed;
+      issues[4].closedAt = new Date(); // Set the specific closedAt date
+      issues[5].status = Status.InProgress;
+      issues[6].status = Status.Closed;
+      issues[6].closedAt = new Date(); // Set the specific closedAt date
+      return {
+        id: 55,
+        name: 'Mocking Bird',
+        description: 'project with some Issues with Status Enums',
+        milestones,
+        issues,
+      };
+    }
     default: {
       return {
         id: 0,
