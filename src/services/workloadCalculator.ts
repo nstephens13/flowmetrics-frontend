@@ -1,5 +1,5 @@
-import type { Project } from '@/model/Project';
-import type { Employee } from '@/model/Employee';
+import type { ProjectIF } from '@/model/ProjectIF';
+import type { EmployeeIF } from '@/model/EmployeeIF';
 import type { IssueIF } from '@/model/IssueIF';
 import { Status } from '../model/IssueIF';
 
@@ -16,11 +16,11 @@ import { getMockData } from './__mockdata__/mockDataComposer';
  * @returns {Map} key:Employee, value:{ openIssues: number; inProgressIssues: number; closedIssues: number }
  */
 function calculateWorkload(
-  project: Project,
-): Map<Employee, { openIssues: number; inProgressIssues: number; closedIssues: number }> {
-  const mapToReturn:Map<Employee, { openIssues: number; inProgressIssues: number; closedIssues: number }> = new Map([]);
+  project: ProjectIF,
+): Map<EmployeeIF, { openIssues: number; inProgressIssues: number; closedIssues: number }> {
+  const mapToReturn:Map<EmployeeIF, { openIssues: number; inProgressIssues: number; closedIssues: number }> = new Map([]);
   const issueSet: Set<IssueIF> = new Set<IssueIF>();
-  let projectToCalculate: Project;
+  let projectToCalculate: ProjectIF;
 
   /**
    * ToDo: decouple the mock data when everything is setup

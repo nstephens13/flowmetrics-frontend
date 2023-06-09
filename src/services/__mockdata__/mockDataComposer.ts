@@ -1,8 +1,8 @@
 import fs from 'fs';
-import type { Project } from '@/model/Project';
-import type { Employee } from '@/model/Employee';
+import type { ProjectIF } from '@/model/ProjectIF';
+import type { EmployeeIF } from '@/model/EmployeeIF';
 import type { IssueIF } from '@/model/IssueIF';
-import type { Milestone } from '@/model/Milestone';
+import type { MilestoneIF } from '@/model/MilestoneIF';
 import { Status } from '../../model/IssueIF';
 
 export function loadDataFromFile<T>(filePath: string): T[] {
@@ -19,12 +19,12 @@ function getRandomInt(max: number) {
 }
 
 // give out a fake project
-export function getMockData(dataset = 3): Project {
-  const employees: Employee[] = loadDataFromFile<Employee>(
+export function getMockData(dataset = 3): ProjectIF {
+  const employees: EmployeeIF[] = loadDataFromFile<EmployeeIF>(
     'src/services/__mockdata__/Employees.json',
   );
   const issues: IssueIF[] = loadDataFromFile<IssueIF>('src/services/__mockdata__/Issues.json');
-  const milestones: Milestone[] = loadDataFromFile<Milestone>(
+  const milestones: MilestoneIF[] = loadDataFromFile<MilestoneIF>(
     'src/services/__mockdata__/Milestones.json',
   );
 

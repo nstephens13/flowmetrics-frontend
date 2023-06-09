@@ -3,14 +3,14 @@ import {
 } from 'vitest';
 import { getMockData, loadDataFromFile } from '../__mockdata__/mockDataComposer';
 import calculateWorkload from '../workloadCalculator';
-import type { Employee } from '../../model/Employee';
-import type { Project } from '../../model/Project';
+import type { EmployeeIF } from '../../model/EmployeeIF';
+import type { ProjectIF } from '../../model/ProjectIF';
 import type { IssueIF } from '../../model/IssueIF';
 
 // Just a Helper Function to create my expected Values to compare with real values
 function assignIssue(
-  project: Project,
-  employees: Employee[],
+  project: ProjectIF,
+  employees: EmployeeIF[],
   issueNumber: number,
   employeeNumber: number,
 ) {
@@ -22,7 +22,7 @@ function assignIssue(
 describe('When mock data helper is asked for mock data, there should be correctly constructed mock data object returned ', () => {
   // given and when togehter, scroll to next test to see a better example
   // given+when
-  const project: Project = getMockData(1);
+  const project: ProjectIF = getMockData(1);
   const loadedIssues: IssueIF[] = project.issues;
 
   // investigate the result
@@ -58,7 +58,7 @@ describe('Workload Calculator should calculate Workload correctly for Mock Data 
 
   // given
   const project = getMockData(2);
-  const employees: Employee[] = loadDataFromFile<Employee>(
+  const employees: EmployeeIF[] = loadDataFromFile<EmployeeIF>(
     'src/services/__mockdata__/Employees.json',
   );
 
@@ -91,11 +91,11 @@ describe('Workload Calculator should calculate Workload correctly for Mock Data 
   // checking the calculations, the expected value come from the prepared employees array,
   // the actual value is from the result
   test('workload should contain correct key value pairs', () => {
-    workload.forEach((tuple: { openIssues: number; closedIssues: number }, employee: Employee) => {
+    workload.forEach((tuple: { openIssues: number; closedIssues: number }, employee: EmployeeIF) => {
       const openIssuesList = [1, 2, 3, 1]; // expected values for open issues from json file
       employees.forEach((emp) => {
         if (employee.id === emp.id) {
-          assert.deepEqual<Employee>(employee, emp);
+          assert.deepEqual<EmployeeIF>(employee, emp);
           expect(tuple.openIssues).eq(openIssuesList[employee.id - 1]);
         }
       });
@@ -108,7 +108,7 @@ describe('Workload Calculator should calculate Workload correctly for Mock Data 
 
   // given
   const project = getMockData(55);
-  const employees: Employee[] = loadDataFromFile<Employee>('src/services/__mockdata__/Employees.json');
+  const employees: EmployeeIF[] = loadDataFromFile<EmployeeIF>('src/services/__mockdata__/Employees.json');
 
   // assigning the issues to my own employee array as in dataset 2 just for deep equal comparison
   assignIssue(project, employees, 0, 0);
@@ -140,7 +140,7 @@ describe('Workload Calculator should calculate Workload correctly for Mock Data 
   // the actual value is from the result
   test('workload should contain correct key-value pairs', () => {
     workload.forEach(
-      (tuple: { openIssues: number; inProgressIssues: number; closedIssues: number }, employee: Employee) => {
+      (tuple: { openIssues: number; inProgressIssues: number; closedIssues: number }, employee: EmployeeIF) => {
         const openIssuesList = [0, 1, 0, 0]; // expected values for open issues from json file
         const inProgressIssuesList = [1, 0, 1, 0]; // expected values for in-progress issues from json file
         const closedIssuesList = [0, 1, 2, 1]; // expected values for closed issues from json file
@@ -163,7 +163,7 @@ describe('Workload Calculator should calculate Workload correctly for Mock Data 
 describe('Workload Calculator should calculate Workload correctly for Mock Data Set 1 ', () => {
   // given
   const project = getMockData(1);
-  const employees: Employee[] = loadDataFromFile<Employee>(
+  const employees: EmployeeIF[] = loadDataFromFile<EmployeeIF>(
     'src/services/__mockdata__/Employees.json',
   );
 
@@ -185,7 +185,7 @@ describe('Workload Calculator should calculate Workload correctly for Mock Data 
 
   // then
   test('workload should contain correct values', () => {
-    assert.deepEqual<Employee>(employee, employees[1]);
+    assert.deepEqual<EmployeeIF>(employee, employees[1]);
     expect(workload.get(employee)?.openIssues).eq(1);
   });
 });

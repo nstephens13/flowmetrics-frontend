@@ -7,7 +7,7 @@ import type { IssueIF } from './IssueIF';
  * @prop {string} description the description of the milestone
  * @prop {Issue[]} issues a array of Issues - objects that are assigned to this milestone
  */
-export interface Milestone {
+export interface MilestoneIF {
   id: number
   name: string
   description: string

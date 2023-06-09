@@ -1,6 +1,4 @@
-import type { Employee } from './Employee';
-
-
+import type { EmployeeIF } from './EmployeeIF';
 
 export enum Status{
   Open,
@@ -27,8 +25,8 @@ export interface IssueIF {
   id: number;
   name: string;
   description: string| null;
-  assignedTo: Employee| null;
-  createdBy: Employee;
+  assignedTo: EmployeeIF| null;
+  createdBy: EmployeeIF;
   createdAt: Date;
   closedAt: Date| null;
   dueTo: Date| null;
