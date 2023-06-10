@@ -1,9 +1,9 @@
+import cloneDeep from 'lodash/cloneDeep';
 import type { ProjectIF } from '@/model/ProjectIF';
 import type { EmployeeIF } from '@/model/EmployeeIF';
 import type { IssueIF } from '@/model/IssueIF';
 import type { MilestoneIF } from '@/model/MilestoneIF';
 import { Status } from '../../model/IssueIF';
-import cloneDeep from 'lodash/cloneDeep';
 
 import employeeJson from './Employees.json';
 import issueJson from './Issues.json';
@@ -30,13 +30,18 @@ function assignIssueToMilestone(issueNumber: number, milestoneNumber: number, mi
   return mileStonesToReturn;
 }
 
+function loadArraysFromFile() {
+  const employeesArray: EmployeeIF[] = cloneDeep(employeeJson) as EmployeeIF[];
+  const issuesArray: IssueIF[] = cloneDeep(issueJson) as IssueIF[];
+  const milestones: MilestoneIF[] = cloneDeep(milestoneJson) as MilestoneIF[];
+  return { employeesArray, issuesArray, milestones };
+}
+
 // give out a fake project
 export function getMockData(dataset = 3): ProjectIF {
   switch (dataset) {
     case 1: {
-      const employeesArray: EmployeeIF[] = cloneDeep(employeeJson) as EmployeeIF[];
-      const issuesArray: IssueIF[] = cloneDeep(issueJson) as IssueIF[];
-      const milestones: MilestoneIF[] = cloneDeep(milestoneJson) as MilestoneIF[];
+      const { employeesArray, issuesArray, milestones } = loadArraysFromFile();
 
       const tuple: {
         issuesToReturn: IssueIF[];
@@ -53,9 +58,7 @@ export function getMockData(dataset = 3): ProjectIF {
       };
     }
     case 2: {
-      const employeesArray: EmployeeIF[] = cloneDeep(employeeJson) as EmployeeIF[];
-      const issuesArray: IssueIF[] = cloneDeep(issueJson) as IssueIF[];
-      const milestonesArray: MilestoneIF[] = cloneDeep(milestoneJson) as MilestoneIF[];
+      const { employeesArray, issuesArray, milestones: milestonesArray } = loadArraysFromFile();
 
       let tuple = assignIssueToEmployee(0, 0, issuesArray, employeesArray);
       tuple = assignIssueToEmployee(1, 1, tuple.issuesToReturn, tuple.employeesToReturn);
@@ -81,9 +84,7 @@ export function getMockData(dataset = 3): ProjectIF {
     }
 
     case 3: {
-      const employeesArray: EmployeeIF[] = cloneDeep(employeeJson) as EmployeeIF[];
-      const issuesArray: IssueIF[] = cloneDeep(issueJson) as IssueIF[];
-      const milestones: MilestoneIF[] = cloneDeep(milestoneJson) as MilestoneIF[];
+      const { employeesArray, issuesArray, milestones } = loadArraysFromFile();
       let issues = issuesArray;
       const numberOfIssues = issuesArray.length;
       const numberOfEmployees = employeesArray.length;
@@ -134,9 +135,7 @@ export function getMockData(dataset = 3): ProjectIF {
       };
     }
     case 55: {
-      const employeesArray: EmployeeIF[] = cloneDeep(employeeJson) as EmployeeIF[];
-      const issuesArray: IssueIF[] = cloneDeep(issueJson) as IssueIF[];
-      const milestones: MilestoneIF[] = cloneDeep(milestoneJson) as MilestoneIF[];
+      const { employeesArray, issuesArray, milestones } = loadArraysFromFile();
 
       let tuple = assignIssueToEmployee(0, 0, issuesArray, employeesArray);
       tuple = assignIssueToEmployee(1, 1, tuple.issuesToReturn, tuple.employeesToReturn);
@@ -146,7 +145,6 @@ export function getMockData(dataset = 3): ProjectIF {
       tuple = assignIssueToEmployee(5, 2, tuple.issuesToReturn, tuple.employeesToReturn);
       tuple = assignIssueToEmployee(6, 3, tuple.issuesToReturn, tuple.employeesToReturn);
       const issues = tuple.issuesToReturn;
-
 
       issues[0].status = Status.InProgress;
       issues[2].status = Status.Closed;
