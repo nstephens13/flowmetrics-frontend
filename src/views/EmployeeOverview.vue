@@ -9,11 +9,11 @@
         </div>
       </div>
 
-      <div class="user-name-container">
-        <div :style="userNameBackgroundStyle" class="user-name-background">
-          <div class="user-name">{{ employee.firstName }} {{ employee.lastName }}</div>
+        <div v-for="([employee, employeeData]) in employeeMap" :key="employee.id" class="user-name-container">
+            <div :style="getUserNameBackgroundStyle(employee)" class="user-name-background">
+                <div class="user-name">{{ employee.firstName }} {{ employee.lastName }}</div>
+            </div>
         </div>
-      </div>
 
       <div class="statistics-container">
         <div class="open"></div>
@@ -28,12 +28,7 @@
 import { defineComponent } from 'vue';
 import Card from 'primevue/card';
 import type { EmployeeIF } from '@/model/EmployeeIF';
-
-const employee:EmployeeIF = {
-    id: 1, firstName: 'John', lastName: 'Doe', assignedIssues: [],
-  };
-  const employeeMap: Map<EmployeeIF, { openIssues: number; inProgressIssues: number; closedIssues: number }> = new Map<EmployeeIF, {openIssues: number; inProgressIssues: number; closedIssues: number}>();
-  employeeMap.set(employee, { openIssues: 2, inProgressIssues: 1, closedIssues: 4 });
+import calculateWorkload from '../services/workloadCalculator';
 
 export default defineComponent({
   name: 'EmployeeOverview',
@@ -45,20 +40,20 @@ export default defineComponent({
 
   // Component properties
   props: {
-    employee: {
-      type: Object as () => EmployeeIF,
-      required: true,
-    },
   },
 
   // Computed property for dynamic styling
   computed: {
-    userNameBackgroundStyle(): string {
-      const firstNameLength = this.employee.firstName.trim().length;
-      const lastNameLength = this.employee.lastName.trim().length;
+    employeeMap(): Map<EmployeeIF, { openIssues: number; inProgressIssues: number; closedIssues: number }> {
+      const map = calculateWorkload(null);
+      return map;
+    },
+    getUserNameBackgroundStyle: (): ((employee: EmployeeIF) => string) => (employee: EmployeeIF): string => {
+      const firstNameLength = employee.firstName.trim().length;
+      const lastNameLength = employee.lastName.trim().length;
       const nameLength = firstNameLength + lastNameLength;
       const width = nameLength + 20; // Add 20 pixels for padding
-      const height = 20 + (nameLength > 0 ? 10 : 0) // Adjust the height based on name length
+      const height = 20 + (nameLength > 0 ? 10 : 0); // Adjust the height based on name length
       return `width: ${width}px; height: ${height}px`;
     },
   },
