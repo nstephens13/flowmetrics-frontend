@@ -3,18 +3,16 @@
     <template #title>Employee Overview</template>
 
     <template #content>
-      <div class="icon-container">
-        <div class="icon-background">
-          <span class="pi pi-user user-size"></span>
-        </div>
-      </div>
-
-        <div v-for="([employee, employeeData]) in employeeMap" :key="employee.id" class="user-name-container">
+       <div>
+        <div v-for="([employee, employeeData]) in employeeMap" :key="employee.id" class="icon-container">
+            <div class="icon-background">
+                <span class="pi pi-user user-size"></span>
+            </div>
             <div :style="getUserNameBackgroundStyle(employee)" class="user-name-background">
                 <div class="user-name">{{ employee.firstName }} {{ employee.lastName }}</div>
             </div>
         </div>
-
+    </div>
       <div class="statistics-container">
         <div class="open"></div>
         <div class="in-progress"></div>
@@ -48,7 +46,7 @@ export default defineComponent({
       const map = calculateWorkload(null);
       return map;
     },
-    getUserNameBackgroundStyle: (): ((employee: EmployeeIF) => string) => (employee: EmployeeIF): string => {
+    getUserNameBackgroundStyle: (): ((employee: EmployeeIF) => string) => (employee: EmployeeIF) => {
       const firstNameLength = employee.firstName.trim().length;
       const lastNameLength = employee.lastName.trim().length;
       const nameLength = firstNameLength + lastNameLength;
@@ -72,14 +70,13 @@ export default defineComponent({
 
 /* Employee icon and background */
 .icon-container {
-  position: relative;
-  top: 20px;
-  left: 30px;
-  margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
 
 }
 .icon-background {
-  position: absolute;
+  //position: absolute;
   width: 100px;
   height: 100px;
   background-color: rgba(128, 128, 128, 0.7); /* RGB values and opacity */
@@ -94,9 +91,9 @@ export default defineComponent({
 }
 /* User name and background */
 .user-name-container {
-  position: relative;
-  top: 130px;
-  left: 30px;
+  //position: relative;
+  //top: 130px;
+  //left: 30px;
 }
 .user-name-background {
   background-color: rgba(45, 108, 193, 0.9);
@@ -109,7 +106,8 @@ export default defineComponent({
 .user-name {
   font-size: 13px;
   color: white;
-  position: absolute;
+  //position: absolute;
+    text-align: center;
 }
 
 /* Statistics */
