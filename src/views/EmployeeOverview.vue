@@ -49,7 +49,7 @@ export default defineComponent({
     getUserNameBackgroundStyle: (): ((employee: EmployeeIF) => string) => (employee: EmployeeIF) => {
       const firstNameLength = employee.firstName.trim().length;
       const lastNameLength = employee.lastName.trim().length;
-      const nameLength = firstNameLength + lastNameLength;
+      const nameLength = (firstNameLength + lastNameLength) * 8;
       const width = nameLength + 20; // Add 20 pixels for padding
       const height = 20 + (nameLength > 0 ? 10 : 0); // Adjust the height based on name length
       return `width: ${width}px; height: ${height}px`;
