@@ -16,7 +16,7 @@ import { getMockData } from './__mockdata__/mockDataComposer';
  * @returns {Map} key:Employee, value:{ openIssues: number; inProgressIssues: number; closedIssues: number }
  */
 function calculateWorkload(
-  project: ProjectIF,
+  project: ProjectIF | null,
 ): Map<EmployeeIF, { openIssues: number; inProgressIssues: number; closedIssues: number }> {
   const mapToReturn:Map<EmployeeIF, { openIssues: number; inProgressIssues: number; closedIssues: number }> = new Map([]);
   const issueSet: Set<IssueIF> = new Set<IssueIF>();
