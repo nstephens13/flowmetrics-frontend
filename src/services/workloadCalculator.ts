@@ -4,7 +4,7 @@ import type { IssueIF } from '@/model/IssueIF';
 import { Status } from '../model/IssueIF';
 
 // just temporary import
-import { getMockData } from './__mockdata__/mockDataComposer';
+import { getMockData } from '../assets/__mockdata__/mockDataComposer';
 
 /**
  * This function calculate the workload from a project team, and give the
@@ -12,7 +12,8 @@ import { getMockData } from './__mockdata__/mockDataComposer';
  * the amount of assigned Issues that are open but not closed or in progress, the
  * amount of Issues that are in progress, and the amount that are closed
  *
- * @param project Project Object that should be calculated
+ * @param project Project Object that should be calculated, if null a project
+ * with random mock data will be used
  * @returns {Map} key:Employee, value:{ openIssues: number; inProgressIssues: number; closedIssues: number }
  */
 function calculateWorkload(
