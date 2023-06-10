@@ -1,5 +1,5 @@
-import type { Issue } from './Issue'
-import type { Milestone } from './Milestone'
+import type { IssueIF } from './IssueIF';
+import type { MilestoneIF } from './MilestoneIF';
 
 /**
  *
@@ -10,10 +10,10 @@ import type { Milestone } from './Milestone'
  * @prop {Issue[]} issues a array of Issues - objects that are assigned to the project
  * but not to a milestone
  */
-export interface Project {
+export interface ProjectIF {
   id: number
   name: string
   description: string
-  milestones: Milestone[]
-  issues: Issue[]
+  milestones: MilestoneIF[]
+  issues: IssueIF[]
 }

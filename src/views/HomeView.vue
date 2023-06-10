@@ -3,16 +3,16 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent } from 'vue';
 
 // Components
-import ComponentDemo from '../components/ComponentDemo.vue'
+import ComponentDemo from '../components/ComponentDemo.vue';
 
 export default defineComponent({
   name: 'HomeView',
 
   components: {
-    ComponentDemo
-  }
-})
+    ComponentDemo,
+  },
+});
 </script>

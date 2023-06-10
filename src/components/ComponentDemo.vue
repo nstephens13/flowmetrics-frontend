@@ -7,11 +7,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref } from 'vue';
 
-const date = ref()
+const date = ref();
 
 defineProps<{
   msg: string
-}>()
+}>();
 </script>
