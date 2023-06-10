@@ -1,25 +1,28 @@
 <template>
-  <Card class="background-card">
-    <template #title>Employee Overview</template>
+    <Card class="background-card">
+        <template #title>Employee Overview</template>
 
-    <template #content>
-       <div>
-        <div v-for="([employee, employeeData]) in employeeMap" :key="employee.id" class="icon-container">
-            <div class="icon-background">
-                <span class="pi pi-user user-size"></span>
-            </div>
-            <div :style="getUserNameBackgroundStyle(employee)" class="user-name-background">
-                <div class="user-name">{{ employee.firstName }} {{ employee.lastName }}</div>
-            </div>
-        </div>
-    </div>
-      <div class="statistics-container">
-        <div class="open"></div>
-        <div class="in-progress"></div>
-        <div class="closed"></div>
-      </div>
-    </template>
-  </Card>
+        <template #content>
+            <div>
+                <div v-for="([employee, employeeData]) in employeeMap" :key="employee.id" class="icon-container">
+                    <div class="icon-user-container">
+                        <div class="icon-background">
+                            <span class="pi pi-user user-size"></span>
+                        </div>
+                        <div :style="getUserNameBackgroundStyle(employee)" class="user-name-background">
+                            <div class="user-name">{{ employee.firstName }} {{ employee.lastName }}</div>
+                        </div>
+                    </div>
+                        <div class="statistics-container">
+                            <div class="open"></div>
+                            <div class="in-progress"></div>
+                            <div class="closed"></div>
+                        </div>
+                    </div>
+                </div>
+
+        </template>
+    </Card>
 </template>
 
 <script lang="ts">
@@ -37,8 +40,7 @@ export default defineComponent({
   // Other component and logic
 
   // Component properties
-  props: {
-  },
+  props: {},
 
   // Computed property for dynamic styling
   computed: {
@@ -61,91 +63,99 @@ export default defineComponent({
 <style>
 /* Card Component */
 .background-card {
-  width: 1440px; /* Set the width to match the MacBook Air 13'' screen width */
-  height: 700px;
+    width: 1440px; /* Set the width to match the MacBook Air 13'' screen width */
+    height: 700px;
 }
+
 .card-title {
-  font-size: 20px;
+    font-size: 20px;
+}
+
+.icon-user-container {
+    display: flex;
+    flex-direction: column; /* Stack icon and user name vertically */
+    //align-items: center; /* Horizontally center align icon and user name */
+    margin-bottom: 10px;
 }
 
 /* Employee icon and background */
 .icon-container {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
+    flex-direction: row; /* Display the icon and name in a column */
+    //align-items: center; /* Center align the items horizontally */
+    margin-bottom: 10px; /* Add spacing between the containers */
 
 }
+
 .icon-background {
-  //position: absolute;
-  width: 100px;
-  height: 100px;
-  background-color: rgba(128, 128, 128, 0.7); /* RGB values and opacity */
-  border-radius: 5%; /* Change roundness of edges */
-  display: flex;
-  align-items: center;
-  justify-content: center;
+//position: absolute; width: 100px; height: 100px; margin-right: 10px;
+    background-color: rgba(128, 128, 128, 0.7); /* RGB values and opacity */
+    border-radius: 5%; /* Change roundness of edges */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+
 .user-size {
-  font-size: 70px;
-  color: white;
+    font-size: 70px;
+    color: white;
 }
+
 /* User name and background */
 .user-name-container {
-  //position: relative;
-  //top: 130px;
-  //left: 30px;
+//position: relative; //top: 130px; //left: 30px;
 }
+
 .user-name-background {
-  background-color: rgba(45, 108, 193, 0.9);
-  border-radius: 5%;
-  display: inline-block;
-  align-items: center;
-  justify-content: center;
-  padding: 0 10px;
+    background-color: rgba(45, 108, 193, 0.9);
+    border-radius: 5%;
+    display: inline-block;
+    align-items: center;
+    justify-content: center;
+    padding: 0 10px;
 }
+
 .user-name {
-  font-size: 13px;
-  color: white;
-  //position: absolute;
-    text-align: center;
+    font-size: 13px;
+    color: white;
+//position: absolute; text-align: center;
 }
 
 /* Statistics */
 .statistics-container {
-  position: relative;
-  bottom: -10px;
-  left: 150px;
-  display: flex;
-  align-items: flex-end; /* Allign items to the bottom */
+    //position:;
+    //bottom: -10px;
+    //left: 150px;
+    display: flex;
+    align-items: flex-end; /* Allign items to the bottom */
 }
 
 .open {
-  width: 20px;
-  height: 80px;
-  background-color: grey;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 10px;
+    width: 20px;
+    height: 80px;
+    background-color: grey;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
 }
 
 .in-progress {
-  width: 20px;
-  height: 80px;
-  background-color: grey;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 10px;
+    width: 20px;
+    height: 80px;
+    background-color: grey;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
 }
 
 .closed {
-  width: 20px;
-  height: 80px;
-  background-color: grey;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 10px;
+    width: 20px;
+    height: 80px;
+    background-color: grey;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
 }
 </style>
