@@ -43,3 +43,10 @@ npm run test:unit
 ----
 npm run lint
 ----
+
+==== Generate Coverage Report with https://vitest.dev/[Vitest]
+
+[source,sh]
+----
+npm run coverage-report
+----
