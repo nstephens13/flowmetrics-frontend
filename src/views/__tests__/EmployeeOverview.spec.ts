@@ -1,6 +1,4 @@
-import {
-  describe, expect, test,
-} from 'vitest';
+import { describe, expect, test } from 'vitest';
 import { mount, VueWrapper } from '@vue/test-utils';
 import PrimeVue from 'primevue/config';
 import Card from 'primevue/card';
@@ -8,13 +6,7 @@ import EmployeeOverview from '../EmployeeOverview.vue';
 import type { EmployeeIF } from '../../model/EmployeeIF';
 import calculateWorkload from '../../services/workloadCalculator';
 import { getMockData } from '../../assets/__mockdata__/mockDataComposer';
-
-function getBoxHeightStyle(count: number) {
-  const minHeight = 20; // Minimum height for the box
-  const maxHeight = 180; // Maximum height for the box
-  const height = Math.min(minHeight + count * 20, maxHeight);
-  return height;
-}
+import { getHeightForStatisticBoxes } from '../EmployeeOverviewHelper';
 
 describe('EmployeeOverview with a simple manual constructed map should render correctly', () => {
   // given
@@ -85,8 +77,7 @@ describe('EmployeeOverview with mockDataSet 55 should render correctly', () => {
     props: {},
     computed: {
       employeeMap(): Map<EmployeeIF, { openIssues: number; inProgressIssues: number; closedIssues: number }> {
-        const employeeMap = calculateWorkload(project);
-        return employeeMap;
+        return calculateWorkload(project);
       },
       getUserNameBackgroundStyle: EmployeeOverview.computed?.getUserNameBackgroundStyle,
       getBoxHeightStyle: EmployeeOverview.computed?.getBoxHeightStyle,
@@ -115,13 +106,13 @@ describe('EmployeeOverview with mockDataSet 55 should render correctly', () => {
 
   test('all Boxes have a correctly calculated height', () => {
     openBoxes.forEach((box, index) => {
-      expect(box.attributes('style')).toContain(`height: ${getBoxHeightStyle(openIssuesList[index])}px`);
+      expect(box.attributes('style')).toContain(`height: ${getHeightForStatisticBoxes(openIssuesList[index])}px`);
     });
     inProgressBoxes.forEach((box, index) => {
-      expect(box.attributes('style')).toContain(`height: ${getBoxHeightStyle(inProgressIssuesList[index])}px`);
+      expect(box.attributes('style')).toContain(`height: ${getHeightForStatisticBoxes(inProgressIssuesList[index])}px`);
     });
     closedBoxes.forEach((box, index) => {
-      expect(box.attributes('style')).toContain(`height: ${getBoxHeightStyle(closedIssuesList[index])}px`);
+      expect(box.attributes('style')).toContain(`height: ${getHeightForStatisticBoxes(closedIssuesList[index])}px`);
     });
   });
 });

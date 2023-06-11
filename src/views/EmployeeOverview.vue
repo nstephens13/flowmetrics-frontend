@@ -20,11 +20,11 @@
                     </div>
                 </div>
 
-                    <div class="statistics-container">
-                        <div class="open" :style="getBoxHeightStyle(employeeData.openIssues)"></div>
-                        <div class="in-progress" :style="getBoxHeightStyle(employeeData.inProgressIssues)"></div>
-                        <div class="closed" :style="getBoxHeightStyle(employeeData.closedIssues)"></div>
-                    </div>
+                <div class="statistics-container">
+                    <div class="open" :style="getBoxHeightStyle(employeeData.openIssues)"></div>
+                    <div class="in-progress" :style="getBoxHeightStyle(employeeData.inProgressIssues)"></div>
+                    <div class="closed" :style="getBoxHeightStyle(employeeData.closedIssues)"></div>
+                </div>
             </div>
         </template>
     </Card>
@@ -35,6 +35,7 @@ import { defineComponent } from 'vue';
 import Card from 'primevue/card';
 import type { EmployeeIF } from '@/model/EmployeeIF';
 import calculateWorkload from '../services/workloadCalculator';
+import { calculateUserBackgroundStyle, getHeightForStatisticBoxes } from './EmployeeOverviewHelper';
 
 export default defineComponent({
   name: 'EmployeeOverview',
@@ -42,31 +43,21 @@ export default defineComponent({
   components: {
     Card,
   },
-  // Other component and logic
 
   // Component properties
   props: {},
 
   // Computed property for dynamic styling
   computed: {
-    employeeMap(): Map<EmployeeIF, { openIssues: number; inProgressIssues: number; closedIssues: number }> {
-      const map = calculateWorkload(null);
-      return map;
-    },
-    getUserNameBackgroundStyle: (): ((employee: EmployeeIF) => string) => (employee: EmployeeIF) => {
-      const firstNameLength = employee.firstName.trim().length;
-      const lastNameLength = employee.lastName.trim().length;
-      const nameLength = (firstNameLength + lastNameLength) * 8;
-      const width = nameLength + 20; // Add 20 pixels for padding
-      const height = 20 + (nameLength > 0 ? 10 : 0); // Adjust the height based on name length
+    employeeMap: (): Map<EmployeeIF,
+    { openIssues: number; inProgressIssues: number; closedIssues: number }> => calculateWorkload(null),
+
+    getUserNameBackgroundStyle: (): ((employee: EmployeeIF) => string) => (employee) => {
+      const { width, height } = calculateUserBackgroundStyle(employee);
       return `width: ${width}px; height: ${height}px`;
     },
-    getBoxHeightStyle: () => (count: number) => {
-      const minHeight = 20; // Minimum height for the box
-      const maxHeight = 180; // Maximum height for the box
-      const height = Math.min(minHeight + count * 20, maxHeight); // Calculate the height based on the count
-      return `height: ${height}px`;
-    },
+
+    getBoxHeightStyle: ():((count: number) => string) => (count: number) => `height: ${getHeightForStatisticBoxes(count)}px`,
   },
 });
 </script>
@@ -96,9 +87,7 @@ export default defineComponent({
 }
 
 /* Employee icon and background */
-
 .icon-background {
-//position: absolute; width: 100px; height: 100px; margin-right: 10px;
     background-color: rgba(128, 128, 128, 0.7); /* RGB values and opacity */
     border-radius: 5%; /* Change roundness of edges */
     display: flex;
@@ -112,7 +101,6 @@ export default defineComponent({
 }
 
 /* User name and background */
-
 .user-name-background {
     background-color: rgba(45, 108, 193, 0.9);
     border-radius: 5%;
