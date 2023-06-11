@@ -20,13 +20,11 @@
                     </div>
                 </div>
 
-                <div class="statistics-container">
                     <div class="statistics-container">
                         <div class="open" :style="getBoxHeightStyle(employeeData.openIssues)"></div>
                         <div class="in-progress" :style="getBoxHeightStyle(employeeData.inProgressIssues)"></div>
                         <div class="closed" :style="getBoxHeightStyle(employeeData.closedIssues)"></div>
                     </div>
-                </div>
             </div>
         </template>
     </Card>
