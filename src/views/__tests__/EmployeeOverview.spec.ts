@@ -53,9 +53,9 @@ describe('EmployeeOverview with a simple manual constructed map should render co
   });
 
   test('all Boxes have a correctly calculated height', () => {
-    expect(openBoxes[0].attributes('style')).toContain('height: 60px'); // Adjust this value based on your computed style logic
-    expect(inProgressBoxes[0].attributes('style')).toContain('height: 80px'); // Adjust this value based on your computed style logic
-    expect(closedBoxes[0].attributes('style')).toContain('height: 120px'); // Adjust this value based on your computed style logic
+    expect(openBoxes[0].attributes('style')).toContain(`height: ${getHeightForStatisticBoxes(2)}px`); // Adjust this value based on your computed style logic
+    expect(inProgressBoxes[0].attributes('style')).toContain(`height: ${getHeightForStatisticBoxes(3)}px`); // Adjust this value based on your computed style logic
+    expect(closedBoxes[0].attributes('style')).toContain(`height: ${getHeightForStatisticBoxes(5)}px`); // Adjust this value based on your computed style logic
   });
 });
 
