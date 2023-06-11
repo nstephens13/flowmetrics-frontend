@@ -1,3 +1,21 @@
+<template>
+    <Menubar>
+        <template #start >
+            <div class="container">
+                <div>
+                    <Button text icon="pi pi-bars" style="color: var(--primary-color-text)" aria-label="Submit" @click="visible = true"></Button>
+                </div>
+                <div>
+                    <h2 id="productName">FlowMetrics</h2>
+                </div>
+            </div>
+                <Sidebar v-model:visible="visible"> 
+                    <Menu :model="items" id="sidebarMenu"></Menu>
+                </Sidebar>
+        </template>
+    </Menubar>
+</template>
+
 <script setup lang="ts">
 
 import { ref } from 'vue';
@@ -21,30 +39,6 @@ const items = ref([
 
 </script>
 
-<template>
-        <Menubar>
-            <template #start >
-                <div class="container">
-                    <div>
-                        <Button text icon="pi pi-bars" style="color: var(--primary-color-text)" aria-label="Submit" @click="visible = true"></Button>
-                    </div>
-                    <div>
-                        <h2 id="productName">FlowMetrics</h2>
-                    </div>
-                </div>
-                    <Sidebar v-model:visible="visible"> 
-                            <Menu :model="items"></Menu>  
-                    </Sidebar>
-            </template>
-            <!--
-                Options Button
-            <template #end>
-                <Button rounded text icon="pi pi-ellipsis-v" style="color: var(--primary-color-text)" aria-label="Submit"></Button>
-            </template>
-            -->
-        </Menubar>
-</template>
-
 <style scoped>
 .p-menubar{
      background-color:#2196f3;
@@ -52,10 +46,7 @@ const items = ref([
      border: 0;
      border-radius: 0%;
 }
-.p-menu{
-    border: 0;
-    border-radius: 0%;
-}
+
 #productName{
     margin: 0.3rem 0.5rem 0rem;
 }
@@ -63,4 +54,12 @@ const items = ref([
     display: flex;
 }
 
+</style>
+
+<style>
+#sidebarMenu{
+    border: 0px;
+    border-radius: 0px;
+    width: 100%;
+}
 </style>
