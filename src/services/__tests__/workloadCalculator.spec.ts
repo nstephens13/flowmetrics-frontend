@@ -11,7 +11,7 @@ import type { IssueIF } from '../../model/IssueIF';
 import employeeJson from '../../assets/__mockdata__/Employees.json';
 
 // Just a Helper Function to create my expected Values to compare with real values
-function assignIssue(
+export function assignIssue(
   project: ProjectIF,
   employees: EmployeeIF[],
   issueNumber: number,
