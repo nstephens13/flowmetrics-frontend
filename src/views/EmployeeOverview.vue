@@ -21,9 +21,11 @@
                 </div>
 
                 <div class="statistics-container">
-                    <div class="open"></div>
-                    <div class="in-progress"></div>
-                    <div class="closed"></div>
+                    <div class="statistics-container">
+                        <div class="open" :style="getBoxHeightStyle(employeeData.openIssues)"></div>
+                        <div class="in-progress" :style="getBoxHeightStyle(employeeData.inProgressIssues)"></div>
+                        <div class="closed" :style="getBoxHeightStyle(employeeData.closedIssues)"></div>
+                    </div>
                 </div>
             </div>
         </template>
@@ -60,6 +62,12 @@ export default defineComponent({
       const width = nameLength + 20; // Add 20 pixels for padding
       const height = 20 + (nameLength > 0 ? 10 : 0); // Adjust the height based on name length
       return `width: ${width}px; height: ${height}px`;
+    },
+    getBoxHeightStyle: () => (count: number) => {
+      const minHeight = 20; // Minimum height for the box
+      const maxHeight = 180; // Maximum height for the box
+      const height = Math.min(minHeight + count * 20, maxHeight); // Calculate the height based on the count
+      return `height: ${height}px`;
     },
   },
 });
@@ -131,7 +139,7 @@ export default defineComponent({
 .open {
     width: 20px;
     height: 80px;
-    background-color: grey;
+    background-color: #CCCCCC;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -141,7 +149,7 @@ export default defineComponent({
 .in-progress {
     width: 20px;
     height: 80px;
-    background-color: grey;
+    background-color: #808080;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -151,7 +159,7 @@ export default defineComponent({
 .closed {
     width: 20px;
     height: 80px;
-    background-color: grey;
+    background-color: #404040;
     display: flex;
     align-items: center;
     justify-content: center;
