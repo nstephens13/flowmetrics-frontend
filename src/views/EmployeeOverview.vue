@@ -3,24 +3,29 @@
         <template #title>Employee Overview</template>
 
         <template #content>
-            <div>
-                <div v-for="([employee, employeeData]) in employeeMap" :key="employee.id" class="icon-container">
-                    <div class="icon-user-container">
-                        <div class="icon-background">
-                            <span class="pi pi-user user-size"></span>
-                        </div>
-                        <div :style="getUserNameBackgroundStyle(employee)" class="user-name-background">
-                            <div class="user-name">{{ employee.firstName }} {{ employee.lastName }}</div>
-                        </div>
+
+            <div v-for="([employee, employeeData]) in employeeMap"
+                 :key="employee.id"
+                 class="icon-container">
+
+                <div class="user-details">
+                    <div class="icon-background">
+                        <span class="pi pi-user user-size"></span>
                     </div>
-                        <div class="statistics-container">
-                            <div class="open"></div>
-                            <div class="in-progress"></div>
-                            <div class="closed"></div>
+
+                    <div :style="getUserNameBackgroundStyle(employee)" class="user-name-background">
+                        <div class="user-name">
+                            {{ employee.firstName }} {{ employee.lastName }}
                         </div>
                     </div>
                 </div>
 
+                <div class="statistics-container">
+                    <div class="open"></div>
+                    <div class="in-progress"></div>
+                    <div class="closed"></div>
+                </div>
+            </div>
         </template>
     </Card>
 </template>
@@ -71,20 +76,20 @@ export default defineComponent({
     font-size: 20px;
 }
 
-.icon-user-container {
-    display: flex;
-    flex-direction: column; /* Stack icon and user name vertically */
-    //align-items: center; /* Horizontally center align icon and user name */
+.icon-container {
+    display: inline-flex;
+    align-items: center;
     margin-bottom: 10px;
+    margin-right: 10px;
+}
+
+.user-details {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
 }
 
 /* Employee icon and background */
-.icon-container {
-    flex-direction: row; /* Display the icon and name in a column */
-    //align-items: center; /* Center align the items horizontally */
-    margin-bottom: 10px; /* Add spacing between the containers */
-
-}
 
 .icon-background {
 //position: absolute; width: 100px; height: 100px; margin-right: 10px;
@@ -101,9 +106,6 @@ export default defineComponent({
 }
 
 /* User name and background */
-.user-name-container {
-//position: relative; //top: 130px; //left: 30px;
-}
 
 .user-name-background {
     background-color: rgba(45, 108, 193, 0.9);
@@ -122,9 +124,6 @@ export default defineComponent({
 
 /* Statistics */
 .statistics-container {
-    //position:;
-    //bottom: -10px;
-    //left: 150px;
     display: flex;
     align-items: flex-end; /* Allign items to the bottom */
 }
