@@ -12,10 +12,15 @@ import milestoneJson from './Milestones.json';
 function getRandomInt(max: number) {
   return Math.floor(Math.random() * max);
 }
-function assignIssueToEmployee(issueNumber: number, employeeNumber: number, issues: IssueIF[], employees: EmployeeIF[]): {
-  issuesToReturn: IssueIF[];
-  employeesToReturn: EmployeeIF[]
-} {
+function assignIssueToEmployee(
+  issueNumber: number,
+  employeeNumber: number,
+  issues: IssueIF[],
+  employees: EmployeeIF[],
+): {
+    issuesToReturn: IssueIF[];
+    employeesToReturn: EmployeeIF[]
+  } {
   const issuesToReturn = issues;
   const employeesToReturn = employees;
   issuesToReturn[issueNumber].assignedTo = employees[employeeNumber];
@@ -23,7 +28,12 @@ function assignIssueToEmployee(issueNumber: number, employeeNumber: number, issu
 
   return { issuesToReturn, employeesToReturn };
 }
-function assignIssueToMilestone(issueNumber: number, milestoneNumber: number, milestones:MilestoneIF[], issues:IssueIF[]) {
+function assignIssueToMilestone(
+  issueNumber: number,
+  milestoneNumber: number,
+  milestones:MilestoneIF[],
+  issues:IssueIF[],
+) {
   const mileStonesToReturn = milestones;
   mileStonesToReturn[milestoneNumber].issues.push(issues[issueNumber]);
 
@@ -84,9 +94,16 @@ export function getMockData(dataset = 3): ProjectIF {
     }
 
     case 3: {
-      const { employeesArray, issuesArray, milestones } = loadArraysFromFile();
-      let issues = issuesArray;
-      const numberOfIssues = issuesArray.length;
+      const { employeesArray, milestones } = loadArraysFromFile();
+      let issues: IssueIF[] = [];
+      for (let i = 0; i < 280; i++) {
+        issues.push({
+          id: i, name: `Issue Name ${i}`, description: `Description of Issue ${i}`, closedAt: null, status: null, assignedTo: null, createdAt: null, createdBy: null, dueTo: null,
+        });
+      }
+
+      // issues = issuesArray;
+      const numberOfIssues = issues.length;
       const numberOfEmployees = employeesArray.length;
 
       for (let i = 0; i < numberOfIssues; i++) {

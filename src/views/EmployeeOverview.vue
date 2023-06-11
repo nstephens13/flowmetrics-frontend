@@ -22,7 +22,9 @@
 
                 <div class="statistics-container">
                     <div class="open" :style="getBoxHeightStyle(employeeData.openIssues)"></div>
-                    <div class="in-progress" :style="getBoxHeightStyle(employeeData.inProgressIssues)"></div>
+                    <div class="in-progress"
+                         :style="getBoxHeightStyle(employeeData.inProgressIssues)">
+                    </div>
                     <div class="closed" :style="getBoxHeightStyle(employeeData.closedIssues)"></div>
                 </div>
             </div>
@@ -50,7 +52,9 @@ export default defineComponent({
   // Computed property for dynamic styling
   computed: {
     employeeMap: (): Map<EmployeeIF,
-    { openIssues: number; inProgressIssues: number; closedIssues: number }> => calculateWorkload(null),
+    { openIssues: number;
+      inProgressIssues: number;
+      closedIssues: number }> => calculateWorkload(null),
 
     getUserNameBackgroundStyle: (): ((employee: EmployeeIF) => string) => (employee) => {
       const { width, height } = calculateUserBackgroundStyle(employee);
@@ -76,8 +80,8 @@ export default defineComponent({
 .icon-container {
     display: inline-flex;
     align-items: center;
-    margin-bottom: 10px;
-    margin-right: 10px;
+    margin-bottom: 40px;
+    margin-right: 40px;
 }
 
 .user-details {

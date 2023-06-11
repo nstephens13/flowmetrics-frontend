@@ -1,9 +1,9 @@
 import type { EmployeeIF } from '../model/EmployeeIF';
 
 export function getHeightForStatisticBoxes(count: number) {
-  const minHeight = 20; // Minimum height for the box
-  const maxHeight = 180; // Maximum height for the box
-  const height = Math.min(minHeight + count * 20, maxHeight); // Calculate the height based on the count
+  const minHeight = 5; // Minimum height for the box
+  const maxHeight = 80; // Maximum height for the box
+  const height = Math.min(minHeight + count * 5, maxHeight); // Calculate the height based on the count
   return height;
 }
 
