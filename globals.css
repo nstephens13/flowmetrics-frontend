@@ -1,0 +1,30 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,700|Material+Icons:400");
+
+.screen a {
+    display: contents;
+    text-decoration: none;
+}
+
+.container-center-horitzontal {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    pointer-events: none;
+    width: 100%;
+}
+
+.container-center-horizontal > * {
+    flex-shrink: 0;
+    pointer-events: auto;
+}
+
+.valign-text-middle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Modify the font-family property to change the font to Roboto */
+body {
+    font-family: 'Roboto', sans-serif;
+}

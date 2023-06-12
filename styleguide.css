@@ -1,0 +1,63 @@
+:root {
+    --black-2: rgba(0, 0, 0, 0.871);
+    --black: rgba(0, 0, 0, 1);
+    --navy-blue: rgba(25, 118, 210, 1);
+    --sonic-silver: rgba(117, 117, 117, 1);
+    --rose: rgba(225, 82, 82, 1);
+    --white: rgba(225, 225, 225, 1);
+
+    --font-size-xs: 12px;
+    --font-size-s: 13px;
+    --font-size-m: 14px;
+    --font-size-l: 22px;
+    --font-size-xl: 24px;
+    --font-size-xxl: 35px;
+    --font-size-xxxl: 36px;
+
+    --font-family-material_icons: "Material Icons";
+    --font-family-roboto: "Roboto";
+}
+
+.roboto-normal-black-14px {
+    color: var(--black-2);
+    font-family: var(--font-family-roboto);
+    font-size: var(--font-size-m);
+    font-weight: 400;
+    font-style: normal;
+}
+
+.materialicons-normal-white-24px {
+    color: var(--white);
+    font-family: var(--font-family-material_icons);
+    font-size: var(--font-size-xl);
+    font-weight: 400;
+    font-style: normal;
+}
+
+.roboto-normal-rose-14px {
+    color: var(--rose);
+    font-family: var(--font-family-roboto);
+    font-size: var(--font-size-m);
+    font-weight: 400;
+    font-style: normal;
+}
+
+.roboto-bold-sonic-silver-12px {
+    color: var(--sonic-silver);
+    font-family: var(--font-family-roboto);
+    font-size: var(--font-size-xs);
+    font-weight: 700;
+    font-style: normal;
+}
+
+.roboto-normal-navy-blue-36px {
+    color: var(--navy-blue);
+    font-family: var(--font-family-roboto);
+    font-size: var(--font-size-xxxl);
+    font-weight: 400;
+    font-style: normal;
+}
+
+
+
+
