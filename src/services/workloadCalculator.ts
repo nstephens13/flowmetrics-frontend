@@ -4,7 +4,7 @@ import type { IssueIF } from '@/model/IssueIF';
 import { Status } from '../model/IssueIF';
 
 // just temporary import
-import { getMockData } from '../assets/__mockdata__/mockDataComposer';
+import getMockData from '../assets/__mockdata__/mockDataComposer';
 
 /**
  * This function calculate the workload from a project team, and give the
@@ -14,12 +14,14 @@ import { getMockData } from '../assets/__mockdata__/mockDataComposer';
  *
  * @param project Project Object that should be calculated, if null a project
  * with random mock data will be used
- * @returns {Map} key:Employee, value:{ openIssues: number; inProgressIssues: number; closedIssues: number }
+ * @returns {Map} key:Employee,
+ * value:{ openIssues: number; inProgressIssues: number; closedIssues: number }
  */
 function calculateWorkload(
   project: ProjectIF | null,
 ): Map<EmployeeIF, { openIssues: number; inProgressIssues: number; closedIssues: number }> {
-  const mapToReturn:Map<EmployeeIF, { openIssues: number; inProgressIssues: number; closedIssues: number }> = new Map([]);
+  const mapToReturn: Map<EmployeeIF,
+  { openIssues: number; inProgressIssues: number; closedIssues: number }> = new Map([]);
   const issueSet: Set<IssueIF> = new Set<IssueIF>();
   let projectToCalculate: ProjectIF;
 
@@ -40,9 +42,9 @@ function calculateWorkload(
       let numberClosedTickets: number;
 
       // checking if the employee is already with values in the map
-      const tuple: { openIssues: number; inProgressIssues: number; closedIssues: number } | undefined = mapToReturn.get(
-        issue.assignedTo,
-      );
+      const tuple:
+      { openIssues: number; inProgressIssues: number; closedIssues: number }
+      | undefined = mapToReturn.get(issue.assignedTo);
 
       // setting the values to zero if the employee isn't in the map already
       if (tuple !== undefined) {
