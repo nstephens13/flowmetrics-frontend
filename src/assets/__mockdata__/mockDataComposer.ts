@@ -1,4 +1,3 @@
-import cloneDeep from 'lodash/cloneDeep';
 import type { ProjectIF } from '@/model/ProjectIF';
 import type { EmployeeIF } from '@/model/EmployeeIF';
 import type { IssueIF } from '@/model/IssueIF';
@@ -41,14 +40,14 @@ function assignIssueToMilestone(
 }
 
 function loadArraysFromFile() {
-  const employeesArray: EmployeeIF[] = cloneDeep(employeeJson) as EmployeeIF[];
-  const issuesArray: IssueIF[] = cloneDeep(issueJson) as IssueIF[];
-  const milestones: MilestoneIF[] = cloneDeep(milestoneJson) as MilestoneIF[];
+  const employeesArray: EmployeeIF[] = structuredClone(employeeJson) as EmployeeIF[];
+  const issuesArray: IssueIF[] = structuredClone(issueJson) as IssueIF[];
+  const milestones: MilestoneIF[] = structuredClone(milestoneJson) as MilestoneIF[];
   return { employeesArray, issuesArray, milestones };
 }
 
 // give out a fake project
-export function getMockData(dataset = 3): ProjectIF {
+function getMockData(dataset = 3): ProjectIF {
   switch (dataset) {
     case 1: {
       const { employeesArray, issuesArray, milestones } = loadArraysFromFile();
@@ -113,7 +112,8 @@ export function getMockData(dataset = 3): ProjectIF {
           issues[i].status = Status.InProgress;
         } else if (randomStatus === 1) {
           const randomDate = new Date();
-          randomDate.setDate(randomDate.getDate() - getRandomInt(30)); // Assigning a random closedAt date within the last 30 days
+          // Assigning a random closedAt date within the last 30 days
+          randomDate.setDate(randomDate.getDate() - getRandomInt(30));
           issues[i].closedAt = randomDate;
         }
 
@@ -142,7 +142,7 @@ export function getMockData(dataset = 3): ProjectIF {
       };
     }
     case 54: {
-      const milestones: MilestoneIF[] = cloneDeep(milestoneJson) as MilestoneIF[];
+      const milestones: MilestoneIF[] = structuredClone(milestoneJson) as MilestoneIF[];
       return {
         id: 54,
         name: 'Mocking Bird',
@@ -192,3 +192,4 @@ export function getMockData(dataset = 3): ProjectIF {
     }
   }
 }
+export default getMockData;

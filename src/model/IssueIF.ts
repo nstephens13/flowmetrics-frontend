@@ -4,8 +4,6 @@ export enum Status{
   Open,
   Closed,
   InProgress,
-  // Resolved,
-  // Zombie
 }
 
 /**
@@ -31,5 +29,4 @@ export interface IssueIF {
   closedAt: Date| null;
   dueTo: Date| null;
   status: Status | null;
-  // remainTime(): number| null;
 }
