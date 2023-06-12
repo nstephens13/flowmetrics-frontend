@@ -1,8 +1,7 @@
 import {
   assert, expect, test, describe,
 } from 'vitest';
-import cloneDeep from 'lodash/cloneDeep';
-import { getMockData } from '../../assets/__mockdata__/mockDataComposer';
+import getMockData from '../../assets/__mockdata__/mockDataComposer';
 import calculateWorkload from '../workloadCalculator';
 import type { EmployeeIF } from '../../model/EmployeeIF';
 import type { ProjectIF } from '../../model/ProjectIF';
@@ -61,7 +60,7 @@ describe('Workload Calculator should calculate Workload correctly for Mock Data 
 
   // given
   const project = getMockData(2);
-  const employees: EmployeeIF[] = cloneDeep(employeeJson) as EmployeeIF[];
+  const employees: EmployeeIF[] = structuredClone(employeeJson) as EmployeeIF[];
 
   // assigning the issues to my own employee array as in dataset 2 just for deep equal comparison
   assignIssue(project, employees, 0, 0);
@@ -92,15 +91,17 @@ describe('Workload Calculator should calculate Workload correctly for Mock Data 
   // checking the calculations, the expected value come from the prepared employees array,
   // the actual value is from the result
   test('workload should contain correct key value pairs', () => {
-    workload.forEach((tuple: { openIssues: number; closedIssues: number }, employee: EmployeeIF) => {
-      const openIssuesList = [1, 2, 3, 1]; // expected values for open issues from json file
-      employees.forEach((emp) => {
-        if (employee.id === emp.id) {
-          assert.deepEqual<EmployeeIF>(employee, emp);
-          expect(tuple.openIssues).eq(openIssuesList[employee.id - 1]);
-        }
-      });
-    });
+    workload.forEach(
+      (tuple: { openIssues: number; closedIssues: number }, employee: EmployeeIF) => {
+        const openIssuesList = [1, 2, 3, 1]; // expected values for open issues from json file
+        employees.forEach((emp) => {
+          if (employee.id === emp.id) {
+            assert.deepEqual<EmployeeIF>(employee, emp);
+            expect(tuple.openIssues).eq(openIssuesList[employee.id - 1]);
+          }
+        });
+      },
+    );
   });
 });
 
@@ -109,7 +110,7 @@ describe('Workload Calculator should calculate Workload correctly for Mock Data 
 
   // given
   const project = getMockData(55);
-  const employees: EmployeeIF[] = cloneDeep(employeeJson) as EmployeeIF[];
+  const employees: EmployeeIF[] = structuredClone(employeeJson) as EmployeeIF[];
 
   // assigning the issues to my own employee array as in dataset 2 just for deep equal comparison
   assignIssue(project, employees, 0, 0);
@@ -141,10 +142,13 @@ describe('Workload Calculator should calculate Workload correctly for Mock Data 
   // the actual value is from the result
   test('workload should contain correct key-value pairs', () => {
     workload.forEach(
-      (tuple: { openIssues: number; inProgressIssues: number; closedIssues: number }, employee: EmployeeIF) => {
-        const openIssuesList = [0, 1, 0, 0]; // expected values for open issues from json file
-        const inProgressIssuesList = [1, 0, 1, 0]; // expected values for in-progress issues from json file
-        const closedIssuesList = [0, 1, 2, 1]; // expected values for closed issues from json file
+      (
+        tuple: { openIssues: number; inProgressIssues: number; closedIssues: number },
+        employee: EmployeeIF,
+      ) => {
+        const openIssuesList = [0, 1, 0, 0]; // expected values for open issues
+        const inProgressIssuesList = [1, 0, 1, 0]; // expected values for in-progress issues
+        const closedIssuesList = [0, 1, 2, 1]; // expected values for closed issues
 
         employees.forEach((emp) => {
           if (employee.id === emp.id) {
