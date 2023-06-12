@@ -1,57 +1,45 @@
-import fs from 'fs';
 import { defineStore } from 'pinia';
 import type { SLACategory } from '@/model/SLACategory';
 import type { SLADeadline } from '@/model/SLADeadline';
-
-const categoriesFilePath = './SLACategories.json';
-const deadlinesFilePath = './SLADeadlines.json';
+import type { SLARule } from '@/model/SLARule';
 
 const useSLAStore = defineStore('sla', {
   state: () => ({
-    categories: [] as SLACategory[],
-    deadlines: [] as SLADeadline[],
+    categories: [
+      { id: 1, name: 'Category 1', description: 'Description 1' },
+      { id: 2, name: 'Category 2', description: 'Description 2' },
+      { id: 3, name: 'Category 3', description: 'Description 3' },
+    ] as SLACategory[],
+    deadlines: [
+      { categoryId: 1, durationInDays: 3, expirationDate: new Date('2023-07-15') },
+      { categoryId: 2, durationInDays: 5, expirationDate: new Date('2023-07-17') },
+      { categoryId: 3, durationInDays: 7, expirationDate: new Date('2023-07-19') },
+    ] as SLADeadline[],
+    slaRules: [] as SLARule[],
+
   }),
+
   actions: {
-    setCategories(categories: SLACategory[]) {
-      this.categories = categories;
-      this.saveCategories();
+    addCategory(category: SLACategory) {
+      this.categories.push(category);
     },
-    setDeadlines(deadlines: SLADeadline[]) {
-      this.deadlines = deadlines;
-      this.saveDeadlines();
+    addDeadline(deadline: SLADeadline) {
+      this.deadlines.push(deadline);
     },
-    async fetchCategories() {
-      try {
-        const categoriesData = fs.readFileSync(categoriesFilePath, 'utf8');
-        const categories = JSON.parse(categoriesData);
-        this.setCategories(categories);
-      } catch (error) {
-        // Handle error
-      }
+    addSLARule(rule: SLARule) {
+      this.slaRules.push(rule);
     },
-    async fetchDeadlines() {
-      try {
-        const deadlinesData = fs.readFileSync(deadlinesFilePath, 'utf8');
-        const deadlines = JSON.parse(deadlinesData);
-        this.setDeadlines(deadlines);
-      } catch (error) {
-        // Handle error
-      }
-    },
-    async saveCategories() {
-      try {
-        const categoriesData = JSON.stringify(this.categories);
-        fs.writeFileSync(categoriesFilePath, categoriesData, 'utf8');
-      } catch (error) {
-        // Handle error
-      }
-    },
-    async saveDeadlines() {
-      try {
-        const deadlinesData = JSON.stringify(this.deadlines);
-        fs.writeFileSync(deadlinesFilePath, deadlinesData, 'utf8');
-      } catch (error) {
-        // Handle error
+    initializeRules() {
+      for (let i = 0; i < 5; i++) {
+        const categoryIndex = i % this.categories.length;
+        const deadlineIndex = i % this.deadlines.length;
+
+        const rule: SLARule = {
+          category: this.categories[categoryIndex],
+          deadline: this.deadlines[deadlineIndex],
+        };
+
+        this.addSLARule(rule);
       }
     },
   },

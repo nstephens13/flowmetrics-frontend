@@ -17,6 +17,11 @@ const router = createRouter({
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/AboutView.vue'),
     },
+    {
+      path: '/sla-management',
+      name: 'sla-management',
+      component: () => import('../views/SLAComponent.vue'),
+    },
   ],
 });
 

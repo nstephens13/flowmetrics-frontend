@@ -1,5 +1,5 @@
 export interface SLACategory {
-  id: number;
-  name: string;
-  description: string;
+  id: number | null;
+  name: string | null;
+  description: string | null;
 }

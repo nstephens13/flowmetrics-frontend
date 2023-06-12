@@ -1,5 +1,6 @@
 export interface SLADeadline {
-  categoryId: number;
-  durationInDays: number;
-  expirationDate: Date
+  id: number | null;
+  name: string | null;
+  durationInDays: number | null;
+  expirationDate: Date | null;
 }
