@@ -1,1 +1,8 @@
 node_modules
+.githooks
+.gitignore
+.git
+.vscode
+.eslintrc.cjs
+.eslintignore
+.prettierrc.json
