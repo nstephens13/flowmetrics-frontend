@@ -69,7 +69,7 @@ export default defineComponent({
 <style>
 /* Card Component */
 .background-card {
-    width: 1440px; /* Set the width to match the MacBook Air 13'' screen width */
+    width: 3072px; /* Set the width to match the MacBook Pro 16'' screen width */
     height: 700px;
 }
 
@@ -92,7 +92,9 @@ export default defineComponent({
 
 /* Employee icon and background */
 .icon-background {
-    background-color: rgba(128, 128, 128, 0.7); /* RGB values and opacity */
+    width: 60px;
+    height: 60px;
+    background-color: rgba(128, 128, 128, 0.4); /* RGB values and opacity */
     border-radius: 5%; /* Change roundness of edges */
     display: flex;
     align-items: center;
@@ -100,7 +102,7 @@ export default defineComponent({
 }
 
 .user-size {
-    font-size: 70px;
+    font-size: 40px;
     color: white;
 }
 
@@ -108,37 +110,38 @@ export default defineComponent({
 .user-name-background {
     background-color: rgba(45, 108, 193, 0.9);
     border-radius: 5%;
-    display: inline-block;
+    display: flex; /* Centers the name */
     align-items: center;
     justify-content: center;
     padding: 0 10px;
+    margin-top: 10px;
 }
 
 .user-name {
     font-size: 13px;
     color: white;
-    /* position: absolute; text-align: center; */
+    text-align: center;
 }
 
 /* Statistics */
 .statistics-container {
     display: flex;
-    align-items: flex-end; /* Allign items to the bottom */
+    align-items: flex-end; /* Align items to the bottom */
+    align-self: end;
 }
 
 .open {
     width: 20px;
-    height: 80px;
     background-color: #CCCCCC;
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-left: 10px;
     margin-right: 10px;
 }
 
 .in-progress {
     width: 20px;
-    height: 80px;
     background-color: #808080;
     display: flex;
     align-items: center;
@@ -148,7 +151,6 @@ export default defineComponent({
 
 .closed {
     width: 20px;
-    height: 80px;
     background-color: #404040;
     display: flex;
     align-items: center;

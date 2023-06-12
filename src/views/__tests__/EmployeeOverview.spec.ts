@@ -5,7 +5,7 @@ import Card from 'primevue/card';
 import EmployeeOverview from '../EmployeeOverview.vue';
 import type { EmployeeIF } from '../../model/EmployeeIF';
 import calculateWorkload from '../../services/workloadCalculator';
-import { getMockData } from '../../assets/__mockdata__/mockDataComposer';
+import getMockData from '../../assets/__mockdata__/mockDataComposer';
 import { getHeightForStatisticBoxes } from '../EmployeeOverviewHelper';
 
 describe('EmployeeOverview with a simple manual constructed map should render correctly', () => {
@@ -26,7 +26,8 @@ describe('EmployeeOverview with a simple manual constructed map should render co
     },
     props: {},
     computed: {
-      employeeMap(): Map<EmployeeIF, { openIssues: number; inProgressIssues: number; closedIssues: number }> {
+      employeeMap(): Map<EmployeeIF, { openIssues: number; inProgressIssues: number;
+        closedIssues: number }> {
         return employeeMap;
       },
       getUserNameBackgroundStyle: EmployeeOverview.computed?.getUserNameBackgroundStyle,
@@ -63,7 +64,7 @@ describe('EmployeeOverview with mockDataSet 55 should render correctly', () => {
   // given
   const project = getMockData(55);
   const openIssuesList = [0, 1, 0, 0]; // expected values for open issues from json file
-  const inProgressIssuesList = [1, 0, 1, 0]; // expected values for in-progress issues from json file
+  const inProgressIssuesList = [1, 0, 1, 0]; // exp. values for in-progress issues from json file
   const closedIssuesList = [0, 1, 2, 1]; // expected values for closed issues from json file
 
   // when
@@ -76,7 +77,8 @@ describe('EmployeeOverview with mockDataSet 55 should render correctly', () => {
     },
     props: {},
     computed: {
-      employeeMap(): Map<EmployeeIF, { openIssues: number; inProgressIssues: number; closedIssues: number }> {
+      employeeMap(): Map<EmployeeIF, { openIssues: number; inProgressIssues: number;
+        closedIssues: number }> {
         return calculateWorkload(project);
       },
       getUserNameBackgroundStyle: EmployeeOverview.computed?.getUserNameBackgroundStyle,
