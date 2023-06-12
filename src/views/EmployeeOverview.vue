@@ -30,10 +30,12 @@ import Card from 'primevue/card';
 import type { EmployeeIF } from '@/model/EmployeeIF';
 
 const employee:EmployeeIF = {
-    id: 1, firstName: 'John', lastName: 'Doe', assignedIssues: [],
-  };
-  const employeeMap: Map<EmployeeIF, { openIssues: number; inProgressIssues: number; closedIssues: number }> = new Map<EmployeeIF, {openIssues: number; inProgressIssues: number; closedIssues: number}>();
-  employeeMap.set(employee, { openIssues: 2, inProgressIssues: 1, closedIssues: 4 });
+  id: 1, firstName: 'Marie', lastName: 'Müller', assignedIssues: [],
+};
+const employeeMap: Map<EmployeeIF, { openIssues: number; inProgressIssues: number;
+  closedIssues: number }> = new Map<EmployeeIF, {openIssues: number; inProgressIssues:
+number; closedIssues: number}>();
+employeeMap.set(employee, { openIssues: 2, inProgressIssues: 1, closedIssues: 4 });
 
 export default defineComponent({
   name: 'EmployeeOverview',
@@ -41,15 +43,21 @@ export default defineComponent({
   components: {
     Card,
   },
-  // Other component and logic
+
+  // Data property for the employee object
+  data() {
+    return {
+      employee,
+    };
+  },
 
   // Component properties
-  props: {
-    employee: {
-      type: Object as () => EmployeeIF,
-      required: true,
-    },
-  },
+  // props: {
+  //   employee: {
+  //     type: Object as () => EmployeeIF,
+  //     required: true,
+  //   },
+  // },
 
   // Computed property for dynamic styling
   computed: {
@@ -58,7 +66,7 @@ export default defineComponent({
       const lastNameLength = this.employee.lastName.trim().length;
       const nameLength = firstNameLength + lastNameLength;
       const width = nameLength + 20; // Add 20 pixels for padding
-      const height = 20 + (nameLength > 0 ? 10 : 0) // Adjust the height based on name length
+      const height = 20 + (nameLength > 0 ? 10 : 0); // Adjust the height based on name length
       return `width: ${width}px; height: ${height}px`;
     },
   },
@@ -100,16 +108,18 @@ export default defineComponent({
 /* User name and background */
 .user-name-container {
   position: relative;
-  top: 130px;
+  top: 120px;
   left: 30px;
+  align-items: center;
+  justify-content: center;
 }
 .user-name-background {
   background-color: rgba(45, 108, 193, 0.9);
   border-radius: 5%;
-  display: inline-block;
+  display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 10px;
+  padding: 0 50px;
 }
 .user-name {
   font-size: 13px;
@@ -123,7 +133,7 @@ export default defineComponent({
   bottom: -10px;
   left: 150px;
   display: flex;
-  align-items: flex-end; /* Allign items to the bottom */
+  align-items: flex-bottom; /* Allign items to the bottom */
 }
 
 .open {
