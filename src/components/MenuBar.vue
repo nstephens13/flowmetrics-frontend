@@ -3,10 +3,18 @@
         <template #start >
             <div class="container">
                 <div>
-                    <Button id="sidebarButton" text icon="pi pi-bars" style="color: var(--primary-color-text)" aria-label="Submit" @click="visible = true"></Button>
+                    <Button
+                        id="sidebarButton"
+                        text
+                        icon="pi pi-bars"
+                        style="color: var(--primary-color-text)"
+                        aria-label="Submit"
+                        @click="visible = !visible">
+                    </Button>
+
                 </div>
                 <div>
-                    <h2 id="productName">{{ title}}</h2>
+                    <h2 id="productName">{{ title }}</h2>
                 </div>
             </div>
                 <Sidebar v-model:visible="visible">
@@ -19,7 +27,8 @@
 <script setup lang="ts">
 
 import { ref } from 'vue';
-const title = "FlowMetrics";
+
+const title = 'FlowMetrics';
 const visible = ref();
 const items = ref([
   {
@@ -45,11 +54,11 @@ const items = ref([
      background-color:#2196f3;
      color: #ffffff;
      border: 0;
-     border-radius: 0%;
+     border-radius: 0;
 }
 
 #productName{
-    margin: 0.3rem 0.5rem 0rem;
+    margin: 0.3rem 0.5rem 0;
 }
 .container {
     display: flex;
@@ -59,8 +68,8 @@ const items = ref([
 
 <style>
 #sidebarMenu{
-    border: 0px;
-    border-radius: 0px;
+    border: 0;
+    border-radius: 0;
     width: 100%;
 }
 </style>

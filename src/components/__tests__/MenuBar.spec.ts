@@ -1,35 +1,43 @@
 import { describe, expect, test } from 'vitest';
+import { mount } from '@vue/test-utils';
 import Button from 'primevue/button';
 import Sidebar from 'primevue/sidebar';
 import Menu from 'primevue/menu';
 import PrimeVue from 'primevue/config';
 import Menubar from 'primevue/menubar';
-import router from '@/router';
-
-import { VueWrapper, mount } from '@vue/test-utils';
+import router from '../../router';
 import MenuBar from '../MenuBar.vue';
 
 describe('Menubar Button should open sidebar', () => {
-  test('should open sidebar', async () => {
-    const wrapper: VueWrapper = mount(MenuBar, {
-      global: {
-        plugins: [PrimeVue, router],
-        components: { Button, Sidebar, Menu, Menubar },
+  const wrapper = mount(MenuBar, {
+    global: {
+      plugins: [PrimeVue, router],
+      components: {
+        Button, Menu, Menubar, Sidebar,
       },
-    });
+      stubs: {
+        teleport: false,
+      },
+    },
+  });
 
-    let menu = wrapper.findComponent(Menu);
-    expect(menu.exists()).toBe(false);
+  test('it mounts', () => {
+    expect(wrapper.exists()).toBe(true);
+    expect(wrapper.getComponent(Menubar).isVisible()).toBe(true);
+    expect(wrapper.isVisible()).toBe(true);
+  });
 
-    const button = wrapper.findComponent(Button);
+  test('should open and close sidebar', async () => {
+    let menubar = wrapper.findComponent(Menu);
+    expect(menubar.exists()).toBe(false);
+
+    const button = wrapper.getComponent(Menubar).findComponent(Button);
     await button.trigger('click');
-    let sidebar = wrapper.findComponent(Sidebar);
-    expect(sidebar.exists()).toBe(true);
 
-    menu = wrapper.findComponent(Menu);
-    expect(menu.exists()).toBe(true);
+    expect(wrapper.getComponent(Sidebar).vm.$props.visible).toBe(true);
+    menubar = wrapper.findComponent(Menu);
 
     await button.trigger('click');
-    expect(sidebar.isVisible()).toBe(false);
+    expect(wrapper.getComponent(Sidebar).vm.$props.visible).toBe(false);
   });
 });
