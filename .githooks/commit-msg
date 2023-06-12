@@ -30,13 +30,13 @@ async function checkCommitMessage() {
   let COMMIT_CONTRACT = /^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test){1}:\#([0-9]{1,6})\s((\s|[a-zA-Z0-9])+)/;
   let result = COMMIT_CONTRACT.test(message);
 
+  const ticketID = getTicketIDFromString(branchName);
+  const messageID = getTicketIDFromString(message);
+
   if (!result) {
     handleBadCommitMessage(COMMIT_CONTRACT, ticketID, message);
     
   }
-
-  const ticketID = getTicketIDFromString(branchName);
-  const messageID = getTicketIDFromString(message);
 
   if(ticketID != messageID){
     handleBadCommitMessage(COMMIT_CONTRACT, ticketID, message);
@@ -45,9 +45,6 @@ async function checkCommitMessage() {
 
   process.exit(0);
 }
-
-
-
 
 function getTicketIDFromString(string) {
   const TICKET_ID = /[0-9]{1,6}/;
