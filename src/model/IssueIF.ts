@@ -26,8 +26,8 @@ export interface IssueIF {
   name: string;
   description: string| null;
   assignedTo: EmployeeIF| null;
-  createdBy: EmployeeIF;
-  createdAt: Date;
+  createdBy: EmployeeIF|null;
+  createdAt: Date|null;
   closedAt: Date| null;
   dueTo: Date| null;
   status: Status | null;

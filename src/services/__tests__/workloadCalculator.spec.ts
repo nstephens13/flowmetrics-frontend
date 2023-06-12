@@ -1,11 +1,14 @@
 import {
   assert, expect, test, describe,
 } from 'vitest';
-import { getMockData, loadDataFromFile } from '../__mockdata__/mockDataComposer';
+import cloneDeep from 'lodash/cloneDeep';
+import { getMockData } from '../../assets/__mockdata__/mockDataComposer';
 import calculateWorkload from '../workloadCalculator';
 import type { EmployeeIF } from '../../model/EmployeeIF';
 import type { ProjectIF } from '../../model/ProjectIF';
 import type { IssueIF } from '../../model/IssueIF';
+
+import employeeJson from '../../assets/__mockdata__/Employees.json';
 
 // Just a Helper Function to create my expected Values to compare with real values
 function assignIssue(
@@ -58,9 +61,7 @@ describe('Workload Calculator should calculate Workload correctly for Mock Data 
 
   // given
   const project = getMockData(2);
-  const employees: EmployeeIF[] = loadDataFromFile<EmployeeIF>(
-    'src/services/__mockdata__/Employees.json',
-  );
+  const employees: EmployeeIF[] = cloneDeep(employeeJson) as EmployeeIF[];
 
   // assigning the issues to my own employee array as in dataset 2 just for deep equal comparison
   assignIssue(project, employees, 0, 0);
@@ -108,7 +109,7 @@ describe('Workload Calculator should calculate Workload correctly for Mock Data 
 
   // given
   const project = getMockData(55);
-  const employees: EmployeeIF[] = loadDataFromFile<EmployeeIF>('src/services/__mockdata__/Employees.json');
+  const employees: EmployeeIF[] = cloneDeep(employeeJson) as EmployeeIF[];
 
   // assigning the issues to my own employee array as in dataset 2 just for deep equal comparison
   assignIssue(project, employees, 0, 0);
@@ -163,9 +164,7 @@ describe('Workload Calculator should calculate Workload correctly for Mock Data 
 describe('Workload Calculator should calculate Workload correctly for Mock Data Set 1 ', () => {
   // given
   const project = getMockData(1);
-  const employees: EmployeeIF[] = loadDataFromFile<EmployeeIF>(
-    'src/services/__mockdata__/Employees.json',
-  );
+  const employees: EmployeeIF[] = employeeJson as EmployeeIF[];
 
   // when
   const workload = calculateWorkload(project);
