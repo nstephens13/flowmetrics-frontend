@@ -9,7 +9,7 @@
                     <h2 id="productName">FlowMetrics</h2>
                 </div>
             </div>
-                <Sidebar v-model:visible="visible"> 
+                <Sidebar v-model:visible="visible">
                     <Menu :model="items" id="sidebarMenu"></Menu>
                 </Sidebar>
         </template>
@@ -19,6 +19,7 @@
 <script setup lang="ts">
 
 import { ref } from 'vue';
+
 const visible = ref();
 const items = ref([
   {

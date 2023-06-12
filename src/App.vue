@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router';
+import { RouterView } from 'vue-router';
 import { defineComponent } from 'vue';
 import MenuBar from './components/MenuBar.vue';
 
