@@ -3,10 +3,10 @@
         <template #start >
             <div class="container">
                 <div>
-                    <Button text icon="pi pi-bars" style="color: var(--primary-color-text)" aria-label="Submit" @click="visible = true"></Button>
+                    <Button id="sidebarButton" text icon="pi pi-bars" style="color: var(--primary-color-text)" aria-label="Submit" @click="visible = true"></Button>
                 </div>
                 <div>
-                    <h2 id="productName">FlowMetrics</h2>
+                    <h2 id="productName">{{ title}}</h2>
                 </div>
             </div>
                 <Sidebar v-model:visible="visible">
@@ -19,7 +19,7 @@
 <script setup lang="ts">
 
 import { ref } from 'vue';
-
+const title = "FlowMetrics";
 const visible = ref();
 const items = ref([
   {
