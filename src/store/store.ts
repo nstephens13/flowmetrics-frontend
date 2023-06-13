@@ -1,57 +1,53 @@
-import fs from 'fs';
 import { defineStore } from 'pinia';
-import type { SLACategory } from '@/model/SLACategory';
-import type { SLADeadline } from '@/model/SLADeadline';
-
-const categoriesFilePath = './SLACategories.json';
-const deadlinesFilePath = './SLADeadlines.json';
+import type { SLASubscriber } from '../model/SLASubscriber';
+import type { SLARule } from '../model/SLARule';
+import type { SLACategory } from '../model/SLACategory';
 
 const useSLAStore = defineStore('sla', {
   state: () => ({
-    categories: [] as SLACategory[],
-    deadlines: [] as SLADeadline[],
+    subscriber: [
+      { id: 1, name: 'Customer 1', description: 'Description 1' },
+      { id: 2, name: 'Customer 2', description: 'Description 2' },
+      { id: 3, name: 'Customer 3', description: 'Description 3' },
+    ] as SLASubscriber[],
+    rules: [
+      {
+        id: 1, name: 'Pre-Config 1', durationInDays: 3, expirationDate: null,
+      },
+      {
+        id: 2, name: 'Pre-Config 2', durationInDays: null, expirationDate: new Date('2023-07-17'), maxAssignedEmployees: 4,
+      },
+      {
+        id: 3, name: 'Pre-Config 3', durationInDays: 7, expirationDate: new Date('2023-12-19'), maxAssignedEmployees: 7,
+      },
+    ] as SLARule[],
+    slaCategories: [] as SLACategory[],
+
   }),
+
   actions: {
-    setCategories(categories: SLACategory[]) {
-      this.categories = categories;
-      this.saveCategories();
+    addSubscriber(category: SLASubscriber) {
+      this.subscriber.push(category);
     },
-    setDeadlines(deadlines: SLADeadline[]) {
-      this.deadlines = deadlines;
-      this.saveDeadlines();
+    addRule(deadline: SLARule) {
+      this.rules.push(deadline);
     },
-    async fetchCategories() {
-      try {
-        const categoriesData = fs.readFileSync(categoriesFilePath, 'utf8');
-        const categories = JSON.parse(categoriesData);
-        this.setCategories(categories);
-      } catch (error) {
-        // Handle error
-      }
+    addSLACategory(rule: SLACategory) {
+      this.slaCategories.push(rule);
     },
-    async fetchDeadlines() {
-      try {
-        const deadlinesData = fs.readFileSync(deadlinesFilePath, 'utf8');
-        const deadlines = JSON.parse(deadlinesData);
-        this.setDeadlines(deadlines);
-      } catch (error) {
-        // Handle error
-      }
-    },
-    async saveCategories() {
-      try {
-        const categoriesData = JSON.stringify(this.categories);
-        fs.writeFileSync(categoriesFilePath, categoriesData, 'utf8');
-      } catch (error) {
-        // Handle error
-      }
-    },
-    async saveDeadlines() {
-      try {
-        const deadlinesData = JSON.stringify(this.deadlines);
-        fs.writeFileSync(deadlinesFilePath, deadlinesData, 'utf8');
-      } catch (error) {
-        // Handle error
+    initializeCategories() {
+      for (let i = 0; i < 5; i++) {
+        const amountSubscribers = i % this.subscriber.length;
+        const rulesIndex = i % this.rules.length;
+
+        const category: SLACategory = {
+          id: i,
+          name: `savedConfig_${i}`,
+          subscriber: this.subscriber[amountSubscribers],
+          rule: this.rules[rulesIndex],
+        };
+
+        this.addSLACategory(category);
       }
     },
   },

@@ -1,7 +1,7 @@
-import type { SLACategory } from '@/model/SLACategory';
-import type { SLADeadline } from '@/model/SLADeadline';
-
 export interface SLARule {
-  category: SLACategory;
-  deadline: SLADeadline;
+  id: number | null;
+  name: string | null;
+  durationInDays: number | null;
+  expirationDate: Date | null;
+  maxAssignedEmployees: number | null;
 }
