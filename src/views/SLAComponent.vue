@@ -2,42 +2,38 @@
     <Card class="background-card">
         <template #title>SLA Management View</template>
         <template #content>
-        <div>
-            <h3>Add SLA Subscriber</h3>
-            <InputText v-model="newSubscriber" placeholder="Enter subscriber name" />
-            <Button @click="addSubscriber" label="Add" />
-        </div>
+            <div>
+                <h3>Add SLA Subscriber</h3>
+                <InputText v-model="newSubscriber" placeholder="Enter subscriber name" />
+                <Button @click="addSubscriber" label="Add" />
+            </div>
 
-        <div>
-            <h3>Add SLA Deadline</h3>
-            <InputText v-model="newRule" placeholder="Enter rule name" />
-            <Button @click="addRule" label="Add" />
-        </div>
+            <div>
+                <h3>Add SLA Rule</h3>
+                <InputText v-model="newRuleName" placeholder="Enter rule name" />
+                <Dropdown v-model="newRuleMaxAssignedEmployees" :options="maxAssignedEmployeesOptions" placeholder="Select max assigned employees" />
+                <Button @click="addRule" label="Add" />
+            </div>
 
-        <div>
-            <h3>Create SLA Category</h3>
-            <Dropdown
-                v-model="selectedSubscriber"
-                :options="subscribers"
-                optionLabel="name"
-                placeholder="Select subscriber"
-            />
-            <Dropdown
-                v-model="selectedRule"
-                :options="rules"
-                optionLabel="name"
-                placeholder="Select rule"
-            />
-            <Button @click="createCategory" label="Create" />
-        </div>
+            <div>
+                <h3>Create SLA Category</h3>
+                <Dropdown v-model="selectedSubscriber" :options="subscriber" optionLabel="name" placeholder="Select subscriber" />
+                <Dropdown v-model="selectedRule" :options="rules" optionLabel="name" placeholder="Select rule" />
+                <InputText v-model="categoryName" placeholder="Enter category name" />
+                <Button @click="createCategory" label="Create" />
+            </div>
 
-        <div>
-            <h3>SLA Categories</h3>
-            <DataTable :value="categories">
-                <Column field="subscriber.name" header="Subscriber" />
-                <Column field="rule.name" header="Rule" />
-            </DataTable>
-        </div>
+            <div>
+                <h3>SLA Categories</h3>
+                <DataTable :value="categories">
+                    <Column field="name" header="Category" />
+                    <Column field="subscriber.name" header="Subscriber" />
+                    <Column field="rule.name" header="Rule" />
+                    <Column field="rule.durationInDays" header="Duration (Days)" />
+                    <Column field="rule.expirationDate" header="Expiration Date" />
+                    <Column field="rule.maxAssignedEmployees" header="Max Assigned Employees" />
+                </DataTable>
+            </div>
         </template>
     </Card>
 </template>
@@ -61,9 +57,11 @@ export default defineComponent({
     const slaStore = useSLAStore();
 
     const newSubscriber = ref('');
-    const newRule = ref('');
+    const newRuleName = ref('');
+    const newRuleMaxAssignedEmployees = ref(null);
     const selectedSubscriber = ref(null);
     const selectedRule = ref(null);
+    const categoryName = ref('');
 
     slaStore.initializeCategories();
 
@@ -72,42 +70,56 @@ export default defineComponent({
     const rules = computed(() => slaStore.rules);
     const categories = computed(() => slaStore.slaCategories);
 
-    // Add a new category to the store
+    // Add a new subscriber to the store
     const addSubscriber = () => {
-      const category: SLASubscriber = { id: null, name: newSubscriber.value.trim(), description: null };
-      slaStore.addSubscriber(category);
+      const subscriber: SLASubscriber = { id: null, name: newSubscriber.value.trim(), description: null };
+      slaStore.addSubscriber(subscriber);
       newSubscriber.value = '';
     };
 
-    // Add a new deadline to the store
+    // Add a new rule to the store
     const addRule = () => {
-      const deadline: SLARule = {
-        id: null, name: newRule.value.trim(), durationInDays: null, expirationDate: null, maxAssignedEmployees: null,
+      const rule: SLARule = {
+        id: null,
+        name: newRuleName.value.trim(),
+        durationInDays: null,
+        expirationDate: null,
+        maxAssignedEmployees: newRuleMaxAssignedEmployees.value,
       };
-      slaStore.addRule(deadline);
-      newRule.value = '';
+      slaStore.addRule(rule);
+      newRuleName.value = '';
+      newRuleMaxAssignedEmployees.value = null;
     };
 
-    // Create a new SLA rule using selected category and deadline
+    // Create a new SLA category using selected subscriber and rule
     const createCategory = () => {
       if (selectedSubscriber.value && selectedRule.value) {
         const category: SLACategory = {
+          id: null,
+          name: categoryName.value.trim() || null,
           subscriber: selectedSubscriber.value,
           rule: selectedRule.value,
         };
         slaStore.addSLACategory(category);
         selectedSubscriber.value = null;
         selectedRule.value = null;
+        categoryName.value = '';
       }
     };
 
+    // Options for the max assigned employees dropdown
+    const maxAssignedEmployeesOptions = [1, 2, 3, 4, 5];
+
     return {
       newSubscriber,
-      newRule,
+      newRuleName,
+      newRuleMaxAssignedEmployees,
       selectedSubscriber,
       selectedRule,
-      subscribers: subscriber,
+      categoryName,
+      subscriber,
       rules,
+      maxAssignedEmployeesOptions,
       addSubscriber,
       addRule,
       createCategory,

@@ -6,19 +6,19 @@ import type { SLACategory } from '@/model/SLACategory';
 const useSLAStore = defineStore('sla', {
   state: () => ({
     subscriber: [
-      { id: 1, name: 'Category 1', description: 'Description 1' },
-      { id: 2, name: 'Category 2', description: 'Description 2' },
-      { id: 3, name: 'Category 3', description: 'Description 3' },
+      { id: 1, name: 'Customer 1', description: 'Description 1' },
+      { id: 2, name: 'Customer 2', description: 'Description 2' },
+      { id: 3, name: 'Customer 3', description: 'Description 3' },
     ] as SLASubscriber[],
     rules: [
       {
-        id: 1, name: 'Deadline 1', durationInDays: 3, expirationDate: new Date('2023-07-15'),
+        id: 1, name: 'Pre-Config 1', durationInDays: 3, expirationDate: null,
       },
       {
-        id: 2, name: 'Deadline 2', durationInDays: 5, expirationDate: new Date('2023-07-17'),
+        id: 2, name: 'Pre-Config 2', durationInDays: null, expirationDate: new Date('2023-07-17'), maxAssignedEmployees: 4,
       },
       {
-        id: 3, name: 'Deadline 3', durationInDays: 7, expirationDate: new Date('2023-07-19'),
+        id: 3, name: 'Pre-Config 3', durationInDays: 7, expirationDate: new Date('2023-12-19'), maxAssignedEmployees: 7,
       },
     ] as SLARule[],
     slaCategories: [] as SLACategory[],
@@ -41,6 +41,8 @@ const useSLAStore = defineStore('sla', {
         const rulesIndex = i % this.rules.length;
 
         const category: SLACategory = {
+          id: i,
+          name: `savedConfig_${i}`,
           subscriber: this.subscriber[amountSubscribers],
           rule: this.rules[rulesIndex],
         };
