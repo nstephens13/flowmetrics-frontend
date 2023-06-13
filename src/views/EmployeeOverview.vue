@@ -69,7 +69,7 @@ export default defineComponent({
 <style>
 /* Card Component */
 .background-card {
-    width: 3072px; /* Set the width to match the MacBook Pro 16'' screen width */
+    /* width: 3072px; /* Set the width to match the MacBook Pro 16'' screen width */
     height: 700px;
 }
 
