@@ -55,7 +55,7 @@ class Issue implements IssueIF {
 // builds array of objects uses data given, creates Issue objects
 function getArrayOfIssues(): Issue[] {
   const issueData: IssueIF[] = [{
-    id: 1,
+    id: 14898,
     name: 'Issue 1',
     description: 'This is the first issue',
     assignedTo: null,
@@ -68,7 +68,7 @@ function getArrayOfIssues(): Issue[] {
     status: Status.Open,
   },
   {
-    id: 2,
+    id: 148093,
     name: 'Issue 2',
     description: null,
     assignedTo: {
@@ -83,7 +83,7 @@ function getArrayOfIssues(): Issue[] {
     status: Status.Closed,
   },
   {
-    id: 3,
+    id: 23253,
     name: 'Issue 3',
     description: 'This is the third issue',
     assignedTo: {
@@ -98,7 +98,7 @@ function getArrayOfIssues(): Issue[] {
     status: Status.InProgress,
   },
   {
-    id: 4,
+    id: 49764,
     name: 'Issue 4',
     description: 'This is the fourth issue',
     assignedTo: null,
@@ -111,7 +111,7 @@ function getArrayOfIssues(): Issue[] {
     status: Status.Open,
   },
   {
-    id: 5,
+    id: 3423455,
     name: 'Issue 5',
     description: 'This is the fifth issue',
     assignedTo: {
@@ -125,7 +125,7 @@ function getArrayOfIssues(): Issue[] {
     dueTo: new Date('2023-06-25'),
     status: Status.InProgress,
   }, {
-    id: 6,
+    id: 654353,
     name: 'Issue 6',
     description: 'This is the sixth issue',
     assignedTo: null,
@@ -138,7 +138,7 @@ function getArrayOfIssues(): Issue[] {
     status: Status.Open,
   },
   {
-    id: 7,
+    id: 32542527,
     name: 'Issue 7',
     description: null,
     assignedTo: {
@@ -153,7 +153,7 @@ function getArrayOfIssues(): Issue[] {
     status: Status.InProgress,
   },
   {
-    id: 8,
+    id: 345358,
     name: 'Issue 8',
     description: 'This is the eighth issue',
     assignedTo: {
@@ -168,7 +168,7 @@ function getArrayOfIssues(): Issue[] {
     status: Status.InProgress,
   },
   {
-    id: 9,
+    id: 9645754,
     name: 'Issue 9',
     description: 'This is the ninth issue',
     assignedTo: {
@@ -183,7 +183,7 @@ function getArrayOfIssues(): Issue[] {
     status: Status.InProgress,
   },
   {
-    id: 10,
+    id: 132440,
     name: 'Issue 10',
     description: 'This is the tenth issue',
     assignedTo: {
