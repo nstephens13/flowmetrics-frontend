@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
-import type { SLASubscriber } from '../model/SLASubscriber';
-import type { SLARule } from '../model/SLARule';
-import type { SLACategory } from '../model/SLACategory';
+import type { SLASubscriber } from '@/model/SLASubscriber';
+import type { SLARule } from '@/model/SLARule';
+import type { SLACategory } from '@/model/SLACategory';
 
 const useSLAStore = defineStore('sla', {
   state: () => ({
@@ -22,26 +22,43 @@ const useSLAStore = defineStore('sla', {
       },
     ] as SLARule[],
     slaCategories: [] as SLACategory[],
-
+    subscribersIdCount: 3,
+    rulesIdCount: 3,
+    slaCategoriesIdCount: 0,
   }),
 
   actions: {
-    addSubscriber(category: SLASubscriber) {
-      this.subscriber.push(category);
+    addSubscriber(subscriber: SLASubscriber) {
+      this.subscribersIdCount += 1;
+      const subscriberToAdd = subscriber;
+      subscriberToAdd.id = this.slaCategoriesIdCount;
+      this.subscriber.push(subscriberToAdd);
     },
-    addRule(deadline: SLARule) {
-      this.rules.push(deadline);
+    addRule(rule: SLARule) {
+      this.rulesIdCount += 1;
+      const ruleToAdd = rule;
+      ruleToAdd.id = this.rulesIdCount;
+      this.rules.push(ruleToAdd);
     },
-    addSLACategory(rule: SLACategory) {
-      this.slaCategories.push(rule);
+    addSLACategory(category: SLACategory) {
+      this.slaCategoriesIdCount += 1;
+      const categoryToAdd = category;
+      categoryToAdd.id = this.slaCategoriesIdCount;
+      this.slaCategories.push(categoryToAdd);
     },
+    deleteSLACategory(category: SLACategory) {
+      const index = this.slaCategories.findIndex((c) => c.id === category?.id);
+      if (index !== -1) {
+        this.slaCategories.splice(index, 1);
+      }
+    },
+
     initializeCategories() {
-      for (let i = 0; i < 5; i++) {
+      for (let i = 1; i < 6; i++) {
         const amountSubscribers = i % this.subscriber.length;
         const rulesIndex = i % this.rules.length;
-
         const category: SLACategory = {
-          id: i,
+          id: null,
           name: `savedConfig_${i}`,
           subscriber: this.subscriber[amountSubscribers],
           rule: this.rules[rulesIndex],
