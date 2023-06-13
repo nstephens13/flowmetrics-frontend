@@ -124,7 +124,10 @@ function getArrayOfIssues(): Issue[] {
     closedAt: null,
     dueTo: new Date('2023-06-25'),
     status: Status.InProgress,
-  }, {
+  },
+    // extra data
+    /*
+    {
     id: 654353,
     name: 'Issue 6',
     description: 'This is the sixth issue',
@@ -197,6 +200,7 @@ function getArrayOfIssues(): Issue[] {
     dueTo: new Date('2023-07-20'),
     status: Status.InProgress,
   },
+  */
   ];
 
   // map method to transform array of IssueIF objects into an array of Issue objects
@@ -214,16 +218,43 @@ function getArrayOfIssues(): Issue[] {
 
   return issues;
 }
+// function to return assigned name
+function getAssignedToName(issue: Issue): string {
+  if (issue.assignedTo) {
+    return `${issue.assignedTo.firstName} ${issue.assignedTo.lastName}`;
+  }
+  return '';
+}
 
-// function to calculate days left of Tickets until due date
-function remainTime(issue: Issue): number | null {
+// function for issue-status
+function getStatus(issue: Issue): Status {
+  return issue.status;
+}
+
+function getTicketID(issue: Issue): number {
+  return issue.id;
+}
+
+// function accepts due-to Issue-Object & transforms to date
+function getFormattedDate(issue: Issue): string {
+  const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+  return issue.dueTo ? issue.dueTo.toLocaleDateString(undefined, options) : '';
+}
+
+// accepts due to Issue-Object & transfers to time
+function getTimeLeft(issue: Issue): number | null {
   if (issue.dueTo) {
     const currentTime = new Date().getTime();
     const dueTime = issue.dueTo.getTime();
-    return Math.max(0, dueTime - currentTime);
+    const timeLeft = Math.max(0, dueTime - currentTime);
+    return Math.ceil(timeLeft / (1000 * 60 * 60 * 24));
   }
   return null;
 }
 
 // export of data array and remaintime for ticket calculation
-export { getArrayOfIssues, remainTime };
+export {
+  Issue, getArrayOfIssues, getTimeLeft, getFormattedDate,
+  getAssignedToName, getStatus, getTicketID,
+
+};

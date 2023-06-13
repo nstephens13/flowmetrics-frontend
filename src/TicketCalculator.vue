@@ -1,11 +1,33 @@
 <template>
-<Desktop1 v-bind="desktop1Data" />
-<Desktop1 :desktop1Data="desktop1Data" />
-</template>
+  <Desktop1 v-bind="desktop1Data" />
+  <div>
+    <p>Open Issues: {{ openIssuesCount }}</p>
+    <p>In Progress Issues: {{ inProgressIssuesCount }}</p>
+    <p>Closed Issues: {{ closedIssuesCount }}</p>
+    <ul>
+    <li v-for="(issue, index) in desktop1Data.issues" :key="issue.id">
+    <h3>{{ issue.name }}</h3>
+    <p>{{ issue.description }}</p>
+    <p>Due Date: {{ getFormattedDate(issue) }}</p>
+    <p>Time Left: {{ getTimeLeft(issue) }} days</p>
+    <p>Remaining Time: {{ remainingTime[index] }} milliseconds</p>
+  </li>
+  </ul>
+  </div>
+  </template>
 
 <script>
-import Desktop1 from "@/components/Desktop1.vue";
-import Issue from "@/path/to/Issue";
+import Desktop1 from '@/components/Desktop1.vue';
+import {
+  Issue,
+  getArrayOfIssues,
+  getTimeLeft,
+  getFormattedDate,
+  getAssignedToName,
+  getStatus,
+  getTicketID,
+}
+  from '@/model/Issue.ts';
 
 export default {
   name: 'App',
@@ -13,8 +35,44 @@ export default {
     Desktop1,
   },
   data() {
-    return { desktop1Data };
+    return {
+      desktop1Data: {
+        issues: [],
+        openIssuesCount: 0,
+        inProgressIssuesCount: 0,
+        closedIssuesCount: 0,
+      },
+    };
   },
+  created() {
+    this.desktop1Data.issues = getArrayOfIssues();
+    this.desktop1Data.openIssuesCount = this.countOpenIssues(this.desktop1Data.issues);
+    this.desktop1Data.inProgressIssuesCount = this.countInProgressIssues(this.desktop1Data.issues);
+    this.desktop1Data.closedIssuesCount = this.countClosedIssues(this.desktop1Data.issues);
+  },
+  computed: {
+    remainingTime() {
+      return this.desktop1Data.issues.map((issue) => getFormattedDate(issue));
+    },
+  },
+  methods: {
+    getFormattedDate,
+    getTimeLeft,
+    getAssignedToName,
+    getStatus,
+    getTicketID,
+    countOpenIssues(issues) {
+      return issues.filter((issue) => issue.status === Status.Open).length;
+    },
+    countInProgressIssues(issues) {
+      return issues.filter((issue) => issue.status === Status.InProgress).length;
+    },
+    countClosedIssues(issues) {
+      return issues.filter((issue) => issue.status === Status.Closed).length;
+    },
+
+  },
+
 };
 
 const vBtn1Data = {
@@ -40,54 +98,54 @@ const vChipData = {
 };
 
 const ringOpenData = {
-  span: '36',
+  span: countOpenIssues(getArrayOfIssues()),
   name: 'Open Tickets',
 };
 
 const ringImProgressData = {
-  span: "24",
-  name: "In Progress",
+  span: countInProgressIssues(getArrayOfIssues()),
+  name: 'In Progress',
 // className: "ring_im_progress",
 };
 
 const ringClosedData = {
-  span: "40",
-  name: "Closed Tickets",
+  span: countClosedIssues(getArrayOfIssues()),
+  name: 'Closed Tickets',
 };
 
 const ringTotalData = {
-  span: "100",
-  name: "Total amount",
-  className: "ring_total",
+  span: getArrayOfIssues().length,
+  name: 'Total amount',
+  className: 'ring_total',
 };
 
 const thTextStart1Data = {
-  span: "Ticket ID",
+  span: 'Ticket ID',
 };
 
 const tdTextStart1Data = {
-  frozenYogurt: "2ef7bd608",
-  className: "",
+  frozenYogurt: getTicketID(getArrayOfIssues()[0]),
+  className: '',
 };
 
 const tdTextStart2Data = {
-  frozenYogurt: "7c211433",	
-  className: "",
+  frozenYogurt: getTicketID(getArrayOfIssues()[1]),
+  className: '',
 };
 
 const tdTextStart3Data = {
-  frozenYogurt: "42dfg45fgg",
-  className: "",
+  frozenYogurt: getTicketID(getArrayOfIssues()[2]),
+  className: '',
 };
 
-const tdTextStart4Data = { 
-  frozenYogurt: "2ddcgdff5",	
-  className: "",
+const tdTextStart4Data = {
+  frozenYogurt: getTicketID(getArrayOfIssues()[3]),
+  className: '',
 };
 
 const tdTextStart5Data = {
-  frozenYogurt: "2dgdhdft56h6",	
-  className: "",
+  frozenYogurt: getTicketID(getArrayOfIssues()[4]),
+  className: '',
 };
 
 const frame1Data = {
@@ -100,32 +158,32 @@ const frame1Data = {
 };
 
 const thTextStart2Data = {
-  span: "Status",
+  span: 'Status',
 };
 
 const tdTextStart6Data = {
-  frozenYogurt: "In Progress",
-  className: "td-text-start-20",
+  frozenYogurt: getStatus(getArrayOfIssues()[0]),
+  className: 'td-text-start-20',
 };
 
 const tdTextStart7Data = {
-  frozenYogurt: "Closed",
-  className: "td-text-start-21",
+  frozenYogurt: getStatus(getArrayOfIssues()[1]),
+  className: 'td-text-start-21',
 };
 
 const tdTextStart8Data = {
-  frozenYogurt: "In Progress",
-  className: "td-text-start-22",
+  frozenYogurt: getStatus(getArrayOfIssues()[2]),
+  className: 'td-text-start-22',
 };
 
 const tdTextStart9Data = {
-  frozenYogurt: "Open",
-  className: "td-text-start-23",
+  frozenYogurt: getStatus(getArrayOfIssues()[3]),
+  className: 'td-text-start-23',
 };
 
 const tdTextStart10Data = {
-  frozenYogurt: "In Progress",
-  className: "td-text-start-24",
+  frozenYogurt: getStatus(getArrayOfIssues()[4]),
+  className: 'td-text-start-24',
 };
 
 const frame2Data = {
@@ -138,32 +196,32 @@ const frame2Data = {
 };
 
 const thTextStart3Data = {
-  span: "Due Date",
+  span: 'Due Date',
 };
 
 const tdTextStart11Data = {
-  frozenYogurt: "30.06.2023",
-  className: "td-text-start-25",
+  frozenYogurt: getFormattedDate(getArrayOfIssues()[0]),
+  className: 'td-text-start-25',
 };
 
 const tdTextStart12Data = {
-  frozenYogurt: "11.06.2023",
-  className: "td-text-start-26",
+  frozenYogurt: getFormattedDate(getArrayOfIssues()[1]),
+  className: 'td-text-start-26',
 };
 
 const tdTextStart13Data = {
-  frozenYogurt: "01.07.2023",
-  className: "td-text-start-27",
+  frozenYogurt: getFormattedDate(getArrayOfIssues()[2]),
+  className: 'td-text-start-27',
 };
 
 const tdTextStart14Data = {
-  frozenYogurt: "30.08.2023",
-  className: "td-text-start-28",
+  frozenYogurt: getFormattedDate(getArrayOfIssues()[3]),
+  className: 'td-text-start-28',
 };
 
 const tdTextStart15Data = {
-  frozenYogurt: "09.06.2023",
-  className: "td-text-start-29",
+  frozenYogurt: getFormattedDate(getArrayOfIssues()[4]),
+  className: 'td-text-start-29',
 };
 
 const frame3Data = {
@@ -176,31 +234,31 @@ const frame3Data = {
 };
 
 const thTextStart4Data = {
-  span: "Time left",
+  span: 'Time left',
 };
 
 const tdTextStart16Data = {
-  frozenYogurt: "22 days",
-  className: "td-text-start-30",
+  frozenYogurt: getTimeLeft(getArrayOfIssues()[0]),
+  className: 'td-text-start-30',
 };
 
 const tdTextStart17Data = {
-  frozenYogurt: "18 days",
-  className: "td-text-start-31",
+  frozenYogurt: getTimeLeft(getArrayOfIssues()[1]),
+  className: 'td-text-start-31',
 };
 
 const tdTextStart18Data = {
-  frozenYogurt: "24 days",
-  className: "td-text-start-32",
+  frozenYogurt: getTimeLeft(getArrayOfIssues()[2]),
+  className: 'td-text-start-32',
 };
 
 const tdTextStart19Data = {
-  frozenYogurt: "82 days",
-  className: "td-text-start-33",
+  frozenYogurt: getTimeLeft(getArrayOfIssues()[3]),
+  className: 'td-text-start-33',
 };
 
 const tdTextStart22Data = {
-  frozenYogurt: "1 days",
+  frozenYogurt: getTimeLeft(getArrayOfIssues()[4]),
 };
 
 const frame4Data = {
@@ -213,32 +271,32 @@ const frame4Data = {
 };
 
 const thTextStart5Data = {
-  span: "Assigned to",
+  span: 'Assigned to',
 };
 
 const tdTextStart20Data = {
-  frozenYogurt: "Alex Mustermann",
-  className: "td-text-start-34",
+  frozenYogurt: getAssignedToName(getArrayOfIssues()[0]),
+  className: 'td-text-start-34',
 };
 
 const tdTextStart21Data = {
-  frozenYogurt: "Leon Fischer",
-  className: "td-text-start-35",
+  frozenYogurt: getAssignedToName(getArrayOfIssues()[1]),
+  className: 'td-text-start-35',
 };
 
 const tdTextStart23Data = {
-  frozenYogurt: "Lena Hoffmann",
-  className: "td-text-start-36",
+  frozenYogurt: getAssignedToName(getArrayOfIssues()[2]),
+  className: 'td-text-start-36',
 };
 
 const tdTextStart24Data = {
-  frozenYogurt: "Emma Mayer",
-  className: "td-text-start-37",
+  frozenYogurt: getAssignedToName(getArrayOfIssues()[3]),
+  className: 'td-text-start-37',
 };
 
 const tdTextStart25Data = {
-  frozenYogurt: "Noah Weber",
-  className: "td-text-start",
+  frozenYogurt: getAssignedToName(getArrayOfIssues()[4]),
+  className: 'td-text-start',
 };
 
 const frame5Data = {
@@ -254,7 +312,7 @@ const vTableData = {
 
   frame1Props: frame1Data,
   frame2Props: frame2Data,
-  frame3Props: frame3Data, 
+  frame3Props: frame3Data,
   frame4Props: frame4Data,
   frame5Props: frame5Data,
 };
