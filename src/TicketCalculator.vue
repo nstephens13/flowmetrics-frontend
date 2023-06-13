@@ -1,9 +1,6 @@
 <template>
   <Desktop1 v-bind="desktop1Data" />
   <div>
-    <p>Open Issues: {{ openIssuesCount }}</p>
-    <p>In Progress Issues: {{ inProgressIssuesCount }}</p>
-    <p>Closed Issues: {{ closedIssuesCount }}</p>
     <ul>
     <li v-for="(issue, index) in desktop1Data.issues" :key="issue.id">
     <h3>{{ issue.name }}</h3>
