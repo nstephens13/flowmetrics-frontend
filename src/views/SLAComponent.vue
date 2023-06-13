@@ -74,7 +74,7 @@ export default defineComponent({
 
     // Add a new category to the store
     const addCategory = () => {
-      const category: SLACategory = { id: null, name: newCategory.value, description: null };
+      const category: SLACategory = { id: null, name: newCategory.value.trim(), description: null };
       slaStore.addCategory(category);
       newCategory.value = '';
     };
@@ -82,7 +82,7 @@ export default defineComponent({
     // Add a new deadline to the store
     const addDeadline = () => {
       const deadline: SLADeadline = {
-        id: null, name: newCategory.value, durationInDays: null, expirationDate: null,
+        id: null, name: newDeadline.value.trim(), durationInDays: null, expirationDate: null,
       };
       slaStore.addDeadline(deadline);
       newDeadline.value = '';
