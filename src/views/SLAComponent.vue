@@ -4,23 +4,37 @@
         <template #content>
             <div>
                 <h3>Add SLA Subscriber</h3>
-                <InputText v-model="newSubscriber" placeholder="Enter subscriber name" />
-                <Button @click="addSubscriber" label="Add" />
+                <div class="subscriber-container">
+                  <InputText v-model="newSubscriber" placeholder="Enter subscriber name"
+                           class="enter-subscriber"/>
+                  <Button @click="addSubscriber" label="+" class="add-subscriber"/>
+                </div>
             </div>
-
             <div>
                 <h3>Add SLA Rule</h3>
-                <InputText v-model="newRuleName" placeholder="Enter rule name" />
-                <Dropdown v-model="newRuleMaxAssignedEmployees" :options="maxAssignedEmployeesOptions" placeholder="Select max assigned employees" />
-                <Button @click="addRule" label="Add" />
+                <div class="rule-container">
+                    <InputText v-model="newRuleName" placeholder="Enter rule name"
+                               class="enter-rule"/>
+                    <Dropdown v-model="newRuleMaxAssignedEmployees"
+                          :options="maxAssignedEmployeesOptions"
+                          placeholder="Select max assigned employees"
+                          class="select-employees"/>
+                    <Button @click="addRule" label="+" class="add-rule"/>
+                </div>
             </div>
-
             <div>
-                <h3>Create SLA Category</h3>
-                <Dropdown v-model="selectedSubscriber" :options="subscriber" optionLabel="name" placeholder="Select subscriber" />
-                <Dropdown v-model="selectedRule" :options="rules" optionLabel="name" placeholder="Select rule" />
-                <InputText v-model="categoryName" placeholder="Enter category name" />
-                <Button @click="createCategory" label="Create" />
+                <h3>Add new SLA Category</h3>
+                <div class="category-container">
+                    <Dropdown v-model="selectedSubscriber"
+                          :options="subscriber" optionLabel="name"
+                          placeholder="Select subscriber" class="select-subscriber"/>
+                    <Dropdown v-model="selectedRule"
+                          :options="rules" optionLabel="name"
+                          placeholder="Select rule" class="select-rule"/>
+                    <InputText v-model="categoryName" placeholder="Enter category name"
+                           class="enter-category"/>
+                    <Button @click="createCategory" label="+" class="add-category"/>
+                </div>
             </div>
 
             <div>
@@ -34,7 +48,11 @@
                     <Column field="rule.maxAssignedEmployees" header="Max Assigned Employees" />
                     <Column header="Delete">
                         <template #body="rowData">
-                            <Button icon="pi pi-trash" class="p-button-danger" @click="deleteCategory(rowData.data)"></Button>
+                            <Button class="p-button-danger" @click="deleteCategory(rowData.data)">
+                              <span class="pi pi-trash trash-size"></span>
+                            </Button>
+                            <!--Button icon="pi pi-trash" class="p-button-danger"
+                                    @click="deleteCategory(rowData.data)"></Button-->
                         </template>
                     </Column>
                 </DataTable>
@@ -46,6 +64,9 @@
 <script lang="ts">
 import { defineComponent, ref, computed } from 'vue';
 import Card from 'primevue/card';
+import Button from 'primevue/button';
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
 import useSLAStore from '../store/store';
 import type { SLASubscriber } from '@/model/SLASubscriber';
 import type { SLARule } from '@/model/SLARule';
@@ -56,6 +77,9 @@ export default defineComponent({
 
   components: {
     Card,
+    Button,
+    DataTable,
+    Column,
   },
 
   setup() {
@@ -77,7 +101,9 @@ export default defineComponent({
 
     // Add a new subscriber to the store
     const addSubscriber = () => {
-      const subscriber: SLASubscriber = { id: null, name: newSubscriber.value.trim(), description: null };
+      const subscriber: SLASubscriber = {
+        id: null, name: newSubscriber.value.trim(), description: null,
+      };
       slaStore.addSubscriber(subscriber);
       newSubscriber.value = '';
     };
@@ -141,6 +167,81 @@ export default defineComponent({
 
 <style scoped>
 .background-card {
-
+  height: auto;
+  width: auto;
+}
+.subscriber-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 40px;
+}
+.enter-subscriber {
+  margin-right: 10px;
+}
+.add-subscriber {
+  background-color: mediumseagreen;
+  color: white;
+  border: none;
+  justify-content: center;
+  height: 30px;
+  width: 30px;
+  padding: 0;
+  font-size: 12px;
+}
+.rule-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 40px;
+}
+.enter-rule {
+  margin-right: 10px;
+}
+.select-employees {
+  margin-right: 10px;
+}
+.category-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 40px;
+}
+.select-subscriber {
+  margin-right: 10px;
+}
+.select-rule {
+  margin-right: 10px;
+}
+.add-rule {
+  background-color: mediumseagreen;
+  color: white;
+  border: none;
+  justify-content: center;
+  height: 30px;
+  width: 30px;
+  padding: 0;
+  font-size: 12px;
+}
+.enter-category {
+  margin-right: 10px;
+}
+.add-category {
+  background-color: mediumseagreen;
+  color: white;
+  border: none;
+  justify-content: center;
+  height: 30px;
+  width: 30px;
+  padding: 0;
+  font-size: 12px;
+}
+.p-button-danger {
+  background-color: red;
+  color: white;
+  border: none;
+}
+.trash-size {
+  color: white;
+  font-size: 12px;
+  position: relative;
+  z-index: 1;
 }
 </style>

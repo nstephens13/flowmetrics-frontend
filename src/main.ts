@@ -9,11 +9,11 @@ import { createPinia } from 'pinia';
 import InputText from 'primevue/inputtext';
 import Dropdown from 'primevue/dropdown';
 import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
 import router from './router';
 import App from './App.vue';
 import 'primevue/resources/themes/lara-light-indigo/theme.css';
 import 'primevue/resources/primevue.min.css';
-import Column from 'primevue/column';
 
 const app = createApp(App);
 const pinia = createPinia();
