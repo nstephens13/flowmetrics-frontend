@@ -2,8 +2,8 @@ import {
   assert, expect, test, describe, vitest,
 } from 'vitest';
 import fetchSLARules from '../slaService';
-import type { SLACategory } from '@/model/SLACategory';
-import type { SLARule } from '../../model/SLARule';
+import type { SLASubscriber } from '../../model/SLASubscriber';
+import type { SLACategory } from '../../model/SLACategory';
 
 describe('When mock data helper is asked for mock data, there should be correctly constructed mock data object returned ', () => {
   test('loadedSLARules should be an array with valid SLARule Objects', () => {

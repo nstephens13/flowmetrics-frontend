@@ -1,9 +1,9 @@
-import type { SLARule } from '@/model/SLARule';
+import type { SLACategory } from '@/model/SLACategory';
 import SLACategories from './__mockdata__/SLACategories.json';
 import SLADeadlinesObjects from './__mockdata__/SLADeadlines.json';
 
-function fetchSLARules():SLARule[] {
-  const slaRulesToReturn: SLARule[] = [];
+function fetchSLARules():SLACategory[] {
+  const slaRulesToReturn: SLACategory[] = [];
 
   SLACategories.forEach((category) => {
     SLADeadlinesObjects.forEach((deadlineFromFile) => {

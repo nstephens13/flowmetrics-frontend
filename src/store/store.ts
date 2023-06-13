@@ -1,16 +1,16 @@
 import { defineStore } from 'pinia';
-import type { SLACategory } from '@/model/SLACategory';
-import type { SLADeadline } from '@/model/SLADeadline';
+import type { SLASubscriber } from '@/model/SLASubscriber';
 import type { SLARule } from '@/model/SLARule';
+import type { SLACategory } from '@/model/SLACategory';
 
 const useSLAStore = defineStore('sla', {
   state: () => ({
-    categories: [
+    subscriber: [
       { id: 1, name: 'Category 1', description: 'Description 1' },
       { id: 2, name: 'Category 2', description: 'Description 2' },
       { id: 3, name: 'Category 3', description: 'Description 3' },
-    ] as SLACategory[],
-    deadlines: [
+    ] as SLASubscriber[],
+    rules: [
       {
         id: 1, name: 'Deadline 1', durationInDays: 3, expirationDate: new Date('2023-07-15'),
       },
@@ -20,32 +20,32 @@ const useSLAStore = defineStore('sla', {
       {
         id: 3, name: 'Deadline 3', durationInDays: 7, expirationDate: new Date('2023-07-19'),
       },
-    ] as SLADeadline[],
-    slaRules: [] as SLARule[],
+    ] as SLARule[],
+    slaCategories: [] as SLACategory[],
 
   }),
 
   actions: {
-    addCategory(category: SLACategory) {
-      this.categories.push(category);
+    addSubscriber(category: SLASubscriber) {
+      this.subscriber.push(category);
     },
-    addDeadline(deadline: SLADeadline) {
-      this.deadlines.push(deadline);
+    addRule(deadline: SLARule) {
+      this.rules.push(deadline);
     },
-    addSLARule(rule: SLARule) {
-      this.slaRules.push(rule);
+    addSLACategory(rule: SLACategory) {
+      this.slaCategories.push(rule);
     },
-    initializeRules() {
+    initializeCategories() {
       for (let i = 0; i < 5; i++) {
-        const categoryIndex = i % this.categories.length;
-        const deadlineIndex = i % this.deadlines.length;
+        const amountSubscribers = i % this.subscriber.length;
+        const rulesIndex = i % this.rules.length;
 
-        const rule: SLARule = {
-          category: this.categories[categoryIndex],
-          deadline: this.deadlines[deadlineIndex],
+        const category: SLACategory = {
+          subscriber: this.subscriber[amountSubscribers],
+          rule: this.rules[rulesIndex],
         };
 
-        this.addSLARule(rule);
+        this.addSLACategory(category);
       }
     },
   },

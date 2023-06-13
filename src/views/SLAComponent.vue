@@ -3,39 +3,39 @@
         <template #title>SLA Management View</template>
         <template #content>
         <div>
-            <h3>Add SLA Category</h3>
-            <InputText v-model="newCategory" placeholder="Enter category name" />
-            <Button @click="addCategory" label="Add" />
+            <h3>Add SLA Subscriber</h3>
+            <InputText v-model="newSubscriber" placeholder="Enter subscriber name" />
+            <Button @click="addSubscriber" label="Add" />
         </div>
 
         <div>
             <h3>Add SLA Deadline</h3>
-            <InputText v-model="newDeadline" placeholder="Enter deadline name" />
-            <Button @click="addDeadline" label="Add" />
+            <InputText v-model="newRule" placeholder="Enter rule name" />
+            <Button @click="addRule" label="Add" />
         </div>
 
         <div>
-            <h3>Create SLA Rule</h3>
+            <h3>Create SLA Category</h3>
             <Dropdown
-                v-model="selectedCategory"
-                :options="categories"
+                v-model="selectedSubscriber"
+                :options="subscribers"
                 optionLabel="name"
-                placeholder="Select category"
+                placeholder="Select subscriber"
             />
             <Dropdown
-                v-model="selectedDeadline"
-                :options="deadlines"
+                v-model="selectedRule"
+                :options="rules"
                 optionLabel="name"
-                placeholder="Select deadline"
+                placeholder="Select rule"
             />
-            <Button @click="createRule" label="Create" />
+            <Button @click="createCategory" label="Create" />
         </div>
 
         <div>
-            <h3>SLA Rules</h3>
-            <DataTable :value="slaRules">
-                <Column field="category.name" header="Category" />
-                <Column field="deadline.name" header="Deadline" />
+            <h3>SLA Categories</h3>
+            <DataTable :value="categories">
+                <Column field="subscriber.name" header="Subscriber" />
+                <Column field="rule.name" header="Rule" />
             </DataTable>
         </div>
         </template>
@@ -46,9 +46,9 @@
 import { defineComponent, ref, computed } from 'vue';
 import Card from 'primevue/card';
 import useSLAStore from '../store/store';
-import type { SLACategory } from '@/model/SLACategory';
-import type { SLADeadline } from '@/model/SLADeadline';
+import type { SLASubscriber } from '@/model/SLASubscriber';
 import type { SLARule } from '@/model/SLARule';
+import type { SLACategory } from '@/model/SLACategory';
 
 export default defineComponent({
   name: 'SLAComponent',
@@ -60,58 +60,58 @@ export default defineComponent({
   setup() {
     const slaStore = useSLAStore();
 
-    const newCategory = ref('');
-    const newDeadline = ref('');
-    const selectedCategory = ref(null);
-    const selectedDeadline = ref(null);
+    const newSubscriber = ref('');
+    const newRule = ref('');
+    const selectedSubscriber = ref(null);
+    const selectedRule = ref(null);
 
-    slaStore.initializeRules();
+    slaStore.initializeCategories();
 
     // Get categories, deadlines, and rules from the store
-    const categories = computed(() => slaStore.categories);
-    const deadlines = computed(() => slaStore.deadlines);
-    const slaRules = computed(() => slaStore.slaRules);
+    const subscriber = computed(() => slaStore.subscriber);
+    const rules = computed(() => slaStore.rules);
+    const categories = computed(() => slaStore.slaCategories);
 
     // Add a new category to the store
-    const addCategory = () => {
-      const category: SLACategory = { id: null, name: newCategory.value.trim(), description: null };
-      slaStore.addCategory(category);
-      newCategory.value = '';
+    const addSubscriber = () => {
+      const category: SLASubscriber = { id: null, name: newSubscriber.value.trim(), description: null };
+      slaStore.addSubscriber(category);
+      newSubscriber.value = '';
     };
 
     // Add a new deadline to the store
-    const addDeadline = () => {
-      const deadline: SLADeadline = {
-        id: null, name: newDeadline.value.trim(), durationInDays: null, expirationDate: null,
+    const addRule = () => {
+      const deadline: SLARule = {
+        id: null, name: newRule.value.trim(), durationInDays: null, expirationDate: null, maxAssignedEmployees: null,
       };
-      slaStore.addDeadline(deadline);
-      newDeadline.value = '';
+      slaStore.addRule(deadline);
+      newRule.value = '';
     };
 
     // Create a new SLA rule using selected category and deadline
-    const createRule = () => {
-      if (selectedCategory.value && selectedDeadline.value) {
-        const rule: SLARule = {
-          category: selectedCategory.value,
-          deadline: selectedDeadline.value,
+    const createCategory = () => {
+      if (selectedSubscriber.value && selectedRule.value) {
+        const category: SLACategory = {
+          subscriber: selectedSubscriber.value,
+          rule: selectedRule.value,
         };
-        slaStore.addSLARule(rule);
-        selectedCategory.value = null;
-        selectedDeadline.value = null;
+        slaStore.addSLACategory(category);
+        selectedSubscriber.value = null;
+        selectedRule.value = null;
       }
     };
 
     return {
-      newCategory,
-      newDeadline,
-      selectedCategory,
-      selectedDeadline,
+      newSubscriber,
+      newRule,
+      selectedSubscriber,
+      selectedRule,
+      subscribers: subscriber,
+      rules,
+      addSubscriber,
+      addRule,
+      createCategory,
       categories,
-      deadlines,
-      addCategory,
-      addDeadline,
-      createRule,
-      slaRules,
     };
   },
 });
