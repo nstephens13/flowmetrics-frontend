@@ -1,4 +1,4 @@
-import type { Issue } from './Issue';
+import type { IssueIF } from './IssueIF';
 
 /**
  *
@@ -7,9 +7,9 @@ import type { Issue } from './Issue';
  * @prop {string} description the description of the milestone
  * @prop {Issue[]} issues a array of Issues - objects that are assigned to this milestone
  */
-export interface Milestone {
+export interface MilestoneIF {
   id: number
   name: string
   description: string
-  issues: Issue[]
+  issues: IssueIF[]
 }
