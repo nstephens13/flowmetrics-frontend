@@ -13,7 +13,10 @@ describe('Menubar Button should open sidebar', () => {
     global: {
       plugins: [PrimeVue, router],
       components: {
-        Button, Menu, Menubar, Sidebar,
+        Button,
+        Menu,
+        Menubar,
+        Sidebar,
       },
       stubs: {
         teleport: false,

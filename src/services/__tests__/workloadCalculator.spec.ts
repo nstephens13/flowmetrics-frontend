@@ -6,6 +6,7 @@ import calculateWorkload from '../workloadCalculator';
 import type { EmployeeIF } from '../../model/EmployeeIF';
 import type { ProjectIF } from '../../model/ProjectIF';
 import type { IssueIF } from '../../model/IssueIF';
+import type { IssueDataIF } from '../../model/IssueDataIF';
 
 import employeeJson from '../../assets/__mockdata__/Employees.json';
 
@@ -91,17 +92,15 @@ describe('Workload Calculator should calculate Workload correctly for Mock Data 
   // checking the calculations, the expected value come from the prepared employees array,
   // the actual value is from the result
   test('workload should contain correct key value pairs', () => {
-    workload.forEach(
-      (tuple: { openIssues: number; closedIssues: number }, employee: EmployeeIF) => {
-        const openIssuesList = [1, 2, 3, 1]; // expected values for open issues from json file
-        employees.forEach((emp) => {
-          if (employee.id === emp.id) {
-            assert.deepEqual<EmployeeIF>(employee, emp);
-            expect(tuple.openIssues).eq(openIssuesList[employee.id - 1]);
-          }
-        });
-      },
-    );
+    workload.forEach((issueData: IssueDataIF, employee: EmployeeIF) => {
+      const openIssuesList = [1, 2, 3, 1]; // expected values for open issues from json file
+      employees.forEach((emp) => {
+        if (employee.id === emp.id) {
+          assert.deepEqual<EmployeeIF>(employee, emp);
+          expect(issueData.openIssues).eq(openIssuesList[employee.id - 1]);
+        }
+      });
+    });
   });
 });
 
@@ -141,25 +140,20 @@ describe('Workload Calculator should calculate Workload correctly for Mock Data 
   // checking the calculations, the expected value comes from the prepared employees array,
   // the actual value is from the result
   test('workload should contain correct key-value pairs', () => {
-    workload.forEach(
-      (
-        tuple: { openIssues: number; inProgressIssues: number; closedIssues: number },
-        employee: EmployeeIF,
-      ) => {
-        const openIssuesList = [0, 1, 0, 0]; // expected values for open issues
-        const inProgressIssuesList = [1, 0, 1, 0]; // expected values for in-progress issues
-        const closedIssuesList = [0, 1, 2, 1]; // expected values for closed issues
+    workload.forEach((issueData: IssueDataIF, employee: EmployeeIF) => {
+      const openIssuesList = [0, 1, 0, 0]; // expected values for open issues
+      const inProgressIssuesList = [1, 0, 1, 0]; // expected values for in-progress issues
+      const closedIssuesList = [0, 1, 2, 1]; // expected values for closed issues
 
-        employees.forEach((emp) => {
-          if (employee.id === emp.id) {
-            expect(employee).toEqual(emp);
-            expect(tuple.openIssues).toBe(openIssuesList[employee.id - 1]);
-            expect(tuple.inProgressIssues).toBe(inProgressIssuesList[employee.id - 1]);
-            expect(tuple.closedIssues).toBe(closedIssuesList[employee.id - 1]);
-          }
-        });
-      },
-    );
+      employees.forEach((emp) => {
+        if (employee.id === emp.id) {
+          expect(employee).toEqual(emp);
+          expect(issueData.openIssues).toBe(openIssuesList[employee.id - 1]);
+          expect(issueData.inProgressIssues).toBe(inProgressIssuesList[employee.id - 1]);
+          expect(issueData.closedIssues).toBe(closedIssuesList[employee.id - 1]);
+        }
+      });
+    });
   });
 });
 // Write at least tests that fixes the expected behaviour,

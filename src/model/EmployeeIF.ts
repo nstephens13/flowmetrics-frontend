@@ -12,5 +12,4 @@ export interface EmployeeIF {
   firstName: string
   lastName: string
   assignedIssues: IssueIF[]
-
 }

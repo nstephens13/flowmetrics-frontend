@@ -2,6 +2,7 @@ import type { ProjectIF } from '@/model/ProjectIF';
 import type { EmployeeIF } from '@/model/EmployeeIF';
 import type { IssueIF } from '@/model/IssueIF';
 import type { MilestoneIF } from '@/model/MilestoneIF';
+import type { IssueDataIF } from '@/model/IssueDataIF';
 import { Status } from '../../model/IssueIF';
 
 import employeeJson from './Employees.json';
@@ -57,38 +58,38 @@ function getMockData(dataset = 3): ProjectIF {
   switch (dataset) {
     case 1: {
       [employeesArray, issuesArray, milestones] = loadArraysFromFile();
-      [issues, employees] = assignIssueToEmployee(1, 1, issuesArray, employeesArray);
+      [issuesArray, employees] = assignIssueToEmployee(1, 1, issuesArray, employeesArray);
 
       return {
         id: 1,
         name: 'Mocking Bird',
         description: 'first mock dataset',
-        milestones,
-        issues,
+        milestones: milestones,
+        issues: issuesArray,
       };
     }
 
     case 2: {
       [employeesArray, issuesArray, milestones] = loadArraysFromFile();
-      [issues, employees] = assignIssueToEmployee(0, 0, issuesArray, employeesArray);
-      [issues, employees] = assignIssueToEmployee(1, 1, issues, employees);
-      [issues, employees] = assignIssueToEmployee(2, 1, issues, employees);
-      [issues, employees] = assignIssueToEmployee(3, 2, issues, employees);
-      [issues, employees] = assignIssueToEmployee(4, 2, issues, employees);
-      [issues, employees] = assignIssueToEmployee(5, 2, issues, employees);
-      [issues, employees] = assignIssueToEmployee(6, 3, issues, employees);
+      [issuesArray, employees] = assignIssueToEmployee(0, 0, issuesArray, employeesArray);
+      [issuesArray, employees] = assignIssueToEmployee(1, 1, issuesArray, employees);
+      [issuesArray, employees] = assignIssueToEmployee(2, 1, issuesArray, employees);
+      [issuesArray, employees] = assignIssueToEmployee(3, 2, issuesArray, employees);
+      [issuesArray, employees] = assignIssueToEmployee(4, 2, issuesArray, employees);
+      [issuesArray, employees] = assignIssueToEmployee(5, 2, issuesArray, employees);
+      [issuesArray, employees] = assignIssueToEmployee(6, 3, issuesArray, employees);
 
-      milestones = assignIssueToMilestone(0, 0, milestones, issues);
-      milestones = assignIssueToMilestone(1, 0, milestones, issues);
-      milestones = assignIssueToMilestone(2, 1, milestones, issues);
-      milestones = assignIssueToMilestone(3, 1, milestones, issues);
+      milestones = assignIssueToMilestone(0, 0, milestones, issuesArray);
+      milestones = assignIssueToMilestone(1, 0, milestones, issuesArray);
+      milestones = assignIssueToMilestone(2, 1, milestones, issuesArray);
+      milestones = assignIssueToMilestone(3, 1, milestones, issuesArray);
 
       return {
         id: 2,
         name: 'Mocking Bird',
         description: 'second mock dataset',
-        milestones,
-        issues,
+        milestones: milestones,
+        issues: issuesArray,
       };
     }
 
