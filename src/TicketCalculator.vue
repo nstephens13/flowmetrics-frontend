@@ -1,11 +1,11 @@
-import Issue from './Issue';
-
 <template>
 <Desktop1 v-bind="desktop1Data" />
+<Desktop1 :desktop1Data="desktop1Data" />
 </template>
 
 <script>
 import Desktop1 from "@/components/Desktop1.vue";
+import Issue from "@/path/to/Issue";
 
 export default {
   name: 'App',
