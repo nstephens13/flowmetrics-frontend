@@ -11,6 +11,7 @@ import InputText from 'primevue/inputtext';
 import Sidebar from 'primevue/sidebar';
 import Tree from 'primevue/tree';
 import Card from 'primevue/card';
+import Dropdown from 'primevue/dropdown';
 
 import router from './router';
 import App from './App.vue';
@@ -31,5 +32,6 @@ app.component('InputText', InputText);
 app.component('Sidebar', Sidebar);
 app.component('Tree', Tree);
 app.component('Card', Card);
+app.component('Dropdown', Dropdown);
 
 app.mount('#app');
