@@ -32,6 +32,11 @@
                     <Column field="rule.durationInDays" header="Duration (Days)" />
                     <Column field="rule.expirationDate" header="Expiration Date" />
                     <Column field="rule.maxAssignedEmployees" header="Max Assigned Employees" />
+                    <Column header="Actions">
+                        <template #body="rowData">
+                            <Button icon="pi pi-trash" class="p-button-danger" @click="deleteCategory(rowData.data)"></Button>
+                        </template>
+                    </Column>
                 </DataTable>
             </div>
         </template>
@@ -106,6 +111,10 @@ export default defineComponent({
         categoryName.value = '';
       }
     };
+    const deleteCategory = (category: SLACategory) => {
+      slaStore.deleteSLACategory(category);
+    };
+    // Template for the delete button in each row
 
     // Options for the max assigned employees dropdown
     const maxAssignedEmployeesOptions = [1, 2, 3, 4, 5];
@@ -124,6 +133,7 @@ export default defineComponent({
       addRule,
       createCategory,
       categories,
+      deleteCategory,
     };
   },
 });
