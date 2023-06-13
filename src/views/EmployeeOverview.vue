@@ -79,15 +79,18 @@ export default defineComponent({
 
 .icon-container {
     display: inline-flex;
-    align-items: center;
+    align-items: center; /* Center vertically */
     margin-bottom: 40px;
     margin-right: 40px;
+    justify-content: center; /* Center horizontally */
+
 }
 
 .user-details {
     display: flex;
-    align-items: center;
+    align-items: center; /* Center vertically */
     flex-direction: column;
+    justify-content: center; /* Center horizontally */
 }
 
 /* Employee icon and background */
