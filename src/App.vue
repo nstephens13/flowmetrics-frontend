@@ -4,13 +4,12 @@
     <div class="wrapper">
       <HelloWorld msg="You did it!" />
       <nav>
-        <RouterLink to="/" style="font-family: Arial, sans-serif; font-size: 16px">Home</RouterLink>
+        <!--RouterLink to="/" style="font-family: Arial, sans-serif; font-size: 16px">Home
+        </RouterLink>
         <RouterLink to="/about" style="font-family: Arial, sans-serif; font-size: 16px"
-          >About</RouterLink
-        >
+          >About</RouterLink>
         <RouterLink to="/employee-overview" style="font-family: Arial, sans-serif; font-size: 16px"
-          >Employee Overview</RouterLink
-        >
+          >Employee Overview</RouterLink-->
       </nav>
     </div>
   </body>

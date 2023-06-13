@@ -39,7 +39,7 @@ const items = ref([
   {
     label: 'Employee Overview',
     icon: 'pi pi-fw pi-users',
-    to: '/',
+    to: '/employee-overview',
   },
   {
     label: 'Create Rules',
