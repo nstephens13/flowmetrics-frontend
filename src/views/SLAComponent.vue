@@ -32,7 +32,7 @@
                     <Column field="rule.durationInDays" header="Duration (Days)" />
                     <Column field="rule.expirationDate" header="Expiration Date" />
                     <Column field="rule.maxAssignedEmployees" header="Max Assigned Employees" />
-                    <Column header="Actions">
+                    <Column header="Delete">
                         <template #body="rowData">
                             <Button icon="pi pi-trash" class="p-button-danger" @click="deleteCategory(rowData.data)"></Button>
                         </template>
