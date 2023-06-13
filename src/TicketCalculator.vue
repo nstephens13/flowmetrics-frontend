@@ -38,17 +38,11 @@ export default {
     return {
       desktop1Data: {
         issues: [],
-        openIssuesCount: 0,
-        inProgressIssuesCount: 0,
-        closedIssuesCount: 0,
       },
     };
   },
   created() {
     this.desktop1Data.issues = getArrayOfIssues();
-    this.desktop1Data.openIssuesCount = this.countOpenIssues(this.desktop1Data.issues);
-    this.desktop1Data.inProgressIssuesCount = this.countInProgressIssues(this.desktop1Data.issues);
-    this.desktop1Data.closedIssuesCount = this.countClosedIssues(this.desktop1Data.issues);
   },
   computed: {
     remainingTime() {
@@ -61,15 +55,6 @@ export default {
     getAssignedToName,
     getStatus,
     getTicketID,
-    countOpenIssues(issues) {
-      return issues.filter((issue) => issue.status === Status.Open).length;
-    },
-    countInProgressIssues(issues) {
-      return issues.filter((issue) => issue.status === Status.InProgress).length;
-    },
-    countClosedIssues(issues) {
-      return issues.filter((issue) => issue.status === Status.Closed).length;
-    },
 
   },
 
@@ -98,23 +83,22 @@ const vChipData = {
 };
 
 const ringOpenData = {
-  span: countOpenIssues(getArrayOfIssues()),
+  span: 24,
   name: 'Open Tickets',
 };
 
 const ringImProgressData = {
-  span: countInProgressIssues(getArrayOfIssues()),
+  span: 30,
   name: 'In Progress',
-// className: "ring_im_progress",
 };
 
 const ringClosedData = {
-  span: countClosedIssues(getArrayOfIssues()),
+  span: 46,
   name: 'Closed Tickets',
 };
 
 const ringTotalData = {
-  span: getArrayOfIssues().length,
+  span: 100,
   name: 'Total amount',
   className: 'ring_total',
 };
