@@ -1,6 +1,8 @@
 import './assets/main.css';
 import { createApp } from 'vue';
+
 import PrimeVue from 'primevue/config';
+import Card from 'primevue/card';
 import Button from 'primevue/button';
 import Calendar from 'primevue/calendar';
 import Menubar from 'primevue/menubar';
@@ -15,10 +17,6 @@ import App from './App.vue';
 import 'primevue/resources/themes/lara-light-indigo/theme.css';
 import 'primevue/resources/primevue.min.css';
 import 'primeicons/primeicons.css';
-import 'primeicons/primeicons.css';
-import Card from 'primevue/card';
-import router from './router';
-import App from './App.vue';
 
 const app = createApp(App);
 app.use(PrimeVue);

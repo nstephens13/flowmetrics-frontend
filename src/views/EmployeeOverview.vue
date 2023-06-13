@@ -34,21 +34,12 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import Card from 'primevue/card';
 import type { EmployeeIF } from '@/model/EmployeeIF';
 import calculateWorkload from '../services/workloadCalculator';
 import { calculateUserBackgroundStyle, getHeightForStatisticBoxes } from './EmployeeOverviewHelper';
 
 export default defineComponent({
   name: 'EmployeeOverview',
-  // Component options and logic
-  components: {
-    Card,
-  },
-
-  // Component properties
-  props: {},
-
   // Computed property for dynamic styling
   computed: {
     employeeMap: (): Map<EmployeeIF,
