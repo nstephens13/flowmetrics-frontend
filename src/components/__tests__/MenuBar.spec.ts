@@ -24,6 +24,7 @@ describe('Menubar Button should open sidebar', () => {
   test('it mounts', () => {
     expect(wrapper.exists()).toBe(true);
     expect(wrapper.getComponent(Menubar).isVisible()).toBe(true);
+    expect(wrapper.getComponent(Button).isVisible()).toBe(true);
     expect(wrapper.isVisible()).toBe(true);
   });
 
@@ -39,5 +40,15 @@ describe('Menubar Button should open sidebar', () => {
 
     await button.trigger('click');
     expect(wrapper.getComponent(Sidebar).vm.$props.visible).toBe(false);
+  });
+
+  test('sidebar menu three items', async () => {
+    const menubar = wrapper.findComponent(Menu);
+    expect(menubar.exists()).toBe(false);
+    const button = wrapper.getComponent(Menubar).findComponent(Button);
+    await button.trigger('click');
+    wrapper.findComponent(Menu);
+    const menu = await wrapper.getComponent(Sidebar).getComponent(Menu);
+    expect(menu.findAll('.p-menuitem').length).toBe(3);
   });
 });
