@@ -1,6 +1,6 @@
 <template>
   <div class="card">
-    <Card style="width: 50 em;">
+    <Card>
       <template #title> Project Overview </template>
       <template #content>
         <div>
@@ -24,12 +24,12 @@
       <template #title> Tickets Overview </template>
       <template #content>
         <div class="card">
-        <DataTable :value="selectedProject.issues" showGridlines>
+        <DataTable :value="selectedProjectIssues" showGridlines>
             <Column field="id" header="Ticket-ID"></Column>
             <Column field="name" header="Name"></Column>
             <Column field="description" header="Description"></Column>
-            <Column field="assignedTo" header="Assigned To"></Column>
-            <Column field="createdBy" header="Created by"></Column>
+<!--            <Column field="assignedTo" header="Assigned To"></Column>-->
+<!--            <Column field="createdBy" header="Created by"></Column>-->
             <Column field="createdAt" header="Created on"></Column>
             <Column field="closedAt" header="Closed on"></Column>
             <Column field="dueTo" header="Due on"></Column>
@@ -41,38 +41,38 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import { ref } from 'vue';
-import type { ProjectIF } from '../model/ProjectIF';
-import type { IssueIF } from '../model/IssueIF';
+<script lang="ts">
+import { defineComponent } from 'vue';
+import type { ProjectIF } from '@/model/ProjectIF';
+
 import getMockData from '../assets/__mockdata__/mockDataComposer';
-const emptyProject: ProjectIF = {
-  id: 0,
-  name: '',
-  description: '',
-  milestones: [],
-  issues: [],
-};
-/*
-const emptyIssue: IssueIF = {
-  id: 0,
-  name: '',
-  description: '',
-  assignedTo: [],
-  createdBy: [],
-  createdAt: "2019-01-16",
-  closedAt: "2019-01-16",
-  dueTo: "2019-01-16",
-  status: [],
-};
-*/
-const selectedProject = ref(emptyProject);
-const projects = ref([
-  getMockData(1),
-  getMockData(2),
-  getMockData(3),
-  getMockData(53),
-  getMockData(54),
-  getMockData(55),
-]);
+import type { IssueIF } from '@/model/IssueIF';
+
+export default defineComponent({
+  name: 'ProjectDescriptionPanel',
+  data() {
+    return {
+      selectedProject: {
+        id: 0,
+        name: '',
+        description: '',
+        milestones: [],
+        issues: [],
+      } as ProjectIF,
+      projects: [
+        getMockData(1),
+        getMockData(2),
+        getMockData(3),
+        getMockData(53),
+        getMockData(54),
+        getMockData(55),
+      ] as ProjectIF[],
+    };
+  },
+  computed: {
+    selectedProjectIssues(): IssueIF[] {
+      return this.selectedProject.issues;
+    },
+  },
+});
 </script>
