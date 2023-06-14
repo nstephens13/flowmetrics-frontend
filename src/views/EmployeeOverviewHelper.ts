@@ -3,15 +3,17 @@ import type { EmployeeIF } from '@/model/EmployeeIF';
 export function getHeightForStatisticBoxes(count: number) {
   const minHeight = 5; // Minimum height for the box
   const maxHeight = 80; // Maximum height for the box
-  const height = Math.min(minHeight + count * 5, maxHeight); // Calculate the height based on the count
-  return height;
+  // Calculate the height based on the count
+  return Math.min(minHeight + count * 5, maxHeight);
 }
 
 export function calculateUserBackgroundStyle(employee: EmployeeIF) {
-  const firstNameLength = employee.firstName.length;
-  const lastNameLength = employee.lastName.length;
+  const firstNameLength = employee.firstName.trim().length;
+  const lastNameLength = employee.lastName.trim().length;
   const nameLength = (firstNameLength + lastNameLength) * 10;
+  // Calculate width of blue background behind username
   const width = nameLength + 10; // Add 10 pixels for padding
-  const height = 20 + (nameLength > 0 ? 10 : 0); // Adjust the height based on name length
+  // Calculate height of blue background behind username
+  const height = 10 + (nameLength > 0 ? 10 : 0);
   return { width, height };
 }
