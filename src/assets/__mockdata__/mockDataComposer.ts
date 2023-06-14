@@ -165,9 +165,9 @@ function getMockData(dataset = 3): ProjectIF {
         }
 
         issuesForProject.push({
-          id: i,
-          name: faker.hacker.phrase(),
-          description: faker.company.catchPhrase(),
+          id: i + 1,
+          name: faker.company.catchPhrase(),
+          description: faker.hacker.phrase(),
           closedAt,
           status,
           assignedTo: null,
