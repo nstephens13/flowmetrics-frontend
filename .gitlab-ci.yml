@@ -51,10 +51,24 @@ stages:
   extends:
     - .frontendJob
 
+"Frontend-Build":
+  stage: Build
+  variables:
+    IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
+  script:
+    - docker build -t $IMAGE_TAG .
+    - docker push $IMAGE_TAG
+  rules:
+    - if: '$CI_COMMIT_REF_NAME != "main"'
+      when: never
+    - if: '$CI_COMMIT_REF_NAME != "development"'
+      when: never
+    - changes:
+        - ".gitlab-ci.yml"
+
 "Frontend-Deployment":
   stage: Deploy
   script:
     - npm ci
-    - npm run build
   extends:
     - .frontendJob
