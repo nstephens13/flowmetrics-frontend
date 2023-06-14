@@ -1,6 +1,8 @@
 stages:
-  - Test+Lint
+  - Lint
+  - Test
   - Build
+  - Deploy
 
 .frontendJob:
   image: node:20.2.0-alpine3.18
