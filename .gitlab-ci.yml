@@ -58,13 +58,10 @@ stages:
   script:
     - docker build -t $IMAGE_TAG .
     - docker push $IMAGE_TAG
-  rules:
-    - if: '$CI_COMMIT_BRANCH != "main"'
-      when: never
-    - if: '$CI_COMMIT_BRANCH != "development"'
-      when: never
-    - if: '$CI_COMMIT_BRANCH != "00-test-runner-and-pipeline"'
-      when: never
+  only:
+    - main
+    - development
+    - 00-test-runner-and-pipeline
 
 "Frontend-Deployment":
   stage: Deploy
