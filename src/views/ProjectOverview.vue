@@ -1,10 +1,5 @@
 <template>
-  <ProjectDescriptionPanel
-    projectName="Project Name"
-    openTickets="5"
-    closedTickets="10"
-    inProgressTickets="16"
-  ></ProjectDescriptionPanel>
+  <ProjectDescriptionPanel></ProjectDescriptionPanel>
 </template>
 
 <script lang="ts">
