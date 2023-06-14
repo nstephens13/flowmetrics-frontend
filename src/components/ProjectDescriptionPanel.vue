@@ -24,17 +24,25 @@
       <template #title> Tickets Overview </template>
       <template #content>
         <div class="card">
-        <DataTable :value="selectedProjectIssues" showGridlines>
+          <DataTable :value="selectedProjectIssues" showGridlines>
             <Column field="id" header="Ticket-ID"></Column>
             <Column field="name" header="Name"></Column>
             <Column field="description" header="Description"></Column>
-<!--            <Column field="assignedTo" header="Assigned To"></Column>-->
-<!--            <Column field="createdBy" header="Created by"></Column>-->
+            <Column field="assignedTo" header="Assigned To">
+              <template #body="slotProps">
+                {{
+                  slotProps.data.assignedTo.firstName +
+                  ' ' +
+                  slotProps.data.assignedTo.lastName
+                }}
+              </template>
+            </Column>
+            <Column field="createdBy" header="Created by"></Column>
             <Column field="createdAt" header="Created on"></Column>
             <Column field="closedAt" header="Closed on"></Column>
             <Column field="dueTo" header="Due on"></Column>
             <Column field="status" header="Status"></Column>
-        </DataTable>
+          </DataTable>
         </div>
       </template>
     </Card>
