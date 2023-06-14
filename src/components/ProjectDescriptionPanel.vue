@@ -2,6 +2,7 @@
   <div class="card">
     <Card>
       <template #title>
+        <h3> Project Overview</h3>
         <div class="card flex justify-content-center">
           <Dropdown
             v-model="selectedProject"
@@ -13,13 +14,10 @@
         </div>
       </template>
       <template #content>
-        <h4>ID: {{ selectedProject.id }}</h4>
-        <h4>description: {{ selectedProject.description }}</h4>
+        <h4>Name: {{ selectedProject.name }}</h4>
+        <h4>Project-ID: {{ selectedProject.id }}</h4>
+        <h4>Description: {{ selectedProject.description }}</h4>
         <h4>total issues : {{ selectedProject.issues.length }}</h4>
-      </template>
-      <template #footer>
-        <Button label="Jira"></Button>
-        <Button label="Confluence" severity="secondary" style="margin-left: 0.5em"></Button>
       </template>
     </Card>
   </div>
