@@ -21,7 +21,7 @@ stages:
     - changes:
         - ".gitlab-ci.yml"
 
-######## Frontend
+######## Frontend Pipeline
 "Frontend-Lint":
   stage: Lint
   script:
