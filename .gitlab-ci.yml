@@ -20,24 +20,37 @@ stages:
         - ".gitlab-ci.yml"
 
 ######## Frontend
-Frontend-Test:
-  stage: Test+Lint
-  script:
-    - npm ci
-    - npm run test:unit
-  extends:
-    - .frontendJob
-
-Frontend-Lint:
-  stage: Test+Lint
+"Frontend-Lint":
+  stage: Lint
   script:
     - npm ci
     - npm run lint:no-fix
   extends:
     - .frontendJob
 
+"Frontend-Test":
+  stage: Test
+  script:
+    - npm ci
+    - npm run test:pipeline
+  artifacts:
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage/cobertura-coverage.xml
+  extends:
+    - .frontendJob
+
 "Frontend-Build":
   stage: Build
+  script:
+    - npm ci
+    - npm run build
+  extends:
+    - .frontendJob
+
+"Frontend-Deployment":
+  stage: Deploy
   script:
     - npm ci
     - npm run build
