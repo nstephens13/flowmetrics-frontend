@@ -7,7 +7,6 @@
       </template>
       <template #content>
         <Panel>
-          <template #header>{{ selectedProject.name }}</template>
           <template #icons>
             <Dropdown
             v-model="selectedProject"
