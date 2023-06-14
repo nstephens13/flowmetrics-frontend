@@ -1,27 +1,37 @@
 <template>
-  <div class="card">
+  <div class="card" style="position: relative;">
     <Card>
-      <template #title> Project Overview </template>
+      <template #title>
+        Project Overview
+        <Divider></Divider>
+      </template>
       <template #content>
-        <div>
-          <Dropdown
+        <Panel>
+          <template #header>{{ selectedProject.name }}</template>
+          <template #icons>
+            <Dropdown
             v-model="selectedProject"
             :options="projects"
             optionLabel="name"
             placeholder="Select a project"
             class="w-full md:w-14rem"
-          />
-        </div>
-        <h4>Name: {{ selectedProject.name }}</h4>
-        <h4>Project-ID: {{ selectedProject.id }}</h4>
-        <h4>Description: {{ selectedProject.description }}</h4>
-        <h4>Total issues : {{ selectedProject.issues.length }}</h4>
+            />
+          </template>
+          <template #default>
+            Project-ID: {{ selectedProject.id }}<br>
+            Description: {{ selectedProject.description }}<br>
+            Total issues : {{ selectedProject.issues.length }}<br>
+          </template>
+        </Panel>
       </template>
     </Card>
   </div>
   <div class="card">
     <Card>
-      <template #title> Tickets Overview </template>
+      <template #title>
+        Tickets
+        <Divider></Divider>
+      </template>
       <template #content>
         <div class="card">
         <DataTable :value="selectedProjectIssues" showGridlines>
@@ -54,7 +64,7 @@ export default defineComponent({
     return {
       selectedProject: {
         id: 0,
-        name: '',
+        name: 'Project_Name',
         description: '',
         milestones: [],
         issues: [],
@@ -76,3 +86,9 @@ export default defineComponent({
   },
 });
 </script>
+<style scoped>
+.p-card{
+  margin: 15px;
+  box-shadow: none;
+}
+</style>
