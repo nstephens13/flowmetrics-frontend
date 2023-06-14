@@ -59,14 +59,12 @@ stages:
     - docker build -t $IMAGE_TAG .
     - docker push $IMAGE_TAG
   rules:
-    - if: '$CI_COMMIT_REF_NAME != "main"'
+    - if: '$CI_COMMIT_BRANCH != "main"'
       when: never
-    - if: '$CI_COMMIT_REF_NAME != "development"'
+    - if: '$CI_COMMIT_BRANCH != "development"'
       when: never
-    - if: '$CI_COMMIT_REF_NAME != "00-test-runner-and-pipeline"'
+    - if: '$CI_COMMIT_BRANCH != "00-test-runner-and-pipeline"'
       when: never
-    - changes:
-        - ".gitlab-ci.yml"
 
 "Frontend-Deployment":
   stage: Deploy
