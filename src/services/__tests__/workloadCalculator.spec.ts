@@ -1,16 +1,18 @@
 import {
   assert, expect, test, describe,
 } from 'vitest';
-import { getMockData, loadDataFromFile } from '../__mockdata__/mockDataComposer';
+import getMockData from '../../assets/__mockdata__/mockDataComposer';
 import calculateWorkload from '../workloadCalculator';
-import type { Employee } from '../../model/Employee';
-import type { Project } from '../../model/Project';
-import type { Issue } from '../../model/Issue';
+import type { EmployeeIF } from '../../model/EmployeeIF';
+import type { ProjectIF } from '../../model/ProjectIF';
+import type { IssueIF } from '../../model/IssueIF';
+
+import employeeJson from '../../assets/__mockdata__/Employees.json';
 
 // Just a Helper Function to create my expected Values to compare with real values
 function assignIssue(
-  project: Project,
-  employees: Employee[],
+  project: ProjectIF,
+  employees: EmployeeIF[],
   issueNumber: number,
   employeeNumber: number,
 ) {
@@ -22,8 +24,8 @@ function assignIssue(
 describe('When mock data helper is asked for mock data, there should be correctly constructed mock data object returned ', () => {
   // given and when togehter, scroll to next test to see a better example
   // given+when
-  const project: Project = getMockData(1);
-  const loadedIssues: Issue[] = project.issues;
+  const project: ProjectIF = getMockData(1);
+  const loadedIssues: IssueIF[] = project.issues;
 
   // investigate the result
   // then
@@ -33,10 +35,10 @@ describe('When mock data helper is asked for mock data, there should be correctl
   });
 
   test('Each item in loadedIssues should be a valid Issue object', () => {
-    let check: boolean = false;
-    let oneFail: boolean = false;
+    let check = false;
+    let oneFail = false;
 
-    loadedIssues.forEach((issue: Issue) => {
+    loadedIssues.forEach((issue: IssueIF) => {
       if (
         typeof issue.id === 'number'
         && typeof issue.name === 'string'
@@ -58,9 +60,7 @@ describe('Workload Calculator should calculate Workload correctly for Mock Data 
 
   // given
   const project = getMockData(2);
-  const employees: Employee[] = loadDataFromFile<Employee>(
-    'src/services/__mockdata__/Employees.json',
-  );
+  const employees: EmployeeIF[] = structuredClone(employeeJson) as EmployeeIF[];
 
   // assigning the issues to my own employee array as in dataset 2 just for deep equal comparison
   assignIssue(project, employees, 0, 0);
@@ -91,27 +91,84 @@ describe('Workload Calculator should calculate Workload correctly for Mock Data 
   // checking the calculations, the expected value come from the prepared employees array,
   // the actual value is from the result
   test('workload should contain correct key value pairs', () => {
-    workload.forEach((tuple: { openIssues: number; closedIssues: number }, employee: Employee) => {
-      const openIssuesList = [1, 2, 3, 1]; // expected values for open issues from json file
-      employees.forEach((emp) => {
-        if (employee.id === emp.id) {
-          assert.deepEqual<Employee>(employee, emp);
-          expect(tuple.openIssues).eq(openIssuesList[employee.id - 1]);
-        }
-      });
-    });
+    workload.forEach(
+      (tuple: { openIssues: number; closedIssues: number }, employee: EmployeeIF) => {
+        const openIssuesList = [1, 2, 3, 1]; // expected values for open issues from json file
+        employees.forEach((emp) => {
+          if (employee.id === emp.id) {
+            assert.deepEqual<EmployeeIF>(employee, emp);
+            expect(tuple.openIssues).eq(openIssuesList[employee.id - 1]);
+          }
+        });
+      },
+    );
   });
 });
 
+describe('Workload Calculator should calculate Workload correctly for Mock Data Set 55', () => {
+  // preparing my data structure that I need as a parameter in the tested function
+
+  // given
+  const project = getMockData(55);
+  const employees: EmployeeIF[] = structuredClone(employeeJson) as EmployeeIF[];
+
+  // assigning the issues to my own employee array as in dataset 2 just for deep equal comparison
+  assignIssue(project, employees, 0, 0);
+  assignIssue(project, employees, 1, 1);
+  assignIssue(project, employees, 2, 1);
+  assignIssue(project, employees, 3, 2);
+  assignIssue(project, employees, 4, 2);
+  assignIssue(project, employees, 5, 2);
+  assignIssue(project, employees, 6, 3);
+
+  // calling the function that is being tested
+
+  // when
+  const workload = calculateWorkload(project);
+
+  // inspecting the result
+
+  // then
+
+  test('workload should be a Map', () => {
+    expect(workload).toBeInstanceOf(Map);
+  });
+
+  test('map should only contain four key-value pairs', () => {
+    expect(workload.size).toBe(4);
+  });
+
+  // checking the calculations, the expected value comes from the prepared employees array,
+  // the actual value is from the result
+  test('workload should contain correct key-value pairs', () => {
+    workload.forEach(
+      (
+        tuple: { openIssues: number; inProgressIssues: number; closedIssues: number },
+        employee: EmployeeIF,
+      ) => {
+        const openIssuesList = [0, 1, 0, 0]; // expected values for open issues
+        const inProgressIssuesList = [1, 0, 1, 0]; // expected values for in-progress issues
+        const closedIssuesList = [0, 1, 2, 1]; // expected values for closed issues
+
+        employees.forEach((emp) => {
+          if (employee.id === emp.id) {
+            expect(employee).toEqual(emp);
+            expect(tuple.openIssues).toBe(openIssuesList[employee.id - 1]);
+            expect(tuple.inProgressIssues).toBe(inProgressIssuesList[employee.id - 1]);
+            expect(tuple.closedIssues).toBe(closedIssuesList[employee.id - 1]);
+          }
+        });
+      },
+    );
+  });
+});
 // Write at least tests that fixes the expected behaviour,
 // that you can see when changes in code broke something
 
 describe('Workload Calculator should calculate Workload correctly for Mock Data Set 1 ', () => {
   // given
   const project = getMockData(1);
-  const employees: Employee[] = loadDataFromFile<Employee>(
-    'src/services/__mockdata__/Employees.json',
-  );
+  const employees: EmployeeIF[] = employeeJson as EmployeeIF[];
 
   // when
   const workload = calculateWorkload(project);
@@ -131,7 +188,7 @@ describe('Workload Calculator should calculate Workload correctly for Mock Data 
 
   // then
   test('workload should contain correct values', () => {
-    assert.deepEqual<Employee>(employee, employees[1]);
+    assert.deepEqual<EmployeeIF>(employee, employees[1]);
     expect(workload.get(employee)?.openIssues).eq(1);
   });
 });
