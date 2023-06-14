@@ -125,9 +125,7 @@ function getArrayOfIssues(): Issue[] {
     dueTo: new Date('2023-06-25'),
     status: Status.InProgress,
   },
-    // extra data
-    /*
-    {
+  {
     id: 654353,
     name: 'Issue 6',
     description: 'This is the sixth issue',
@@ -200,7 +198,6 @@ function getArrayOfIssues(): Issue[] {
     dueTo: new Date('2023-07-20'),
     status: Status.InProgress,
   },
-  */
   ];
 
   // map method to transform array of IssueIF objects into an array of Issue objects
@@ -251,10 +248,22 @@ function getTimeLeft(issue: Issue): number | null {
   }
   return null;
 }
+const countIssuesByStatus = (arr: Issue[], status: Status): number => arr.filter(issue => issue.status === status).length;
+
+// Function to count the total number of "Open" issues
+const countOpenIssues = (arr: Issue[]): number => countIssuesByStatus(arr, Status.Open);
+
+// Function to count the total number of "Closed" issues
+const countClosedIssues = (arr: Issue[]): number => countIssuesByStatus(arr, Status.Closed);
+
+// Function to count the total number of "In Progress" issues
+const countInProgressIssues = (arr: Issue[]): number => countIssuesByStatus(arr, Status.InProgress);
+
 
 // export of data array and remaintime for ticket calculation
 export {
   Issue, getArrayOfIssues, getTimeLeft, getFormattedDate,
-  getAssignedToName, getStatus, getTicketID,
+  getAssignedToName, getStatus, getTicketID, countClosedIssues, countInProgressIssues,
+  countOpenIssues,
 
 };
