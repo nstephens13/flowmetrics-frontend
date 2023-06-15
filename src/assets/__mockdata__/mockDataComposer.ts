@@ -159,6 +159,7 @@ function getMockData(dataset = 3): ProjectIF {
         issues: [],
       };
     }
+
     case 55: {
       const { employeesArray, issuesArray, milestones } = loadArraysFromFile();
 
@@ -200,4 +201,5 @@ function getMockData(dataset = 3): ProjectIF {
     }
   }
 }
+
 export default getMockData;

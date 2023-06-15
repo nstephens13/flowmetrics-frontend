@@ -41,9 +41,9 @@ const items = ref([
     to: '/employee-overview',
   },
   {
-    label: 'Create Rules',
+    label: 'Create SLA Rules',
     icon: 'pi pi-fw pi-filter',
-    to: '/about',
+    to: '/sla-management',
   },
 ]);
 </script>
