@@ -28,6 +28,7 @@ app.use(PrimeVue);
 app.use(router);
 
 app.component('Calendar', Calendar);
+app.component('Card', Card);
 app.component('Button', Button);
 app.component('Menubar', Menubar);
 app.component('Menu', Menu);
