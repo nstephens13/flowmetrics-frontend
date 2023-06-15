@@ -39,11 +39,7 @@
             <Column field="description" header="Description"></Column>
             <Column field="assignedTo" header="Assigned To">
               <template #body="slotProps">
-                {{
-                  slotProps.data.assignedTo.firstName +
-                  ' ' +
-                  slotProps.data.assignedTo.lastName
-                }}
+                {{ printAssignedTo(slotProps.data.assignedTo) }}
               </template>
             </Column>
             <Column field="createdBy" header="Created by"></Column>
@@ -58,12 +54,24 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { defineComponent } from 'vue';
 import type { ProjectIF } from '@/model/ProjectIF';
 
 import getMockData from '../assets/__mockdata__/mockDataComposer';
 import type { IssueIF } from '@/model/IssueIF';
+import type { EmployeeIF } from '@/model/EmployeeIF';
+
+function printAssignedTo(employee: EmployeeIF | null): string {
+  const firstName = employee?.firstName ?? "";
+  const lastName = employee?.lastName ?? "";
+  return `${firstName} ${lastName}`;
+}
+
+defineExpose({ printAssignedTo });
+</script>
+
+<script lang="ts">
 
 export default defineComponent({
   name: 'ProjectDescriptionPanel',
@@ -93,6 +101,7 @@ export default defineComponent({
   },
 });
 </script>
+
 <style scoped>
 .p-card{
   margin: 15px;
