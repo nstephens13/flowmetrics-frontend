@@ -45,36 +45,19 @@
 import { ref } from 'vue';
 import type { EmployeeIF } from '@/model/EmployeeIF';
 import calculateWorkload from '../services/workloadCalculator';
-
-function getHeightForStatisticBoxes(count: number) {
-  const minHeight = 5; // Minimum height for the box
-  const maxHeight = 80; // Maximum height for the box
-  // Calculate the height based on the count
-  return Math.min(minHeight + count * 5, maxHeight);
-}
-
-function calculateUserBackgroundStyle(employee: EmployeeIF) {
-  const firstNameLength = employee.firstName.trim().length;
-  const lastNameLength = employee.lastName.trim().length;
-  const nameLength = (firstNameLength + lastNameLength) * 10;
-  // Calculate width of blue background behind username
-  const width = nameLength + 10; // Add 10 pixels for padding
-  // Calculate height of blue background behind username
-  const height = 10 + (nameLength > 0 ? 10 : 0);
-  return { width, height };
-}
+import { calculateCssUserBackgroundStyle, getCssHeightForStatisticBoxes } from './EmployeeOverviewHelper';
 
 const employeeMap = ref<
 Map<EmployeeIF, { openIssues: number; inProgressIssues: number; closedIssues: number }>
 >(calculateWorkload(null));
 
 function getUserNameBackgroundStyle(employee: EmployeeIF): string {
-  const { width, height } = calculateUserBackgroundStyle(employee);
+  const { width, height } = calculateCssUserBackgroundStyle(employee);
   return `width: ${width}px; height: ${height}px`;
 }
 
 function getBoxHeightStyle(count: number) {
-  const height = getHeightForStatisticBoxes(count);
+  const height = getCssHeightForStatisticBoxes(count);
   return `height: ${height}px`;
 }
 </script>
