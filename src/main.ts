@@ -2,7 +2,6 @@ import './assets/main.css';
 import { createApp } from 'vue';
 
 import PrimeVue from 'primevue/config';
-import Card from 'primevue/card';
 import Button from 'primevue/button';
 import Calendar from 'primevue/calendar';
 import Menubar from 'primevue/menubar';
