@@ -41,7 +41,7 @@ describe('EmployeeOverview with a simple manual constructed map should render co
 
   // then
   test('Component should include the Name John Doe', () => {
-    expect(wrapper.text()).toContain('John Doe');
+    expect(wrapper.text()).toContain('JOHN DOE');
   });
 
   test('all Boxes exists exactly one time', () => {
@@ -92,10 +92,10 @@ describe('EmployeeOverview with mockDataSet 55 should render correctly', () => {
 
   // then
   test('Component should render all Employee Names', () => {
-    expect(wrapper.text()).toContain('John Doe');
-    expect(wrapper.text()).toContain('Jane Smith');
-    expect(wrapper.text()).toContain('Mike Johnson');
-    expect(wrapper.text()).toContain('Max Mustermann');
+    expect(wrapper.text()).toContain('JOHN DOE');
+    expect(wrapper.text()).toContain('JANE SMITH');
+    expect(wrapper.text()).toContain('MIKE JOHNSON');
+    expect(wrapper.text()).toContain('MAX MUSTERMANN');
   });
 
   // Assert that the boxes are rendered with the correct styles and values
