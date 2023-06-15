@@ -67,7 +67,6 @@ function getMockData(dataset = 3): ProjectIF {
       };
     }
     case 2: {
-
       const { employeesArray, issuesArray, milestones: milestonesArray } = loadArraysFromFile();
 
       let tuple = assignIssueToEmployee(0, 0, issuesArray, employeesArray);
@@ -136,7 +135,6 @@ function getMockData(dataset = 3): ProjectIF {
       };
     }
     case 54: {
-
       const milestones: MilestoneIF[] = structuredClone(milestoneJson) as MilestoneIF[];
       return {
         id: 54,
