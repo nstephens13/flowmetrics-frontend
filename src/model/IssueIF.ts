@@ -28,5 +28,5 @@ export interface IssueIF {
   createdAt: Date;
   closedAt: Date| null;
   dueTo: Date| null;
-  status: Status | null;
+  status: Status;
 }
