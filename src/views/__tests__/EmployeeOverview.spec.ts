@@ -26,14 +26,15 @@ describe('EmployeeOverview with a simple manual constructed map should render co
     },
     props: {},
     computed: {
-      employeeMap(): Map<EmployeeIF, { openIssues: number; inProgressIssues: number;
-        closedIssues: number }> {
+      employeeMap(): Map<
+      EmployeeIF,
+      { openIssues: number; inProgressIssues: number; closedIssues: number }
+      > {
         return employeeMap;
       },
       getUserNameBackgroundStyle: EmployeeOverview.computed?.getUserNameBackgroundStyle,
       getBoxHeightStyle: EmployeeOverview.computed?.getBoxHeightStyle,
     },
-
   });
   const openBoxes = wrapper.findAll('.open');
   const inProgressBoxes = wrapper.findAll('.in-progress');
@@ -55,8 +56,12 @@ describe('EmployeeOverview with a simple manual constructed map should render co
 
   test('all Boxes have a correctly calculated height', () => {
     expect(openBoxes[0].attributes('style')).toContain(`height: ${getHeightForStatisticBoxes(2)}px`); // Adjust this value based on your computed style logic
-    expect(inProgressBoxes[0].attributes('style')).toContain(`height: ${getHeightForStatisticBoxes(3)}px`); // Adjust this value based on your computed style logic
-    expect(closedBoxes[0].attributes('style')).toContain(`height: ${getHeightForStatisticBoxes(5)}px`); // Adjust this value based on your computed style logic
+    expect(inProgressBoxes[0].attributes('style')).toContain(
+      `height: ${getHeightForStatisticBoxes(3)}px`,
+    ); // Adjust this value based on your computed style logic
+    expect(closedBoxes[0].attributes('style')).toContain(
+      `height: ${getHeightForStatisticBoxes(5)}px`,
+    ); // Adjust this value based on your computed style logic
   });
 });
 
@@ -77,8 +82,10 @@ describe('EmployeeOverview with mockDataSet 55 should render correctly', () => {
     },
     props: {},
     computed: {
-      employeeMap(): Map<EmployeeIF, { openIssues: number; inProgressIssues: number;
-        closedIssues: number }> {
+      employeeMap(): Map<
+      EmployeeIF,
+      { openIssues: number; inProgressIssues: number; closedIssues: number }
+      > {
         return calculateWorkload(project);
       },
       getUserNameBackgroundStyle: EmployeeOverview.computed?.getUserNameBackgroundStyle,
@@ -108,13 +115,19 @@ describe('EmployeeOverview with mockDataSet 55 should render correctly', () => {
 
   test('all Boxes have a correctly calculated height', () => {
     openBoxes.forEach((box, index) => {
-      expect(box.attributes('style')).toContain(`height: ${getHeightForStatisticBoxes(openIssuesList[index])}px`);
+      expect(box.attributes('style')).toContain(
+        `height: ${getHeightForStatisticBoxes(openIssuesList[index])}px`,
+      );
     });
     inProgressBoxes.forEach((box, index) => {
-      expect(box.attributes('style')).toContain(`height: ${getHeightForStatisticBoxes(inProgressIssuesList[index])}px`);
+      expect(box.attributes('style')).toContain(
+        `height: ${getHeightForStatisticBoxes(inProgressIssuesList[index])}px`,
+      );
     });
     closedBoxes.forEach((box, index) => {
-      expect(box.attributes('style')).toContain(`height: ${getHeightForStatisticBoxes(closedIssuesList[index])}px`);
+      expect(box.attributes('style')).toContain(
+        `height: ${getHeightForStatisticBoxes(closedIssuesList[index])}px`,
+      );
     });
   });
 });

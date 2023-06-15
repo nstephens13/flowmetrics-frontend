@@ -21,7 +21,6 @@
 import { RouterView } from 'vue-router';
 import { defineComponent } from 'vue';
 import MenuBar from './components/MenuBar.vue';
-
 </script>
 
 <script lang="ts">
@@ -34,6 +33,4 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
