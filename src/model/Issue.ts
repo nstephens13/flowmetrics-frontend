@@ -2,7 +2,6 @@ import type { EmployeeIF } from './EmployeeIF';
 import type { IssueIF } from './IssueIF';
 import { Status } from './IssueIF';
 
-
 // Issue Class implements IssueIF
 class Issue implements IssueIF {
   id: number;
@@ -21,7 +20,7 @@ class Issue implements IssueIF {
 
   dueTo: Date | null;
 
-  status: Status| null;
+  status: Status | null;
 
   // constructor sets variabels for issue object
   constructor(
@@ -33,7 +32,7 @@ class Issue implements IssueIF {
     createdAt: Date,
     closedAt: Date | null,
     dueTo: Date | null,
-    status: Status,
+    status: Status | null,
   ) {
     this.id = id;
     this.name = name;
@@ -219,7 +218,7 @@ function getAssignedToName(issue: Issue): string {
 }
 
 // function for issue-status
-function getStatus(issue: Issue): Status {
+function getStatus(issue: Issue): Status | null {
   return issue.status;
 }
 
@@ -243,7 +242,11 @@ function getTimeLeft(issue: Issue): number | null {
   }
   return null;
 }
-const countIssuesByStatus = (arr: Issue[], status: Status): number => arr.filter((issue) => issue.status === status).length;
+
+const countIssuesByStatus = (
+  arr: Issue[],
+  status: Status,
+): number => arr.filter((issue) => issue.status === status).length;
 
 // Function to count the total number of "Open" issues
 const countOpenIssues = (arr: Issue[]): number => countIssuesByStatus(arr, Status.Open);

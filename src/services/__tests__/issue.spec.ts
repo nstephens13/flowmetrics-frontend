@@ -6,10 +6,7 @@ import {
   getAssignedToName,
   getStatus,
   getTicketID,
-  countClosedIssues,
-  countInProgressIssues,
-  countOpenIssues,
-} from '../Issue';
+} from '../../model/Issue';
 
 describe('Issue Tests', () => {
   test('getArrayOfIssues should return an array of Issue objects', () => {

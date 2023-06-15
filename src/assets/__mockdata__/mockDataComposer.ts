@@ -17,7 +17,7 @@ function assignIssueToEmployee(
   issues: IssueIF[],
   employees: EmployeeIF[],
 ): {
-    issuesToReturn: IssueIF[];
+    issuesToReturn: IssueIF[]
     employeesToReturn: EmployeeIF[]
   } {
   const issuesToReturn = issues;
@@ -30,8 +30,8 @@ function assignIssueToEmployee(
 function assignIssueToMilestone(
   issueNumber: number,
   milestoneNumber: number,
-  milestones:MilestoneIF[],
-  issues:IssueIF[],
+  milestones: MilestoneIF[],
+  issues: IssueIF[],
 ) {
   const mileStonesToReturn = milestones;
   mileStonesToReturn[milestoneNumber].issues.push(issues[issueNumber]);
@@ -53,7 +53,7 @@ function getMockData(dataset = 3): ProjectIF {
       const { employeesArray, issuesArray, milestones } = loadArraysFromFile();
 
       const tuple: {
-        issuesToReturn: IssueIF[];
+        issuesToReturn: IssueIF[]
         employeesToReturn: EmployeeIF[]
       } = assignIssueToEmployee(1, 1, issuesArray, employeesArray);
 
