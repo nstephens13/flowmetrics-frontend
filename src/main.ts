@@ -1,11 +1,11 @@
 import './assets/main.css';
 import { createApp } from 'vue';
+import { createPinia } from 'pinia';
 
 import PrimeVue from 'primevue/config';
 import Button from 'primevue/button';
 import Calendar from 'primevue/calendar';
 import Card from 'primevue/card';
-import { createPinia } from 'pinia';
 import InputText from 'primevue/inputtext';
 import Dropdown from 'primevue/dropdown';
 import DataTable from 'primevue/datatable';
