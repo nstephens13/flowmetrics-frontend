@@ -68,7 +68,6 @@ import useSLAStore from '../store/store';
 import type { SLASubscriber } from '@/model/SLASubscriber';
 import type { SLARule } from '@/model/SLARule';
 import type { SLACategory } from '@/model/SLACategory';
-import App from "@/App.vue";
 
 export default defineComponent({
   name: 'SLAComponent',

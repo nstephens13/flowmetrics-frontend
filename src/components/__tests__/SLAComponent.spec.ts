@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { createPinia} from "pinia";
+import { createPinia } from 'pinia';
 import { mount } from '@vue/test-utils';
 import PrimeVue from 'primevue/config';
 import Card from 'primevue/card';
