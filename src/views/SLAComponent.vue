@@ -7,7 +7,7 @@
                 <div class="subscriber-container">
                   <InputText v-model="newSubscriber" placeholder="Enter subscriber name"
                            class="enter-subscriber"/>
-                  <Button @click="addSubscriber" label="+" class="add-subscriber"/>
+                  <Button class="add-subscriber" @click="addSubscriber" label="+"></Button>
                 </div>
             </div>
             <div>
@@ -19,7 +19,7 @@
                           :options="maxAssignedEmployeesOptions"
                           placeholder="Select max assigned employees"
                           class="select-employees"/>
-                    <Button @click="addRule" label="+" class="add-rule"/>
+                    <Button class="add-rule" @click="addRule" label="+"></Button>
                 </div>
             </div>
             <div>
@@ -33,7 +33,7 @@
                           placeholder="Select rule" class="select-rule"/>
                     <InputText v-model="categoryName" placeholder="Enter category name"
                            class="enter-category"/>
-                    <Button @click="createCategory" label="+" class="add-category"/>
+                    <Button class="add-category" @click="createCategory" label="+"></Button>
                 </div>
             </div>
 
@@ -48,11 +48,8 @@
                     <Column field="rule.maxAssignedEmployees" header="Max Assigned Employees" />
                     <Column header="Delete">
                         <template #body="rowData">
-                            <Button class="p-button-danger" @click="deleteCategory(rowData.data)">
-                              <span class="pi pi-trash trash-size"></span>
-                            </Button>
-                            <!--Button icon="pi pi-trash" class="p-button-danger"
-                                    @click="deleteCategory(rowData.data)"></Button-->
+                            <Button icon="pi pi-trash" class="p-button-danger"
+                                    @click="deleteCategory(rowData.data)"></Button>
                         </template>
                     </Column>
                 </DataTable>
@@ -233,15 +230,13 @@ export default defineComponent({
   padding: 0;
   font-size: 12px;
 }
-.p-button-danger {
+/*.p-button-danger {
   background-color: red;
   color: white;
   border: none;
-}
+}*/
 .trash-size {
-  color: white;
-  font-size: 12px;
-  position: relative;
-  z-index: 1;
+  color: black;
+  font-size: 20px;
 }
 </style>
