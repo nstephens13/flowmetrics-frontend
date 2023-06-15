@@ -63,8 +63,8 @@ import type { IssueIF } from '@/model/IssueIF';
 import type { EmployeeIF } from '@/model/EmployeeIF';
 
 function printAssignedTo(employee: EmployeeIF | null): string {
-  const firstName = employee?.firstName ?? "";
-  const lastName = employee?.lastName ?? "";
+  const firstName = employee?.firstName ?? '';
+  const lastName = employee?.lastName ?? '';
   return `${firstName} ${lastName}`;
 }
 

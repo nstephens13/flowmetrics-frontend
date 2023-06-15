@@ -47,6 +47,6 @@ describe('Project Overview should load all the Components', () => {
     };
 
     expect(wrapper.vm.printAssignedTo(employee)).toBe('Johannes Hermann');
-    expect(wrapper.vm.printAssignedTo(null)).toBe(" ");
+    expect(wrapper.vm.printAssignedTo(null)).toBe(' ');
   });
 });
