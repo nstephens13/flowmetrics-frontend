@@ -162,7 +162,7 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>#
+<style scoped>
 /* View background */
 .background-card {
   height: auto;
