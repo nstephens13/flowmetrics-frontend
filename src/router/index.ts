@@ -26,6 +26,11 @@ const router = createRouter({
       name: 'sla-management',
       component: () => import('../views/SLAComponent.vue'),
     },
+    {
+      path: '/employee-overview',
+      name: 'employee-overview',
+      component: () => import('../views/EmployeeOverview.vue'),
+    },
   ],
 });
 

@@ -60,10 +60,6 @@
 
 <script lang="ts">
 import { defineComponent, ref, computed } from 'vue';
-import Card from 'primevue/card';
-import Button from 'primevue/button';
-import DataTable from 'primevue/datatable';
-import Column from 'primevue/column';
 import useSLAStore from '../store/store';
 import type { SLASubscriber } from '@/model/SLASubscriber';
 import type { SLARule } from '@/model/SLARule';
@@ -71,13 +67,6 @@ import type { SLACategory } from '@/model/SLACategory';
 
 export default defineComponent({
   name: 'SLAComponent',
-
-  components: {
-    Card,
-    Button,
-    DataTable,
-    Column,
-  },
   setup() {
     const slaStore = useSLAStore();
     const newSubscriber = ref('');

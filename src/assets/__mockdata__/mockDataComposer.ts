@@ -93,9 +93,24 @@ function getMockData(dataset = 3): ProjectIF {
     }
 
     case 3: {
-      const { employeesArray, issuesArray, milestones } = loadArraysFromFile();
-      let issues = issuesArray;
-      const numberOfIssues = issuesArray.length;
+      const { employeesArray, milestones } = loadArraysFromFile();
+      let issues: IssueIF[] = [];
+      for (let i = 0; i < 280; i++) {
+        issues.push({
+          id: i,
+          name: `Issue Name ${i}`,
+          description: `Description of Issue ${i}`,
+          closedAt: null,
+          status: null,
+          assignedTo: null,
+          createdAt: null,
+          createdBy: null,
+          dueTo: null,
+        });
+      }
+
+      // issues = issuesArray;
+      const numberOfIssues = issues.length;
       const numberOfEmployees = employeesArray.length;
 
       for (let i = 0; i < numberOfIssues; i++) {
