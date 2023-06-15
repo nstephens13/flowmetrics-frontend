@@ -1,9 +1,7 @@
 <template>
   <MenuBar></MenuBar>
   <body>
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
+    <div class="wrapper"></div>
   </body>
 
   <RouterView />
@@ -11,20 +9,11 @@
 
 <script setup lang="ts">
 import { RouterView } from 'vue-router';
-import { defineComponent } from 'vue';
 import MenuBar from './components/MenuBar.vue';
 
 </script>
 
-<script lang="ts">
-export default defineComponent({
-  name: 'HomeView',
-
-  components: {
-    MenuBar,
-  },
-});
-</script>
+<script lang="ts"></script>
 
 <style scoped>
 
