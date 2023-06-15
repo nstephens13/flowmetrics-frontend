@@ -17,7 +17,7 @@ describe('EmployeeOverview with a simple manual constructed map should render co
   );
 
   // when
-  const wrapper: VueWrapper<never> = mount(EmployeeOverview, {
+  const wrapper: VueWrapper<any> = mount(EmployeeOverview, {
     global: {
       plugins: [PrimeVue],
       components: {
@@ -68,7 +68,7 @@ describe('EmployeeOverview with mockDataSet 55 should render correctly', () => {
   const closedIssuesList = [0, 1, 2, 1]; // expected values for closed issues from json file
 
   // when
-  const wrapper: VueWrapper<never> = mount(EmployeeOverview, {
+  const wrapper: VueWrapper<any> = mount(EmployeeOverview, {
     global: {
       plugins: [PrimeVue],
       components: {
