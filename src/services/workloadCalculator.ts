@@ -20,8 +20,10 @@ import getMockData from '../assets/__mockdata__/mockDataComposer';
 function calculateWorkload(
   project: ProjectIF | null,
 ): Map<EmployeeIF, { openIssues: number; inProgressIssues: number; closedIssues: number }> {
-  const mapToReturn: Map<EmployeeIF,
-  { openIssues: number; inProgressIssues: number; closedIssues: number }> = new Map([]);
+  const mapToReturn: Map<
+  EmployeeIF,
+  { openIssues: number; inProgressIssues: number; closedIssues: number }
+  > = new Map([]);
   const issueSet: Set<IssueIF> = new Set<IssueIF>();
   let projectToCalculate: ProjectIF;
 
@@ -43,7 +45,7 @@ function calculateWorkload(
 
       // checking if the employee is already with values in the map
       const tuple:
-      { openIssues: number; inProgressIssues: number; closedIssues: number }
+      | { openIssues: number; inProgressIssues: number; closedIssues: number }
       | undefined = mapToReturn.get(issue.assignedTo);
 
       // setting the values to zero if the employee isn't in the map already
