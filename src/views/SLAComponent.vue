@@ -98,10 +98,10 @@ export default defineComponent({
 
     // Add a new subscriber to the store
     const addSubscriber = () => {
-      const subscriber: SLASubscriber = {
+      const subscriberToAdd: SLASubscriber = {
         id: null, name: newSubscriber.value.trim(), description: null,
       };
-      slaStore.addSubscriber(subscriber);
+      slaStore.addSubscriber(subscriberToAdd);
       newSubscriber.value = '';
     };
 
