@@ -18,6 +18,8 @@ export enum Status{
  * @prop {Date| null} dueTo Due date for the Issue
  * @prop {Status} status the Status of ticket-progress
  */
+
+// Enum to set status of Issue
 export interface IssueIF {
 
   id: number;
@@ -28,5 +30,5 @@ export interface IssueIF {
   createdAt: Date;
   closedAt: Date| null;
   dueTo: Date| null;
-  status: Status;
+  status: Status| null;
 }
