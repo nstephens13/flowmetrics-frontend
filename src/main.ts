@@ -31,6 +31,7 @@ app.use(PrimeVue);
 app.use(router);
 
 app.component('Calendar', Calendar);
+app.component('Card', Card);
 app.component('InputText', InputText);
 app.component('Dropdown', Dropdown);
 app.component('Column', Column);
@@ -50,4 +51,3 @@ app.component('Divider', Divider);
 app.component('Panel', Panel);
 
 app.mount('#app');
-app.component('Card', Card);

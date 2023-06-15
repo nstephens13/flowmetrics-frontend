@@ -21,6 +21,5 @@ export default defineComponent({
   },
 });
 </script>
->>>>>>> development
 
 <style scoped></style>

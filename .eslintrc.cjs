@@ -21,10 +21,6 @@ module.exports = {
     '@typescript-eslint/no-shadow': 'warn',
     'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
     'import/no-unresolved': 0,
-    'vue/multi-word-component-names': 'off',
-    'vue/no-reserved-component-names': 'off',
-    '@typescript-eslint/ban-types': 0,
-    '@typescript-eslint/no-explicit-any': 0,
     'linebreak-style': ['error', 'unix'],
     'import/extensions': [
       'error',
@@ -45,4 +41,16 @@ module.exports = {
       },
     },
   },
+  overrides: [
+    {
+      files: ['src/main.ts', 'src/shims-vue.d.ts'],
+      rules: {
+        'vue/multi-word-component-names': 'off',
+        'vue/no-reserved-component-names': 'off',
+        '@typescript-eslint/ban-types': 0,
+        '@typescript-eslint/no-explicit-any': 0,
+      },
+    },
+  ],
+
 };
