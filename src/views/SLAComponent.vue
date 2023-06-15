@@ -79,60 +79,6 @@ export default defineComponent({
     DataTable,
     Column,
   },
-  props: {
-    newSubscriber: {
-      type: String,
-      default: '',
-    },
-    addSubscriber: {
-      type: Function,
-      default: () => {},
-    },
-    newRuleName: {
-      type: String,
-      default: '',
-    },
-    newRuleMaxAssignedEmployees: {
-      type: Number,
-      default: 0,
-    },
-    addRule: {
-      type: Function,
-      default: () => {},
-    },
-    selectedSubscriber: {
-      type: String,
-      default: '',
-    },
-    subscriber: {
-      type: Array,
-      default: () => {},
-    },
-    selectedRule: {
-      type: String,
-      default: '',
-    },
-    rules: {
-      type: Array,
-      default: () => {},
-    },
-    categoryName: {
-      type: String,
-      default: '',
-    },
-    categories: {
-      type: Array,
-      default: () => {},
-    },
-    createCategory: {
-      type: Function,
-      default: () => {},
-    },
-    maxAssignedEmployeesOptions: {
-      type: Array,
-      default: () => {},
-    },
-  },
   setup() {
     const slaStore = useSLAStore();
     const newSubscriber = ref('');
