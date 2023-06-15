@@ -48,7 +48,7 @@
                     <Column field="rule.maxAssignedEmployees" header="Max Assigned Employees" />
                     <Column header="Delete">
                         <template #body="rowData">
-                            <Button icon="pi pi-trash" class="p-button-danger"
+                            <Button icon="pi pi-trash" class="p-button-danger trash-size"
                                     @click="deleteCategory(rowData.data)"></Button>
                         </template>
                     </Column>
@@ -162,11 +162,13 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
+<style scoped>#
+/* View background */
 .background-card {
   height: auto;
   width: auto;
 }
+/* Add Subscriber Container */
 .subscriber-container {
   display: flex;
   align-items: center;
@@ -185,6 +187,7 @@ export default defineComponent({
   padding: 0;
   font-size: 12px;
 }
+/* Add SLA Rule Container */
 .rule-container {
   display: flex;
   align-items: center;
@@ -196,6 +199,17 @@ export default defineComponent({
 .select-employees {
   margin-right: 10px;
 }
+.add-rule {
+  background-color: mediumseagreen;
+  color: white;
+  border: none;
+  justify-content: center;
+  height: 30px;
+  width: 30px;
+  padding: 0;
+  font-size: 12px;
+}
+/* Add new SLA Category Container */
 .category-container {
   display: flex;
   align-items: center;
@@ -206,16 +220,6 @@ export default defineComponent({
 }
 .select-rule {
   margin-right: 10px;
-}
-.add-rule {
-  background-color: mediumseagreen;
-  color: white;
-  border: none;
-  justify-content: center;
-  height: 30px;
-  width: 30px;
-  padding: 0;
-  font-size: 12px;
 }
 .enter-category {
   margin-right: 10px;
@@ -230,13 +234,16 @@ export default defineComponent({
   padding: 0;
   font-size: 12px;
 }
-/*.p-button-danger {
+/* Delete Button */
+.p-button-danger {
   background-color: red;
   color: white;
   border: none;
-}*/
+  height: 30px;
+  width: 30px;
+}
 .trash-size {
-  color: black;
-  font-size: 20px;
+  color: white;
+  font-size: 5px;
 }
 </style>
