@@ -37,10 +37,10 @@ describe('SLA Store', () => {
 
     expect(store.slaCategories.length).toBeGreaterThanOrEqual(3);
   });
+  const category: SLACategory = {
+    id: null, name: 'New Category', rule, subscriber,
+  };
   test('adds new Configuration', () => {
-    const category: SLACategory = {
-      id: null, name: 'New Category', rule, subscriber,
-    };
     store.addSLACategory(category);
 
     expect(store.slaCategories).toContain(category);
@@ -51,5 +51,10 @@ describe('SLA Store', () => {
   });
   test('has 4 Rules now', () => {
     expect(store.rules.length).toEqual(4);
+  });
+  test('remove last category item', () => {
+    store.deleteSLACategory(category);
+
+    expect(store.slaCategories.findIndex((c) => c.id === category?.id)).toBe(-1);
   });
 });

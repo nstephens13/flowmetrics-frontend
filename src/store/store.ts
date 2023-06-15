@@ -47,9 +47,11 @@ const useSLAStore = defineStore('sla', {
       this.slaCategories.push(categoryToAdd);
     },
     deleteSLACategory(category: SLACategory) {
-      const index = this.slaCategories.findIndex((c) => c.id === category?.id);
-      if (index !== -1) {
-        this.slaCategories.splice(index, 1);
+      if (category.id != null && category.id >= 1) {
+        const index = this.slaCategories.findIndex((c) => c.id === category?.id);
+        if (index !== -1) {
+          this.slaCategories.splice(index, 1);
+        }
       }
     },
 
