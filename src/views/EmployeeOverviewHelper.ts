@@ -1,5 +1,8 @@
 import type { EmployeeIF } from '../model/EmployeeIF';
 
+// TODO: Move to a more appropriate place or
+// rework EmployeeOverview.vue with PrimeFlex to avoid this
+
 export function getCssHeightForStatisticBoxes(count: number) {
   const minHeight = 5; // Minimum height for the box
   const maxHeight = 80; // Maximum height for the box

@@ -44,4 +44,3 @@ app.component('Divider', Divider);
 app.component('Panel', Panel);
 
 app.mount('#app');
-
