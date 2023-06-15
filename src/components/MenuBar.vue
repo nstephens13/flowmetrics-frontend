@@ -33,7 +33,7 @@ const items = ref([
   {
     label: 'Project Overview',
     icon: 'pi pi-fw pi-book',
-    to: '/about',
+    to: '/ProjectOverview',
   },
   {
     label: 'Employee Overview',
@@ -43,6 +43,7 @@ const items = ref([
   {
     label: 'Create Rules',
     icon: 'pi pi-fw pi-filter',
+    to: '/about',
   },
 ]);
 </script>

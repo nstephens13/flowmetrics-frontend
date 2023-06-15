@@ -60,7 +60,7 @@ function getMockData(dataset = 3): ProjectIF {
       const issues = tuple.issuesToReturn;
       return {
         id: 1,
-        name: 'Mocking Bird',
+        name: 'Mocking Bird 1',
         description: 'first mock dataset',
         milestones,
         issues,
@@ -85,7 +85,7 @@ function getMockData(dataset = 3): ProjectIF {
 
       return {
         id: 2,
-        name: 'Mocking Bird',
+        name: 'Mocking Bird 2',
         description: 'second mock dataset',
         milestones,
         issues,
@@ -132,7 +132,7 @@ function getMockData(dataset = 3): ProjectIF {
 
       return {
         id: 3,
-        name: 'Mocking Bird',
+        name: 'Mocking Bird 3',
         description: 'third mock dataset',
         milestones,
         issues,
@@ -143,7 +143,7 @@ function getMockData(dataset = 3): ProjectIF {
     case 53: {
       return {
         id: 53,
-        name: 'Mocking Bird',
+        name: 'Mocking Bird 4',
         description: 'project without issues and milestones',
         issues: [],
         milestones: [],
@@ -153,7 +153,7 @@ function getMockData(dataset = 3): ProjectIF {
       const milestones: MilestoneIF[] = structuredClone(milestoneJson) as MilestoneIF[];
       return {
         id: 54,
-        name: 'Mocking Bird',
+        name: 'Mocking Bird 5',
         description: 'project only with milestones',
         milestones,
         issues: [],
@@ -183,7 +183,7 @@ function getMockData(dataset = 3): ProjectIF {
       issues[6].closedAt = new Date(); // Set the specific closedAt date
       return {
         id: 55,
-        name: 'Mocking Bird',
+        name: 'Mocking Bird 6',
         description: 'project with some Issues with Status Enums',
         milestones,
         issues,
