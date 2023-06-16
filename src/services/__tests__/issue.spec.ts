@@ -4,8 +4,6 @@ import {
   getTimeLeft,
   getFormattedDate,
   getAssignedToName,
-  getStatus,
-  getTicketID,
 } from '../../model/Issue';
 
 describe('Issue Tests', () => {
@@ -40,14 +38,14 @@ describe('Issue Tests', () => {
 
   test('getStatus should return the status of the issue', () => {
     const issue = getArrayOfIssues()[0]; // Assuming the first issue has a status
-    const status = getStatus(issue);
+    const { status } = issue;
     expect(status).not.toBeNull();
     expect(typeof status).toBe('number');
   });
 
   test('getTicketID should return the ID of the issue', () => {
     const issue = getArrayOfIssues()[0]; // Assuming the first issue has an ID
-    const ticketID = getTicketID(issue);
+    const ticketID = issue.id;
     expect(typeof ticketID).toBe('number');
   });
 });

@@ -16,7 +16,6 @@ module.exports = {
   rules: {
     '@typescript-eslint/indent': ['error', 2],
     '@typescript-eslint/no-unused-vars': 'error',
-    '@typescript-eslint/no-explicit-any': 'error',
     'no-plusplus': ['error', { allowForLoopAfterthoughts: true }],
     'no-shadow': 'off',
     '@typescript-eslint/no-shadow': 'warn',
@@ -53,4 +52,5 @@ module.exports = {
       },
     },
   ],
+
 };

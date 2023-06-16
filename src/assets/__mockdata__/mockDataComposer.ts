@@ -60,7 +60,7 @@ function getMockData(dataset = 3): ProjectIF {
       const issues = tuple.issuesToReturn;
       return {
         id: 1,
-        name: 'Mocking Bird',
+        name: 'Mocking Bird 1',
         description: 'first mock dataset',
         milestones,
         issues,
@@ -85,7 +85,7 @@ function getMockData(dataset = 3): ProjectIF {
 
       return {
         id: 2,
-        name: 'Mocking Bird',
+        name: 'Mocking Bird 2',
         description: 'second mock dataset',
         milestones,
         issues,
@@ -93,9 +93,24 @@ function getMockData(dataset = 3): ProjectIF {
     }
 
     case 3: {
-      const { employeesArray, issuesArray, milestones } = loadArraysFromFile();
-      let issues = issuesArray;
-      const numberOfIssues = issuesArray.length;
+      const { employeesArray, milestones } = loadArraysFromFile();
+      let issues: IssueIF[] = [];
+      for (let i = 0; i < 280; i++) {
+        issues.push({
+          id: i,
+          name: `Issue Name ${i}`,
+          description: `Description of Issue ${i}`,
+          closedAt: null,
+          status: null,
+          assignedTo: null,
+          createdAt: null,
+          createdBy: null,
+          dueTo: null,
+        });
+      }
+
+      // issues = issuesArray;
+      const numberOfIssues = issues.length;
       const numberOfEmployees = employeesArray.length;
 
       for (let i = 0; i < numberOfIssues; i++) {
@@ -117,7 +132,7 @@ function getMockData(dataset = 3): ProjectIF {
 
       return {
         id: 3,
-        name: 'Mocking Bird',
+        name: 'Mocking Bird 3',
         description: 'third mock dataset',
         milestones,
         issues,
@@ -128,7 +143,7 @@ function getMockData(dataset = 3): ProjectIF {
     case 53: {
       return {
         id: 53,
-        name: 'Mocking Bird',
+        name: 'Mocking Bird 4',
         description: 'project without issues and milestones',
         issues: [],
         milestones: [],
@@ -138,12 +153,13 @@ function getMockData(dataset = 3): ProjectIF {
       const milestones: MilestoneIF[] = structuredClone(milestoneJson) as MilestoneIF[];
       return {
         id: 54,
-        name: 'Mocking Bird',
+        name: 'Mocking Bird 5',
         description: 'project only with milestones',
         milestones,
         issues: [],
       };
     }
+
     case 55: {
       const { employeesArray, issuesArray, milestones } = loadArraysFromFile();
 
@@ -168,7 +184,7 @@ function getMockData(dataset = 3): ProjectIF {
       issues[6].closedAt = new Date(); // Set the specific closedAt date
       return {
         id: 55,
-        name: 'Mocking Bird',
+        name: 'Mocking Bird 6',
         description: 'project with some Issues with Status Enums',
         milestones,
         issues,
@@ -185,4 +201,5 @@ function getMockData(dataset = 3): ProjectIF {
     }
   }
 }
+
 export default getMockData;

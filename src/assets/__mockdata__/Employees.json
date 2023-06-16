@@ -28,5 +28,53 @@
     "firstName": "Martha",
     "lastName": "Musterfrau",
     "assignedIssues": []
+  },
+  {
+    "id": 6,
+    "firstName": "Estelle",
+    "lastName": "Johnson",
+    "assignedIssues": []
+  },
+  {
+    "id": 7,
+    "firstName": "Sinan",
+    "lastName": "Mustermann",
+    "assignedIssues": []
+  },
+  {
+    "id": 8,
+    "firstName": "Elmar",
+    "lastName": "Smith",
+    "assignedIssues": []
+  },
+  {
+    "id": 9,
+    "firstName": "Clara",
+    "lastName": "Roe",
+    "assignedIssues": []
+  },
+  {
+    "id": 10,
+    "firstName": "Nived",
+    "lastName": "Mustermann",
+    "assignedIssues": []
+  },
+  {
+    "id": 11,
+    "firstName": "Abi",
+    "lastName": "Johnson",
+    "assignedIssues": []
+  },
+  {
+    "id": 12,
+    "firstName": "Phillip",
+    "lastName": "Docker",
+    "assignedIssues": []
+  },
+  {
+    "id": 13,
+    "firstName": "Ingmar",
+    "lastName": "Mustermann",
+    "assignedIssues": []
   }
 ]
