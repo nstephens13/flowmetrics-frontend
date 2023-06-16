@@ -23,7 +23,6 @@ class Issue implements IssueIF {
 
   status: Status | null;
 
-  // constructor sets variabels for issue object
   constructor(
     id: number,
     name: string,
@@ -47,8 +46,8 @@ class Issue implements IssueIF {
   }
 }
 
-function loadIssueDataFromFile(issueJson: Array<any>): IssueIF[] {
-  const issueData: IssueIF[] = [];
+function loadIssueDataFromFile(issueJson: Array<any>): Issue[] {
+  const issueData: Issue[] = [];
   structuredClone(issueJson).forEach((issue) => {
     issueData.push({
       id: issue.id,
@@ -67,21 +66,9 @@ function loadIssueDataFromFile(issueJson: Array<any>): IssueIF[] {
 
 // builds array of objects uses data given, creates Issue objects
 function getArrayOfIssues(): Issue[] {
-  const issueData = loadIssueDataFromFile(IssueJson2);
-
-  // map method to transform array of IssueIF objects into an array of Issue objects
-  return issueData.map((issue) => new Issue(
-    issue.id,
-    issue.name,
-    issue.description,
-    issue.assignedTo,
-    issue.createdBy,
-    issue.createdAt,
-    issue.closedAt,
-    issue.dueTo,
-    issue.status,
-  ));
+  return loadIssueDataFromFile(IssueJson2);
 }
+
 // function to return assigned name
 function getAssignedToName(issue: Issue): string {
   if (issue.assignedTo) {
