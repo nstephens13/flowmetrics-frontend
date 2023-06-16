@@ -69,18 +69,8 @@ stages:
 "Frontend-Deployment":
   image: kroniak/ssh-client:latest
   stage: Deploy
-  environment:
-    name: staging
-    url: http://e.projekte.swe.htwk-leipzig.de:40100/
   tags:
     - docker
-  rules:
-    - if: '$SCHEDULED == "true"'
-      when: never
-    - if: "$CI_COMMIT_REF_NAME == 'development'"
-    - if: "$CI_COMMIT_REF_NAME == 'main'"
-    - if: '($CI_PIPELINE_SOURCE == "merge_request_event")'
-      when: never
   script:
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
@@ -88,3 +78,6 @@ stages:
     - echo "$SSH_KEY" > ~/.ssh/id_rsa
     - chmod 600 ~/.ssh/id_rsa
     - ssh -i ~/.ssh/id_rsa $VM_USERNAME@$VM_IP "podman login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY && podman pull $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG && podman stop flowmetrics && podman run --name flowmetrics -d -p 40100:8080 --rm $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG && exit"
+  only:
+    - main
+    - development
