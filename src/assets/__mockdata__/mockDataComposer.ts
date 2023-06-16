@@ -103,8 +103,8 @@ function getMockData(dataset = 3): ProjectIF {
           closedAt: null,
           status: null,
           assignedTo: null,
-          createdAt: null,
-          createdBy: null,
+          createdAt: new Date(),
+          createdBy: {} as EmployeeIF,
           dueTo: null,
         });
       }

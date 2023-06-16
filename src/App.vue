@@ -1,18 +1,16 @@
 <template>
   <MenuBar></MenuBar>
   <body></body>
-
   <RouterView />
 </template>
 
 <script setup lang="ts">
 import { RouterView } from 'vue-router';
+import { defineComponent } from 'vue';
+import MenuBar from '@/components/MenuBar.vue';
 </script>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import MenuBar from '@/components/MenuBar.vue';
-
 export default defineComponent({
   name: 'HomeView',
 
@@ -21,5 +19,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style scoped></style>
