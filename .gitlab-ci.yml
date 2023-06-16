@@ -69,6 +69,9 @@ stages:
 "Frontend-Deployment":
   image: kroniak/ssh-client:latest
   stage: Deploy
+  environment:
+    name: staging
+    url: http://e.projekte.swe.htwk-leipzig.de:40100/
   tags:
     - docker
   rules:
