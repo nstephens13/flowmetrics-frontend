@@ -1,8 +1,8 @@
 import {
   assert, expect, test, describe,
 } from 'vitest';
-import getMockData from '../../assets/__mockdata__/mockDataComposer';
-import calculateWorkload from '../workloadCalculator';
+import getMockData from '@/assets/__mockdata__/mockDataComposer';
+import calculateWorkload from '@/services/workloadCalculator';
 import type { EmployeeIF } from '../../model/EmployeeIF';
 import type { ProjectIF } from '../../model/ProjectIF';
 import type { IssueIF } from '../../model/IssueIF';

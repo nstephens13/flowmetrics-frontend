@@ -8,7 +8,7 @@ import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
 import Column from 'primevue/column';
 import DataTable from 'primevue/datatable';
-import router from '../../router';
+import router from '@/router/index';
 import SLAComponent from '../../views/SLAComponent.vue';
 
 const pinia = createPinia();

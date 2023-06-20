@@ -2,8 +2,7 @@ import type { ProjectIF } from '@/model/ProjectIF';
 import type { EmployeeIF } from '@/model/EmployeeIF';
 import type { IssueIF } from '@/model/IssueIF';
 import type { MilestoneIF } from '@/model/MilestoneIF';
-import { Status } from '../../model/IssueIF';
-
+import { Status } from '@/model/IssueIF';
 import employeeJson from './Employees.json';
 import issueJson from './Issues.json';
 import milestoneJson from './Milestones.json';

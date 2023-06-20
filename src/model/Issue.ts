@@ -103,6 +103,10 @@ function countIssuesByStatus(issueList: Issue[], status: Status | null): number 
 
 // export of data array and remain time for ticket calculation
 export {
-  Issue, getArrayOfIssues, getTimeLeft, getFormattedDate,
-  getAssignedToName, countIssuesByStatus,
+  Issue,
+  getArrayOfIssues,
+  getTimeLeft,
+  getFormattedDate,
+  getAssignedToName,
+  countIssuesByStatus,
 };

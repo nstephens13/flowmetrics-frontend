@@ -1,10 +1,7 @@
 import { describe, test, expect } from 'vitest';
 import {
-  getArrayOfIssues,
-  getTimeLeft,
-  getFormattedDate,
-  getAssignedToName,
-} from '../../model/Issue';
+  getArrayOfIssues, getTimeLeft, getFormattedDate, getAssignedToName,
+} from '@/model/Issue';
 
 describe('Issue Tests', () => {
   test('getArrayOfIssues should return an array of Issue objects', () => {

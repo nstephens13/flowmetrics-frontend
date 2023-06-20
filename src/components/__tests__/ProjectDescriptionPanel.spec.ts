@@ -9,7 +9,7 @@ import Panel from 'primevue/panel';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import Divider from 'primevue/divider';
-import router from '../../router';
+import router from '@/router/index';
 import ProjectDescriptionPanel from '../ProjectDescriptionPanel.vue';
 import type { EmployeeIF } from '@/model/EmployeeIF';
 

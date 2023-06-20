@@ -5,8 +5,8 @@ import Sidebar from 'primevue/sidebar';
 import Menu from 'primevue/menu';
 import PrimeVue from 'primevue/config';
 import Menubar from 'primevue/menubar';
-import router from '../../router';
-import MenuBar from '../MenuBar.vue';
+import router from '@/router/index';
+import MenuBar from '@/components/MenuBar.vue';
 
 describe('Menubar Button should open sidebar', () => {
   const wrapper = mount(MenuBar, {
