@@ -66,7 +66,7 @@
       </template>
       <template #content>
         <div class="card">
-          <DataTable :value="selectedProject.issues" showGridlines>
+          <DataTable paginator :rows="5" :rowsPerPageOptions="[5, 10, 20, 50]" :value="selectedProject.issues" showGridlines>
             <Column field="id" header="Ticket-ID"></Column>
             <Column field="name" header="Name"></Column>
             <Column field="description" header="Description"></Column>
