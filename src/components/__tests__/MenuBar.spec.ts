@@ -45,13 +45,13 @@ describe('Menubar Button should open sidebar', () => {
     expect(wrapper.getComponent(Sidebar).vm.$props.visible).toBe(false);
   });
 
-  test('sidebar menu three items', async () => {
+  test('sidebar menu four items', async () => {
     const menubar = wrapper.findComponent(Menu);
     expect(menubar.exists()).toBe(false);
     const button = wrapper.getComponent(Menubar).findComponent(Button);
     await button.trigger('click');
     wrapper.findComponent(Menu);
     const menu = await wrapper.getComponent(Sidebar).getComponent(Menu);
-    expect(menu.findAll('.p-menuitem').length).toBe(3);
+    expect(menu.findAll('.p-menuitem').length).toBe(4);
   });
 });
