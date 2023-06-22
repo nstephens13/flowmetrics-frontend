@@ -46,7 +46,7 @@ function loadArraysFromFile() {
 }
 
 // give out a fake project
-function getMockData(dataset = 3): ProjectIF {
+function getMockData(dataset: number): ProjectIF {
   switch (dataset) {
     case 1: {
       const { employeesArray, issuesArray, milestones } = loadArraysFromFile();
@@ -102,7 +102,7 @@ function getMockData(dataset = 3): ProjectIF {
           closedAt: null,
           status: null,
           assignedTo: null,
-          createdAt: new Date(),
+          createdAt: new Date(2018, 0O5, 0O5, 17, 23, 42, 11),
           createdBy: {} as EmployeeIF,
           dueTo: null,
         });
@@ -118,7 +118,7 @@ function getMockData(dataset = 3): ProjectIF {
         if (randomStatus === 2) {
           issues[i].status = Status.InProgress;
         } else if (randomStatus === 1) {
-          const randomDate = new Date();
+          const randomDate = new Date(2018, 0O5, 0O5, 17, 23, 42, 11);
           // Assigning a random closedAt date within the last 30 days
           randomDate.setDate(randomDate.getDate() - getRandomInt(30));
           issues[i].closedAt = randomDate;
@@ -173,14 +173,14 @@ function getMockData(dataset = 3): ProjectIF {
 
       issues[0].status = Status.InProgress;
       issues[2].status = Status.Closed;
-      issues[2].closedAt = new Date(); // Set the specific closedAt date
+      issues[2].closedAt = new Date(2018, 0O5, 0O5, 17, 23, 42, 11); // Set the specific closedAt date
       issues[3].status = Status.Closed;
-      issues[3].closedAt = new Date(); // Set the specific closedAt date
+      issues[3].closedAt = new Date(2018, 0O5, 0O5, 17, 23, 42, 11); // Set the specific closedAt date
       issues[4].status = Status.Closed;
-      issues[4].closedAt = new Date(); // Set the specific closedAt date
+      issues[4].closedAt = new Date(2018, 0O5, 0O5, 17, 23, 42, 11); // Set the specific closedAt date
       issues[5].status = Status.InProgress;
       issues[6].status = Status.Closed;
-      issues[6].closedAt = new Date(); // Set the specific closedAt date
+      issues[6].closedAt = new Date(2018, 0O5, 0O5, 17, 23, 42, 11); // Set the specific closedAt date
       return {
         id: 55,
         name: 'Mocking Bird 6',

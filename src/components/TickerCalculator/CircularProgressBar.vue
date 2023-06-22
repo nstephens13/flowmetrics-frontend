@@ -24,7 +24,7 @@
         <span v-if="percentage" class="circle-progress__percentage">
           {{ getPercentage }}
         </span>
-        <slot />
+        <slot></slot>
       </div>
     </div>
     <p>{{ title }}</p>

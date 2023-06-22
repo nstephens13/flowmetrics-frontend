@@ -68,8 +68,8 @@
         <div class="card">
           <DataTable
             paginator
-            :rows="5"
-            :rowsPerPageOptions="[5, 10, 20, 50]"
+            :rows="10"
+            :rowsPerPageOptions="[10, 20, 50, 100]"
             :value="selectedProject.issues"
             showGridlines
           >
@@ -103,14 +103,9 @@ import getMockData from '@/assets/__mockdata__/mockDataComposer';
 import { countIssuesByStatus, Issue } from '@/model/Issue';
 import { Status } from '@/model/IssueIF';
 
-function printAssignedTo(employee: EmployeeIF | null): string {
-  const firstName = employee?.firstName ?? '';
-  const lastName = employee?.lastName ?? '';
-  return `${firstName} ${lastName}`;
-}
+</script>
 
-defineExpose({ printAssignedTo });
-
+<script lang="ts">
 const selectedProject = ref({
   id: 0,
   name: 'Project_Name',
@@ -127,6 +122,12 @@ const projects: Ref<ProjectIF[]> = ref([
   getMockData(54),
   getMockData(55),
 ] as ProjectIF[]);
+
+function printAssignedTo(employee: EmployeeIF | null): string {
+  const firstName = employee?.firstName ?? '';
+  const lastName = employee?.lastName ?? '';
+  return `${firstName} ${lastName}`;
+}
 
 function getIssueCountMax(issues: Issue[]): number {
   if (issues.length === 0) {
