@@ -2,6 +2,7 @@
   <Card class="background-card">
     <template #title
       >Employee Overview
+      <Divider></Divider>
       <div class="legend-container">
         <div class="open-legend"></div>
         <h6 class="open-font-size">OPEN</h6>

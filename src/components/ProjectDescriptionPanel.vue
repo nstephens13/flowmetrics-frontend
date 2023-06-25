@@ -3,7 +3,7 @@
     <Card>
       <template #title>
         Project Overview
-        <Divider></Divider>
+       <Divider></Divider>
       </template>
       <template #content>
         <Panel>
