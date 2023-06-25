@@ -6,8 +6,9 @@
                 <h3>Add SLA Subscriber</h3>
                 <div class="subscriber-container">
                   <InputText v-model="newSubscriber" placeholder="Enter subscriber name"
-                           class="enter-subscriber"/>
+                             class="enter-subscriber"/>
                   <Button class="add-subscriber" @click="addSubscriber" label="+"></Button>
+                  <div v-if="!isSubscriberNameValid" class="error-message">{{ errorMessage }}</div>
                 </div>
             </div>
             <div>
@@ -70,6 +71,8 @@ export default defineComponent({
   setup() {
     const slaStore = useSLAStore();
     const newSubscriber = ref('');
+    const isSubscriberNameValid = ref(true);
+    const errorMessage = computed(() => (!isSubscriberNameValid.value ? 'Subscriber name must be at least 3 characters' : ''));
     const newRuleName = ref('');
     const newRuleMaxAssignedEmployees = ref(null);
     const selectedSubscriber = ref(null);
@@ -85,11 +88,19 @@ export default defineComponent({
 
     // Add a new subscriber to the store
     const addSubscriber = () => {
+      if (newSubscriber.value.trim().length < 3) {
+        isSubscriberNameValid.value = false;
+        return;
+      }
+
       const subscriberToAdd: SLASubscriber = {
-        id: null, name: newSubscriber.value.trim(), description: null,
+        id: null,
+        name: newSubscriber.value.trim(),
+        description: null,
       };
       slaStore.addSubscriber(subscriberToAdd);
       newSubscriber.value = '';
+      isSubscriberNameValid.value = true;
     };
 
     // Add a new rule to the store
@@ -131,6 +142,8 @@ export default defineComponent({
 
     return {
       newSubscriber,
+      isSubscriberNameValid,
+      errorMessage,
       newRuleName,
       newRuleMaxAssignedEmployees,
       selectedSubscriber,
@@ -233,4 +246,13 @@ export default defineComponent({
   color: white;
   font-size: 5px;
 }
+.error-message {
+  display: block;
+  color: red;
+  font-size: 16px;
+  margin-top: 4px;
+  font-family: inherit;
+  margin-left: 10px;
+}
+
 </style>
