@@ -21,6 +21,7 @@
                           placeholder="Select max assigned employees"
                           class="select-employees"/>
                     <Button class="add-rule" @click="addRule" label="+"></Button>
+                    <div v-if="!isRuleNameValid" class="error-message">{{ ruleErrorMessage }}</div>
                 </div>
             </div>
             <div>
@@ -74,7 +75,9 @@ export default defineComponent({
     const isSubscriberNameValid = ref(true);
     const errorMessage = computed(() => (!isSubscriberNameValid.value ? 'Subscriber name must be at least 3 characters' : ''));
     const newRuleName = ref('');
-    const newRuleMaxAssignedEmployees = ref(null);
+    const newRuleMaxAssignedEmployees = ref();
+    const isRuleNameValid = ref(true);
+    const ruleErrorMessage = computed(() => (!isRuleNameValid.value ? 'Rule name must be at least 3 characters.' : ''));
     const selectedSubscriber = ref(null);
     const selectedRule = ref(null);
     const categoryName = ref('');
@@ -105,6 +108,11 @@ export default defineComponent({
 
     // Add a new rule to the store
     const addRule = () => {
+      if (newRuleName.value.trim().length < 3) {
+        isRuleNameValid.value = false;
+        return;
+      }
+      isRuleNameValid.value = true;
       const rule: SLARule = {
         id: null,
         name: newRuleName.value.trim(),
@@ -146,6 +154,8 @@ export default defineComponent({
       errorMessage,
       newRuleName,
       newRuleMaxAssignedEmployees,
+      isRuleNameValid,
+      ruleErrorMessage,
       selectedSubscriber,
       selectedRule,
       categoryName,
