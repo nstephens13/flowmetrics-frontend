@@ -33,16 +33,22 @@ const items = ref([
   {
     label: 'Project Overview',
     icon: 'pi pi-fw pi-book',
-    to: '/about',
+    to: '/ProjectOverview',
   },
   {
     label: 'Employee Overview',
     icon: 'pi pi-fw pi-users',
-    to: '/',
+    to: '/employee-overview',
   },
   {
-    label: 'Create Rules',
+    label: 'Create SLA Rules',
     icon: 'pi pi-fw pi-filter',
+    to: '/sla-management',
+  },
+  {
+    label: 'Ticket Calculator',
+    icon: 'pi pi-fw pi-ticket',
+    to: '/ticket-calculator',
   },
 ]);
 </script>

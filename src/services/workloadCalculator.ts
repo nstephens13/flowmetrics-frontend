@@ -1,11 +1,9 @@
 import type { ProjectIF } from '@/model/ProjectIF';
 import type { EmployeeIF } from '@/model/EmployeeIF';
 import type { IssueIF } from '@/model/IssueIF';
-import { Status } from '../model/IssueIF';
+import { Status } from '@/model/IssueIF';
 import type { IssueDataIF } from '@/model/IssueDataIF';
-
-// just temporary import
-import getMockData from '../assets/__mockdata__/mockDataComposer';
+import getMockData from '@/assets/__mockdata__/mockDataComposer';
 
 /**
  * This function calculate the workload from a project team, and give the
@@ -27,7 +25,7 @@ function calculateWorkload(project: ProjectIF | null): Map<EmployeeIF, IssueData
    * ToDo: decouple the mock data when everything is setup
    */
   if (project === undefined || project === null) {
-    projectToCalculate = getMockData();
+    projectToCalculate = getMockData(3);
   } else {
     projectToCalculate = project;
   }

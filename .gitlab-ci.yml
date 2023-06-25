@@ -1,0 +1,84 @@
+stages:
+  - Lint
+  - Test
+  - Build
+  - Deploy
+
+.frontendJob:
+  image: node:20.2.0-alpine3.18
+  rules:
+    - if: '$SCHEDULED == "true"'
+      when: never
+    - if: "$CI_COMMIT_REF_NAME == 'main'"
+    - if: '$CI_COMMIT_REF_NAME == "development"'
+    - if: '($CI_MERGE_REQUEST_TITLE != null)'
+      when: never
+    - if: '$CI_MERGE_REQUEST_DRAFT == "false"'
+    - exists:
+        - "$CI_MERGE_REQUEST_TARGET_BRANCH_NAME"
+    - changes:
+        - "./*"
+    - changes:
+        - ".gitlab-ci.yml"
+
+######## Frontend Pipeline
+"Frontend-Lint":
+  stage: Lint
+  script:
+    - npm ci
+    - npm run lint:no-fix
+  extends:
+    - .frontendJob
+
+"Frontend-Test":
+  stage: Test
+  coverage: /All files\s*\|\s*([\d\.]+)/
+  script:
+    - npm ci
+    - npm run test:pipeline
+  artifacts:
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage/cobertura-coverage.xml
+  extends:
+    - .frontendJob
+
+"Frontend-Build":
+  stage: Build
+  script:
+    - npm ci
+    - npm run build
+  extends:
+    - .frontendJob
+
+"Image-Build":
+  image: docker:24.0.2-dind
+  stage: Build
+  tags:
+    - image
+  variables:
+    IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
+  script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker build -t $IMAGE_TAG .
+    - docker push $IMAGE_TAG
+  only:
+    - main
+    - development
+
+"Frontend-Deployment":
+  image: kroniak/ssh-client:latest
+  stage: Deploy
+  tags:
+    - docker
+  script:
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+    - echo "$SSH_KEY" > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - ssh -i ~/.ssh/id_rsa $VM_USERNAME@$VM_IP "podman login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY && podman pull $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG && podman stop flowmetrics && podman run --name flowmetrics -d -p 40100:8080 --rm $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG && exit"
+  only:
+    - main
+    - development

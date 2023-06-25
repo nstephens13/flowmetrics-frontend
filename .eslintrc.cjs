@@ -13,35 +13,31 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 'latest',
   },
+  settings: {
+    'import/extensions': ['.js', '.jsx', '.ts', '.tsx', '.mjs'],
+  },
   rules: {
-    '@typescript-eslint/indent': ['error', 2],
-    '@typescript-eslint/no-unused-vars': 'error',
-    '@typescript-eslint/no-explicit-any': 'error',
-    'no-plusplus': ['error', { allowForLoopAfterthoughts: true }],
-    'no-shadow': 'off',
-    '@typescript-eslint/no-shadow': 'warn',
-    'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
-    'import/no-unresolved': 0,
-    'linebreak-style': ['error', 'unix'],
     'import/extensions': [
-      'error',
+      'warn',
       'ignorePackages',
       {
         js: 'never',
         jsx: 'never',
         ts: 'never',
         tsx: 'never',
+        '': 'never',
       },
     ],
+    '@typescript-eslint/indent': ['error', 2],
+    '@typescript-eslint/no-unused-vars': 'error',
+    'no-plusplus': ['error', { allowForLoopAfterthoughts: true }],
+    'no-shadow': 'off',
+    '@typescript-eslint/no-shadow': 'warn',
+    'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
+    'import/no-unresolved': 0,
+    'linebreak-style': ['error', 'unix'],
   },
   plugins: ['@typescript-eslint'],
-  settings: {
-    'import/resolver': {
-      node: {
-        extensions: ['.js', '.jsx', '.ts', '.tsx'],
-      },
-    },
-  },
   overrides: [
     {
       files: ['src/main.ts', 'src/shims-vue.d.ts'],
@@ -53,4 +49,5 @@ module.exports = {
       },
     },
   ],
+
 };

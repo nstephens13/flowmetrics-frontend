@@ -1,9 +1,9 @@
 import type { EmployeeIF } from './EmployeeIF';
 
 export enum Status {
-  Open,
-  Closed,
-  InProgress
+  Open = 'Open',
+  Closed = 'Closed',
+  InProgress = 'In Progress'
 }
 
 /**
@@ -18,6 +18,8 @@ export enum Status {
  * @prop {Date| null} dueTo Due date for the Issue
  * @prop {Status} status the Status of ticket-progress
  */
+
+// Enum to set status of Issue
 export interface IssueIF {
   id: number
   name: string
