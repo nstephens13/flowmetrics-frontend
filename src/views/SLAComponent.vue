@@ -8,7 +8,7 @@
                   <InputText v-model="newSubscriber" placeholder="Enter subscriber name"
                              class="enter-subscriber"/>
                   <Button class="add-subscriber" @click="addSubscriber" label="+"></Button>
-                  <div v-if="!isSubscriberNameValid" class="error-message">{{ errorMessage }}</div>
+                  <div v-if="!isSubscriberNameValid" class="error-message">{{ SubscriberErrorMessage }}</div>
                 </div>
             </div>
             <div>
@@ -36,6 +36,9 @@
                     <InputText v-model="categoryName" placeholder="Enter category name"
                            class="enter-category"/>
                     <Button class="add-category" @click="createCategory" label="+"></Button>
+                    <div v-if="!isSLACategoryNameValid" class="error-message">
+                      {{ categoryErrorMessage }}
+                    </div>
                 </div>
             </div>
 
@@ -73,7 +76,7 @@ export default defineComponent({
     const slaStore = useSLAStore();
     const newSubscriber = ref('');
     const isSubscriberNameValid = ref(true);
-    const errorMessage = computed(() => (!isSubscriberNameValid.value ? 'Subscriber name must be at least 3 characters' : ''));
+    const SubscriberErrorMessage = computed(() => (!isSubscriberNameValid.value ? 'Subscriber name must be at least 3 characters' : ''));
     const newRuleName = ref('');
     const newRuleMaxAssignedEmployees = ref();
     const isRuleNameValid = ref(true);
@@ -81,6 +84,8 @@ export default defineComponent({
     const selectedSubscriber = ref(null);
     const selectedRule = ref(null);
     const categoryName = ref('');
+    const isSLACategoryNameValid = ref(true);
+    const categoryErrorMessage = computed(() => (!isSLACategoryNameValid.value ? 'Category name must be at least 3 characters.' : ''));
 
     slaStore.initializeCategories();
 
@@ -127,6 +132,11 @@ export default defineComponent({
 
     // Create a new SLA category using selected subscriber and rule
     const createCategory = () => {
+      if (categoryName.value.trim().length < 3) {
+        isSLACategoryNameValid.value = false;
+        return;
+      }
+      isSLACategoryNameValid.value = true;
       if (selectedSubscriber.value && selectedRule.value) {
         const category: SLACategory = {
           id: null,
@@ -151,7 +161,7 @@ export default defineComponent({
     return {
       newSubscriber,
       isSubscriberNameValid,
-      errorMessage,
+      SubscriberErrorMessage,
       newRuleName,
       newRuleMaxAssignedEmployees,
       isRuleNameValid,
@@ -159,6 +169,8 @@ export default defineComponent({
       selectedSubscriber,
       selectedRule,
       categoryName,
+      isSLACategoryNameValid,
+      categoryErrorMessage,
       subscriber,
       rules,
       maxAssignedEmployeesOptions,
