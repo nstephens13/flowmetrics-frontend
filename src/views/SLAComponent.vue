@@ -8,7 +8,9 @@
                   <InputText v-model="newSubscriber" placeholder="Enter subscriber name"
                              class="enter-subscriber"/>
                   <Button class="add-subscriber" @click="addSubscriber" label="+"></Button>
-                  <div v-if="!isSubscriberNameValid" class="error-message">{{ SubscriberErrorMessage }}</div>
+                  <div v-if="!isSubscriberNameValid" class="error-message">
+                    {{ SubscriberErrorMessage }}
+                  </div>
                 </div>
             </div>
             <div>
