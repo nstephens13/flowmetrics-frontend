@@ -11,9 +11,9 @@ import type { MilestoneIF } from './MilestoneIF';
  * but not to a milestone
  */
 export interface ProjectIF {
-  id: number
-  name: string
-  description: string
-  milestones: MilestoneIF[]
-  issues: IssueIF[]
+  id: number;
+  name: string;
+  description: string;
+  milestones: MilestoneIF[];
+  issues: IssueIF[];
 }

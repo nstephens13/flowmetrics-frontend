@@ -31,7 +31,7 @@ function calculateWorkload(
    * ToDo: decouple the mock data when everything is setup
    */
   if (project === undefined || project === null) {
-    projectToCalculate = getMockData();
+    projectToCalculate = getMockData(3);
   } else {
     projectToCalculate = project;
   }
