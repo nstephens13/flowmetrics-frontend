@@ -1,10 +1,25 @@
 <template>
   <Card>
     <template #title>
-      Employee Overview
-      <Divider></Divider>
+      <div class="grid">
+        <div class="col-12">
+          <label class="col-12 gap-3">Employee Overview</label>
+          <Dropdown
+            optionLabel="name"
+            placeholder="Select a project"
+            class="w-full md:w-14rem"
+          />
+          <Dropdown
+            optionLabel="name"
+            placeholder="Select a employee"
+            class="w-full md:w-14rem"
+          />
+        </div>
+      </div>
+      <Divider/>
     </template>
     <template #content>
+      <Divider/>
       <div class="grid">
         <div class="col-4"><EmployeeCard /></div>
         <div class="col-4"><EmployeeCard /></div>
