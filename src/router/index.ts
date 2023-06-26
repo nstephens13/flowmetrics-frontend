@@ -3,6 +3,8 @@ import ProjectOverview from '@/views/ProjectOverview.vue';
 import TicketCalculator from '@/views/TicketCalculatorView.vue';
 import SLAComponent from '@/views/SLAComponent.vue';
 import EmployeeOverview from '@/views/EmployeeOverview.vue';
+import EmployeeOverview2 from '@/views/EmployeeOverview2.vue';
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -31,6 +33,11 @@ const router = createRouter({
       path: '/employee-overview',
       name: 'employee-overview',
       component: EmployeeOverview,
+    },
+    {
+      path: '/employee-overview-2',
+      name: 'employee-overview-2',
+      component: EmployeeOverview2,
     },
   ],
 });

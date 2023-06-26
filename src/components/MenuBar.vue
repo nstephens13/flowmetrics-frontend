@@ -50,6 +50,11 @@ const items = ref([
     icon: 'pi pi-fw pi-ticket',
     to: '/ticket-calculator',
   },
+  {
+    label: 'Employee Overview 2',
+    icon: 'pi pi-fw pi-user',
+    to: '/employee-overview-2',
+  },
 ]);
 </script>
 
