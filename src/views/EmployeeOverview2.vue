@@ -6,9 +6,12 @@
     </template>
     <template #content>
       <div class="grid">
-        <div class="col"><EmployeeCard /></div>
-        <div class="col"><EmployeeCard /></div>
-        <div class="col"><EmployeeCard /></div>
+        <div class="col-4"><EmployeeCard /></div>
+        <div class="col-4"><EmployeeCard /></div>
+        <div class="col-4"><EmployeeCard /></div>
+        <div class="col-4"><EmployeeCard /></div>
+        <div class="col-4"><EmployeeCard /></div>
+        <div class="col-4"><EmployeeCard /></div>
       </div>
     </template>
   </Card>
