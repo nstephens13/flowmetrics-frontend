@@ -73,14 +73,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import type { Ref } from 'vue';
-import CircularProgressBar from '@/components/TicketCalculator/CircularProgressBar.vue';
-import type { ProjectIF } from '@/model/ProjectIF';
-import getMockData from '@/assets/__mockdata__/mockDataComposer';
-import { countIssuesByStatus, Issue, getTimeLeft } from '@/model/Issue';
-import { Status } from '@/model/IssueIF';
-import type { EmployeeIF } from '@/model/EmployeeIF';
+import { ref } from 'vue'
+import type { Ref } from 'vue'
+import CircularProgressBar from '@/components/TicketCalculator/CircularProgressBar.vue'
+import type { ProjectIF } from '@/model/ProjectIF'
+import getMockData from '@/assets/__mockdata__/mockDataComposer'
+import { countIssuesByStatus, Issue, getTimeLeft } from '@/model/Issue'
+import { Status } from '@/model/IssueIF'
+import type { EmployeeIF } from '@/model/EmployeeIF'
 </script>
 
 <script lang="ts">
@@ -89,22 +89,22 @@ const selectedProject: Ref<ProjectIF> = ref({
   name: 'Project_Name',
   description: '',
   milestones: [],
-  issues: [],
-} as ProjectIF);
+  issues: []
+} as ProjectIF)
 
-const projects: Ref<ProjectIF[]> = ref([getMockData(4), getMockData(5)] as ProjectIF[]);
+const projects: Ref<ProjectIF[]> = ref([getMockData(4), getMockData(5)] as ProjectIF[])
 
 function getIssueCountMax(issues: Issue[]): number {
   if (issues.length === 0) {
-    return 100;
+    return 100
   }
-  return issues.length;
+  return issues.length
 }
 
 function printAssignedTo(employee: EmployeeIF | null): string {
-  const firstName = employee?.firstName ?? '';
-  const lastName = employee?.lastName ?? '';
-  return `${firstName} ${lastName}`;
+  const firstName = employee?.firstName ?? ''
+  const lastName = employee?.lastName ?? ''
+  return `${firstName} ${lastName}`
 }
 </script>
 

@@ -1,10 +1,10 @@
-import type { ProjectIF } from '@/model/ProjectIF';
-import type { EmployeeIF } from '@/model/EmployeeIF';
-import type { IssueIF } from '@/model/IssueIF';
-import { Status } from '../model/IssueIF';
+import type { ProjectIF } from '@/model/ProjectIF'
+import type { EmployeeIF } from '@/model/EmployeeIF'
+import type { IssueIF } from '@/model/IssueIF'
+import { Status } from '../model/IssueIF'
 
 // just temporary import
-import getMockData from '../assets/__mockdata__/mockDataComposer';
+import getMockData from '../assets/__mockdata__/mockDataComposer'
 
 /**
  * This function calculate the workload from a project team, and give the
@@ -18,45 +18,45 @@ import getMockData from '../assets/__mockdata__/mockDataComposer';
  * value:{ openIssues: number; inProgressIssues: number; closedIssues: number }
  */
 function calculateWorkload(
-  project: ProjectIF | null,
+  project: ProjectIF | null
 ): Map<EmployeeIF, { openIssues: number; inProgressIssues: number; closedIssues: number }> {
   const mapToReturn: Map<
-  EmployeeIF,
-  { openIssues: number; inProgressIssues: number; closedIssues: number }
-  > = new Map([]);
-  const issueSet: Set<IssueIF> = new Set<IssueIF>();
-  let projectToCalculate: ProjectIF;
+    EmployeeIF,
+    { openIssues: number; inProgressIssues: number; closedIssues: number }
+  > = new Map([])
+  const issueSet: Set<IssueIF> = new Set<IssueIF>()
+  let projectToCalculate: ProjectIF
 
   /**
    * ToDo: decouple the mock data when everything is setup
    */
   if (project === undefined || project === null) {
-    projectToCalculate = getMockData(3);
+    projectToCalculate = getMockData(3)
   } else {
-    projectToCalculate = project;
+    projectToCalculate = project
   }
 
   function extractEmployeeAndUpdateEmployeeMap(issue: IssueIF) {
     // checking if the issue is already done, with a set, and if somebody is assigned
     if (!issueSet.has(issue) && issue.assignedTo !== null && issue.assignedTo !== undefined) {
-      let numberOpenTickets: number;
-      let numberInProgressTickets: number;
-      let numberClosedTickets: number;
+      let numberOpenTickets: number
+      let numberInProgressTickets: number
+      let numberClosedTickets: number
 
       // checking if the employee is already with values in the map
       const tuple:
-      | { openIssues: number; inProgressIssues: number; closedIssues: number }
-      | undefined = mapToReturn.get(issue.assignedTo);
+        | { openIssues: number; inProgressIssues: number; closedIssues: number }
+        | undefined = mapToReturn.get(issue.assignedTo)
 
       // setting the values to zero if the employee isn't in the map already
       if (tuple !== undefined) {
-        numberOpenTickets = tuple.openIssues;
-        numberInProgressTickets = tuple.inProgressIssues;
-        numberClosedTickets = tuple.closedIssues;
+        numberOpenTickets = tuple.openIssues
+        numberInProgressTickets = tuple.inProgressIssues
+        numberClosedTickets = tuple.closedIssues
       } else {
-        numberOpenTickets = 0;
-        numberInProgressTickets = 0;
-        numberClosedTickets = 0;
+        numberOpenTickets = 0
+        numberInProgressTickets = 0
+        numberClosedTickets = 0
       }
 
       // if there is no date for closure of the ticket, then it is a still open ticket
@@ -65,35 +65,35 @@ function calculateWorkload(
           mapToReturn.set(issue.assignedTo, {
             openIssues: numberOpenTickets,
             inProgressIssues: numberInProgressTickets + 1,
-            closedIssues: numberClosedTickets,
-          });
+            closedIssues: numberClosedTickets
+          })
         } else {
           mapToReturn.set(issue.assignedTo, {
             openIssues: numberOpenTickets + 1,
             inProgressIssues: numberInProgressTickets,
-            closedIssues: numberClosedTickets,
-          });
+            closedIssues: numberClosedTickets
+          })
         }
       } else {
         mapToReturn.set(issue.assignedTo, {
           openIssues: numberOpenTickets,
           inProgressIssues: numberInProgressTickets,
-          closedIssues: numberClosedTickets + 1,
-        });
+          closedIssues: numberClosedTickets + 1
+        })
       }
-      issueSet.add(issue);
+      issueSet.add(issue)
     }
   }
 
   projectToCalculate.issues.forEach((issue) => {
-    extractEmployeeAndUpdateEmployeeMap(issue);
-  });
+    extractEmployeeAndUpdateEmployeeMap(issue)
+  })
   projectToCalculate.milestones.forEach((milestone) => {
     milestone.issues.forEach((issue) => {
-      extractEmployeeAndUpdateEmployeeMap(issue);
-    });
-  });
-  return mapToReturn;
+      extractEmployeeAndUpdateEmployeeMap(issue)
+    })
+  })
+  return mapToReturn
 }
 
-export default calculateWorkload;
+export default calculateWorkload

@@ -32,94 +32,94 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, ref } from 'vue'
 
 const props = defineProps({
   title: {
     type: String,
     required: false,
-    default: '',
+    default: ''
   },
   max: {
     type: Number,
     required: true,
-    default: 100,
+    default: 100
   },
 
   value: {
     type: Number,
     required: true,
-    default: 0,
+    default: 0
   },
 
   colorFilled: {
     type: String,
     required: false,
-    default: '#2196f3',
+    default: '#2196f3'
   },
 
   colorUnfilled: {
     type: String,
     required: false,
-    default: '#2196f3',
+    default: '#2196f3'
   },
 
   percentage: {
     type: Boolean,
     required: false,
-    default: false,
+    default: false
   },
 
   rounded: {
     type: Boolean,
     required: false,
-    default: false,
+    default: false
   },
 
   animationDuration: {
     type: String,
     required: false,
-    default: '0.5s',
+    default: '0.5s'
   },
 
   strokeWidth: {
     type: String,
     required: false,
-    default: '5px',
+    default: '5px'
   },
 
   reversedFilling: {
     type: Boolean,
     required: false,
-    default: false,
-  },
-});
+    default: false
+  }
+})
 
-const isLimitReached = computed(() => props.max <= props.value);
+const isLimitReached = computed(() => props.max <= props.value)
 const fillingCircleClasses = computed(() => ({
   'circle-progress__line--top--rounded': props.rounded,
   'circle-progress__line--filled': isLimitReached.value,
-  'circle-progress__line--unfilled': !isLimitReached.value,
-}));
+  'circle-progress__line--unfilled': !isLimitReached.value
+}))
 
-const currentFormatted = computed(() => (isLimitReached.value ? props.max : props.value));
+const currentFormatted = computed(() => (isLimitReached.value ? props.max : props.value))
 
-const fillingCircle = ref(null);
-const radius = ref(48);
-const dashArray = computed(() => radius.value * Math.PI * 2);
+const fillingCircle = ref(null)
+const radius = ref(48)
+const dashArray = computed(() => radius.value * Math.PI * 2)
 const dashOffset = computed(() => {
   if (props.reversedFilling) {
-    return dashArray.value - (dashArray.value * (props.max - currentFormatted.value)) / props.max;
+    return dashArray.value - (dashArray.value * (props.max - currentFormatted.value)) / props.max
   }
-  return dashArray.value - (dashArray.value * currentFormatted.value) / props.max;
-});
+  return dashArray.value - (dashArray.value * currentFormatted.value) / props.max
+})
 
-const getPercentage = computed(() => `${Math.floor((props.value / props.max) * 100)}%`);
+const getPercentage = computed(() => `${Math.floor((props.value / props.max) * 100)}%`)
 
 const fillingCircleStyles = computed(() => ({
   strokeDashoffset: dashOffset.value,
-  strokeDasharray: dashArray.value,
-}));
+  strokeDasharray: dashArray.value
+}))
 </script>
 
 <style>

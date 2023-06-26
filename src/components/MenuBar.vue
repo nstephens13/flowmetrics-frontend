@@ -25,37 +25,37 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref } from 'vue'
 
-const title = 'FlowMetrics';
-const visible = ref();
+const title = 'FlowMetrics'
+const visible = ref()
 const items = ref([
   {
     label: 'Project Overview',
     icon: 'pi pi-fw pi-book',
-    to: '/ProjectOverview',
+    to: '/ProjectOverview'
   },
   {
     label: 'Employee Overview',
     icon: 'pi pi-fw pi-users',
-    to: '/employee-overview',
+    to: '/employee-overview'
   },
   {
     label: 'Create SLA Rules',
     icon: 'pi pi-fw pi-filter',
-    to: '/sla-management',
+    to: '/sla-management'
   },
   {
     label: 'Ticket Calculator',
     icon: 'pi pi-fw pi-ticket',
-    to: '/ticket-calculator',
+    to: '/ticket-calculator'
   },
   {
     label: 'Employee Overview 2',
     icon: 'pi pi-fw pi-user',
-    to: '/employee-overview-2',
-  },
-]);
+    to: '/employee-overview-2'
+  }
+])
 </script>
 
 <style scoped>

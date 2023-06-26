@@ -42,27 +42,27 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import type { EmployeeIF } from '@/model/EmployeeIF';
-import calculateWorkload from '../services/workloadCalculator';
+import { ref } from 'vue'
+import type { EmployeeIF } from '@/model/EmployeeIF'
+import calculateWorkload from '../services/workloadCalculator'
 import {
   calculateCssUserBackgroundStyle,
-  getCssHeightForStatisticBoxes,
-} from './EmployeeOverviewHelper';
-import getMockData from '@/assets/__mockdata__/mockDataComposer';
+  getCssHeightForStatisticBoxes
+} from './EmployeeOverviewHelper'
+import getMockData from '@/assets/__mockdata__/mockDataComposer'
 
 const employeeMap = ref<
-Map<EmployeeIF, { openIssues: number; inProgressIssues: number; closedIssues: number }>
->(calculateWorkload(getMockData(3)));
+  Map<EmployeeIF, { openIssues: number; inProgressIssues: number; closedIssues: number }>
+>(calculateWorkload(getMockData(3)))
 
 function getUserNameBackgroundStyle(employee: EmployeeIF): string {
-  const { width, height } = calculateCssUserBackgroundStyle(employee);
-  return `width: ${width}px; height: ${height}px`;
+  const { width, height } = calculateCssUserBackgroundStyle(employee)
+  return `width: ${width}px; height: ${height}px`
 }
 
 function getBoxHeightStyle(count: number) {
-  const height = getCssHeightForStatisticBoxes(count);
-  return `height: ${height}px`;
+  const height = getCssHeightForStatisticBoxes(count)
+  return `height: ${height}px`
 }
 </script>
 

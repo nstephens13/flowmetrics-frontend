@@ -1,20 +1,20 @@
-import type { ProjectIF } from '@/model/ProjectIF';
-import type { EmployeeIF } from '@/model/EmployeeIF';
-import type { IssueIF } from '@/model/IssueIF';
-import type { MilestoneIF } from '@/model/MilestoneIF';
-import { Status } from '@/model/IssueIF';
-import employeeJson from './Employees.json';
-import issueJson2 from './Issues_2.json';
-import issueJson from './Issues.json';
-import milestoneJson from './Milestones.json';
-import type { Issue } from '@/model/Issue';
+import type { ProjectIF } from '@/model/ProjectIF'
+import type { EmployeeIF } from '@/model/EmployeeIF'
+import type { IssueIF } from '@/model/IssueIF'
+import type { MilestoneIF } from '@/model/MilestoneIF'
+import { Status } from '@/model/IssueIF'
+import employeeJson from './Employees.json'
+import issueJson2 from './Issues_2.json'
+import issueJson from './Issues.json'
+import milestoneJson from './Milestones.json'
+import type { Issue } from '@/model/Issue'
 
 function getRandomInt(max: number) {
-  return Math.floor(Math.random() * max);
+  return Math.floor(Math.random() * max)
 }
 
 function loadIssueDataFromFile(issues: Array<any>): Issue[] {
-  const issueData: Issue[] = [];
+  const issueData: Issue[] = []
   structuredClone(issues).forEach((issue) => {
     issueData.push({
       id: issue.id as number,
@@ -25,101 +25,101 @@ function loadIssueDataFromFile(issues: Array<any>): Issue[] {
       closedAt: issue.closedAt ? new Date(issue.closedAt) : null,
       createdAt: new Date(issue.createdAt),
       dueTo: issue.dueTo ? new Date(issue.dueTo) : null,
-      status: issue.status as Status,
-    });
-  });
-  return issueData;
+      status: issue.status as Status
+    })
+  })
+  return issueData
 }
 
 function assignIssueToEmployee(
   issueNumber: number,
   employeeNumber: number,
   issues: IssueIF[],
-  employees: EmployeeIF[],
+  employees: EmployeeIF[]
 ): {
-    issuesToReturn: IssueIF[]
-    employeesToReturn: EmployeeIF[]
-  } {
-  const issuesToReturn = issues;
-  const employeesToReturn = employees;
-  issuesToReturn[issueNumber].assignedTo = employees[employeeNumber];
-  employeesToReturn[employeeNumber].assignedIssues.push(issues[issueNumber]);
+  issuesToReturn: IssueIF[]
+  employeesToReturn: EmployeeIF[]
+} {
+  const issuesToReturn = issues
+  const employeesToReturn = employees
+  issuesToReturn[issueNumber].assignedTo = employees[employeeNumber]
+  employeesToReturn[employeeNumber].assignedIssues.push(issues[issueNumber])
 
-  return { issuesToReturn, employeesToReturn };
+  return { issuesToReturn, employeesToReturn }
 }
 function assignIssueToMilestone(
   issueNumber: number,
   milestoneNumber: number,
   milestones: MilestoneIF[],
-  issues: IssueIF[],
+  issues: IssueIF[]
 ) {
-  const mileStonesToReturn = milestones;
-  mileStonesToReturn[milestoneNumber].issues.push(issues[issueNumber]);
+  const mileStonesToReturn = milestones
+  mileStonesToReturn[milestoneNumber].issues.push(issues[issueNumber])
 
-  return mileStonesToReturn;
+  return mileStonesToReturn
 }
 
 function loadArraysFromFile(issueFile: any) {
-  const employeesArray: EmployeeIF[] = structuredClone(employeeJson) as EmployeeIF[];
+  const employeesArray: EmployeeIF[] = structuredClone(employeeJson) as EmployeeIF[]
   // const issuesArray: IssueIF[] = structuredClone(issueJson) as IssueIF[];
-  const issuesArray: IssueIF[] = loadIssueDataFromFile(issueFile);
-  const milestones: MilestoneIF[] = structuredClone(milestoneJson) as MilestoneIF[];
-  return { employeesArray, issuesArray, milestones };
+  const issuesArray: IssueIF[] = loadIssueDataFromFile(issueFile)
+  const milestones: MilestoneIF[] = structuredClone(milestoneJson) as MilestoneIF[]
+  return { employeesArray, issuesArray, milestones }
 }
 
 // give out a fake project
 function getMockData(dataset: number): ProjectIF {
   switch (dataset) {
     case 1: {
-      const { employeesArray, issuesArray, milestones } = loadArraysFromFile(issueJson);
+      const { employeesArray, issuesArray, milestones } = loadArraysFromFile(issueJson)
 
       const tuple: {
         issuesToReturn: IssueIF[]
         employeesToReturn: EmployeeIF[]
-      } = assignIssueToEmployee(1, 1, issuesArray, employeesArray);
+      } = assignIssueToEmployee(1, 1, issuesArray, employeesArray)
 
-      const issues = tuple.issuesToReturn;
+      const issues = tuple.issuesToReturn
       return {
         id: 1,
         name: 'Mocking Bird 1',
         description: 'first mock dataset',
         milestones,
-        issues,
-      };
+        issues
+      }
     }
     case 2: {
       const {
         employeesArray,
         issuesArray,
-        milestones: milestonesArray,
-      } = loadArraysFromFile(issueJson);
+        milestones: milestonesArray
+      } = loadArraysFromFile(issueJson)
 
-      let tuple = assignIssueToEmployee(0, 0, issuesArray, employeesArray);
-      tuple = assignIssueToEmployee(1, 1, tuple.issuesToReturn, tuple.employeesToReturn);
-      tuple = assignIssueToEmployee(2, 1, tuple.issuesToReturn, tuple.employeesToReturn);
-      tuple = assignIssueToEmployee(3, 2, tuple.issuesToReturn, tuple.employeesToReturn);
-      tuple = assignIssueToEmployee(4, 2, tuple.issuesToReturn, tuple.employeesToReturn);
-      tuple = assignIssueToEmployee(5, 2, tuple.issuesToReturn, tuple.employeesToReturn);
-      tuple = assignIssueToEmployee(6, 3, tuple.issuesToReturn, tuple.employeesToReturn);
-      const issues = tuple.issuesToReturn;
+      let tuple = assignIssueToEmployee(0, 0, issuesArray, employeesArray)
+      tuple = assignIssueToEmployee(1, 1, tuple.issuesToReturn, tuple.employeesToReturn)
+      tuple = assignIssueToEmployee(2, 1, tuple.issuesToReturn, tuple.employeesToReturn)
+      tuple = assignIssueToEmployee(3, 2, tuple.issuesToReturn, tuple.employeesToReturn)
+      tuple = assignIssueToEmployee(4, 2, tuple.issuesToReturn, tuple.employeesToReturn)
+      tuple = assignIssueToEmployee(5, 2, tuple.issuesToReturn, tuple.employeesToReturn)
+      tuple = assignIssueToEmployee(6, 3, tuple.issuesToReturn, tuple.employeesToReturn)
+      const issues = tuple.issuesToReturn
 
-      let milestones = assignIssueToMilestone(0, 0, milestonesArray, tuple.issuesToReturn);
-      milestones = assignIssueToMilestone(1, 0, milestones, tuple.issuesToReturn);
-      milestones = assignIssueToMilestone(2, 1, milestones, tuple.issuesToReturn);
-      milestones = assignIssueToMilestone(3, 1, milestones, tuple.issuesToReturn);
+      let milestones = assignIssueToMilestone(0, 0, milestonesArray, tuple.issuesToReturn)
+      milestones = assignIssueToMilestone(1, 0, milestones, tuple.issuesToReturn)
+      milestones = assignIssueToMilestone(2, 1, milestones, tuple.issuesToReturn)
+      milestones = assignIssueToMilestone(3, 1, milestones, tuple.issuesToReturn)
 
       return {
         id: 2,
         name: 'Mocking Bird 2',
         description: 'second mock dataset',
         milestones,
-        issues,
-      };
+        issues
+      }
     }
 
     case 3: {
-      const { employeesArray, milestones } = loadArraysFromFile(issueJson);
-      let issues: IssueIF[] = [];
+      const { employeesArray, milestones } = loadArraysFromFile(issueJson)
+      let issues: IssueIF[] = []
       for (let i = 0; i < 280; i++) {
         issues.push({
           id: i,
@@ -130,29 +130,29 @@ function getMockData(dataset: number): ProjectIF {
           assignedTo: null,
           createdAt: new Date(2018, 0o5, 0o5, 17, 23, 42, 11),
           createdBy: {} as EmployeeIF,
-          dueTo: null,
-        });
+          dueTo: null
+        })
       }
 
       // issues = issuesArray;
-      const numberOfIssues = issues.length;
-      const numberOfEmployees = employeesArray.length;
+      const numberOfIssues = issues.length
+      const numberOfEmployees = employeesArray.length
 
       for (let i = 0; i < numberOfIssues; i++) {
-        const randomStatus = getRandomInt(3); // 0: Open, 1: Closed, 2: InProgress
+        const randomStatus = getRandomInt(3) // 0: Open, 1: Closed, 2: InProgress
 
         if (randomStatus === 2) {
-          issues[i].status = Status.InProgress;
+          issues[i].status = Status.InProgress
         } else if (randomStatus === 1) {
-          const randomDate = new Date(2018, 0o5, 0o5, 17, 23, 42, 11);
+          const randomDate = new Date(2018, 0o5, 0o5, 17, 23, 42, 11)
           // Assigning a random closedAt date within the last 30 days
-          randomDate.setDate(randomDate.getDate() - getRandomInt(30));
-          issues[i].closedAt = randomDate;
+          randomDate.setDate(randomDate.getDate() - getRandomInt(30))
+          issues[i].closedAt = randomDate
         }
 
-        const randomEmployee = getRandomInt(numberOfEmployees);
-        const tuple = assignIssueToEmployee(i, randomEmployee, issues, employeesArray);
-        issues = tuple.issuesToReturn;
+        const randomEmployee = getRandomInt(numberOfEmployees)
+        const tuple = assignIssueToEmployee(i, randomEmployee, issues, employeesArray)
+        issues = tuple.issuesToReturn
       }
 
       return {
@@ -160,13 +160,13 @@ function getMockData(dataset: number): ProjectIF {
         name: 'Mocking Bird 3',
         description: 'third mock dataset',
         milestones,
-        issues,
-      };
+        issues
+      }
     }
 
     case 4: {
-      const { employeesArray, milestones } = loadArraysFromFile(issueJson2);
-      let issues: IssueIF[] = [];
+      const { employeesArray, milestones } = loadArraysFromFile(issueJson2)
+      let issues: IssueIF[] = []
       for (let i = 0; i < 280; i++) {
         issues.push({
           id: i,
@@ -177,29 +177,29 @@ function getMockData(dataset: number): ProjectIF {
           assignedTo: null,
           createdAt: new Date(2018, 0o5, 0o5, 17, 23, 42, 11),
           createdBy: {} as EmployeeIF,
-          dueTo: null,
-        });
+          dueTo: null
+        })
       }
 
       // issues = issuesArray;
-      const numberOfIssues = issues.length;
-      const numberOfEmployees = employeesArray.length;
+      const numberOfIssues = issues.length
+      const numberOfEmployees = employeesArray.length
 
       for (let i = 0; i < numberOfIssues; i++) {
-        const randomStatus = getRandomInt(3); // 0: Open, 1: Closed, 2: InProgress
+        const randomStatus = getRandomInt(3) // 0: Open, 1: Closed, 2: InProgress
 
         if (randomStatus === 2) {
-          issues[i].status = Status.InProgress;
+          issues[i].status = Status.InProgress
         } else if (randomStatus === 1) {
-          const randomDate = new Date(2018, 0o5, 0o5, 17, 23, 42, 11);
+          const randomDate = new Date(2018, 0o5, 0o5, 17, 23, 42, 11)
           // Assigning a random closedAt date within the last 30 days
-          randomDate.setDate(randomDate.getDate() - getRandomInt(30));
-          issues[i].closedAt = randomDate;
+          randomDate.setDate(randomDate.getDate() - getRandomInt(30))
+          issues[i].closedAt = randomDate
         }
 
-        const randomEmployee = getRandomInt(numberOfEmployees);
-        const tuple = assignIssueToEmployee(i, randomEmployee, issues, employeesArray);
-        issues = tuple.issuesToReturn;
+        const randomEmployee = getRandomInt(numberOfEmployees)
+        const tuple = assignIssueToEmployee(i, randomEmployee, issues, employeesArray)
+        issues = tuple.issuesToReturn
       }
 
       return {
@@ -207,38 +207,38 @@ function getMockData(dataset: number): ProjectIF {
         name: 'Mocking Bird 3',
         description: 'third mock dataset',
         milestones,
-        issues,
-      };
+        issues
+      }
     }
 
     case 5: {
       const {
         employeesArray,
         issuesArray,
-        milestones: milestonesArray,
-      } = loadArraysFromFile(issueJson2);
+        milestones: milestonesArray
+      } = loadArraysFromFile(issueJson2)
 
-      let tuple = assignIssueToEmployee(0, 0, issuesArray, employeesArray);
-      tuple = assignIssueToEmployee(1, 1, tuple.issuesToReturn, tuple.employeesToReturn);
-      tuple = assignIssueToEmployee(2, 1, tuple.issuesToReturn, tuple.employeesToReturn);
-      tuple = assignIssueToEmployee(3, 2, tuple.issuesToReturn, tuple.employeesToReturn);
-      tuple = assignIssueToEmployee(4, 2, tuple.issuesToReturn, tuple.employeesToReturn);
-      tuple = assignIssueToEmployee(5, 2, tuple.issuesToReturn, tuple.employeesToReturn);
-      tuple = assignIssueToEmployee(6, 3, tuple.issuesToReturn, tuple.employeesToReturn);
-      const issues = tuple.issuesToReturn;
+      let tuple = assignIssueToEmployee(0, 0, issuesArray, employeesArray)
+      tuple = assignIssueToEmployee(1, 1, tuple.issuesToReturn, tuple.employeesToReturn)
+      tuple = assignIssueToEmployee(2, 1, tuple.issuesToReturn, tuple.employeesToReturn)
+      tuple = assignIssueToEmployee(3, 2, tuple.issuesToReturn, tuple.employeesToReturn)
+      tuple = assignIssueToEmployee(4, 2, tuple.issuesToReturn, tuple.employeesToReturn)
+      tuple = assignIssueToEmployee(5, 2, tuple.issuesToReturn, tuple.employeesToReturn)
+      tuple = assignIssueToEmployee(6, 3, tuple.issuesToReturn, tuple.employeesToReturn)
+      const issues = tuple.issuesToReturn
 
-      let milestones = assignIssueToMilestone(0, 0, milestonesArray, tuple.issuesToReturn);
-      milestones = assignIssueToMilestone(1, 0, milestones, tuple.issuesToReturn);
-      milestones = assignIssueToMilestone(2, 1, milestones, tuple.issuesToReturn);
-      milestones = assignIssueToMilestone(3, 1, milestones, tuple.issuesToReturn);
+      let milestones = assignIssueToMilestone(0, 0, milestonesArray, tuple.issuesToReturn)
+      milestones = assignIssueToMilestone(1, 0, milestones, tuple.issuesToReturn)
+      milestones = assignIssueToMilestone(2, 1, milestones, tuple.issuesToReturn)
+      milestones = assignIssueToMilestone(3, 1, milestones, tuple.issuesToReturn)
 
       return {
         id: 2,
         name: 'Mocking Bird 2',
         description: 'second mock dataset',
         milestones,
-        issues,
-      };
+        issues
+      }
     }
 
     // only test cases
@@ -248,50 +248,50 @@ function getMockData(dataset: number): ProjectIF {
         name: 'Mocking Bird 4',
         description: 'project without issues and milestones',
         issues: [],
-        milestones: [],
-      };
+        milestones: []
+      }
     }
     case 54: {
-      const milestones: MilestoneIF[] = structuredClone(milestoneJson) as MilestoneIF[];
+      const milestones: MilestoneIF[] = structuredClone(milestoneJson) as MilestoneIF[]
       return {
         id: 54,
         name: 'Mocking Bird 5',
         description: 'project only with milestones',
         milestones,
-        issues: [],
-      };
+        issues: []
+      }
     }
 
     case 55: {
-      const { employeesArray, issuesArray, milestones } = loadArraysFromFile(issueJson);
+      const { employeesArray, issuesArray, milestones } = loadArraysFromFile(issueJson)
 
-      let tuple = assignIssueToEmployee(0, 0, issuesArray, employeesArray);
-      tuple = assignIssueToEmployee(1, 1, tuple.issuesToReturn, tuple.employeesToReturn);
-      tuple = assignIssueToEmployee(2, 1, tuple.issuesToReturn, tuple.employeesToReturn);
-      tuple = assignIssueToEmployee(3, 2, tuple.issuesToReturn, tuple.employeesToReturn);
-      tuple = assignIssueToEmployee(4, 2, tuple.issuesToReturn, tuple.employeesToReturn);
-      tuple = assignIssueToEmployee(5, 2, tuple.issuesToReturn, tuple.employeesToReturn);
-      tuple = assignIssueToEmployee(6, 3, tuple.issuesToReturn, tuple.employeesToReturn);
-      const issues = tuple.issuesToReturn;
-      const date = new Date(2018, 0o5, 0o5, 17, 23, 42, 11);
+      let tuple = assignIssueToEmployee(0, 0, issuesArray, employeesArray)
+      tuple = assignIssueToEmployee(1, 1, tuple.issuesToReturn, tuple.employeesToReturn)
+      tuple = assignIssueToEmployee(2, 1, tuple.issuesToReturn, tuple.employeesToReturn)
+      tuple = assignIssueToEmployee(3, 2, tuple.issuesToReturn, tuple.employeesToReturn)
+      tuple = assignIssueToEmployee(4, 2, tuple.issuesToReturn, tuple.employeesToReturn)
+      tuple = assignIssueToEmployee(5, 2, tuple.issuesToReturn, tuple.employeesToReturn)
+      tuple = assignIssueToEmployee(6, 3, tuple.issuesToReturn, tuple.employeesToReturn)
+      const issues = tuple.issuesToReturn
+      const date = new Date(2018, 0o5, 0o5, 17, 23, 42, 11)
 
-      issues[0].status = Status.InProgress;
-      issues[2].status = Status.Closed;
-      issues[2].closedAt = date; // Set the specific closedAt date
-      issues[3].status = Status.Closed;
-      issues[3].closedAt = date; // Set the specific closedAt date
-      issues[4].status = Status.Closed;
-      issues[4].closedAt = date; // Set the specific closedAt date
-      issues[5].status = Status.InProgress;
-      issues[6].status = Status.Closed;
-      issues[6].closedAt = date; // Set the specific closedAt date
+      issues[0].status = Status.InProgress
+      issues[2].status = Status.Closed
+      issues[2].closedAt = date // Set the specific closedAt date
+      issues[3].status = Status.Closed
+      issues[3].closedAt = date // Set the specific closedAt date
+      issues[4].status = Status.Closed
+      issues[4].closedAt = date // Set the specific closedAt date
+      issues[5].status = Status.InProgress
+      issues[6].status = Status.Closed
+      issues[6].closedAt = date // Set the specific closedAt date
       return {
         id: 55,
         name: 'Mocking Bird 6',
         description: 'project with some Issues with Status Enums',
         milestones,
-        issues,
-      };
+        issues
+      }
     }
     default: {
       return {
@@ -299,10 +299,10 @@ function getMockData(dataset: number): ProjectIF {
         name: 'default',
         description: 'a empty project',
         milestones: [],
-        issues: [],
-      };
+        issues: []
+      }
     }
   }
 }
 
-export default getMockData;
+export default getMockData
