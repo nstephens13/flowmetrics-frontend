@@ -7,11 +7,12 @@ import Panel from 'primevue/panel';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import Divider from 'primevue/divider';
+import CircularProgressBar from '@/components/TicketCalculator/CircularProgressBar.vue';
 import router from '@/router/index';
-import ProjectDescriptionPanel from '@/components/ProjectDescriptionPanel.vue';
+import TicketCalculator from '../TicketCalculator.vue';
 
 describe('Project Overview should load all the Components', () => {
-  const wrapper = mount(ProjectDescriptionPanel, {
+  const wrapper = mount(TicketCalculator, {
     global: {
       plugins: [PrimeVue, router],
       components: {
@@ -30,10 +31,20 @@ describe('Project Overview should load all the Components', () => {
     expect(wrapper.getComponent(Dropdown).isVisible()).toBe(true);
     expect(wrapper.getComponent(Card).isVisible()).toBe(true);
     expect(wrapper.getComponent(Panel).isVisible()).toBe(true);
+    expect(wrapper.getComponent(CircularProgressBar).isVisible()).toBe(true);
   });
 
-  test('Dropdown select should be shown and in English', () => {
-    expect(wrapper.getComponent(Dropdown).props('placeholder')).toBe('Select a project');
+  test('Should contain three Circular ProgressBars', () => {
+    const circularProgressBars = wrapper.findAllComponents(CircularProgressBar);
+    expect(circularProgressBars.length).toEqual(3);
+  });
+
+  test('Circular Progressbar Default Max', () => {
+    const circularProgressBars = wrapper.findAllComponents(CircularProgressBar);
+    // check if on every element of circularProgressBars the max is 100
+    circularProgressBars.forEach((element) => {
+      expect(element.props('max')).toEqual(100);
+    });
   });
 
   test('Dropdown Selection should contain all projects', () => {
@@ -42,7 +53,7 @@ describe('Project Overview should load all the Components', () => {
       .trigger('click')
       .then(() => {
         const dropdownOptions = wrapper.getComponent(Dropdown).props('options');
-        expect(dropdownOptions.length).toEqual(6);
+        expect(dropdownOptions.length).toEqual(2);
       });
   });
 });
