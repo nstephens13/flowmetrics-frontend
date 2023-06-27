@@ -10,22 +10,19 @@
     </template>
     <template #content>
       <DataView :value="employeeList" dataKey="employee.id" layout="grid">
-        
         <template #header>
-          <!-- <div class="card p-fluid">
+          <div class="card p-fluid">
             <MultiSelect 
               v-model="selectedEmployee"
-              :options="employeeList.data"
-              filter 
-              :optionLabel="employee.lastName"
+              :options="employees"
               placeholder="Select employees"
               class="w-full md:w-14rem"
             />
-          </div> -->
+          </div>
         </template>
         <template #grid="slotProps">
           <div class="col-12 sm:col-6 lg:col-12 xl:col-4 p-2">
-            <div class="p-4 border-1 surface-border border-round">
+            <div class="p-4 border-1 surface-border border-round shadow-5 hover:bg-gray-50 ">
               <EmployeeCard :employee="slotProps.data.employee" :issues="slotProps.data.issues" />
             </div>
           </div>
@@ -36,29 +33,23 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 import EmployeeCard from '@/components/EmployeeCard.vue'
-import type { EmployeeIF } from '@/model/EmployeeIF'
 
-const employeeList = ref();
-const selectedEmployee = ref({
-  id: 0,
-  firstName: "",
-  lastName: "",
-  assignedIssues: [],
-} as EmployeeIF)
 
-onMounted(() => {
-  employeeList.value = Array.from(calculateWorkload(getMockData(3)), ([employee, issues]) => ({ employee, issues}));
-  console.debug(employeeList.value);
-})
+const workload = calculateWorkload(getMockData(3));
+const employeeList = ref(Array.from(workload, ([employee, issues]) => ({ employee, issues})));
+const employees = ref(employeeList.value.map(item => item.employee.firstName + " " + item.employee.lastName));
 
+//should be new employee object without the issues field
+const selectedEmployee: Ref<String> = ref("");
 </script>
 
 <script lang="ts">
 import calculateWorkload from '@/services/workloadCalculator'
 import getMockData from '@/assets/__mockdata__/mockDataComposer';
 import type { Ref } from 'vue'
+import InputText from 'primevue/inputtext';
 
 </script>
 
