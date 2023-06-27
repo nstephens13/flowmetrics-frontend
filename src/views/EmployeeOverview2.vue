@@ -4,44 +4,46 @@
       <div class="grid">
         <div class="col-12">
           <label class="col-12 gap-3">Employee Overview</label>
-          <Dropdown
-            optionLabel="name"
-            placeholder="Select a project"
-            class="w-full md:w-14rem"
-          />
-          <Dropdown
-            optionLabel="name"
-            placeholder="Select a employee"
-            class="w-full md:w-14rem"
-          />
+          <Dropdown optionLabel="name" placeholder="Select a project" class="w-full md:w-14rem" />
+          <Dropdown optionLabel="name" placeholder="Select a employee" class="w-full md:w-14rem" />
         </div>
       </div>
-      <Divider/>
+      <Divider />
     </template>
     <template #content>
-      <Divider/>
-      <div class="grid">
-        <div class="col-4"><EmployeeCard /></div>
-        <div class="col-4"><EmployeeCard /></div>
-        <div class="col-4"><EmployeeCard /></div>
-        <div class="col-4"><EmployeeCard /></div>
-        <div class="col-4"><EmployeeCard /></div>
-        <div class="col-4"><EmployeeCard /></div>
-      </div>
-    </template>
+    <DataView :value="employeeList" dataKey="employee.id" layout="grid">
+      <template #grid="slotProps">
+                <div class="col-12 sm:col-6 lg:col-12 xl:col-4 p-2">
+                    <div class="p-4 border-1 surface-border surface-card border-round">
+                      <EmployeeCard :employee="slotProps.data.employee" :issues="slotProps.data.issues" />
+                    </div>
+                </div>
+            </template>
+    </DataView>
+</template>
   </Card>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
-import EmployeeCard from '../components/EmployeeCard.vue'
+<script setup lang="ts">
+import { onMounted, ref } from 'vue'
+import EmployeeCard from '@/components/EmployeeCard.vue'
 
-export default defineComponent({
-  name: 'EmployeeOverview2',
-  components: {
-    EmployeeCard
-  }
+const products = ref();
+const employeeList = ref();
+
+onMounted(() => {
+  employeeList.value = Array.from(calculateWorkload(getMockData(3)), ([employee, issues]) => ({ employee, issues}));
+  console.debug(employeeList.value);
 })
+
+
+</script>
+
+<script lang="ts">
+import calculateWorkload from '@/services/workloadCalculator'
+import getMockData from '@/assets/__mockdata__/mockDataComposer';
+
+
 </script>
 
 <style scoped>
