@@ -11,16 +11,16 @@
       <Divider />
     </template>
     <template #content>
-    <DataView :value="employeeList" dataKey="employee.id" layout="grid">
-      <template #grid="slotProps">
-                <div class="col-12 sm:col-6 lg:col-12 xl:col-4 p-2">
-                    <div class="p-4 border-1 surface-border surface-card border-round">
-                      <EmployeeCard :employee="slotProps.data.employee" :issues="slotProps.data.issues" />
-                    </div>
-                </div>
-            </template>
-    </DataView>
-</template>
+      <DataView :value="employeeList" dataKey="employee.id" layout="grid">
+        <template #grid="slotProps">
+                  <div class="col-12 sm:col-6 lg:col-12 xl:col-4 p-2">
+                      <div class="p-4 border-1 surface-border border-round">
+                        <EmployeeCard :employee="slotProps.data.employee" :issues="slotProps.data.issues" />
+                      </div>
+                  </div>
+              </template>
+      </DataView>
+    </template>
   </Card>
 </template>
 
