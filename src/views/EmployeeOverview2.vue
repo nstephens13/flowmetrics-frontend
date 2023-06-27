@@ -10,12 +10,19 @@
     </template>
     <template #content>
       <DataView :value="employeeList" dataKey="employee.id" layout="grid">
-        <!--
-        <template #header="slotProps">
-          <div class="">
-            <MultiSelect v-model="selectedEmployees" :options="slotProps.data.employee" filter :optionLabel="lastName"></MultiSelect>
-          </div>
-        </template> -->
+        
+        <template #header>
+          <!-- <div class="card p-fluid">
+            <MultiSelect 
+              v-model="selectedEmployee"
+              :options="employeeList.data"
+              filter 
+              :optionLabel="employee.lastName"
+              placeholder="Select employees"
+              class="w-full md:w-14rem"
+            />
+          </div> -->
+        </template>
         <template #grid="slotProps">
           <div class="col-12 sm:col-6 lg:col-12 xl:col-4 p-2">
             <div class="p-4 border-1 surface-border border-round">
@@ -31,9 +38,15 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import EmployeeCard from '@/components/EmployeeCard.vue'
+import type { EmployeeIF } from '@/model/EmployeeIF'
 
 const employeeList = ref();
-const selectedEmployees = ref();
+const selectedEmployee = ref({
+  id: 0,
+  firstName: "",
+  lastName: "",
+  assignedIssues: [],
+} as EmployeeIF)
 
 onMounted(() => {
   employeeList.value = Array.from(calculateWorkload(getMockData(3)), ([employee, issues]) => ({ employee, issues}));
@@ -45,7 +58,7 @@ onMounted(() => {
 <script lang="ts">
 import calculateWorkload from '@/services/workloadCalculator'
 import getMockData from '@/assets/__mockdata__/mockDataComposer';
-
+import type { Ref } from 'vue'
 
 </script>
 
