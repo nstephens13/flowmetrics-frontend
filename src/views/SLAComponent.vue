@@ -78,7 +78,7 @@ export default defineComponent({
     const slaStore = useSLAStore();
     const newSubscriber = ref('');
     const isSubscriberNameValid = ref(true);
-    const SubscriberErrorMessage = computed(() => (!isSubscriberNameValid.value ? 'Subscriber name must be at least 3 characters' : ''));
+    const SubscriberErrorMessage = computed(() => (!isSubscriberNameValid.value ? 'Subscriber name must be at least 3 characters.' : ''));
     const newRuleName = ref('');
     const newRuleMaxAssignedEmployees = ref();
     const isRuleNameValid = ref(true);
