@@ -24,9 +24,9 @@
             class="select-employees"
           />
           <Dropdown
-              v-model="newOccuredIn"
-              :options="occuredInOptions"
-              placeholder="Occurred In"
+              v-model="newOccurredIn"
+              :options="occurredInOptions"
+              placeholder="Occurred in"
               class="select-employees"
           />
           <Button class="add-rule" @click="addRule" label="+"></Button>
@@ -96,7 +96,7 @@ export default defineComponent({
     const newSubscriber = ref('');
     const newRuleName = ref('');
     const newRuleMaxAssignedEmployees = ref(null);
-    const newOccuredIn = ref(null);
+    const newOccurredIn = ref(null);
     const selectedSubscriber = ref(null);
     const selectedRule = ref(null);
     const categoryName = ref('');
@@ -131,7 +131,7 @@ export default defineComponent({
       slaStore.addRule(rule);
       newRuleName.value = '';
       newRuleMaxAssignedEmployees.value = null;
-      newOccuredIn.value = null;
+      newOccurredIn.value = null;
     };
 
     // Create a new SLA category using selected subscriber and rule
@@ -156,20 +156,20 @@ export default defineComponent({
 
     // Options for the max assigned employees dropdown
     const maxAssignedEmployeesOptions = [1, 2, 3, 4, 5];
-    const occuredInOptions = ['Test','Vorproduktion','Produktion'];
+    const occurredInOptions = ['Test', 'Vorproduktion', 'Produktion'];
 
     return {
       newSubscriber,
       newRuleName,
       newRuleMaxAssignedEmployees,
-      newOccuredIn,
+      newOccurredIn,
       selectedSubscriber,
       selectedRule,
       categoryName,
       subscriber,
       rules,
       maxAssignedEmployeesOptions,
-      occuredInOptions,
+      occurredInOptions,
       addSubscriber,
       addRule,
       createCategory,
