@@ -23,6 +23,9 @@
             placeholder="Select max assigned employees"
             class="select-employees"
           />
+          <Dropdown
+              placeholder="Occurred In"
+          />
           <Button class="add-rule" @click="addRule" label="+"></Button>
         </div>
       </div>
