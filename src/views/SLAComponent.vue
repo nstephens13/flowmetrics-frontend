@@ -73,6 +73,9 @@
         </DataTable>
       </div>
     </template>
+    <template #footer>
+      <GeneratePDF ></GeneratePDF>
+    </template>
   </Card>
 </template>
 
@@ -82,9 +85,11 @@ import useSLAStore from '@/store/store';
 import type { SLASubscriber } from '@/model/SLASubscriber';
 import type { SLARule } from '@/model/SLARule';
 import type { SLACategory } from '@/model/SLACategory';
+import GeneratePDF from '@/components/GeneratePDF.vue';
 
 export default defineComponent({
   name: 'SLAComponent',
+  components: {GeneratePDF},
   setup() {
     const slaStore = useSLAStore();
     const newSubscriber = ref('');

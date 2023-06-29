@@ -36,6 +36,7 @@ module.exports = {
     'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
     'import/no-unresolved': 0,
     'linebreak-style': ['error', 'unix'],
+    'new-cap': 0,
   },
   plugins: ['@typescript-eslint'],
   overrides: [
