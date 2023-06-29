@@ -1,10 +1,9 @@
 import type { ProjectIF } from '@/model/ProjectIF';
 import type { EmployeeIF } from '@/model/EmployeeIF';
 import type { IssueIF } from '@/model/IssueIF';
-import { Status } from '../model/IssueIF';
-
-// just temporary import
-import getMockData from '../assets/__mockdata__/mockDataComposer';
+import { Status } from '@/model/IssueIF';
+import type { IssueDataIF } from '@/model/IssueDataIF';
+import getMockData from '@/assets/__mockdata__/mockDataComposer';
 
 /**
  * This function calculate the workload from a project team, and give the
@@ -17,13 +16,8 @@ import getMockData from '../assets/__mockdata__/mockDataComposer';
  * @returns {Map} key:Employee,
  * value:{ openIssues: number; inProgressIssues: number; closedIssues: number }
  */
-function calculateWorkload(
-  project: ProjectIF | null,
-): Map<EmployeeIF, { openIssues: number; inProgressIssues: number; closedIssues: number }> {
-  const mapToReturn: Map<
-  EmployeeIF,
-  { openIssues: number; inProgressIssues: number; closedIssues: number }
-  > = new Map([]);
+function calculateWorkload(project: ProjectIF | null): Map<EmployeeIF, IssueDataIF> {
+  const mapToReturn: Map<EmployeeIF, IssueDataIF> = new Map([]);
   const issueSet: Set<IssueIF> = new Set<IssueIF>();
   let projectToCalculate: ProjectIF;
 
@@ -39,46 +33,32 @@ function calculateWorkload(
   function extractEmployeeAndUpdateEmployeeMap(issue: IssueIF) {
     // checking if the issue is already done, with a set, and if somebody is assigned
     if (!issueSet.has(issue) && issue.assignedTo !== null && issue.assignedTo !== undefined) {
-      let numberOpenTickets: number;
-      let numberInProgressTickets: number;
-      let numberClosedTickets: number;
-
       // checking if the employee is already with values in the map
-      const tuple:
-      | { openIssues: number; inProgressIssues: number; closedIssues: number }
-      | undefined = mapToReturn.get(issue.assignedTo);
-
-      // setting the values to zero if the employee isn't in the map already
-      if (tuple !== undefined) {
-        numberOpenTickets = tuple.openIssues;
-        numberInProgressTickets = tuple.inProgressIssues;
-        numberClosedTickets = tuple.closedIssues;
-      } else {
-        numberOpenTickets = 0;
-        numberInProgressTickets = 0;
-        numberClosedTickets = 0;
-      }
-
+      const issueData = mapToReturn.get(issue.assignedTo) ?? {
+        openIssues: 0,
+        inProgressIssues: 0,
+        closedIssues: 0,
+      };
       // if there is no date for closure of the ticket, then it is a still open ticket
       if (issue.closedAt === undefined || issue.closedAt === null) {
         if (issue.status === Status.InProgress) {
           mapToReturn.set(issue.assignedTo, {
-            openIssues: numberOpenTickets,
-            inProgressIssues: numberInProgressTickets + 1,
-            closedIssues: numberClosedTickets,
+            openIssues: issueData.openIssues,
+            inProgressIssues: issueData.inProgressIssues + 1,
+            closedIssues: issueData.closedIssues,
           });
         } else {
           mapToReturn.set(issue.assignedTo, {
-            openIssues: numberOpenTickets + 1,
-            inProgressIssues: numberInProgressTickets,
-            closedIssues: numberClosedTickets,
+            openIssues: issueData.openIssues + 1,
+            inProgressIssues: issueData.inProgressIssues,
+            closedIssues: issueData.closedIssues,
           });
         }
       } else {
         mapToReturn.set(issue.assignedTo, {
-          openIssues: numberOpenTickets,
-          inProgressIssues: numberInProgressTickets,
-          closedIssues: numberClosedTickets + 1,
+          openIssues: issueData.openIssues,
+          inProgressIssues: issueData.inProgressIssues,
+          closedIssues: issueData.closedIssues + 1,
         });
       }
       issueSet.add(issue);

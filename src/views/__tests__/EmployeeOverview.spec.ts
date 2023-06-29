@@ -2,6 +2,7 @@ import { describe, test, expect } from 'vitest';
 import { mount } from '@vue/test-utils';
 import PrimeVue from 'primevue/config';
 import Card from 'primevue/card';
+import Divider from 'primevue/divider';
 import EmployeeOverview from '../EmployeeOverview.vue';
 
 describe('EmployeeOverview with a simple manual constructed map should render correctly', () => {
@@ -11,6 +12,7 @@ describe('EmployeeOverview with a simple manual constructed map should render co
       plugins: [PrimeVue],
       components: {
         Card,
+        Divider,
       },
     },
   });
