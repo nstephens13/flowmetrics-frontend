@@ -30,5 +30,5 @@ export interface IssueIF {
   closedAt: Date | null;
   dueTo: Date | null;
   status: Status | null;
-  userStatus: string;
+  userStatus: string | null;
 }

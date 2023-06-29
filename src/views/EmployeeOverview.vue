@@ -2,7 +2,7 @@
     <Card class="background-card">
         <template #title>
             Employee Overview
-
+            <Divider></Divider>
             <div class="legend-container">
                 <div class="first-bar-legend"></div>
                 <h6 class="first-bar-font-size">{{ categoryNames.firstCategory }}</h6>

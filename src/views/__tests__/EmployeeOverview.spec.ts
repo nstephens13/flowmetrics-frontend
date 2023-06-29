@@ -1,7 +1,8 @@
 import { describe, test, expect } from 'vitest';
-import { mount, VueWrapper } from '@vue/test-utils';
+import { mount } from '@vue/test-utils';
 import PrimeVue from 'primevue/config';
 import Card from 'primevue/card';
+import Divider from 'primevue/divider';
 import { createPinia } from 'pinia';
 
 import EmployeeOverview from '../EmployeeOverview.vue';
@@ -11,7 +12,6 @@ import {
   planningStatusList,
   testingStatusList,
 } from '../../assets/__mockdata__/mockDataComposer';
-
 const pinia = createPinia();
 describe('EmployeeOverview with a simple manual constructed map should render correctly', () => {
   // when
@@ -20,6 +20,7 @@ describe('EmployeeOverview with a simple manual constructed map should render co
       plugins: [PrimeVue, pinia],
       components: {
         Card,
+        Divider,
       },
 
       stubs: {
@@ -47,7 +48,7 @@ describe('EmployeeOverview with a simple manual constructed map should render co
 });
 
 describe('EmployeeOverview with a simple manual constructed map should render correctly', () => {
-  const wrapper: VueWrapper = mount(EmployeeOverview, {
+  const wrapper = mount(EmployeeOverview, {
     global: {
       plugins: [PrimeVue, pinia],
       components: {

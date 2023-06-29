@@ -1,7 +1,8 @@
 import type { ProjectIF } from '@/model/ProjectIF';
 import type { EmployeeIF } from '@/model/EmployeeIF';
 import type { IssueIF } from '@/model/IssueIF';
-import { Status } from '../model/IssueIF';
+
+import type { IssueDataIF } from '@/model/IssueDataIF';
 
 // just temporary import
 import getMockData, {
@@ -23,7 +24,7 @@ import getMockData, {
  */
 function calculateWorkload(
   project: ProjectIF | null,
-): Map<EmployeeIF, { planning: number; development: number; testing: number }> {
+): Map<EmployeeIF, IssueDataIF> {
   const mapToReturn: Map<
   EmployeeIF,
   { planning: number; development: number; testing: number }

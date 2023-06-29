@@ -4,6 +4,7 @@ import { mount } from '@vue/test-utils';
 import PrimeVue from 'primevue/config';
 import Card from 'primevue/card';
 import Dropdown from 'primevue/dropdown';
+import Divider from 'primevue/divider';
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
 import Column from 'primevue/column';
@@ -26,6 +27,7 @@ describe('SLAComponent', () => {
           Button,
           Column,
           DataTable,
+          Divider,
         },
       },
     });

@@ -22,7 +22,7 @@ class Issue implements IssueIF {
 
   status: Status | null;
 
-  userStatus: string | null
+  userStatus: string | null;
 
   constructor(
     id: number,
@@ -34,7 +34,7 @@ class Issue implements IssueIF {
     closedAt: Date | null,
     dueTo: Date | null,
     status: Status | null,
-    userStatus: string
+    userStatus: string | null
   ) {
     this.id = id;
     this.name = name;
@@ -60,7 +60,7 @@ function getAssignedToName(issue: Issue): string {
 // function accepts due-to Issue-Object & transforms to date
 function getFormattedDate(issue: Issue): string {
   const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
-  return issue.dueTo ? issue.dueTo.toLocaleDateString(undefined, options) : '';
+  return issue.dueTo ? issue.dueTo.toLocaleDateString('en-US', options) : '';
 }
 
 // accepts due to Issue-Object & transfers to time
