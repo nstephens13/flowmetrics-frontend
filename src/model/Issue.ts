@@ -56,7 +56,7 @@ function getAssignedToName(issue: Issue): string {
 // function accepts due-to Issue-Object & transforms to date
 function getFormattedDate(issue: Issue): string {
   const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
-  return issue.dueTo ? issue.dueTo.toLocaleDateString("en-US", options) : '';
+  return issue.dueTo ? issue.dueTo.toLocaleDateString('en-US', options) : '';
 }
 
 // accepts due to Issue-Object & transfers to time
