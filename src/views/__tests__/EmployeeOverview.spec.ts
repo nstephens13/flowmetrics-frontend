@@ -12,6 +12,7 @@ import {
   planningStatusList,
   testingStatusList,
 } from '../../assets/__mockdata__/mockDataComposer';
+
 const pinia = createPinia();
 describe('EmployeeOverview with a simple manual constructed map should render correctly', () => {
   // when

@@ -86,7 +86,7 @@ import getMockData, {
   testingStatusList,
 } from '@/assets/__mockdata__/mockDataComposer';
 import useFilterConfigStore from '@/store/FilterConfigStore';
-import { filterProjectThatHasTheAllowedStatus } from '@/services/filter/IssuesStateFilter';
+import filterProjectThatHasTheAllowedStatus from '@/services/filter/IssuesStateFilter';
 import type { ProjectIF } from '../model/ProjectIF';
 import type { FilterConfigIF } from '@/model/FilterConfigIF';
 
@@ -136,17 +136,17 @@ function displayWorkload(workloadMap: Map<EmployeeIF, {
   return assignWorkloadMapToBars(workloadMap);
 }
 
-function showWorkloadView(filterConfig: FilterConfigIF) {
+function showWorkloadView(config: FilterConfigIF) {
   const projectToFilter: ProjectIF = getMockData(6);
-  const project: ProjectIF = filterProjectThatHasTheAllowedStatus(projectToFilter, filterConfig);
+  const project: ProjectIF = filterProjectThatHasTheAllowedStatus(projectToFilter, config);
   const workloadMap = calculateWorkload(project);
   employeeMap.value = displayWorkload(workloadMap);
   categoryNames.value = readCategoriesDescription(workloadMap);
 }
 
-function showSecondView(filterConfig: FilterConfigIF) {
+function showSecondView(config: FilterConfigIF) {
   const projectToFilter: ProjectIF = getMockData(6);
-  const project: ProjectIF = filterProjectThatHasTheAllowedStatus(projectToFilter, filterConfig);
+  const project: ProjectIF = filterProjectThatHasTheAllowedStatus(projectToFilter, config);
   const workloadMap = calculateWorkload(project);
   employeeMap.value = displayWorkload(workloadMap);
   categoryNames.value = {
@@ -163,11 +163,19 @@ function updateFilterConfig() {
 
 watch(
   () => [selectedView.value, filterConfigStore.filter],
-  ([selectedView, filterConfig]: [string, FilterConfigIF]) => {
-    if (selectedView === 'workload') {
-      showWorkloadView(filterConfig);
-    } else if (selectedView === 'amount commits') {
-      showSecondView(filterConfig);
+  ([selectedViewItem, filterConfigItem]) => {
+    if (selectedViewItem === 'workload') {
+      if (typeof filterConfigItem === 'string') {
+        // Handle the case when filterConfig is a string
+      } else {
+        showWorkloadView(filterConfigItem);
+      }
+    } else if (selectedViewItem === 'amount commits') {
+      if (typeof filterConfigItem === 'string') {
+        // Handle the case when filterConfig is a string
+      } else {
+        showSecondView(filterConfigItem);
+      }
     }
   },
   { immediate: true },

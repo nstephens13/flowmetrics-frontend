@@ -3,7 +3,10 @@ import type { ProjectIF } from '@/model/ProjectIF';
 import type { IssueIF } from '@/model/IssueIF';
 import type { FilterConfigIF } from '@/model/FilterConfigIF';
 
-export function filterProjectThatHasTheAllowedStatus(project: ProjectIF, filterConfig: FilterConfigIF): ProjectIF {
+function filterProjectThatHasTheAllowedStatus(
+  project: ProjectIF,
+  filterConfig: FilterConfigIF,
+): ProjectIF {
   const filteredIssues = project.issues.filter((issue: IssueIF) => (
     issue.userStatus
             && filterConfig.projectFilter.issueStatusIncludeFilter.includes(issue.userStatus)
@@ -14,3 +17,4 @@ export function filterProjectThatHasTheAllowedStatus(project: ProjectIF, filterC
     issues: filteredIssues,
   };
 }
+export default filterProjectThatHasTheAllowedStatus;

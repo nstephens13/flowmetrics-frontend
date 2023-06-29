@@ -97,7 +97,7 @@ function getMockData(dataset: number): ProjectIF {
   switch (dataset) {
     case 1: {
       milestonesForProject = milestonesArrayFromFile;
-      [issuesForProject] = assignIssueToEmployee(1, 1, issuesArrayFromFile, employeesArrayFromFile)
+      [issuesForProject] = assignIssueToEmployee(1, 1, issuesArrayFromFile, employeesArrayFromFile);
       const [planningStatus] = planningStatusList;
       issuesForProject[1].userStatus = planningStatus;
 
@@ -495,7 +495,8 @@ function getMockData(dataset: number): ProjectIF {
       issuesForProject[6].status = Status.Closed;
       issuesForProject[6].closedAt = date; // Set the specific closedAt date
 
-      [issuesForProject[0].status, issuesForProject[0].userStatus] = [Status.InProgress, devStatusList[0]];
+      [issuesForProject[0].status,
+        issuesForProject[0].userStatus] = [Status.InProgress, devStatusList[0]];
       [issuesForProject[1].userStatus] = [planningStatusList[0]];
       [issuesForProject[2].status, issuesForProject[2].userStatus,
         issuesForProject[2].closedAt] = [Status.Closed, testingStatusList[0], date];
@@ -503,7 +504,8 @@ function getMockData(dataset: number): ProjectIF {
         issuesForProject[3].closedAt] = [Status.Closed, testingStatusList[0], date];
       [issuesForProject[4].status, issuesForProject[4].userStatus,
         issuesForProject[4].closedAt] = [Status.Closed, testingStatusList[0], date];
-      [issuesForProject[5].status, issuesForProject[5].userStatus] = [Status.InProgress, devStatusList[0]];
+      [issuesForProject[5].status,
+        issuesForProject[5].userStatus] = [Status.InProgress, devStatusList[0]];
       [issuesForProject[6].userStatus, issuesForProject[6].closedAt] = [testingStatusList[0], date];
 
       return {

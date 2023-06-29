@@ -35,7 +35,9 @@ export function parseCategoryNames(mapToRead: Map<EmployeeIF, any>) :
 
   if (sampleTuple) {
     const tupleKeys = Object.keys(sampleTuple);
-    [categoryNames.firstCategory, categoryNames.secondCategory, categoryNames.thirdCategory] = tupleKeys;
+    [categoryNames.firstCategory,
+      categoryNames.secondCategory,
+      categoryNames.thirdCategory] = tupleKeys;
   }
 
   return categoryNames;

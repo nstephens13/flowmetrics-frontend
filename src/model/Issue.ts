@@ -34,7 +34,7 @@ class Issue implements IssueIF {
     closedAt: Date | null,
     dueTo: Date | null,
     status: Status | null,
-    userStatus: string | null
+    userStatus: string | null,
   ) {
     this.id = id;
     this.name = name;

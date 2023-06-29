@@ -63,26 +63,28 @@ function calculateWorkload(
         numberInDevTickets = 0;
         numberInTestingTickets = 0;
       }
-
-      // if there is no date for closure of the ticket, then it is a still open ticket
-      if (planningStatusList.includes(issue.userStatus)) {
-        mapToReturn.set(issue.assignedTo, {
-          planning: numberPlannedTickets + 1,
-          development: numberInDevTickets,
-          testing: numberInTestingTickets,
-        });
-      } else if (devStatusList.includes(issue.userStatus)) {
-        mapToReturn.set(issue.assignedTo, {
-          planning: numberPlannedTickets,
-          development: numberInDevTickets + 1,
-          testing: numberInTestingTickets,
-        });
-      } else if (testingStatusList.includes(issue.userStatus) || nonDisplayedStatusList.includes(issue.userStatus)) {
-        mapToReturn.set(issue.assignedTo, {
-          planning: numberPlannedTickets,
-          development: numberInDevTickets,
-          testing: numberInTestingTickets + 1,
-        });
+      if (issue.userStatus != null) {
+        // if there is no date for closure of the ticket, then it is a still open ticket
+        if (planningStatusList.includes(issue.userStatus)) {
+          mapToReturn.set(issue.assignedTo, {
+            planning: numberPlannedTickets + 1,
+            development: numberInDevTickets,
+            testing: numberInTestingTickets,
+          });
+        } else if (devStatusList.includes(issue.userStatus)) {
+          mapToReturn.set(issue.assignedTo, {
+            planning: numberPlannedTickets,
+            development: numberInDevTickets + 1,
+            testing: numberInTestingTickets,
+          });
+        } else if (testingStatusList.includes(issue.userStatus)
+            || nonDisplayedStatusList.includes(issue.userStatus)) {
+          mapToReturn.set(issue.assignedTo, {
+            planning: numberPlannedTickets,
+            development: numberInDevTickets,
+            testing: numberInTestingTickets + 1,
+          });
+        }
       }
     }
     issueSet.add(issue);
