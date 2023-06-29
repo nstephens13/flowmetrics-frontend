@@ -38,15 +38,14 @@ function assignIssueToEmployee(
   issues: IssueIF[],
   employees: EmployeeIF[],
 ): [IssueIF[], EmployeeIF[]] {
-
   const issuesToReturn = issues;
   const employeesToReturn = employees;
 
-  //assign issue to employee if the issue exists and the employee exists
+  // assign issue to employee if the issue exists and the employee exists
   if (issueNumber < issues.length && employeeNumber < employees.length) {
     issuesToReturn[issueNumber].assignedTo = employees[employeeNumber];
-  } 
-  
+  }
+
   employeesToReturn[employeeNumber].assignedIssues.push(issues[issueNumber]);
   return [issuesToReturn, employeesToReturn];
 }
@@ -154,13 +153,10 @@ function getMockData(dataset: number): ProjectIF {
         issuesForProject,
       );
 
-      milestonesForProject = assignIssueToMilestone(
-        1,
-        0,
-        milestonesForProject,
-        issuesForProject,
-      );
+      milestonesForProject = assignIssueToMilestone(1, 0, milestonesForProject, issuesForProject);
+
       milestonesForProject = assignIssueToMilestone(2, 1, milestonesForProject, issuesForProject);
+
       milestonesForProject = assignIssueToMilestone(3, 1, milestonesForProject, issuesForProject);
 
       return {
@@ -327,6 +323,7 @@ function getMockData(dataset: number): ProjectIF {
         milestonesArrayFromFile,
         issuesForProject,
       );
+
       milestonesForProject = assignIssueToMilestone(1, 0, milestonesForProject, issuesForProject);
       milestonesForProject = assignIssueToMilestone(2, 1, milestonesForProject, issuesForProject);
       milestonesForProject = assignIssueToMilestone(3, 1, milestonesForProject, issuesForProject);
