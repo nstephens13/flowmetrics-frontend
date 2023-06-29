@@ -19,7 +19,8 @@
       </label>
       <label for="Open" class="col-3 font-bold">Open</label>
       <div class="col-9 md:col-9">
-        <ProgressBar class="emplyeeProgressbar"
+        <ProgressBar 
+          class="openIssuesProgressbar"
           :value="issues.openIssues / (issues.openIssues + issues.inProgressIssues + issues.closedIssues) * 100">
           {{ issues.openIssues }}
         </ProgressBar>
@@ -29,6 +30,7 @@
       <label for="In Progress" class="col-3 font-bold">In Progress</label>
       <div class="col-9 md:col-9">
         <ProgressBar
+        class="inProgressIssuesProgressbar"
           :value="issues.inProgressIssues / (issues.openIssues + issues.inProgressIssues + issues.closedIssues) * 100">
           {{ issues.inProgressIssues }}
         </ProgressBar>
@@ -38,6 +40,7 @@
       <label for="Closed" class="col-3 font-bold">Closed</label>
       <div class="col-9 md:col-9">
         <ProgressBar
+        class="closedIssuesProgressbar"
           :value="issues.closedIssues / (issues.openIssues + issues.inProgressIssues + issues.closedIssues) * 100">
           {{ issues.closedIssues }}
         </ProgressBar>
