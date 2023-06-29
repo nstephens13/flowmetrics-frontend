@@ -59,13 +59,12 @@ describe('Employee Card should load all the Components', () => {
         expect(labelText).toContain(expectedTotalTickets);
     })
     test('Progressbars checks', () => {
+        
         const progressBar1 = wrapper.find('.openIssuesProgressbar');
-        expect(progressBar1.attributes('label')).toBe((20 / 40 * 100).toString());
+        expect(progressBar1.text()).toBe("20");
         const progressBar2 = wrapper.find('.inProgressIssuesProgressbar');
-        expect(progressBar2.attributes('label')).toBe((5 / 40 * 100).toString());
+        expect(progressBar2.text()).toBe("5");
         const progressBar3 = wrapper.find('.closedIssuesProgressbar');
-        expect(progressBar3.attributes('label')).toBe((15 / 40 * 100).toString());
-
-
+        expect(progressBar3.text()).toBe("15");
     })
 })
