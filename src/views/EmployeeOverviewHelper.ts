@@ -20,3 +20,45 @@ export function calculateCssUserBackgroundStyle(employee: EmployeeIF) {
   const height = 10 + (nameLength > 0 ? 10 : 0);
   return { width, height };
 }
+
+export function parseCategoryNames(mapToRead: Map<EmployeeIF, any>) :
+{ firstCategory: string, secondCategory: string, thirdCategory: string } {
+  const categoryNames: { firstCategory: string, secondCategory: string, thirdCategory: string } = {
+    firstCategory: '',
+    secondCategory: '',
+    thirdCategory: '',
+  };
+
+  const keys = mapToRead.keys();
+  const firstKey = keys.next().value;
+  const sampleTuple = mapToRead.get(firstKey);
+
+  if (sampleTuple) {
+    const tupleKeys = Object.keys(sampleTuple);
+    [categoryNames.firstCategory, categoryNames.secondCategory, categoryNames.thirdCategory] = tupleKeys;
+  }
+
+  return categoryNames;
+}
+export function assignWorkloadMapToBars(workloadMap: Map<EmployeeIF, {
+  planning: number;
+  development: number;
+  testing: number
+}>): Map<EmployeeIF,
+    { firstBar: number; secondBar: number; thirdBar: number }> {
+  const newMap: Map<EmployeeIF,
+      { firstBar: number; secondBar: number; thirdBar: number }> = new Map();
+  workloadMap.forEach(
+      (
+          tuple: { planning: number; development: number; testing: number },
+          employee: EmployeeIF,
+      ) => {
+        newMap.set((employee), {
+          firstBar: tuple.planning,
+          secondBar: tuple.development,
+          thirdBar: tuple.testing,
+        });
+      },
+  );
+  return newMap;
+}

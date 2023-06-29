@@ -92,12 +92,12 @@ describe('Workload Calculator should calculate Workload correctly for Mock Data 
   // the actual value is from the result
   test('workload should contain correct key value pairs', () => {
     workload.forEach(
-      (tuple: { openIssues: number; closedIssues: number }, employee: EmployeeIF) => {
+      (tuple: { planning: number; testing: number }, employee: EmployeeIF) => {
         const openIssuesList = [1, 2, 3, 1]; // expected values for open issues from json file
         employees.forEach((emp) => {
           if (employee.id === emp.id) {
             assert.deepEqual<EmployeeIF>(employee, emp);
-            expect(tuple.openIssues).eq(openIssuesList[employee.id - 1]);
+            expect(tuple.planning).eq(openIssuesList[employee.id - 1]);
           }
         });
       },
@@ -143,7 +143,7 @@ describe('Workload Calculator should calculate Workload correctly for Mock Data 
   test('workload should contain correct key-value pairs', () => {
     workload.forEach(
       (
-        tuple: { openIssues: number; inProgressIssues: number; closedIssues: number },
+        tuple: { planning: number; development: number; testing: number },
         employee: EmployeeIF,
       ) => {
         const openIssuesList = [0, 1, 0, 0]; // expected values for open issues
@@ -153,9 +153,9 @@ describe('Workload Calculator should calculate Workload correctly for Mock Data 
         employees.forEach((emp) => {
           if (employee.id === emp.id) {
             expect(employee).toEqual(emp);
-            expect(tuple.openIssues).toBe(openIssuesList[employee.id - 1]);
-            expect(tuple.inProgressIssues).toBe(inProgressIssuesList[employee.id - 1]);
-            expect(tuple.closedIssues).toBe(closedIssuesList[employee.id - 1]);
+            expect(tuple.planning).toBe(openIssuesList[employee.id - 1]);
+            expect(tuple.development).toBe(inProgressIssuesList[employee.id - 1]);
+            expect(tuple.testing).toBe(closedIssuesList[employee.id - 1]);
           }
         });
       },
@@ -189,7 +189,7 @@ describe('Workload Calculator should calculate Workload correctly for Mock Data 
   // then
   test('workload should contain correct values', () => {
     assert.deepEqual<EmployeeIF>(employee, employees[1]);
-    expect(workload.get(employee)?.openIssues).eq(1);
+    expect(workload.get(employee)?.planning).eq(1);
   });
 });
 

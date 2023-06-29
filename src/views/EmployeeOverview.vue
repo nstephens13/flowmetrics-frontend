@@ -1,18 +1,26 @@
 <template>
     <Card class="background-card">
-        <template #title
-        >Employee Overview
+        <template #title>
+            Employee Overview
+
             <div class="legend-container">
                 <div class="open-legend"></div>
-                <h6 class="open-font-size">OPEN</h6>
+                <h6 class="open-font-size">{{ categoryNames.firstCategory }}</h6>
                 <div class="in-progress-legend"></div>
-                <h6 class="in-progress-font-size">IN PROGRESS</h6>
+                <h6 class="in-progress-font-size">{{ categoryNames.secondCategory }}</h6>
                 <div class="closed-legend"></div>
-                <h6 class="closed-font-size">CLOSED</h6>
+                <h6 class="closed-font-size">{{ categoryNames.thirdCategory }}</h6>
+            </div>
+            <div class="dropdown-container">
+                <label for="view-select">Select View: </label>
+                <select v-model="selectedView" id="view-select">
+                    <option value="workload">Workload View</option>
+                    <option value="second">Second View</option>
+                </select>
             </div>
         </template>
-
         <template #content>
+
             <div
                     v-for="[employee, employeeData] in employeeMap"
                     :key="employee.id"
@@ -32,9 +40,9 @@
                 </div>
 
                 <div class="statistics-container">
-                    <div class="open" :style="getBoxHeightStyle(employeeData.openIssues)"></div>
-                    <div class="in-progress" :style="getBoxHeightStyle(employeeData.inProgressIssues)"></div>
-                    <div class="closed" :style="getBoxHeightStyle(employeeData.closedIssues)"></div>
+                    <div class="open" :style="getBoxHeightStyle(employeeData.firstBar)"></div>
+                    <div class="in-progress" :style="getBoxHeightStyle(employeeData.secondBar)"></div>
+                    <div class="closed" :style="getBoxHeightStyle(employeeData.thirdBar)"></div>
                 </div>
             </div>
         </template>
@@ -46,8 +54,9 @@ import { ref, watch } from 'vue';
 import type { EmployeeIF } from '@/model/EmployeeIF';
 import calculateWorkload from '../services/workloadCalculator';
 import {
+  assignWorkloadMapToBars,
   calculateCssUserBackgroundStyle,
-  getCssHeightForStatisticBoxes,
+  getCssHeightForStatisticBoxes, parseCategoryNames,
 } from './EmployeeOverviewHelper';
 import getMockData from '@/assets/__mockdata__/mockDataComposer';
 import useFilterConfigStore from '@/store/FilterConfigStore';
@@ -57,9 +66,21 @@ import type { FilterConfigIF } from '@/model/FilterConfigIF';
 
 const filterConfigStore = useFilterConfigStore();
 const employeeMap = ref<Map<EmployeeIF,
-{ openIssues: number; inProgressIssues: number; closedIssues: number }>>(
+{ firstBar: number; secondBar: number; thirdBar: number }>>(
   new Map(),
 );
+
+const categoryNames = ref<{
+  firstCategory: string,
+  secondCategory: string,
+  thirdCategory: string
+}>({
+  firstCategory: '',
+  secondCategory: '',
+  thirdCategory: '',
+});
+
+const selectedView = ref<string>('workload'); // Default value is 'workload'
 
 function getUserNameBackgroundStyle(employee: EmployeeIF): string {
   const { width, height } = calculateCssUserBackgroundStyle(employee);
@@ -71,13 +92,48 @@ function getBoxHeightStyle(count: number) {
   return `height: ${height}px`;
 }
 
+function readCategoriesDescription(mapToRead: Map<EmployeeIF, any>):
+{ firstCategory: string, secondCategory: string, thirdCategory: string } {
+  return parseCategoryNames(mapToRead);
+}
+
+function displayWorkload(workloadMap: Map<EmployeeIF, {
+  planning: number;
+  development: number;
+  testing: number
+}>): Map<EmployeeIF,
+  { firstBar: number; secondBar: number; thirdBar: number }> {
+  return assignWorkloadMapToBars(workloadMap);
+}
+
+function showWorkloadView(filterConfig: FilterConfigIF) {
+  const projectToFilter: ProjectIF = getMockData(6);
+  const project: ProjectIF = filterProjectThatHasTheAllowedStatus(projectToFilter, filterConfig);
+  const workloadMap = calculateWorkload(project);
+  employeeMap.value = displayWorkload(workloadMap);
+  categoryNames.value = readCategoriesDescription(workloadMap);
+}
+
+function showSecondView(filterConfig: FilterConfigIF) {
+  const projectToFilter: ProjectIF = getMockData(6);
+  const project: ProjectIF = filterProjectThatHasTheAllowedStatus(projectToFilter, filterConfig);
+  const workloadMap = calculateWorkload(project);
+  employeeMap.value = displayWorkload(workloadMap);
+  categoryNames.value = {
+    firstCategory: 'first new Cat',
+    secondCategory: 'second new Cat',
+    thirdCategory: 'third new Cat',
+  };
+}
+
 watch(
-  () => filterConfigStore.filter,
-  (filterConfig: FilterConfigIF) => {
-    const projectToFilter: ProjectIF = getMockData(6);
-    const project: ProjectIF = filterProjectThatHasTheAllowedStatus(projectToFilter, filterConfig);
-    const workloadMap = calculateWorkload(project);
-    employeeMap.value = workloadMap;
+  () => [selectedView.value, filterConfigStore.filter],
+  ([selectedView, filterConfig]: [string, FilterConfigIF]) => {
+    if (selectedView === 'workload') {
+      showWorkloadView(filterConfig);
+    } else if (selectedView === 'second') {
+      showSecondView(filterConfig);
+    }
   },
   { immediate: true },
 );

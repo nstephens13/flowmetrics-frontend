@@ -15,14 +15,14 @@ import getMockData from '../assets/__mockdata__/mockDataComposer';
  * @param project Project Object that should be calculated, if null a project
  * with random mock data will be used
  * @returns {Map} key:Employee,
- * value:{ openIssues: number; inProgressIssues: number; closedIssues: number }
+ * value:{ planning: number; development: number; testing: number }
  */
 function calculateWorkload(
   project: ProjectIF | null,
-): Map<EmployeeIF, { openIssues: number; inProgressIssues: number; closedIssues: number }> {
+): Map<EmployeeIF, { planning: number; development: number; testing: number }> {
   const mapToReturn: Map<
   EmployeeIF,
-  { openIssues: number; inProgressIssues: number; closedIssues: number }
+  { planning: number; development: number; testing: number }
   > = new Map([]);
   const issueSet: Set<IssueIF> = new Set<IssueIF>();
   let projectToCalculate: ProjectIF;
@@ -39,46 +39,46 @@ function calculateWorkload(
   function extractEmployeeAndUpdateEmployeeMap(issue: IssueIF) {
     // checking if the issue is already done, with a set, and if somebody is assigned
     if (!issueSet.has(issue) && issue.assignedTo !== null && issue.assignedTo !== undefined) {
-      let numberOpenTickets: number;
-      let numberInProgressTickets: number;
-      let numberClosedTickets: number;
+      let numberPlannedTickets: number;
+      let numberInDevTickets: number;
+      let numberInTestingTickets: number;
 
       // checking if the employee is already with values in the map
       const tuple:
-      | { openIssues: number; inProgressIssues: number; closedIssues: number }
+      | { planning: number; development: number; testing: number }
       | undefined = mapToReturn.get(issue.assignedTo);
 
       // setting the values to zero if the employee isn't in the map already
       if (tuple !== undefined) {
-        numberOpenTickets = tuple.openIssues;
-        numberInProgressTickets = tuple.inProgressIssues;
-        numberClosedTickets = tuple.closedIssues;
+        numberPlannedTickets = tuple.planning;
+        numberInDevTickets = tuple.development;
+        numberInTestingTickets = tuple.testing;
       } else {
-        numberOpenTickets = 0;
-        numberInProgressTickets = 0;
-        numberClosedTickets = 0;
+        numberPlannedTickets = 0;
+        numberInDevTickets = 0;
+        numberInTestingTickets = 0;
       }
 
       // if there is no date for closure of the ticket, then it is a still open ticket
       if (issue.closedAt === undefined || issue.closedAt === null) {
         if (issue.status === Status.InProgress) {
           mapToReturn.set(issue.assignedTo, {
-            openIssues: numberOpenTickets,
-            inProgressIssues: numberInProgressTickets + 1,
-            closedIssues: numberClosedTickets,
+            planning: numberPlannedTickets,
+            development: numberInDevTickets + 1,
+            testing: numberInTestingTickets,
           });
         } else {
           mapToReturn.set(issue.assignedTo, {
-            openIssues: numberOpenTickets + 1,
-            inProgressIssues: numberInProgressTickets,
-            closedIssues: numberClosedTickets,
+            planning: numberPlannedTickets + 1,
+            development: numberInDevTickets,
+            testing: numberInTestingTickets,
           });
         }
       } else {
         mapToReturn.set(issue.assignedTo, {
-          openIssues: numberOpenTickets,
-          inProgressIssues: numberInProgressTickets,
-          closedIssues: numberClosedTickets + 1,
+          planning: numberPlannedTickets,
+          development: numberInDevTickets,
+          testing: numberInTestingTickets + 1,
         });
       }
       issueSet.add(issue);
