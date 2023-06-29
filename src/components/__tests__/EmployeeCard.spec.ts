@@ -9,7 +9,6 @@ import Divider from 'primevue/divider'
 import ProgressBar from 'primevue/progressbar'
 
 import EmployeeCard from '../EmployeeCard.vue'
-import { Issue } from '@/model/Issue'
 
 describe('Employee Card should load all the Components', () => {
     const wrapper = mount(EmployeeCard, {
@@ -37,7 +36,6 @@ describe('Employee Card should load all the Components', () => {
         }  
     )
     
-    const totaltickets = 40;
     test('it mounts', () => {
         expect(wrapper.exists()).toBe(true)
         expect(wrapper.getComponent(Avatar).isVisible()).toBe(true)
@@ -45,12 +43,20 @@ describe('Employee Card should load all the Components', () => {
         expect(wrapper.getComponent(Divider).isVisible()).toBe(true)
         expect(wrapper.getComponent(ProgressBar).isVisible()).toBe(true)
     })
+
     test('Label on Avatar Component', () => {
         expect(wrapper.getComponent(Avatar).props('label')).toBe('EM')
     })
+
+    test('checks for Employee Name', () => {
+        const employeeName = wrapper.find('.Name');
+        expect(employeeName.text()).toBe("Erika Mustermann");
+    })
+
     test('Label on Chip component', () => {
         expect(wrapper.getComponent(Chip).props('label')).toBe('Employee ID : 19')
     })
+
     test('checks for total tickets', () => {
         const label = wrapper.find('label[for="totaltickets"]');
         const labelText = label.text();
@@ -58,6 +64,7 @@ describe('Employee Card should load all the Components', () => {
 
         expect(labelText).toContain(expectedTotalTickets);
     })
+
     test('Progressbars checks', () => {
         
         const progressBar1 = wrapper.find('.openIssuesProgressbar');
@@ -67,4 +74,5 @@ describe('Employee Card should load all the Components', () => {
         const progressBar3 = wrapper.find('.closedIssuesProgressbar');
         expect(progressBar3.text()).toBe("15");
     })
+    
 })

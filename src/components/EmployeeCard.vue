@@ -5,7 +5,7 @@
         style="background-color:#2d6dc1; color: #ffffff" />
     </div>
     <div class="col-6">
-      <h3>{{ employee.firstName + " " + employee.lastName }}</h3>
+      <h3 class="Name">{{ employee.firstName + " " + employee.lastName }}</h3>
     </div>
     <div class="flex align-items-center align-content-left col-4">
       <Chip :label="'Employee ID : ' + employee.id"></Chip>

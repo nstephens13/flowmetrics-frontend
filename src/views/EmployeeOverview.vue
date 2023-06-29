@@ -3,7 +3,7 @@
     <template #title>
       <div class="grid">
         <div class="col-12">
-          <label class="col-12 gap-3">Employee Overview</label>
+          <label class="PageTitel">Employee Overview</label>
         </div>
       </div>
       <Divider />
@@ -53,10 +53,7 @@ const employee = ref({
 
 const workload: Ref<Map<EmployeeIF,{ openIssues: number; inProgressIssues: number; closedIssues: number }>> = ref(calculateWorkload(selectedProject.value));
 const employeeList = ref(Array.from(workload.value, ([employee, issues]) => ({ employee, issues})));
-//const employees = ref(employeeList.value.map(item => item.employee.firstName + " " + item.employee.lastName));
 
-//should be new employee object without the issues field
-const selectedEmployee: Ref<String> = ref("");
 
 watch(selectedProject, (selectedProject) => {
     workload.value = calculateWorkload(selectedProject);
