@@ -7,7 +7,7 @@ const useFilterConfigStore = defineStore('filterConfig', {
     filter: {
       id: 1,
       projectFilter: {
-        issueStatusIncludeFilter: [Status.Open, Status.InProgress],
+        issueStatusIncludeFilter: ['Open', 'In Progress'],
       },
     } as FilterConfigIF,
   }),

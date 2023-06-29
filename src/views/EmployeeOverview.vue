@@ -74,7 +74,7 @@ function getBoxHeightStyle(count: number) {
 watch(
   () => filterConfigStore.filter,
   (filterConfig: FilterConfigIF) => {
-    const projectToFilter: ProjectIF = getMockData(3);
+    const projectToFilter: ProjectIF = getMockData(6);
     const project: ProjectIF = filterProjectThatHasTheAllowedStatus(projectToFilter, filterConfig);
     const workloadMap = calculateWorkload(project);
     employeeMap.value = workloadMap;

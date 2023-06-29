@@ -2,13 +2,15 @@ import { describe, test, expect } from 'vitest';
 import { mount } from '@vue/test-utils';
 import PrimeVue from 'primevue/config';
 import Card from 'primevue/card';
+import { createPinia } from 'pinia';
 import EmployeeOverview from '../EmployeeOverview.vue';
 
+const pinia = createPinia();
 describe('EmployeeOverview with a simple manual constructed map should render correctly', () => {
   // when
   const wrapper = mount(EmployeeOverview, {
     global: {
-      plugins: [PrimeVue],
+      plugins: [PrimeVue, pinia],
       components: {
         Card,
       },
@@ -18,7 +20,7 @@ describe('EmployeeOverview with a simple manual constructed map should render co
   const openBoxes = wrapper.findAll('.open');
   const inProgressBoxes = wrapper.findAll('.in-progress');
   const closedBoxes = wrapper.findAll('.closed');
-
+  const result = wrapper.text();
   // TODO Test dosent test the right thing
   test('Component should include the Name John Doe', () => {
     expect(wrapper.text()).toContain('JOHN DOE');

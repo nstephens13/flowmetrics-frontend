@@ -1,13 +1,13 @@
-import type { ProjectIF } from '@/model/ProjectIF';
-import type { EmployeeIF } from '@/model/EmployeeIF';
-import type { IssueIF } from '@/model/IssueIF';
-import type { MilestoneIF } from '@/model/MilestoneIF';
-import { Status } from '@/model/IssueIF';
+import type {ProjectIF} from '@/model/ProjectIF';
+import type {EmployeeIF} from '@/model/EmployeeIF';
+import type {IssueIF} from '@/model/IssueIF';
+import {Status} from '@/model/IssueIF';
+import type {MilestoneIF} from '@/model/MilestoneIF';
 import employeeJson from './Employees.json';
 import issueJson2 from './Issues_2.json';
 import issueJson from './Issues.json';
 import milestoneJson from './Milestones.json';
-import type { Issue } from '@/model/Issue';
+import type {Issue} from '@/model/Issue';
 
 function getRandomInt(max: number) {
   return Math.floor(Math.random() * max);
@@ -26,6 +26,7 @@ function loadIssueDataFromFile(issues: Array<any>): Issue[] {
       createdAt: new Date(issue.createdAt),
       dueTo: issue.dueTo ? new Date(issue.dueTo) : null,
       status: issue.status as Status,
+      userStatus: issue.userStatus as string,
     });
   });
   return issueData;
@@ -62,7 +63,7 @@ function assignIssueToMilestone(
 function loadArraysFromFile(issueFile: any) {
   const employeesArray: EmployeeIF[] = structuredClone(employeeJson) as EmployeeIF[];
   // const issuesArray: IssueIF[] = structuredClone(issueJson) as IssueIF[];
-  const issuesArray: IssueIF[] = loadIssueDataFromFile(issueFile);
+  const issuesArray: IssueIF[] = loadIssueDataFromFile(issueFile) as IssueIF[];
   const milestones: MilestoneIF[] = structuredClone(milestoneJson) as MilestoneIF[];
   return { employeesArray, issuesArray, milestones };
 }
@@ -131,6 +132,7 @@ function getMockData(dataset: number): ProjectIF {
           createdAt: new Date(2018, 0o5, 0o5, 17, 23, 42, 11),
           createdBy: {} as EmployeeIF,
           dueTo: null,
+          userStatus: '',
         });
       }
 
@@ -180,6 +182,7 @@ function getMockData(dataset: number): ProjectIF {
           createdAt: new Date(2018, 0o5, 0o5, 17, 23, 42, 11),
           createdBy: {} as EmployeeIF,
           dueTo: null,
+          userStatus: '',
         });
       }
 
@@ -238,6 +241,58 @@ function getMockData(dataset: number): ProjectIF {
         id: 2,
         name: 'Mocking Bird 2',
         description: 'second mock dataset',
+        milestones,
+        issues,
+      };
+    }
+
+    case 6: {
+      const { employeesArray, milestones } = loadArraysFromFile(issueJson);
+      let issues: IssueIF[] = [];
+      for (let i = 0; i < 280; i++) {
+        issues.push({
+          id: i,
+          name: `Issue Name ${i}`,
+          description: `Description of Issue ${i}`,
+          closedAt: null,
+          status: null,
+          assignedTo: null,
+          createdAt: new Date(2018, 0o5, 0o5, 17, 23, 42, 11),
+          createdBy: {} as EmployeeIF,
+          dueTo: null,
+          userStatus: '',
+        });
+      }
+
+      // issues = issuesArray;
+      const numberOfIssues = issues.length;
+      const numberOfEmployees = employeesArray.length;
+
+      for (let i = 0; i < numberOfIssues; i++) {
+        const randomStatus = getRandomInt(3); // 0: Open, 1: Closed, 2: InProgress
+
+        if (randomStatus === 2) {
+          issues[i].status = Status.InProgress;
+          issues[i].userStatus = 'In Progress';
+        } else if (randomStatus === 1) {
+          const randomDate = new Date(2018, 0o5, 0o5, 17, 23, 42, 11);
+          // Assigning a random closedAt date within the last 30 days
+          randomDate.setDate(randomDate.getDate() - getRandomInt(30));
+          issues[i].closedAt = randomDate;
+          issues[i].userStatus = 'Closed';
+        } else {
+          issues[i].userStatus = 'Open';
+        }
+
+        const randomEmployee = getRandomInt(numberOfEmployees);
+        const tuple = assignIssueToEmployee(i, randomEmployee, issues, employeesArray);
+        issues = tuple.issuesToReturn;
+      }
+
+      return {
+        id: 6,
+        name: 'Mocking Bird 6',
+        description: 'sixth mock dataset',
         milestones,
         issues,
       };

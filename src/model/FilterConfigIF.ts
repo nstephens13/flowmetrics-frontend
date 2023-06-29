@@ -1,7 +1,5 @@
-import type { Status } from '@/model/IssueIF';
-
 export interface ProjectFilterConfigIF {
-  issueStatusIncludeFilter: Status[];
+  issueStatusIncludeFilter: string[];
 }
 
 export interface FilterConfigIF {

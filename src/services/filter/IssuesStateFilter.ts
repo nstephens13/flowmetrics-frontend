@@ -5,8 +5,8 @@ import type { FilterConfigIF } from '@/model/FilterConfigIF';
 
 export function filterProjectThatHasTheAllowedStatus(project: ProjectIF, filterConfig: FilterConfigIF): ProjectIF {
   const filteredIssues = project.issues.filter((issue: IssueIF) => (
-    issue.status
-            && filterConfig.projectFilter.issueStatusIncludeFilter.includes(issue.status)
+    issue.userStatus
+            && filterConfig.projectFilter.issueStatusIncludeFilter.includes(issue.userStatus)
   ));
 
   return {
