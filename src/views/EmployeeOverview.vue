@@ -45,11 +45,6 @@ const selectedProject = ref({
   issues: []
 } as ProjectIF)
 
-const employee = ref({
-  id: 0,
-  firstName: "",
-  lastName: "",
-} as EmployeeIF)
 
 const workload: Ref<Map<EmployeeIF,{ openIssues: number; inProgressIssues: number; closedIssues: number }>> = ref(calculateWorkload(selectedProject.value));
 const employeeList = ref(Array.from(workload.value, ([employee, issues]) => ({ employee, issues})));
@@ -77,10 +72,6 @@ const projects: Ref<ProjectIF[]> = ref([
   getMockData(54),
   getMockData(55)
 ] as ProjectIF[])
-</script>
-
-<script lang="ts">
-
 </script>
 
 <style scoped>

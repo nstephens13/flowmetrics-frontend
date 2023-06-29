@@ -50,10 +50,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-
-const AvatarLabel = ref();
-const props = defineProps({
+defineProps({
   employee: {
     type: Object,
     required: true

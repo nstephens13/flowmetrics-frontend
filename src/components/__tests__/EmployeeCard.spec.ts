@@ -60,7 +60,7 @@ describe('Employee Card should load all the Components', () => {
     test('checks for total tickets', () => {
         const label = wrapper.find('label[for="totaltickets"]');
         const labelText = label.text();
-        const expectedTotalTickets = 40; // Calculate the expected value based on the provided issues
+        const expectedTotalTickets = 40;
 
         expect(labelText).toContain(expectedTotalTickets);
     })
