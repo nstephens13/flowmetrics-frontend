@@ -38,11 +38,16 @@ function assignIssueToEmployee(
   issues: IssueIF[],
   employees: EmployeeIF[],
 ): [IssueIF[], EmployeeIF[]] {
+
   const issuesToReturn = issues;
   const employeesToReturn = employees;
-  issuesToReturn[issueNumber].assignedTo = employees[employeeNumber];
-  employeesToReturn[employeeNumber].assignedIssues.push(issues[issueNumber]);
 
+  //assign issue to employee if the issue exists and the employee exists
+  if (issueNumber < issues.length && employeeNumber < employees.length) {
+    issuesToReturn[issueNumber].assignedTo = employees[employeeNumber];
+  } 
+  
+  employeesToReturn[employeeNumber].assignedIssues.push(issues[issueNumber]);
   return [issuesToReturn, employeesToReturn];
 }
 
