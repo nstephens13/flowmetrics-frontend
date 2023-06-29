@@ -12,10 +12,11 @@
       <DataView :value="employeeList" dataKey="employee.id" layout="grid">
         <template #header>
           <div class="card p-fluid">
-            <MultiSelect 
-              v-model="selectedEmployee"
-              :options="employees"
-              placeholder="Select employees"
+            <Dropdown
+              v-model="selectedProject"
+              :options="projects"
+              optionLabel="name"
+              placeholder="Select a project"
               class="w-full md:w-14rem"
             />
           </div>
@@ -33,23 +34,55 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import EmployeeCard from '@/components/EmployeeCard.vue'
 
+const selectedProject = ref({
+  id: 0,
+  name: 'Project_Name',
+  description: '',
+  milestones: [],
+  issues: []
+} as ProjectIF)
 
-const workload = calculateWorkload(getMockData(3));
-const employeeList = ref(Array.from(workload, ([employee, issues]) => ({ employee, issues})));
-const employees = ref(employeeList.value.map(item => item.employee.firstName + " " + item.employee.lastName));
+const employee = ref({
+  id: 0,
+  firstName: "",
+  lastName: "",
+} as EmployeeIF)
+
+const workload: Ref<Map<EmployeeIF,{ openIssues: number; inProgressIssues: number; closedIssues: number }>> = ref(calculateWorkload(selectedProject.value));
+const employeeList = ref(Array.from(workload.value, ([employee, issues]) => ({ employee, issues})));
+//const employees = ref(employeeList.value.map(item => item.employee.firstName + " " + item.employee.lastName));
 
 //should be new employee object without the issues field
 const selectedEmployee: Ref<String> = ref("");
+
+watch(selectedProject, (selectedProject) => {
+    workload.value = calculateWorkload(selectedProject);
+    employeeList.value = Array.from(workload.value, ([employee, issues]) => ({ employee, issues}));
+});
+
 </script>
 
 <script lang="ts">
 import calculateWorkload from '@/services/workloadCalculator'
+import type { ProjectIF } from '@/model/ProjectIF'
 import getMockData from '@/assets/__mockdata__/mockDataComposer';
 import type { Ref } from 'vue'
-import InputText from 'primevue/inputtext';
+import type { EmployeeIF } from '@/model/EmployeeIF';
+
+const projects: Ref<ProjectIF[]> = ref([
+  getMockData(1),
+  getMockData(2),
+  getMockData(3),
+  getMockData(53),
+  getMockData(54),
+  getMockData(55)
+] as ProjectIF[])
+</script>
+
+<script lang="ts">
 
 </script>
 
