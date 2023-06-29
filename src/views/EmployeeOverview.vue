@@ -15,8 +15,27 @@
                 <label for="view-select">Select View: </label>
                 <select v-model="selectedView" id="view-select">
                     <option value="workload">Workload View</option>
-                    <option value="second">Second View</option>
+                    <option value="amount commits">Amount of Commits</option>
                 </select>
+            </div>
+            <div class="dropdown-container">
+                <label>Select FilterConfig: </label>
+                <button class="dropdown-button" @click="isDropdownOpen = !isDropdownOpen">
+                    {{ selectedStatuses.length }} Selected
+                </button>
+                <ul v-show="isDropdownOpen" class="dropdown-menu">
+                    <li v-for="status in allStatuses" :key="status">
+                        <label>
+                            <input
+                                type="checkbox"
+                                :value="status"
+                                v-model="selectedStatuses"
+                                @change="updateFilterConfig"
+                            />
+                            {{ status }}
+                        </label>
+                    </li>
+                </ul>
             </div>
         </template>
         <template #content>
@@ -41,7 +60,8 @@
 
                 <div class="statistics-container">
                     <div class="first-bar" :style="getBoxHeightStyle(employeeData.firstBar)"></div>
-                    <div class="second-bar" :style="getBoxHeightStyle(employeeData.secondBar)"></div>
+                    <div class="second-bar"
+                         :style="getBoxHeightStyle(employeeData.secondBar)"></div>
                     <div class="third-bar" :style="getBoxHeightStyle(employeeData.thirdBar)"></div>
                 </div>
             </div>
@@ -50,7 +70,9 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue';
+import {
+  computed, onMounted, ref, watch,
+} from 'vue';
 import type { EmployeeIF } from '@/model/EmployeeIF';
 import calculateWorkload from '../services/workloadCalculator';
 import {
@@ -58,7 +80,11 @@ import {
   calculateCssUserBackgroundStyle,
   getCssHeightForStatisticBoxes, parseCategoryNames,
 } from './EmployeeOverviewHelper';
-import getMockData from '@/assets/__mockdata__/mockDataComposer';
+import getMockData, {
+  devStatusList, nonDisplayedStatusList,
+  planningStatusList,
+  testingStatusList,
+} from '@/assets/__mockdata__/mockDataComposer';
 import useFilterConfigStore from '@/store/FilterConfigStore';
 import { filterProjectThatHasTheAllowedStatus } from '@/services/filter/IssuesStateFilter';
 import type { ProjectIF } from '../model/ProjectIF';
@@ -79,6 +105,10 @@ const categoryNames = ref<{
   secondCategory: '',
   thirdCategory: '',
 });
+const allStatuses = ref();
+const isDropdownOpen = ref(false);
+const filterConfig = computed(() => filterConfigStore.getFilterConfig);
+const selectedStatuses = ref(filterConfig.value.projectFilter.issueStatusIncludeFilter);
 
 const selectedView = ref<string>('workload'); // Default value is 'workload'
 
@@ -120,10 +150,15 @@ function showSecondView(filterConfig: FilterConfigIF) {
   const workloadMap = calculateWorkload(project);
   employeeMap.value = displayWorkload(workloadMap);
   categoryNames.value = {
-    firstCategory: 'first new Cat',
-    secondCategory: 'second new Cat',
-    thirdCategory: 'third new Cat',
+    firstCategory: '<10 commits',
+    secondCategory: '10-30 commits',
+    thirdCategory: '>30 commits',
   };
+}
+function updateFilterConfig() {
+  const updatedFilterConfig = { ...filterConfig.value };
+  updatedFilterConfig.projectFilter.issueStatusIncludeFilter = selectedStatuses.value;
+  filterConfigStore.setFilterConfig(updatedFilterConfig);
 }
 
 watch(
@@ -131,13 +166,24 @@ watch(
   ([selectedView, filterConfig]: [string, FilterConfigIF]) => {
     if (selectedView === 'workload') {
       showWorkloadView(filterConfig);
-    } else if (selectedView === 'second') {
+    } else if (selectedView === 'amount commits') {
       showSecondView(filterConfig);
     }
   },
   { immediate: true },
 );
+watch(selectedStatuses, () => {
+  updateFilterConfig();
+});
+
+watch(filterConfig, (newConfig) => {
+  selectedStatuses.value = newConfig.projectFilter.issueStatusIncludeFilter;
+});
+
 onMounted(() => {
+  const statusList: string[] = [...planningStatusList,
+    ...devStatusList, ...testingStatusList, ...nonDisplayedStatusList];
+  allStatuses.value = statusList;
   // Call showWorkloadView immediately after mounting
   showWorkloadView(filterConfigStore.filter);
 });
@@ -155,6 +201,7 @@ onMounted(() => {
     display: inline-flex;
     align-items: center; /* Center vertically */
     margin-left: 60px;
+    flex-wrap: nowrap;
 }
 
 /* Legend */
@@ -167,6 +214,7 @@ onMounted(() => {
 .first-bar-font-size {
     font-size: 12px;
     margin-left: 10px;
+
 }
 
 .second-bar-legend {
@@ -191,6 +239,8 @@ onMounted(() => {
 .third-bar-font-size {
     font-size: 12px;
     margin-left: 10px;
+    margin-right: 15px;
+
 }
 
 /* Container for icon with background, user name with background and statistics */
@@ -277,4 +327,42 @@ onMounted(() => {
     justify-content: center;
     margin-right: 10px;
 }
+.dropdown-container {
+    position: relative;
+    display: inline-block;
+    margin-right: 15px
+}
+
+.dropdown-button {
+    padding: 5px 10px;
+    background-color: #eee;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 15px;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin-top: 5px;
+    padding: 0;
+    list-style-type: none;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.dropdown-menu li {
+    padding: 5px;
+}
+
+.dropdown-menu li label {
+    display: block;
+}
+
 </style>

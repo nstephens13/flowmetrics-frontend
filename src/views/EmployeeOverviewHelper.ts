@@ -45,20 +45,20 @@ export function assignWorkloadMapToBars(workloadMap: Map<EmployeeIF, {
   development: number;
   testing: number
 }>): Map<EmployeeIF,
-    { firstBar: number; secondBar: number; thirdBar: number }> {
+  { firstBar: number; secondBar: number; thirdBar: number }> {
   const newMap: Map<EmployeeIF,
-      { firstBar: number; secondBar: number; thirdBar: number }> = new Map();
+  { firstBar: number; secondBar: number; thirdBar: number }> = new Map();
   workloadMap.forEach(
-      (
-          tuple: { planning: number; development: number; testing: number },
-          employee: EmployeeIF,
-      ) => {
-        newMap.set((employee), {
-          firstBar: tuple.planning,
-          secondBar: tuple.development,
-          thirdBar: tuple.testing,
-        });
-      },
+    (
+      tuple: { planning: number; development: number; testing: number },
+      employee: EmployeeIF,
+    ) => {
+      newMap.set((employee), {
+        firstBar: tuple.planning,
+        secondBar: tuple.development,
+        thirdBar: tuple.testing,
+      });
+    },
   );
   return newMap;
 }

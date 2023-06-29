@@ -5,7 +5,7 @@ import { Status } from '../model/IssueIF';
 
 // just temporary import
 import getMockData, {
-  devStatusList,
+  devStatusList, nonDisplayedStatusList,
   planningStatusList,
   testingStatusList,
 } from '../assets/__mockdata__/mockDataComposer';
@@ -76,7 +76,7 @@ function calculateWorkload(
           development: numberInDevTickets + 1,
           testing: numberInTestingTickets,
         });
-      } else if (testingStatusList.includes(issue.userStatus)) {
+      } else if (testingStatusList.includes(issue.userStatus) || nonDisplayedStatusList.includes(issue.userStatus)) {
         mapToReturn.set(issue.assignedTo, {
           planning: numberPlannedTickets,
           development: numberInDevTickets,
