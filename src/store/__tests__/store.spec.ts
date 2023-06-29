@@ -1,11 +1,9 @@
-import {
-  describe, test, expect,
-} from 'vitest';
+import { describe, test, expect } from 'vitest';
 import { setActivePinia, createPinia } from 'pinia';
-import useSLAStore from '../store';
-import type { SLASubscriber } from '../../model/SLASubscriber';
-import type { SLARule } from '../../model/SLARule';
-import type { SLACategory } from '../../model/SLACategory';
+import useSLAStore from '@/store/store';
+import type { SLASubscriber } from '@/model/SLASubscriber';
+import type { SLARule } from '@/model/SLARule';
+import type { SLACategory } from '@/model/SLACategory';
 
 describe('SLA Store', () => {
   setActivePinia(createPinia());
@@ -17,14 +15,22 @@ describe('SLA Store', () => {
   test('has 3 Rules in the Beginning', () => {
     expect(store.rules.length).toEqual(3);
   });
-  const subscriber: SLASubscriber = { id: null, name: 'New Subscriber', description: 'New Description' };
+  const subscriber: SLASubscriber = {
+    id: null,
+    name: 'New Subscriber',
+    description: 'New Description',
+  };
   test('adds Subscribers', () => {
     store.addSubscriber(subscriber);
 
     expect(store.subscriber).toContain(subscriber);
   });
   const rule: SLARule = {
-    id: null, name: 'New Rule', durationInDays: 3, expirationDate: null, maxAssignedEmployees: 5,
+    id: null,
+    name: 'New Rule',
+    durationInDays: 3,
+    expirationDate: null,
+    maxAssignedEmployees: 5,
   };
   test('adds Rules', () => {
     store.addRule(rule);
@@ -38,7 +44,10 @@ describe('SLA Store', () => {
     expect(store.slaCategories.length).toBeGreaterThanOrEqual(3);
   });
   const category: SLACategory = {
-    id: null, name: 'New Category', rule, subscriber,
+    id: null,
+    name: 'New Category',
+    rule,
+    subscriber,
   };
   test('adds new Configuration', () => {
     store.addSLACategory(category);

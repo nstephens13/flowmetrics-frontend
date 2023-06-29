@@ -1,7 +1,6 @@
 import type { EmployeeIF } from './EmployeeIF';
 import type { IssueIF } from './IssueIF';
 import { Status } from './IssueIF';
-import IssueJson2 from '../assets/__mockdata__/Issues_2.json';
 
 // Issue Class implements IssueIF
 class Issue implements IssueIF {
@@ -46,29 +45,6 @@ class Issue implements IssueIF {
   }
 }
 
-function loadIssueDataFromFile(issueJson: Array<any>): Issue[] {
-  const issueData: Issue[] = [];
-  structuredClone(issueJson).forEach((issue) => {
-    issueData.push({
-      id: issue.id,
-      name: issue.name,
-      description: issue.description,
-      assignedTo: issue.assignedTo,
-      createdBy: issue.createdBy,
-      closedAt: issue.closedAt ? new Date(issue.closedAt) : null,
-      createdAt: new Date(issue.createdAt),
-      dueTo: issue.dueTo ? new Date(issue.dueTo) : null,
-      status: issue.status,
-    });
-  });
-  return issueData;
-}
-
-// builds array of objects uses data given, creates Issue objects
-function getArrayOfIssues(): Issue[] {
-  return loadIssueDataFromFile(IssueJson2);
-}
-
 // function to return assigned name
 function getAssignedToName(issue: Issue): string {
   if (issue.assignedTo) {
@@ -103,6 +79,5 @@ function countIssuesByStatus(issueList: Issue[], status: Status | null): number 
 
 // export of data array and remain time for ticket calculation
 export {
-  Issue, getArrayOfIssues, getTimeLeft, getFormattedDate,
-  getAssignedToName, countIssuesByStatus,
+  Issue, getTimeLeft, getFormattedDate, getAssignedToName, countIssuesByStatus,
 };

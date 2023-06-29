@@ -13,7 +13,21 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 'latest',
   },
+  settings: {
+    'import/extensions': ['.js', '.jsx', '.ts', '.tsx', '.mjs'],
+  },
   rules: {
+    'import/extensions': [
+      'warn',
+      'ignorePackages',
+      {
+        js: 'never',
+        jsx: 'never',
+        ts: 'never',
+        tsx: 'never',
+        '': 'never',
+      },
+    ],
     '@typescript-eslint/indent': ['error', 2],
     '@typescript-eslint/no-unused-vars': 'error',
     'no-plusplus': ['error', { allowForLoopAfterthoughts: true }],
@@ -22,25 +36,8 @@ module.exports = {
     'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
     'import/no-unresolved': 0,
     'linebreak-style': ['error', 'unix'],
-    'import/extensions': [
-      'error',
-      'ignorePackages',
-      {
-        js: 'never',
-        jsx: 'never',
-        ts: 'never',
-        tsx: 'never',
-      },
-    ],
   },
   plugins: ['@typescript-eslint'],
-  settings: {
-    'import/resolver': {
-      node: {
-        extensions: ['.js', '.jsx', '.ts', '.tsx'],
-      },
-    },
-  },
   overrides: [
     {
       files: ['src/main.ts', 'src/shims-vue.d.ts'],

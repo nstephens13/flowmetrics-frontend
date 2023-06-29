@@ -1,68 +1,85 @@
 <template>
-    <Card class="background-card">
-        <template #title>SLA Management View
-          <Divider></Divider>
-        </template>
-        <template #content>
-            <div>
-                <h3>Add SLA Subscriber</h3>
-                <div class="subscriber-container">
-                  <InputText v-model="newSubscriber" placeholder="Enter subscriber name"
-                           class="enter-subscriber"/>
-                  <Button class="add-subscriber" @click="addSubscriber" label="+"></Button>
-                </div>
-            </div>
-            <div>
-                <h3>Add SLA Rule</h3>
-                <div class="rule-container">
-                    <InputText v-model="newRuleName" placeholder="Enter rule name"
-                               class="enter-rule"/>
-                    <Dropdown v-model="newRuleMaxAssignedEmployees"
-                          :options="maxAssignedEmployeesOptions"
-                          placeholder="Select max assigned employees"
-                          class="select-employees"/>
-                    <Button class="add-rule" @click="addRule" label="+"></Button>
-                </div>
-            </div>
-            <div>
-                <h3>Add new SLA Category</h3>
-                <div class="category-container">
-                    <Dropdown v-model="selectedSubscriber"
-                          :options="subscriber" optionLabel="name"
-                          placeholder="Select subscriber" class="select-subscriber"/>
-                    <Dropdown v-model="selectedRule"
-                          :options="rules" optionLabel="name"
-                          placeholder="Select rule" class="select-rule"/>
-                    <InputText v-model="categoryName" placeholder="Enter category name"
-                           class="enter-category"/>
-                    <Button class="add-category" @click="createCategory" label="+"></Button>
-                </div>
-            </div>
+  <Card class="background-card">
+    <template #title>SLA Management View</template>
+    <Divider></Divider>
+    <template #content>
+      <div>
+        <h3>Add SLA Subscriber</h3>
+        <div class="subscriber-container">
+          <InputText
+            v-model="newSubscriber"
+            placeholder="Enter subscriber name"
+            class="enter-subscriber"
+          />
+          <Button class="add-subscriber" @click="addSubscriber" label="+"></Button>
+        </div>
+      </div>
+      <div>
+        <h3>Add SLA Rule</h3>
+        <div class="rule-container">
+          <InputText v-model="newRuleName" placeholder="Enter rule name" class="enter-rule" />
+          <Dropdown
+            v-model="newRuleMaxAssignedEmployees"
+            :options="maxAssignedEmployeesOptions"
+            placeholder="Select max assigned employees"
+            class="select-employees"
+          />
+          <Button class="add-rule" @click="addRule" label="+"></Button>
+        </div>
+      </div>
+      <div>
+        <h3>Add new SLA Category</h3>
+        <div class="category-container">
+          <Dropdown
+            v-model="selectedSubscriber"
+            :options="subscriber"
+            optionLabel="name"
+            placeholder="Select subscriber"
+            class="select-subscriber"
+          />
+          <Dropdown
+            v-model="selectedRule"
+            :options="rules"
+            optionLabel="name"
+            placeholder="Select rule"
+            class="select-rule"
+          />
+          <InputText
+            v-model="categoryName"
+            placeholder="Enter category name"
+            class="enter-category"
+          />
+          <Button class="add-category" @click="createCategory" label="+"></Button>
+        </div>
+      </div>
 
-            <div>
-                <h3>SLA Categories</h3>
-                <DataTable :value="categories">
-                    <Column field="name" header="Category" />
-                    <Column field="subscriber.name" header="Subscriber" />
-                    <Column field="rule.name" header="Rule" />
-                    <Column field="rule.durationInDays" header="Duration (Days)" />
-                    <Column field="rule.expirationDate" header="Expiration Date" />
-                    <Column field="rule.maxAssignedEmployees" header="Max Assigned Employees" />
-                    <Column header="Delete">
-                        <template #body="rowData">
-                            <Button icon="pi pi-trash" class="p-button-danger trash-size"
-                                    @click="deleteCategory(rowData.data)"></Button>
-                        </template>
-                    </Column>
-                </DataTable>
-            </div>
-        </template>
-    </Card>
+      <div>
+        <h3>SLA Categories</h3>
+        <DataTable :value="categories">
+          <Column field="name" header="Category" />
+          <Column field="subscriber.name" header="Subscriber" />
+          <Column field="rule.name" header="Rule" />
+          <Column field="rule.durationInDays" header="Duration (Days)" />
+          <Column field="rule.expirationDate" header="Expiration Date" />
+          <Column field="rule.maxAssignedEmployees" header="Max Assigned Employees" />
+          <Column header="Delete">
+            <template #body="rowData">
+              <Button
+                icon="pi pi-trash"
+                class="p-button-danger trash-size"
+                @click="deleteCategory(rowData.data)"
+              ></Button>
+            </template>
+          </Column>
+        </DataTable>
+      </div>
+    </template>
+  </Card>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref, computed } from 'vue';
-import useSLAStore from '../store/store';
+import useSLAStore from '@/store/store';
 import type { SLASubscriber } from '@/model/SLASubscriber';
 import type { SLARule } from '@/model/SLARule';
 import type { SLACategory } from '@/model/SLACategory';
@@ -88,7 +105,9 @@ export default defineComponent({
     // Add a new subscriber to the store
     const addSubscriber = () => {
       const subscriberToAdd: SLASubscriber = {
-        id: null, name: newSubscriber.value.trim(), description: null,
+        id: null,
+        name: newSubscriber.value.trim(),
+        description: null,
       };
       slaStore.addSubscriber(subscriberToAdd);
       newSubscriber.value = '';

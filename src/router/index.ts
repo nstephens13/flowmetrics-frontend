@@ -1,7 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import HomeView from '../views/HomeView.vue';
-import ProjectOverview from '../views/ProjectOverview.vue';
-import About from '../views/AboutView.vue';
+import ProjectOverview from '@/views/ProjectOverview.vue';
+import TicketCalculator from '@/views/TicketCalculatorView.vue';
+import SLAComponent from '@/views/SLAComponent.vue';
+import EmployeeOverview from '@/views/EmployeeOverview.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -9,12 +10,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView,
-    },
-    {
-      path: '/about',
-      name: 'about',
-      component: About,
+      component: ProjectOverview,
     },
     {
       path: '/projectoverview',
@@ -22,14 +18,19 @@ const router = createRouter({
       component: ProjectOverview,
     },
     {
+      path: '/ticket-calculator',
+      name: 'ticket-calculator',
+      component: TicketCalculator,
+    },
+    {
       path: '/sla-management',
       name: 'sla-management',
-      component: () => import('../views/SLAComponent.vue'),
+      component: SLAComponent,
     },
     {
       path: '/employee-overview',
       name: 'employee-overview',
-      component: () => import('../views/EmployeeOverview.vue'),
+      component: EmployeeOverview,
     },
   ],
 });
