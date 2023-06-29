@@ -69,7 +69,7 @@ describe('getFormattedDate', () => {
       id: 4245, firstName: 'Jane', lastName: 'Smith', assignedIssues: [],
     }, new Date(), null, dueTo, null);
     const formattedDate = getFormattedDate(issue);
-    expect(formattedDate).toBe('1. Juli 2023');
+    expect(formattedDate).toBe('July 1, 2023');
   });
 
   test('returns an empty string when dueTo is null', () => {
