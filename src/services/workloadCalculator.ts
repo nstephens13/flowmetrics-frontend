@@ -4,7 +4,11 @@ import type { IssueIF } from '@/model/IssueIF';
 import { Status } from '../model/IssueIF';
 
 // just temporary import
-import getMockData from '../assets/__mockdata__/mockDataComposer';
+import getMockData, {
+  devStatusList,
+  planningStatusList,
+  testingStatusList,
+} from '../assets/__mockdata__/mockDataComposer';
 
 /**
  * This function calculate the workload from a project team, and give the
@@ -28,8 +32,8 @@ function calculateWorkload(
   let projectToCalculate: ProjectIF;
 
   /**
-   * ToDo: decouple the mock data when everything is setup
-   */
+     * ToDo: decouple the mock data when everything is setup
+     */
   if (project === undefined || project === null) {
     projectToCalculate = getMockData(3);
   } else {
@@ -60,29 +64,27 @@ function calculateWorkload(
       }
 
       // if there is no date for closure of the ticket, then it is a still open ticket
-      if (issue.closedAt === undefined || issue.closedAt === null) {
-        if (issue.status === Status.InProgress) {
-          mapToReturn.set(issue.assignedTo, {
-            planning: numberPlannedTickets,
-            development: numberInDevTickets + 1,
-            testing: numberInTestingTickets,
-          });
-        } else {
-          mapToReturn.set(issue.assignedTo, {
-            planning: numberPlannedTickets + 1,
-            development: numberInDevTickets,
-            testing: numberInTestingTickets,
-          });
-        }
-      } else {
+      if (planningStatusList.includes(issue.userStatus)) {
+        mapToReturn.set(issue.assignedTo, {
+          planning: numberPlannedTickets + 1,
+          development: numberInDevTickets,
+          testing: numberInTestingTickets,
+        });
+      } else if (devStatusList.includes(issue.userStatus)) {
+        mapToReturn.set(issue.assignedTo, {
+          planning: numberPlannedTickets,
+          development: numberInDevTickets + 1,
+          testing: numberInTestingTickets,
+        });
+      } else if (testingStatusList.includes(issue.userStatus)) {
         mapToReturn.set(issue.assignedTo, {
           planning: numberPlannedTickets,
           development: numberInDevTickets,
           testing: numberInTestingTickets + 1,
         });
       }
-      issueSet.add(issue);
     }
+    issueSet.add(issue);
   }
 
   projectToCalculate.issues.forEach((issue) => {

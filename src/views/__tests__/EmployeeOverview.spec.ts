@@ -17,14 +17,15 @@ describe('EmployeeOverview with a simple manual constructed map should render co
     },
   });
 
-  const openBoxes = wrapper.findAll('.open');
-  const inProgressBoxes = wrapper.findAll('.in-progress');
-  const closedBoxes = wrapper.findAll('.closed');
-  const result = wrapper.text();
+  const openBoxes = wrapper.findAll('.first-bar');
+  const inProgressBoxes = wrapper.findAll('.second-bar');
+  const closedBoxes = wrapper.findAll('.third-bar');
   // TODO Test dosent test the right thing
   test('Component should include the Name John Doe', () => {
     expect(wrapper.text()).toContain('JOHN DOE');
   });
+
+  const result = wrapper.text();
 
   test('all Boxes exists exactly one time', () => {
     expect(openBoxes[0].exists()).toBe(true);

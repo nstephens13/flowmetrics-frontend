@@ -1,14 +1,18 @@
-import type {ProjectIF} from '@/model/ProjectIF';
-import type {EmployeeIF} from '@/model/EmployeeIF';
-import type {IssueIF} from '@/model/IssueIF';
-import {Status} from '@/model/IssueIF';
-import type {MilestoneIF} from '@/model/MilestoneIF';
+import type { ProjectIF } from '@/model/ProjectIF';
+import type { EmployeeIF } from '@/model/EmployeeIF';
+import type { IssueIF } from '@/model/IssueIF';
+import { Status } from '@/model/IssueIF';
+import type { MilestoneIF } from '@/model/MilestoneIF';
 import employeeJson from './Employees.json';
 import issueJson2 from './Issues_2.json';
 import issueJson from './Issues.json';
 import milestoneJson from './Milestones.json';
-import type {Issue} from '@/model/Issue';
+import type { Issue } from '@/model/Issue';
 
+
+export const planningStatusList: string[] = ['planned', 'design'];
+export const devStatusList: string[] = ['in Work', 'review'];
+export const testingStatusList: string[] = ['UnitTest', 'E2E'];
 function getRandomInt(max: number) {
   return Math.floor(Math.random() * max);
 }
@@ -80,6 +84,7 @@ function getMockData(dataset: number): ProjectIF {
       } = assignIssueToEmployee(1, 1, issuesArray, employeesArray);
 
       const issues = tuple.issuesToReturn;
+      issues[1].userStatus = planningStatusList[0];
       return {
         id: 1,
         name: 'Mocking Bird 1',
@@ -108,6 +113,14 @@ function getMockData(dataset: number): ProjectIF {
       milestones = assignIssueToMilestone(1, 0, milestones, tuple.issuesToReturn);
       milestones = assignIssueToMilestone(2, 1, milestones, tuple.issuesToReturn);
       milestones = assignIssueToMilestone(3, 1, milestones, tuple.issuesToReturn);
+
+      issues[0].userStatus = planningStatusList[0];
+      issues[1].userStatus = planningStatusList[0];
+      issues[2].userStatus = planningStatusList[0];
+      issues[3].userStatus = planningStatusList[0];
+      issues[4].userStatus = planningStatusList[0];
+      issues[5].userStatus = planningStatusList[0];
+      issues[6].userStatus = planningStatusList[0];
 
       return {
         id: 2,
@@ -273,15 +286,15 @@ function getMockData(dataset: number): ProjectIF {
 
         if (randomStatus === 2) {
           issues[i].status = Status.InProgress;
-          issues[i].userStatus = 'In Progress';
+          issues[i].userStatus = devStatusList[0];
         } else if (randomStatus === 1) {
           const randomDate = new Date(2018, 0o5, 0o5, 17, 23, 42, 11);
           // Assigning a random closedAt date within the last 30 days
           randomDate.setDate(randomDate.getDate() - getRandomInt(30));
           issues[i].closedAt = randomDate;
-          issues[i].userStatus = 'Closed';
+          issues[i].userStatus = testingStatusList[0];
         } else {
-          issues[i].userStatus = 'Open';
+          issues[i].userStatus = planningStatusList[0];
         }
 
         const randomEmployee = getRandomInt(numberOfEmployees);
@@ -333,14 +346,20 @@ function getMockData(dataset: number): ProjectIF {
       const date = new Date(2018, 0o5, 0o5, 17, 23, 42, 11);
 
       issues[0].status = Status.InProgress;
+      issues[0].userStatus = devStatusList[0];
+      issues[1].userStatus = planningStatusList[0];
       issues[2].status = Status.Closed;
+      issues[2].userStatus = testingStatusList[0];
       issues[2].closedAt = date; // Set the specific closedAt date
       issues[3].status = Status.Closed;
+      issues[3].userStatus = testingStatusList[0];
       issues[3].closedAt = date; // Set the specific closedAt date
       issues[4].status = Status.Closed;
+      issues[4].userStatus = testingStatusList[0];
       issues[4].closedAt = date; // Set the specific closedAt date
       issues[5].status = Status.InProgress;
-      issues[6].status = Status.Closed;
+      issues[5].userStatus = devStatusList[0];
+      issues[6].userStatus = testingStatusList[0];
       issues[6].closedAt = date; // Set the specific closedAt date
       return {
         id: 55,

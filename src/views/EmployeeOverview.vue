@@ -4,12 +4,12 @@
             Employee Overview
 
             <div class="legend-container">
-                <div class="open-legend"></div>
-                <h6 class="open-font-size">{{ categoryNames.firstCategory }}</h6>
-                <div class="in-progress-legend"></div>
-                <h6 class="in-progress-font-size">{{ categoryNames.secondCategory }}</h6>
-                <div class="closed-legend"></div>
-                <h6 class="closed-font-size">{{ categoryNames.thirdCategory }}</h6>
+                <div class="first-bar-legend"></div>
+                <h6 class="first-bar-font-size">{{ categoryNames.firstCategory }}</h6>
+                <div class="second-bar-legend"></div>
+                <h6 class="second-bar-font-size">{{ categoryNames.secondCategory }}</h6>
+                <div class="third-bar-legend"></div>
+                <h6 class="third-bar-font-size">{{ categoryNames.thirdCategory }}</h6>
             </div>
             <div class="dropdown-container">
                 <label for="view-select">Select View: </label>
@@ -40,9 +40,9 @@
                 </div>
 
                 <div class="statistics-container">
-                    <div class="open" :style="getBoxHeightStyle(employeeData.firstBar)"></div>
-                    <div class="in-progress" :style="getBoxHeightStyle(employeeData.secondBar)"></div>
-                    <div class="closed" :style="getBoxHeightStyle(employeeData.thirdBar)"></div>
+                    <div class="first-bar" :style="getBoxHeightStyle(employeeData.firstBar)"></div>
+                    <div class="second-bar" :style="getBoxHeightStyle(employeeData.secondBar)"></div>
+                    <div class="third-bar" :style="getBoxHeightStyle(employeeData.thirdBar)"></div>
                 </div>
             </div>
         </template>
@@ -50,7 +50,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import type { EmployeeIF } from '@/model/EmployeeIF';
 import calculateWorkload from '../services/workloadCalculator';
 import {
@@ -137,6 +137,10 @@ watch(
   },
   { immediate: true },
 );
+onMounted(() => {
+  // Call showWorkloadView immediately after mounting
+  showWorkloadView(filterConfigStore.filter);
+});
 </script>
 
 <style>
@@ -154,37 +158,37 @@ watch(
 }
 
 /* Legend */
-.open-legend {
+.first-bar-legend {
     width: 20px;
     height: 20px;
     background-color: rgba(128, 128, 128, 0.8); /* RGB values and opacity */
 }
 
-.open-font-size {
+.first-bar-font-size {
     font-size: 12px;
     margin-left: 10px;
 }
 
-.in-progress-legend {
+.second-bar-legend {
     width: 20px;
     height: 20px;
     background-color: rgba(128, 128, 128, 0.5); /* RGB values and opacity */
     margin-left: 30px;
 }
 
-.in-progress-font-size {
+.second-bar-font-size {
     font-size: 12px;
     margin-left: 10px;
 }
 
-.closed-legend {
+.third-bar-legend {
     width: 20px;
     height: 20px;
     background-color: rgba(128, 128, 128, 0.3); /* RGB values and opacity */
     margin-left: 30px;
 }
 
-.closed-font-size {
+.third-bar-font-size {
     font-size: 12px;
     margin-left: 10px;
 }
@@ -246,7 +250,7 @@ watch(
     align-self: end;
 }
 
-.open {
+.first-bar {
     width: 20px;
     background-color: rgba(128, 128, 128, 0.8); /* RGB values and opacity */
     display: flex;
@@ -256,7 +260,7 @@ watch(
     margin-right: 10px;
 }
 
-.in-progress {
+.second-bar {
     width: 20px;
     background-color: rgba(128, 128, 128, 0.5); /* RGB values and opacity */
     display: flex;
@@ -265,7 +269,7 @@ watch(
     margin-right: 10px;
 }
 
-.closed {
+.third-bar {
     width: 20px;
     background-color: rgba(128, 128, 128, 0.3); /* RGB values and opacity */
     display: flex;
