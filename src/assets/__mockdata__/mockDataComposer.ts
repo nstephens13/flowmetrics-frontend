@@ -148,6 +148,8 @@ function getMockData(dataset: number): ProjectIF {
           // Assigning a random closedAt date within the last 30 days
           randomDate.setDate(randomDate.getDate() - getRandomInt(30));
           issues[i].closedAt = randomDate;
+        } else {
+          issues[i].status = Status.Open;
         }
 
         const randomEmployee = getRandomInt(numberOfEmployees);
