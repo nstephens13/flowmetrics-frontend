@@ -1,4 +1,4 @@
-import { describe, test, expect } from 'vitest';
+import { describe, test, expect, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
 import PrimeVue from 'primevue/config';
 import Card from 'primevue/card';
@@ -68,13 +68,20 @@ describe('EmployeeOverview with a simple manual constructed map should render co
     expect(wrapper.isVisible()).toBe(true);
   });
   test('all strings in the filter dropdown are rendered', async () => {
+    const menu = wrapper.find('.dropdown-menu');
+    expect(menu.attributes('style')).toBe('display: none;');
+
+
     // Open the dropdown
     const dropdownButton = wrapper.find('.dropdown-button');
-    await dropdownButton.trigger('click');
 
+    const spyButton = vi.spyOn(dropdownButton, 'trigger');
     // Get all the options in the dropdown
-    const dropdownOptions = wrapper.findAll('.dropdown-menu li');
+    await dropdownButton.trigger('click');
+    expect(spyButton).toHaveBeenCalledOnce();
 
+    expect(menu.attributes('style')).not.toBe('display: none;');
+    const dropdownOptions = wrapper.findAll('.dropdown-menu li');
     // Extract the text of each option
     const optionTexts = dropdownOptions.map((option) => option.text());
 

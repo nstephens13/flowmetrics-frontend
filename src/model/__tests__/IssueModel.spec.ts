@@ -85,13 +85,13 @@ describe('getFormattedDate', () => {
 
 describe('getTimeLeft', () => {
   test('returns the number of days left when dueTo is in the future', () => {
-    const currentTime = new Date('2023-06-29').getTime();
-    const dueTo = new Date('2023-07-01');
+    const currentTime = new Date();
+    const dueTo = new Date(currentTime.getTime() + 24 * 60 * 60 * 1000);
     const issue = new Issue(1, 'Test Issue', null, null, {
       id: 4245, firstName: 'Jane', lastName: 'Smith', assignedIssues: [],
     }, new Date(), null, dueTo, null, null);
     const timeLeft = getTimeLeft(issue);
-    const expectedTimeLeft = Math.ceil((dueTo.getTime() - currentTime) / (1000 * 60 * 60 * 24));
+    const expectedTimeLeft = Math.ceil((dueTo.getTime() - currentTime.getTime()) / (1000 * 60 * 60 * 24));
     expect(timeLeft).toBe(expectedTimeLeft);
   });
 
