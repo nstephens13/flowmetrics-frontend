@@ -11,7 +11,7 @@ import milestoneJson from './Milestones.json';
 import type { Issue } from '@/model/Issue';
 
 export const planningStatusList: string[] = ['planned', 'design'];
-export const devStatusList: string[] = ['in Work', 'review'];
+export const devStatusList: string[] = ['in work', 'review'];
 export const testingStatusList: string[] = ['UnitTest', 'E2E'];
 
 export const nonDisplayedStatusList: string[] = ['closed'];
