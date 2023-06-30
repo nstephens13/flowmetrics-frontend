@@ -1,6 +1,4 @@
-import {
-  assert, expect, test, describe,
-} from 'vitest';
+import { assert, expect, test, describe } from 'vitest';
 import getMockData from '@/assets/__mockdata__/mockDataComposer';
 import calculateWorkload from '@/services/workloadCalculator';
 import type { EmployeeIF } from '../../model/EmployeeIF';
@@ -15,7 +13,7 @@ function assignIssue(
   project: ProjectIF,
   employees: EmployeeIF[],
   issueNumber: number,
-  employeeNumber: number,
+  employeeNumber: number
 ) {
   employees[employeeNumber].assignedIssues.push(project.issues[issueNumber]);
 }
@@ -41,9 +39,9 @@ describe('When mock data helper is asked for mock data, there should be correctl
 
     loadedIssues.forEach((issue: IssueIF) => {
       if (
-        typeof issue.id === 'number'
-        && typeof issue.name === 'string'
-        && typeof issue.description === 'string'
+        typeof issue.id === 'number' &&
+        typeof issue.name === 'string' &&
+        typeof issue.description === 'string'
       ) {
         check = true;
       } else {

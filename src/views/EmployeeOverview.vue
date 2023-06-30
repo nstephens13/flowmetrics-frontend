@@ -53,7 +53,7 @@ import {
 import getMockData from '@/assets/__mockdata__/mockDataComposer';
 
 const employeeMap = ref<
-Map<EmployeeIF, { openIssues: number; inProgressIssues: number; closedIssues: number }>
+  Map<EmployeeIF, { openIssues: number; inProgressIssues: number; closedIssues: number }>
 >(calculateWorkload(getMockData(3)));
 
 function getUserNameBackgroundStyle(employee: EmployeeIF): string {
