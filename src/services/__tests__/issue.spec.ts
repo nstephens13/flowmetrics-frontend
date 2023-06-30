@@ -1,6 +1,6 @@
-import { describe, test, expect } from 'vitest'
-import { getTimeLeft, getFormattedDate, getAssignedToName } from '@/model/Issue'
-import getMockData from '@/assets/__mockdata__/mockDataComposer'
+import { describe, test, expect } from 'vitest';
+import { getTimeLeft, getFormattedDate, getAssignedToName } from '@/model/Issue';
+import getMockData from '@/assets/__mockdata__/mockDataComposer';
 
 describe('Issue Tests', () => {
   test('getArrayOfIssues should return an array of Issue objects', () => {

@@ -1,15 +1,16 @@
-import { describe, expect, test } from 'vitest'
-import { createPinia } from 'pinia'
-import { mount } from '@vue/test-utils'
-import PrimeVue from 'primevue/config'
-import Card from 'primevue/card'
-import Dropdown from 'primevue/dropdown'
-import InputText from 'primevue/inputtext'
-import Button from 'primevue/button'
-import Column from 'primevue/column'
-import DataTable from 'primevue/datatable'
-import router from '@/router/index'
-import SLAComponent from '@/views/SLAComponent.vue'
+import { describe, expect, test } from 'vitest';
+import { createPinia } from 'pinia';
+import { mount } from '@vue/test-utils';
+import PrimeVue from 'primevue/config';
+import Card from 'primevue/card';
+import Dropdown from 'primevue/dropdown';
+import Divider from 'primevue/divider';
+import InputText from 'primevue/inputtext';
+import Button from 'primevue/button';
+import Column from 'primevue/column';
+import DataTable from 'primevue/datatable';
+import router from '@/router/index';
+import SLAComponent from '@/views/SLAComponent.vue';
 
 const pinia = createPinia()
 
@@ -25,10 +26,11 @@ describe('SLAComponent', () => {
           Card,
           Button,
           Column,
-          DataTable
-        }
-      }
-    })
-    expect(wrapper.exists()).toBe(true)
-  })
-})
+          DataTable,
+          Divider,
+        },
+      },
+    });
+    expect(wrapper.exists()).toBe(true);
+  });
+});
