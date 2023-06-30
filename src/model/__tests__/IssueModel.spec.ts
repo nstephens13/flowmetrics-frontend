@@ -87,7 +87,7 @@ describe('getTimeLeft', () => {
     const dueTo = new Date(currentTime.getTime() + 24 * 60 * 60 * 1000);
     const issue = new Issue(1, 'Test Issue', null, null, {
       id: 4245, firstName: 'Jane', lastName: 'Smith', assignedIssues: [],
-    }, new Date(), null, dueTo, null, null);
+    }, new Date(), null, dueTo, null);
     const timeLeft = getTimeLeft(issue);
     const expectedTimeLeft = Math.ceil(
       (dueTo.getTime() - currentTime.getTime()) / (1000 * 60 * 60 * 24),

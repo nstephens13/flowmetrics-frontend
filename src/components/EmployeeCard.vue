@@ -18,13 +18,14 @@
   <div class="flex-none flex flex-column gap-2">
     <div class="grid">
       <label for="totaltickets" class="col-12 font-bold ">
-        Total Tickets : {{ issues.openIssues + issues.inProgressIssues + issues.closedIssues }}
+        Total Tickets : {{ totalIssues }}
       </label>
       <label for="Open" class="col-3 font-bold">Open</label>
       <div class="col-9 md:col-9">
         <ProgressBar
           class="openIssuesProgressbar"
-          :value="issues.openIssues/(issues.openIssues + issues.inProgressIssues + issues.closedIssues)*100"
+          :value
+          ="issues.openIssues/(totalIssues)*100"
         >
           {{ issues.openIssues }}
         </ProgressBar>
@@ -35,7 +36,8 @@
       <div class="col-9 md:col-9">
         <ProgressBar
           class="inProgressIssuesProgressbar"
-          :value="issues.inProgressIssues / (issues.openIssues + issues.inProgressIssues + issues.closedIssues) * 100"
+          :value
+          ="issues.inProgressIssues/(totalIssues)*100"
         >
           {{ issues.inProgressIssues }}
         </ProgressBar>
@@ -46,7 +48,8 @@
       <div class="col-9 md:col-9">
         <ProgressBar
         class="closedIssuesProgressbar"
-          :value="issues.closedIssues / (issues.openIssues + issues.inProgressIssues + issues.closedIssues) * 100">
+          :value
+          ="issues.closedIssues/(totalIssues)* 100">
           {{ issues.closedIssues }}
         </ProgressBar>
       </div>
@@ -55,7 +58,9 @@
 </template>
 
 <script setup lang="ts">
-defineProps({
+import { computed } from 'vue';
+
+const p = defineProps({
   employee: {
     type: Object,
     required: true,
@@ -64,11 +69,15 @@ defineProps({
     type: Object as () => {
       openIssues: number;
       inProgressIssues: number;
-      closedIssues: number
+      closedIssues: number;
     },
     required: true,
   },
 });
+
+const totalIssues = computed(
+  () => p.issues.openIssues + p.issues.inProgressIssues + p.issues.closedIssues,
+);
 </script>
 
 <style scoped>
