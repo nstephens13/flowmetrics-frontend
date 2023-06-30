@@ -59,8 +59,8 @@ const employeeList = ref(
   Array.from(workload.value, ([employee, issues]) => ({ employee, issues })),
 );
 
-watch(selectedProject, (selectedproject) => {
-  workload.value = calculateWorkload(selectedproject);
+watch(selectedProject, (selectedProjectInDropdown) => {
+  workload.value = calculateWorkload(selectedProjectInDropdown);
   employeeList.value = Array.from(workload.value, ([employee, issues]) => ({ employee, issues }));
 });
 
