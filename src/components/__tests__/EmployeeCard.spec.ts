@@ -4,7 +4,6 @@ import PrimeVue from 'primevue/config';
 
 import Avatar from 'primevue/avatar';
 import Chip from 'primevue/chip';
-import Divider from 'primevue/divider';
 import ProgressBar from 'primevue/progressbar';
 import router from '@/router/index';
 
@@ -17,7 +16,6 @@ describe('Employee Card should load all the Components', () => {
       components: {
         Avatar,
         Chip,
-        Divider,
         ProgressBar,
       },
     },
@@ -39,7 +37,6 @@ describe('Employee Card should load all the Components', () => {
     expect(wrapper.exists()).toBe(true);
     expect(wrapper.getComponent(Avatar).isVisible()).toBe(true);
     expect(wrapper.getComponent(Chip).isVisible()).toBe(true);
-    expect(wrapper.getComponent(Divider).isVisible()).toBe(true);
     expect(wrapper.getComponent(ProgressBar).isVisible()).toBe(true);
   });
 
@@ -48,7 +45,7 @@ describe('Employee Card should load all the Components', () => {
   });
 
   test('checks for Employee Name', () => {
-    const employeeName = wrapper.find('.Name');
+    const employeeName = wrapper.find('.EmployeeName');
     expect(employeeName.text()).toBe('Erika Mustermann');
   });
 
@@ -57,7 +54,7 @@ describe('Employee Card should load all the Components', () => {
   });
 
   test('checks for total tickets', () => {
-    const label = wrapper.find('label[for="totaltickets"]');
+    const label = wrapper.find('label[for="TotalTickets"]');
     const labelText = label.text();
     const expectedTotalTickets = 40;
 

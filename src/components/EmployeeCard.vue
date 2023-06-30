@@ -7,6 +7,7 @@
         style="background-color:#2d6dc1; color: #ffffff"
       />
       <h3
+      class="EmployeeName"
       style="margin-right: auto;"
       >{{ employee.firstName + " " + employee.lastName }}</h3>
       <Chip :label="'Employee ID : ' + employee.id"></Chip>
