@@ -1,4 +1,4 @@
-import type { EmployeeIF } from './EmployeeIF'
+import type { EmployeeIF } from './EmployeeIF';
 
 export enum Status {
   Open = 'Open',

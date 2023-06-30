@@ -67,24 +67,24 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import type { Ref } from 'vue'
-import type { EmployeeIF } from '@/model/EmployeeIF'
-import type { ProjectIF } from '@/model/ProjectIF'
-import getMockData from '@/assets/__mockdata__/mockDataComposer'
+import { ref } from 'vue';
+import type { Ref } from 'vue';
+import type { EmployeeIF } from '@/model/EmployeeIF';
+import type { ProjectIF } from '@/model/ProjectIF';
+import getMockData from '@/assets/__mockdata__/mockDataComposer';
 
 const selectedProject = ref({
   id: 0,
   name: 'Project_Name',
   description: '',
   milestones: [],
-  issues: []
-} as ProjectIF)
+  issues: [],
+} as ProjectIF);
 
 function printAssignedTo(employee: EmployeeIF | null): string {
-  const firstName = employee?.firstName ?? ''
-  const lastName = employee?.lastName ?? ''
-  return `${firstName} ${lastName}`
+  const firstName = employee?.firstName ?? '';
+  const lastName = employee?.lastName ?? '';
+  return `${firstName} ${lastName}`;
 }
 </script>
 
@@ -95,8 +95,8 @@ const projects: Ref<ProjectIF[]> = ref([
   getMockData(3),
   getMockData(53),
   getMockData(54),
-  getMockData(55)
-] as ProjectIF[])
+  getMockData(55),
+] as ProjectIF[]);
 </script>
 
 <style scoped>

@@ -1,8 +1,11 @@
 <template>
   <div class="grid">
     <div class="flex align-items-center justify-content-center col-2">
-      <Avatar :label="employee.firstName.charAt(0) + employee.lastName.charAt(0)" class="mr-2" size="large"
-        style="background-color:#2d6dc1; color: #ffffff" />
+      <Avatar
+      :label="employee.firstName.charAt(0) + employee.lastName.charAt(0)"
+      class="mr-2"
+      size="large"
+      style="background-color:#2d6dc1; color: #ffffff" />
     </div>
     <div class="col-6">
       <h3 class="Name">{{ employee.firstName + " " + employee.lastName }}</h3>
@@ -19,9 +22,10 @@
       </label>
       <label for="Open" class="col-3 font-bold">Open</label>
       <div class="col-9 md:col-9">
-        <ProgressBar 
+        <ProgressBar
           class="openIssuesProgressbar"
-          :value="issues.openIssues / (issues.openIssues + issues.inProgressIssues + issues.closedIssues) * 100">
+          :value="issues.openIssues/(issues.openIssues + issues.inProgressIssues + issues.closedIssues)*100"
+        >
           {{ issues.openIssues }}
         </ProgressBar>
       </div>
@@ -30,8 +34,9 @@
       <label for="In Progress" class="col-3 font-bold">In Progress</label>
       <div class="col-9 md:col-9">
         <ProgressBar
-        class="inProgressIssuesProgressbar"
-          :value="issues.inProgressIssues / (issues.openIssues + issues.inProgressIssues + issues.closedIssues) * 100">
+          class="inProgressIssuesProgressbar"
+          :value="issues.inProgressIssues / (issues.openIssues + issues.inProgressIssues + issues.closedIssues) * 100"
+        >
           {{ issues.inProgressIssues }}
         </ProgressBar>
       </div>
@@ -53,15 +58,18 @@
 defineProps({
   employee: {
     type: Object,
-    required: true
+    required: true,
   },
   issues: {
-    type: Object as () => { openIssues: number; inProgressIssues: number; closedIssues: number },
-    required: true
-  }
-})
+    type: Object as () => {
+      openIssues: number;
+      inProgressIssues: number;
+      closedIssues: number
+    },
+    required: true,
+  },
+});
 </script>
-
 
 <style scoped>
 .p-card {

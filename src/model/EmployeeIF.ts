@@ -1,4 +1,4 @@
-import type { IssueIF } from './IssueIF'
+import type { IssueIF } from './IssueIF';
 
 /**
  *

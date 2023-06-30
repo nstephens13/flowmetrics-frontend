@@ -1,5 +1,5 @@
-import type { IssueIF } from './IssueIF'
-import type { MilestoneIF } from './MilestoneIF'
+import type { IssueIF } from './IssueIF';
+import type { MilestoneIF } from './MilestoneIF';
 
 /**
  *

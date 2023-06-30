@@ -1,26 +1,26 @@
-import type { EmployeeIF } from './EmployeeIF'
-import type { IssueIF } from './IssueIF'
-import { Status } from './IssueIF'
+import type { EmployeeIF } from './EmployeeIF';
+import type { IssueIF } from './IssueIF';
+import { Status } from './IssueIF';
 
 // Issue Class implements IssueIF
 class Issue implements IssueIF {
-  id: number
+  id: number;
 
-  name: string
+  name: string;
 
-  description: string | null
+  description: string | null;
 
-  assignedTo: EmployeeIF | null
+  assignedTo: EmployeeIF | null;
 
-  createdBy: EmployeeIF
+  createdBy: EmployeeIF;
 
-  createdAt: Date
+  createdAt: Date;
 
-  closedAt: Date | null
+  closedAt: Date | null;
 
-  dueTo: Date | null
+  dueTo: Date | null;
 
-  status: Status | null
+  status: Status | null;
 
   constructor(
     id: number,
@@ -31,26 +31,26 @@ class Issue implements IssueIF {
     createdAt: Date,
     closedAt: Date | null,
     dueTo: Date | null,
-    status: Status | null
+    status: Status | null,
   ) {
-    this.id = id
-    this.name = name
-    this.description = description
-    this.assignedTo = assignedTo
-    this.createdBy = createdBy
-    this.createdAt = createdAt
-    this.closedAt = closedAt
-    this.dueTo = dueTo
-    this.status = status
+    this.id = id;
+    this.name = name;
+    this.description = description;
+    this.assignedTo = assignedTo;
+    this.createdBy = createdBy;
+    this.createdAt = createdAt;
+    this.closedAt = closedAt;
+    this.dueTo = dueTo;
+    this.status = status;
   }
 }
 
 // function to return assigned name
 function getAssignedToName(issue: Issue): string {
   if (issue.assignedTo) {
-    return `${issue.assignedTo.firstName} ${issue.assignedTo.lastName}`
+    return `${issue.assignedTo.firstName} ${issue.assignedTo.lastName}`;
   }
-  return ''
+  return '';
 }
 
 // function accepts due-to Issue-Object & transforms to date
@@ -62,20 +62,22 @@ function getFormattedDate(issue: Issue): string {
 // accepts due to Issue-Object & transfers to time
 function getTimeLeft(issue: Issue): number | null {
   if (issue.dueTo) {
-    const currentTime = new Date().getTime()
-    const dueTime = issue.dueTo.getTime()
-    const timeLeft = Math.max(0, dueTime - currentTime)
-    return Math.ceil(timeLeft / (1000 * 60 * 60 * 24))
+    const currentTime = new Date().getTime();
+    const dueTime = issue.dueTo.getTime();
+    const timeLeft = Math.max(0, dueTime - currentTime);
+    return Math.ceil(timeLeft / (1000 * 60 * 60 * 24));
   }
-  return null
+  return null;
 }
 
 function countIssuesByStatus(issueList: Issue[], status: Status | null): number {
   // filter the issue list by status and return the length of the filtered array
   // if the status is null, return the length of the issue list
 
-  return (status ? issueList.filter((issue) => issue.status === status) : issueList).length
+  return (status ? issueList.filter((issue) => issue.status === status) : issueList).length;
 }
 
 // export of data array and remain time for ticket calculation
-export { Issue, getTimeLeft, getFormattedDate, getAssignedToName, countIssuesByStatus }
+export {
+  Issue, getTimeLeft, getFormattedDate, getAssignedToName, countIssuesByStatus,
+};

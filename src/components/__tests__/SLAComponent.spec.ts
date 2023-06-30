@@ -12,7 +12,7 @@ import DataTable from 'primevue/datatable';
 import router from '@/router/index';
 import SLAComponent from '@/views/SLAComponent.vue';
 
-const pinia = createPinia()
+const pinia = createPinia();
 
 /* Basic test to ensure, that SLA Component is successfully rendered without any errors */
 describe('SLAComponent', () => {

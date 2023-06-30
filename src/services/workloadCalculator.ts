@@ -25,9 +25,9 @@ function calculateWorkload(project: ProjectIF | null): Map<EmployeeIF, IssueData
    * ToDo: decouple the mock data when everything is setup
    */
   if (project === undefined || project === null) {
-    projectToCalculate = getMockData(3)
+    projectToCalculate = getMockData(3);
   } else {
-    projectToCalculate = project
+    projectToCalculate = project;
   }
 
   function extractEmployeeAndUpdateEmployeeMap(issue: IssueIF) {
@@ -61,19 +61,19 @@ function calculateWorkload(project: ProjectIF | null): Map<EmployeeIF, IssueData
           closedIssues: issueData.closedIssues + 1,
         });
       }
-      issueSet.add(issue)
+      issueSet.add(issue);
     }
   }
 
   projectToCalculate.issues.forEach((issue) => {
-    extractEmployeeAndUpdateEmployeeMap(issue)
-  })
+    extractEmployeeAndUpdateEmployeeMap(issue);
+  });
   projectToCalculate.milestones.forEach((milestone) => {
     milestone.issues.forEach((issue) => {
-      extractEmployeeAndUpdateEmployeeMap(issue)
-    })
-  })
-  return mapToReturn
+      extractEmployeeAndUpdateEmployeeMap(issue);
+    });
+  });
+  return mapToReturn;
 }
 
-export default calculateWorkload
+export default calculateWorkload;

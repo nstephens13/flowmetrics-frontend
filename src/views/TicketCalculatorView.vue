@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import TicketCalculator from '@/components/TicketCalculator.vue'
+import TicketCalculator from '@/components/TicketCalculator.vue';
 </script>
 
 <style scoped>

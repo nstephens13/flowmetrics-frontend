@@ -11,11 +11,11 @@ import milestoneJson from './Milestones.json';
 import type { Issue } from '@/model/Issue';
 
 function getRandomInt(max: number) {
-  return Math.floor(Math.random() * max)
+  return Math.floor(Math.random() * max);
 }
 
 function loadIssueDataFromFile(issues: Array<any>): Issue[] {
-  const issueData: Issue[] = []
+  const issueData: Issue[] = [];
   structuredClone(issues).forEach((issue) => {
     issueData.push({
       id: issue.id as number,
@@ -26,10 +26,10 @@ function loadIssueDataFromFile(issues: Array<any>): Issue[] {
       closedAt: issue.closedAt ? new Date(issue.closedAt) : null,
       createdAt: new Date(issue.createdAt),
       dueTo: issue.dueTo ? new Date(issue.dueTo) : null,
-      status: issue.status as Status
-    })
-  })
-  return issueData
+      status: issue.status as Status,
+    });
+  });
+  return issueData;
 }
 
 function assignIssueToEmployee(
@@ -54,12 +54,12 @@ function assignIssueToMilestone(
   issueNumber: number,
   milestoneNumber: number,
   milestones: MilestoneIF[],
-  issues: IssueIF[]
+  issues: IssueIF[],
 ) {
-  const mileStonesToReturn = milestones
-  mileStonesToReturn[milestoneNumber].issues.push(issues[issueNumber])
+  const mileStonesToReturn = milestones;
+  mileStonesToReturn[milestoneNumber].issues.push(issues[issueNumber]);
 
-  return mileStonesToReturn
+  return mileStonesToReturn;
 }
 
 function loadArraysFromFile(issueFile: any): [EmployeeIF[], IssueIF[], MilestoneIF[]] {
@@ -344,8 +344,8 @@ function getMockData(dataset: number): ProjectIF {
         name: faker.science.chemicalElement().name,
         description: faker.company.catchPhrase(),
         issues: [],
-        milestones: []
-      }
+        milestones: [],
+      };
     }
     case 54: {
       return {
@@ -427,10 +427,10 @@ function getMockData(dataset: number): ProjectIF {
         name: 'default',
         description: 'a empty project',
         milestones: [],
-        issues: []
-      }
+        issues: [],
+      };
     }
   }
 }
 
-export default getMockData
+export default getMockData;

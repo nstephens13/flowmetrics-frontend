@@ -34,35 +34,39 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
-import EmployeeCard from '@/components/EmployeeCard.vue'
+import { ref, watch } from 'vue';
+import type { Ref } from 'vue';
+import EmployeeCard from '@/components/EmployeeCard.vue';
+
+</script>
+
+<script lang="ts">
+import calculateWorkload from '@/services/workloadCalculator';
+import type { ProjectIF } from '@/model/ProjectIF';
+import getMockData from '@/assets/__mockdata__/mockDataComposer';
+import type { EmployeeIF } from '@/model/EmployeeIF';
 
 const selectedProject = ref({
   id: 0,
   name: 'Project_Name',
   description: '',
   milestones: [],
-  issues: []
-} as ProjectIF)
+  issues: [],
+} as ProjectIF);
 
-
-const workload: Ref<Map<EmployeeIF,{ openIssues: number; inProgressIssues: number; closedIssues: number }>> = ref(calculateWorkload(selectedProject.value));
-const employeeList = ref(Array.from(workload.value, ([employee, issues]) => ({ employee, issues})));
-
+const workload: Ref<Map<EmployeeIF, {
+  openIssues: number;
+  inProgressIssues: number;
+  closedIssues: number
+}>> = ref(calculateWorkload(selectedProject.value));
+const employeeList = ref(
+  Array.from(workload.value, ([employee, issues]) => ({ employee, issues })),
+);
 
 watch(selectedProject, (selectedProject) => {
-    workload.value = calculateWorkload(selectedProject);
-    employeeList.value = Array.from(workload.value, ([employee, issues]) => ({ employee, issues}));
+  workload.value = calculateWorkload(selectedProject);
+  employeeList.value = Array.from(workload.value, ([employee, issues]) => ({ employee, issues }));
 });
-
-</script>
-
-<script lang="ts">
-import calculateWorkload from '@/services/workloadCalculator'
-import type { ProjectIF } from '@/model/ProjectIF'
-import getMockData from '@/assets/__mockdata__/mockDataComposer';
-import type { Ref } from 'vue'
-import type { EmployeeIF } from '@/model/EmployeeIF';
 
 const projects: Ref<ProjectIF[]> = ref([
   getMockData(1),
@@ -70,8 +74,8 @@ const projects: Ref<ProjectIF[]> = ref([
   getMockData(3),
   getMockData(53),
   getMockData(54),
-  getMockData(55)
-] as ProjectIF[])
+  getMockData(55),
+] as ProjectIF[]);
 </script>
 
 <style scoped>
