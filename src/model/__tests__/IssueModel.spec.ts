@@ -1,7 +1,11 @@
 import { describe, test, expect } from 'vitest';
 import { Status } from '../IssueIF';
 import {
-  Issue, countIssuesByStatus, getAssignedToName, getFormattedDate, getTimeLeft,
+  Issue,
+  countIssuesByStatus,
+  getAssignedToName,
+  getFormattedDate,
+  getTimeLeft,
 } from '../Issue';
 
 describe('Issue Class', () => {
@@ -11,7 +15,10 @@ describe('Issue Class', () => {
     const description = 'This is a test issue';
     const assignedTo = null;
     const createdBy = {
-      id: 34, firstName: 'John', lastName: 'Doe', assignedIssues: [],
+      id: 34,
+      firstName: 'John',
+      lastName: 'Doe',
+      assignedIssues: [],
     };
     const createdAt = new Date();
     const closedAt = null;
@@ -46,19 +53,50 @@ describe('Issue Class', () => {
 
 describe('getAssignedToName', () => {
   test('returns the assigned name when assignedTo is not null', () => {
-    const issue = new Issue(1, 'Test Issue', null, {
-      id: 34, firstName: 'John', lastName: 'Doe', assignedIssues: [],
-    }, {
-      id: 4245, firstName: 'Jane', lastName: 'Smith', assignedIssues: [],
-    }, new Date(), null, null, null, null);
+    const issue = new Issue(
+      1,
+      'Test Issue',
+      null,
+      {
+        id: 34,
+        firstName: 'John',
+        lastName: 'Doe',
+        assignedIssues: [],
+      },
+      {
+        id: 4245,
+        firstName: 'Jane',
+        lastName: 'Smith',
+        assignedIssues: [],
+      },
+      new Date(),
+      null,
+      null,
+      null,
+      null,
+    );
     const assignedToName = getAssignedToName(issue);
     expect(assignedToName).toBe('John Doe');
   });
 
   test('returns an empty string when assignedTo is null', () => {
-    const issue = new Issue(1, 'Test Issue', null, null, {
-      id: 4245, firstName: 'Jane', lastName: 'Smith', assignedIssues: [],
-    }, new Date(), null, null, null, null);
+    const issue = new Issue(
+      1,
+      'Test Issue',
+      null,
+      null,
+      {
+        id: 4245,
+        firstName: 'Jane',
+        lastName: 'Smith',
+        assignedIssues: [],
+      },
+      new Date(),
+      null,
+      null,
+      null,
+      null,
+    );
     const assignedToName = getAssignedToName(issue);
     expect(assignedToName).toBe('');
   });
@@ -67,17 +105,45 @@ describe('getAssignedToName', () => {
 describe('getFormattedDate', () => {
   test('returns a formatted date string when dueTo is not null', () => {
     const dueTo = new Date('2023-07-01');
-    const issue = new Issue(1, 'Test Issue', null, null, {
-      id: 4245, firstName: 'Jane', lastName: 'Smith', assignedIssues: [],
-    }, new Date(), null, dueTo, null, null);
+    const issue = new Issue(
+      1,
+      'Test Issue',
+      null,
+      null,
+      {
+        id: 4245,
+        firstName: 'Jane',
+        lastName: 'Smith',
+        assignedIssues: [],
+      },
+      new Date(),
+      null,
+      dueTo,
+      null,
+      null,
+    );
     const formattedDate = getFormattedDate(issue);
     expect(formattedDate).toBe('July 1, 2023');
   });
 
   test('returns an empty string when dueTo is null', () => {
-    const issue = new Issue(1, 'Test Issue', null, null, {
-      id: 4245, firstName: 'Jane', lastName: 'Smith', assignedIssues: [],
-    }, new Date(), null, null, null, null);
+    const issue = new Issue(
+      1,
+      'Test Issue',
+      null,
+      null,
+      {
+        id: 4245,
+        firstName: 'Jane',
+        lastName: 'Smith',
+        assignedIssues: [],
+      },
+      new Date(),
+      null,
+      null,
+      null,
+      null,
+    );
     const formattedDate = getFormattedDate(issue);
     expect(formattedDate).toBe('');
   });
@@ -87,27 +153,71 @@ describe('getTimeLeft', () => {
   test('returns the number of days left when dueTo is in the future', () => {
     const currentTime = new Date();
     const dueTo = new Date(currentTime.getTime() + 24 * 60 * 60 * 1000);
-    const issue = new Issue(1, 'Test Issue', null, null, {
-      id: 4245, firstName: 'Jane', lastName: 'Smith', assignedIssues: [],
-    }, new Date(), null, dueTo, null, null);
+    const issue = new Issue(
+      1,
+      'Test Issue',
+      null,
+      null,
+      {
+        id: 4245,
+        firstName: 'Jane',
+        lastName: 'Smith',
+        assignedIssues: [],
+      },
+      new Date(),
+      null,
+      dueTo,
+      null,
+      null,
+    );
     const timeLeft = getTimeLeft(issue);
-    const expectedTimeLeft = Math.ceil((dueTo.getTime() - currentTime.getTime()) / (1000 * 60 * 60 * 24));
+    const expectedTimeLeft = Math.ceil(
+      (dueTo.getTime() - currentTime.getTime()) / (1000 * 60 * 60 * 24),
+    );
     expect(timeLeft).toBe(expectedTimeLeft);
   });
 
   test('returns 0 when dueTo is in the past', () => {
     const dueTo = new Date('2023-06-29');
-    const issue = new Issue(1, 'Test Issue', null, null, {
-      id: 4245, firstName: 'Jane', lastName: 'Smith', assignedIssues: [],
-    }, new Date(), null, dueTo, null, null);
+    const issue = new Issue(
+      1,
+      'Test Issue',
+      null,
+      null,
+      {
+        id: 4245,
+        firstName: 'Jane',
+        lastName: 'Smith',
+        assignedIssues: [],
+      },
+      new Date(),
+      null,
+      dueTo,
+      null,
+      null,
+    );
     const timeLeft = getTimeLeft(issue);
     expect(timeLeft).toBe(0);
   });
 
   test('returns null when dueTo is null', () => {
-    const issue = new Issue(1, 'Test Issue', null, null, {
-      id: 4245, firstName: 'Jane', lastName: 'Smith', assignedIssues: [],
-    }, new Date(), null, null, null, null);
+    const issue = new Issue(
+      1,
+      'Test Issue',
+      null,
+      null,
+      {
+        id: 4245,
+        firstName: 'Jane',
+        lastName: 'Smith',
+        assignedIssues: [],
+      },
+      new Date(),
+      null,
+      null,
+      null,
+      null,
+    );
     const timeLeft = getTimeLeft(issue);
     expect(timeLeft).toBeNull();
   });
@@ -115,21 +225,91 @@ describe('getTimeLeft', () => {
 
 describe('countIssuesByStatus', () => {
   const issueList = [
-    new Issue(1, 'Issue 1', null, null, {
-      id: 4245, firstName: 'Jane', lastName: 'Smith', assignedIssues: [],
-    }, new Date(), null, null, Status.Open, null),
-    new Issue(2, 'Issue 2', null, null, {
-      id: 34, firstName: 'John', lastName: 'Doe', assignedIssues: [],
-    }, new Date(), null, null, Status.Closed, null),
-    new Issue(3, 'Issue 3', null, null, {
-      id: 4245, firstName: 'Jane', lastName: 'Smith', assignedIssues: [],
-    }, new Date(), null, null, Status.InProgress, null),
-    new Issue(4, 'Issue 4', null, null, {
-      id: 34, firstName: 'John', lastName: 'Doe', assignedIssues: [],
-    }, new Date(), null, null, Status.Open, null),
-    new Issue(5, 'Issue 5', null, null, {
-      id: 4245, firstName: 'Jane', lastName: 'Smith', assignedIssues: [],
-    }, new Date(), null, null, Status.Closed, null),
+    new Issue(
+      1,
+      'Issue 1',
+      null,
+      null,
+      {
+        id: 4245,
+        firstName: 'Jane',
+        lastName: 'Smith',
+        assignedIssues: [],
+      },
+      new Date(),
+      null,
+      null,
+      Status.Open,
+      null,
+    ),
+    new Issue(
+      2,
+      'Issue 2',
+      null,
+      null,
+      {
+        id: 34,
+        firstName: 'John',
+        lastName: 'Doe',
+        assignedIssues: [],
+      },
+      new Date(),
+      null,
+      null,
+      Status.Closed,
+      null,
+    ),
+    new Issue(
+      3,
+      'Issue 3',
+      null,
+      null,
+      {
+        id: 4245,
+        firstName: 'Jane',
+        lastName: 'Smith',
+        assignedIssues: [],
+      },
+      new Date(),
+      null,
+      null,
+      Status.InProgress,
+      null,
+    ),
+    new Issue(
+      4,
+      'Issue 4',
+      null,
+      null,
+      {
+        id: 34,
+        firstName: 'John',
+        lastName: 'Doe',
+        assignedIssues: [],
+      },
+      new Date(),
+      null,
+      null,
+      Status.Open,
+      null,
+    ),
+    new Issue(
+      5,
+      'Issue 5',
+      null,
+      null,
+      {
+        id: 4245,
+        firstName: 'Jane',
+        lastName: 'Smith',
+        assignedIssues: [],
+      },
+      new Date(),
+      null,
+      null,
+      Status.Closed,
+      null,
+    ),
   ];
 
   test('returns the count of issues with the specified status', () => {

@@ -21,7 +21,7 @@ function getRandomInt(max: number) {
 
 function loadIssueDataFromFile(issues: Array<any>): Issue[] {
   const issueData: Issue[] = [];
-  structuredClone(issues).forEach((issue) => {
+  structuredClone(issues).forEach((issue: IssueIF) => {
     issueData.push({
       id: issue.id as number,
       name: issue.name as string,
@@ -358,15 +358,15 @@ function getMockData(dataset: number): ProjectIF {
       const issues: IssueIF[] = [];
       for (let i = 0; i < 280; i++) {
         issues.push({
-          id: i,
-          name: `Issue Name ${i}`,
-          description: `Description of Issue ${i}`,
+          id: i + 1,
+          name: faker.company.catchPhrase(),
+          description: faker.hacker.phrase(),
           closedAt: null,
           status: null,
           assignedTo: null,
-          createdAt: new Date(2018, 0o5, 0o5, 17, 23, 42, 11),
-          createdBy: {} as EmployeeIF,
-          dueTo: null,
+          createdAt: faker.date.past(),
+          createdBy: employeesArrayFromFile[getRandomInt(employeesForProject.length)],
+          dueTo: faker.date.future(),
           userStatus: '',
         });
       }
@@ -390,10 +390,7 @@ function getMockData(dataset: number): ProjectIF {
           const [testStatus] = testingStatusList;
           issues[i].userStatus = testStatus;
         } else if (randomStatus === 3) {
-          const randomDate = new Date(2018, 0o5, 0o5, 17, 23, 42, 11);
-          // Assigning a random closedAt date within the last 30 days
-          randomDate.setDate(randomDate.getDate() - getRandomInt(30));
-          issues[i].closedAt = randomDate;
+          issues[i].closedAt = faker.date.recent();
           const [nonDisplayedStatus] = nonDisplayedStatusList;
           issues[i].userStatus = nonDisplayedStatus;
         } else {

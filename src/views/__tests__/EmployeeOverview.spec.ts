@@ -1,4 +1,6 @@
-import { describe, test, expect, vi } from 'vitest';
+import {
+  describe, test, expect, vi,
+} from 'vitest';
 import { mount } from '@vue/test-utils';
 import PrimeVue from 'primevue/config';
 import Card from 'primevue/card';
@@ -71,7 +73,6 @@ describe('EmployeeOverview with a simple manual constructed map should render co
     const menu = wrapper.find('.dropdown-menu');
     expect(menu.attributes('style')).toBe('display: none;');
 
-
     // Open the dropdown
     const dropdownButton = wrapper.find('.dropdown-button');
 
@@ -86,8 +87,12 @@ describe('EmployeeOverview with a simple manual constructed map should render co
     const optionTexts = dropdownOptions.map((option) => option.text());
 
     // Define the expected options based on the mock data
-    const expectedOptions = [...planningStatusList,
-      ...devStatusList, ...testingStatusList, ...nonDisplayedStatusList];
+    const expectedOptions = [
+      ...planningStatusList,
+      ...devStatusList,
+      ...testingStatusList,
+      ...nonDisplayedStatusList,
+    ];
 
     // Assert that the option texts match the expected options
     expect(optionTexts).toEqual(expectedOptions);
