@@ -37,10 +37,6 @@
 import { ref, watch } from 'vue';
 import type { Ref } from 'vue';
 import EmployeeCard from '@/components/EmployeeCard.vue';
-
-</script>
-
-<script lang="ts">
 import calculateWorkload from '@/services/workloadCalculator';
 import type { ProjectIF } from '@/model/ProjectIF';
 import getMockData from '@/assets/__mockdata__/mockDataComposer';

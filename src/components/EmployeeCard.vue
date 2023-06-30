@@ -1,57 +1,54 @@
 <template>
-  <div class="grid">
-    <div class="flex align-items-center justify-content-center col-2">
+  <div class="card">
+    <div class="flex flex-wrap align-items-center justify-content-start gap-1">
       <Avatar
-      :label="employee.firstName.charAt(0) + employee.lastName.charAt(0)"
-      class="mr-2"
-      size="large"
-      style="background-color:#2d6dc1; color: #ffffff" />
-    </div>
-    <div class="col-6">
-      <h3 class="Name">{{ employee.firstName + " " + employee.lastName }}</h3>
-    </div>
-    <div class="flex align-items-center align-content-left col-4">
+        :label="employee.firstName.charAt(0) + employee.lastName.charAt(0)"
+        class="mr-2" size="large"
+        style="background-color:#2d6dc1; color: #ffffff"
+      />
+      <h3
+      style="margin-right: auto;"
+      >{{ employee.firstName + " " + employee.lastName }}</h3>
       <Chip :label="'Employee ID : ' + employee.id"></Chip>
     </div>
-  </div>
-  <Divider />
-  <div class="flex-none flex flex-column gap-2">
-    <div class="grid">
-      <label for="totaltickets" class="col-12 font-bold ">
-        Total Tickets : {{ totalIssues }}
-      </label>
-      <label for="Open" class="col-3 font-bold">Open</label>
-      <div class="col-9 md:col-9">
-        <ProgressBar
-          class="openIssuesProgressbar"
-          :value
-          ="issues.openIssues/(totalIssues)*100"
-        >
-          {{ issues.openIssues }}
-        </ProgressBar>
+    <div class="flex flex-column gap-1 py-5">
+      <div class="field grid">
+        <label for="TotalTickets" class="col-12 font-bold">
+          Total Tickets : {{ totalIssues }}
+        </label>
       </div>
-    </div>
-    <div class="grid">
-      <label for="In Progress" class="col-3 font-bold">In Progress</label>
-      <div class="col-9 md:col-9">
-        <ProgressBar
-          class="inProgressIssuesProgressbar"
-          :value
-          ="issues.inProgressIssues/(totalIssues)*100"
-        >
-          {{ issues.inProgressIssues }}
-        </ProgressBar>
+      <!--Open Issues Progress Bar-->
+      <div class="field grid">
+        <label for="Open" class="col-3 font-bold">Open</label>
+        <div class="col-9 md:col-9">
+          <ProgressBar
+            class="openIssuesProgressbar"
+            :value="issues.openIssues / (totalIssues) * 100"
+            >{{ issues.openIssues}}
+          </ProgressBar>
+        </div>
       </div>
-    </div>
-    <div class="field grid">
-      <label for="Closed" class="col-3 font-bold">Closed</label>
-      <div class="col-9 md:col-9">
-        <ProgressBar
-        class="closedIssuesProgressbar"
-          :value
-          ="issues.closedIssues/(totalIssues)* 100">
-          {{ issues.closedIssues }}
-        </ProgressBar>
+      <!--In Progress Issues Progress Bar-->
+      <div class="field grid">
+        <label for="In Progress" class="col-3 font-bold">InProgress</label>
+        <div class="col-9 md:col-9">
+          <ProgressBar
+            class="inProgressIssuesProgressbar"
+            :value="issues.inProgressIssues / (totalIssues) * 100"
+            >{{ issues.inProgressIssues }}
+          </ProgressBar>
+        </div>
+      </div>
+      <!--Closed Issues Progress Bar-->
+      <div class="field grid">
+        <label for="Closed" class="col-3 font-bold">Closed</label>
+        <div class="col-9 md:col-9">
+          <ProgressBar
+            class="closedIssuesProgressbar"
+            :value="issues.closedIssues / (totalIssues) * 100"
+            >{{ issues.closedIssues }}
+          </ProgressBar>
+        </div>
       </div>
     </div>
   </div>
