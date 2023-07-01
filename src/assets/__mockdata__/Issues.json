@@ -3,42 +3,49 @@
     "id": 1,
     "name": "Issue 1",
     "description": "Description for Issue 1",
-    "assignedTo": null
+    "assignedTo": null,
+    "slaRule": null
   },
   {
     "id": 2,
     "name": "Issue 2",
     "description": "Description for Issue 2",
-    "assignedTo": null
+    "assignedTo": null,
+    "slaRule": null
   },
   {
     "id": 3,
     "name": "Issue 3",
     "description": "Description for Issue 3",
-    "assignedTo": null
+    "assignedTo": null,
+    "slaRule": null
   },
   {
     "id": 4,
     "name": "Issue 4",
     "description": "Description for Issue 4",
-    "assignedTo": null
+    "assignedTo": null,
+    "slaRule": null
   },
   {
     "id": 5,
     "name": "Issue 5",
     "description": "Description for Issue 5",
-    "assignedTo": null
+    "assignedTo": null,
+    "slaRule": null
   },
   {
     "id": 6,
     "name": "Issue 6",
     "description": "Description for Issue 6",
-    "assignedTo": null
+    "assignedTo": null,
+    "slaRule": null
   },
   {
     "id": 7,
     "name": "Issue 7",
     "description": "Description for Issue 7",
-    "assignedTo": null
+    "assignedTo": null,
+    "slaRule": null
   }
 ]

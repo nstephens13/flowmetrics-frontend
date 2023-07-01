@@ -8,6 +8,7 @@ import issueJson2 from './Issues_2.json';
 import issueJson from './Issues.json';
 import milestoneJson from './Milestones.json';
 import type { Issue } from '@/model/Issue';
+import type { SLARule } from '@/model/SLARule';
 
 function getRandomInt(max: number) {
   return Math.floor(Math.random() * max);
@@ -26,6 +27,7 @@ function loadIssueDataFromFile(issues: Array<any>): Issue[] {
       createdAt: new Date(issue.createdAt),
       dueTo: issue.dueTo ? new Date(issue.dueTo) : null,
       status: issue.status as Status,
+      slaRule: issue.slaRule as SLARule,
     });
   });
   return issueData;
@@ -131,6 +133,7 @@ function getMockData(dataset: number): ProjectIF {
           createdAt: new Date(2018, 0o5, 0o5, 17, 23, 42, 11),
           createdBy: {} as EmployeeIF,
           dueTo: null,
+          slaRule: null,
         });
       }
 
@@ -178,6 +181,7 @@ function getMockData(dataset: number): ProjectIF {
           createdAt: new Date(2018, 0o5, 0o5, 17, 23, 42, 11),
           createdBy: {} as EmployeeIF,
           dueTo: null,
+          slaRule: null,
         });
       }
 

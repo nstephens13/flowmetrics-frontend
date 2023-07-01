@@ -1,4 +1,5 @@
 import type { EmployeeIF } from './EmployeeIF';
+import type { SLARule } from '@/model/SLARule';
 
 export enum Status {
   Open = 'Open',
@@ -30,4 +31,5 @@ export interface IssueIF {
   closedAt: Date | null;
   dueTo: Date | null;
   status: Status | null;
+  slaRule: SLARule | null;
 }

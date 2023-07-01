@@ -6,9 +6,12 @@
 import Button from 'primevue/button';
 import jsPDF from 'jspdf';
 
-const doc = new jsPDF();
 const generatePDF = () => {
-  doc.text('Hello world!', 10, 10);
-  doc.save('a4.pdf');
+  // Create a new PDF
+  const doc = new jsPDF();
+  // Document title
+  doc.setFontSize(24);
+  doc.text('SLA Rule Report', 10, 15);
+  doc.save('SLARuleReport.pdf');
 };
 </script>
