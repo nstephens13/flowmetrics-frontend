@@ -8,7 +8,7 @@ import Divider from 'primevue/divider';
 import Dropdown from 'primevue/dropdown';
 import router from '@/router/index';
 
-import EmployeeOverview from '../EmployeeOverview.vue';
+import EmployeeOverview from '../EmployeeOverview2.vue';
 
 describe('Employee Overview should load all the Components', () => {
   const wrapper = mount(EmployeeOverview, {
