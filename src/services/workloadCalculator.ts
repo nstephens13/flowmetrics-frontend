@@ -1,9 +1,15 @@
 import type { ProjectIF } from '@/model/ProjectIF';
 import type { EmployeeIF } from '@/model/EmployeeIF';
 import type { IssueIF } from '@/model/IssueIF';
-import { Status } from '@/model/IssueIF';
+
 import type { IssueDataIF } from '@/model/IssueDataIF';
-import getMockData from '@/assets/__mockdata__/mockDataComposer';
+
+// just temporary import
+import getMockData, {
+  devStatusList, nonDisplayedStatusList,
+  planningStatusList,
+  testingStatusList,
+} from '../assets/__mockdata__/mockDataComposer';
 
 /**
  * This function calculate the workload from a project team, and give the
@@ -14,16 +20,21 @@ import getMockData from '@/assets/__mockdata__/mockDataComposer';
  * @param project Project Object that should be calculated, if null a project
  * with random mock data will be used
  * @returns {Map} key:Employee,
- * value:{ openIssues: number; inProgressIssues: number; closedIssues: number }
+ * value:{ planning: number; development: number; testing: number }
  */
-function calculateWorkload(project: ProjectIF | null): Map<EmployeeIF, IssueDataIF> {
-  const mapToReturn: Map<EmployeeIF, IssueDataIF> = new Map([]);
+function calculateWorkload(
+  project: ProjectIF | null,
+): Map<EmployeeIF, IssueDataIF> {
+  const mapToReturn: Map<
+  EmployeeIF,
+  { planning: number; development: number; testing: number }
+  > = new Map([]);
   const issueSet: Set<IssueIF> = new Set<IssueIF>();
   let projectToCalculate: ProjectIF;
 
   /**
-   * ToDo: decouple the mock data when everything is setup
-   */
+     * ToDo: decouple the mock data when everything is setup
+     */
   if (project === undefined || project === null) {
     projectToCalculate = getMockData(3);
   } else {
@@ -33,36 +44,50 @@ function calculateWorkload(project: ProjectIF | null): Map<EmployeeIF, IssueData
   function extractEmployeeAndUpdateEmployeeMap(issue: IssueIF) {
     // checking if the issue is already done, with a set, and if somebody is assigned
     if (!issueSet.has(issue) && issue.assignedTo !== null && issue.assignedTo !== undefined) {
+      let numberPlannedTickets: number;
+      let numberInDevTickets: number;
+      let numberInTestingTickets: number;
+
       // checking if the employee is already with values in the map
-      const issueData = mapToReturn.get(issue.assignedTo) ?? {
-        openIssues: 0,
-        inProgressIssues: 0,
-        closedIssues: 0,
-      };
-      // if there is no date for closure of the ticket, then it is a still open ticket
-      if (issue.closedAt === undefined || issue.closedAt === null) {
-        if (issue.status === Status.InProgress) {
+      const tuple:
+      | { planning: number; development: number; testing: number }
+      | undefined = mapToReturn.get(issue.assignedTo);
+
+      // setting the values to zero if the employee isn't in the map already
+      if (tuple !== undefined) {
+        numberPlannedTickets = tuple.planning;
+        numberInDevTickets = tuple.development;
+        numberInTestingTickets = tuple.testing;
+      } else {
+        numberPlannedTickets = 0;
+        numberInDevTickets = 0;
+        numberInTestingTickets = 0;
+      }
+      if (issue.userStatus != null) {
+        // if there is no date for closure of the ticket, then it is a still open ticket
+        if (planningStatusList.includes(issue.userStatus)) {
           mapToReturn.set(issue.assignedTo, {
-            openIssues: issueData.openIssues,
-            inProgressIssues: issueData.inProgressIssues + 1,
-            closedIssues: issueData.closedIssues,
+            planning: numberPlannedTickets + 1,
+            development: numberInDevTickets,
+            testing: numberInTestingTickets,
           });
-        } else {
+        } else if (devStatusList.includes(issue.userStatus)) {
           mapToReturn.set(issue.assignedTo, {
-            openIssues: issueData.openIssues + 1,
-            inProgressIssues: issueData.inProgressIssues,
-            closedIssues: issueData.closedIssues,
+            planning: numberPlannedTickets,
+            development: numberInDevTickets + 1,
+            testing: numberInTestingTickets,
+          });
+        } else if (testingStatusList.includes(issue.userStatus)
+            || nonDisplayedStatusList.includes(issue.userStatus)) {
+          mapToReturn.set(issue.assignedTo, {
+            planning: numberPlannedTickets,
+            development: numberInDevTickets,
+            testing: numberInTestingTickets + 1,
           });
         }
-      } else {
-        mapToReturn.set(issue.assignedTo, {
-          openIssues: issueData.openIssues,
-          inProgressIssues: issueData.inProgressIssues,
-          closedIssues: issueData.closedIssues + 1,
-        });
       }
-      issueSet.add(issue);
     }
+    issueSet.add(issue);
   }
 
   projectToCalculate.issues.forEach((issue) => {
