@@ -1,6 +1,4 @@
-import {
-  assert, expect, test, describe,
-} from 'vitest';
+import { assert, expect, test, describe } from 'vitest';
 import getMockData from '@/assets/__mockdata__/mockDataComposer';
 import calculateWorkload from '@/services/workloadCalculator';
 import type { EmployeeIF } from '../../model/EmployeeIF';
@@ -14,7 +12,7 @@ function assignIssue(
   project: ProjectIF,
   employees: EmployeeIF[],
   issueNumber: number,
-  employeeNumber: number,
+  employeeNumber: number
 ) {
   employees[employeeNumber].assignedIssues.push(project.issues[issueNumber]);
 }
@@ -40,9 +38,9 @@ describe('When mock data helper is asked for mock data, there should be correctl
 
     loadedIssues.forEach((issue: IssueIF) => {
       if (
-        typeof issue.id === 'number'
-        && typeof issue.name === 'string'
-        && typeof issue.description === 'string'
+        typeof issue.id === 'number' &&
+        typeof issue.name === 'string' &&
+        typeof issue.description === 'string'
       ) {
         check = true;
       } else {
@@ -91,17 +89,15 @@ describe('Workload Calculator should calculate Workload correctly for Mock Data 
   // checking the calculations, the expected value come from the prepared employees array,
   // the actual value is from the result
   test('workload should contain correct key value pairs', () => {
-    workload.forEach(
-      (tuple: { planning: number; testing: number }, employee: EmployeeIF) => {
-        const openIssuesList = [1, 2, 3, 1]; // expected values for open issues from json file
-        employees.forEach((emp) => {
-          if (employee.id === emp.id) {
-            assert.deepEqual<EmployeeIF>(employee, emp);
-            expect(tuple.planning).eq(openIssuesList[employee.id - 1]);
-          }
-        });
-      },
-    );
+    workload.forEach((tuple: { planning: number; testing: number }, employee: EmployeeIF) => {
+      const openIssuesList = [1, 2, 3, 1]; // expected values for open issues from json file
+      employees.forEach((emp) => {
+        if (employee.id === emp.id) {
+          assert.deepEqual<EmployeeIF>(employee, emp);
+          expect(tuple.planning).eq(openIssuesList[employee.id - 1]);
+        }
+      });
+    });
   });
 });
 
@@ -142,10 +138,7 @@ describe('Workload Calculator should calculate Workload correctly for Mock Data 
   // the actual value is from the result
   test('workload should contain correct key-value pairs', () => {
     workload.forEach(
-      (
-        tuple: { planning: number; development: number; testing: number },
-        employee: EmployeeIF,
-      ) => {
+      (tuple: { planning: number; development: number; testing: number }, employee: EmployeeIF) => {
         const openIssuesList = [0, 1, 0, 0]; // expected values for open issues
         const inProgressIssuesList = [1, 0, 1, 0]; // expected values for in-progress issues
         const closedIssuesList = [0, 1, 2, 1]; // expected values for closed issues
@@ -158,7 +151,7 @@ describe('Workload Calculator should calculate Workload correctly for Mock Data 
             expect(tuple.testing).toBe(closedIssuesList[employee.id - 1]);
           }
         });
-      },
+      }
     );
   });
 });

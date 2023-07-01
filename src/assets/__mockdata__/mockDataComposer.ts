@@ -19,7 +19,7 @@ function getRandomInt(max: number) {
   return Math.floor(Math.random() * max);
 }
 
-function loadIssueDataFromFile(issues: Array<any>): Issue[] {
+function loadIssueDataFromFile(issues: any): Issue[] {
   const issueData: Issue[] = [];
   structuredClone(issues).forEach((issue: IssueIF) => {
     issueData.push({
@@ -42,7 +42,7 @@ function assignIssueToEmployee(
   issueNumber: number,
   employeeNumber: number,
   issues: IssueIF[],
-  employees: EmployeeIF[],
+  employees: EmployeeIF[]
 ): [IssueIF[], EmployeeIF[]] {
   const issuesToReturn = issues;
   const employeesToReturn = employees;
@@ -60,7 +60,7 @@ function assignIssueToMilestone(
   issueNumber: number,
   milestoneNumber: number,
   milestones: MilestoneIF[],
-  issues: IssueIF[],
+  issues: IssueIF[]
 ) {
   const mileStonesToReturn = milestones;
   mileStonesToReturn[milestoneNumber].issues.push(issues[issueNumber]);
@@ -68,7 +68,71 @@ function assignIssueToMilestone(
   return mileStonesToReturn;
 }
 
-function loadArraysFromFile(issueFile: any): [EmployeeIF[], IssueIF[], MilestoneIF[]] {
+function loadArraysFromFile(
+  issueFile:
+    | (
+        | {
+            id: number;
+            name: string;
+            description: string;
+            assignedTo: null;
+            createdBy: { id: number; firstName: string; lastName: string; assignedIssues: never[] };
+            createdAt: string;
+            closedAt: null;
+            dueTo: string;
+            status: string;
+          }
+        | {
+            id: number;
+            name: string;
+            description: null;
+            assignedTo: {
+              id: number;
+              firstName: string;
+              lastName: string;
+              assignedIssues: never[];
+            };
+            createdBy: { id: number; firstName: string; lastName: string; assignedIssues: never[] };
+            createdAt: string;
+            closedAt: string;
+            dueTo: string;
+            status: string;
+          }
+        | {
+            id: number;
+            name: string;
+            description: string;
+            assignedTo: {
+              id: number;
+              firstName: string;
+              lastName: string;
+              assignedIssues: never[];
+            };
+            createdBy: { id: number; firstName: string; lastName: string; assignedIssues: never[] };
+            createdAt: string;
+            closedAt: null;
+            dueTo: string;
+            status: string;
+          }
+        | {
+            id: number;
+            name: string;
+            description: null;
+            assignedTo: {
+              id: number;
+              firstName: string;
+              lastName: string;
+              assignedIssues: never[];
+            };
+            createdBy: { id: number; firstName: string; lastName: string; assignedIssues: never[] };
+            createdAt: string;
+            closedAt: null;
+            dueTo: string;
+            status: string;
+          }
+      )[]
+    | { id: number; name: string; description: string; assignedTo: null }[]
+): [EmployeeIF[], IssueIF[], MilestoneIF[]] {
   const employeesArray: EmployeeIF[] = structuredClone(employeeJson) as EmployeeIF[];
   // const issuesArray: IssueIF[] = structuredClone(issueJson) as IssueIF[];
   const issuesArray: IssueIF[] = loadIssueDataFromFile(issueFile) as IssueIF[];
@@ -115,50 +179,50 @@ function getMockData(dataset: number): ProjectIF {
         0,
         0,
         issuesArrayFromFile,
-        employeesArrayFromFile,
+        employeesArrayFromFile
       );
       [issuesForProject, employeesForProject] = assignIssueToEmployee(
         1,
         1,
         issuesForProject,
-        employeesForProject,
+        employeesForProject
       );
       [issuesForProject, employeesForProject] = assignIssueToEmployee(
         2,
         1,
         issuesForProject,
-        employeesForProject,
+        employeesForProject
       );
       [issuesForProject, employeesForProject] = assignIssueToEmployee(
         3,
         2,
         issuesForProject,
-        employeesForProject,
+        employeesForProject
       );
       [issuesForProject, employeesForProject] = assignIssueToEmployee(
         4,
         2,
         issuesForProject,
-        employeesForProject,
+        employeesForProject
       );
       [issuesForProject, employeesForProject] = assignIssueToEmployee(
         5,
         2,
         issuesForProject,
-        employeesForProject,
+        employeesForProject
       );
       [issuesForProject, employeesForProject] = assignIssueToEmployee(
         6,
         3,
         issuesForProject,
-        employeesForProject,
+        employeesForProject
       );
 
       milestonesForProject = assignIssueToMilestone(
         0,
         0,
         milestonesArrayFromFile,
-        issuesForProject,
+        issuesForProject
       );
 
       milestonesForProject = assignIssueToMilestone(1, 0, milestonesForProject, issuesForProject);
@@ -167,12 +231,23 @@ function getMockData(dataset: number): ProjectIF {
 
       milestonesForProject = assignIssueToMilestone(3, 1, milestonesForProject, issuesForProject);
 
-      [issuesForProject[0].userStatus, issuesForProject[1].userStatus,
-        issuesForProject[2].userStatus, issuesForProject[3].userStatus,
-        issuesForProject[4].userStatus, issuesForProject[5].userStatus,
-        issuesForProject[6].userStatus] = [planningStatusList[0], planningStatusList[0],
-        planningStatusList[0], planningStatusList[0], planningStatusList[0],
-        planningStatusList[0], planningStatusList[0]];
+      [
+        issuesForProject[0].userStatus,
+        issuesForProject[1].userStatus,
+        issuesForProject[2].userStatus,
+        issuesForProject[3].userStatus,
+        issuesForProject[4].userStatus,
+        issuesForProject[5].userStatus,
+        issuesForProject[6].userStatus,
+      ] = [
+        planningStatusList[0],
+        planningStatusList[0],
+        planningStatusList[0],
+        planningStatusList[0],
+        planningStatusList[0],
+        planningStatusList[0],
+        planningStatusList[0],
+      ];
 
       return {
         id: 2,
@@ -219,7 +294,7 @@ function getMockData(dataset: number): ProjectIF {
           issue.id,
           randomEmployee,
           issuesForProject,
-          employeesForProject,
+          employeesForProject
         );
       });
 
@@ -233,11 +308,8 @@ function getMockData(dataset: number): ProjectIF {
     }
 
     case 4: {
-      [
-        employeesArrayFromFile,
-        issuesArrayFromFile,
-        milestonesArrayFromFile,
-      ] = loadArraysFromFile(issueJson2);
+      [employeesArrayFromFile, issuesArrayFromFile, milestonesArrayFromFile] =
+        loadArraysFromFile(issueJson2);
 
       for (let i = 0; i < 280; i++) {
         let status = Status.Open;
@@ -271,7 +343,7 @@ function getMockData(dataset: number): ProjectIF {
           issue.id,
           randomEmployee,
           issuesForProject,
-          employeesArrayFromFile,
+          employeesArrayFromFile
         );
       });
 
@@ -285,60 +357,57 @@ function getMockData(dataset: number): ProjectIF {
     }
 
     case 5: {
-      [
-        employeesArrayFromFile,
-        issuesArrayFromFile,
-        milestonesArrayFromFile,
-      ] = loadArraysFromFile(issueJson2);
+      [employeesArrayFromFile, issuesArrayFromFile, milestonesArrayFromFile] =
+        loadArraysFromFile(issueJson2);
 
       [issuesForProject, employeesForProject] = assignIssueToEmployee(
         0,
         0,
         issuesArrayFromFile,
-        employeesArrayFromFile,
+        employeesArrayFromFile
       );
       [issuesForProject, employeesForProject] = assignIssueToEmployee(
         1,
         1,
         issuesForProject,
-        employeesForProject,
+        employeesForProject
       );
       [issuesForProject, employeesForProject] = assignIssueToEmployee(
         2,
         1,
         issuesForProject,
-        employeesForProject,
+        employeesForProject
       );
       [issuesForProject, employeesForProject] = assignIssueToEmployee(
         3,
         2,
         issuesForProject,
-        employeesForProject,
+        employeesForProject
       );
       [issuesForProject, employeesForProject] = assignIssueToEmployee(
         4,
         2,
         issuesForProject,
-        employeesForProject,
+        employeesForProject
       );
       [issuesForProject, employeesForProject] = assignIssueToEmployee(
         5,
         2,
         issuesForProject,
-        employeesForProject,
+        employeesForProject
       );
       [issuesForProject, employeesForProject] = assignIssueToEmployee(
         6,
         3,
         issuesForProject,
-        employeesForProject,
+        employeesForProject
       );
 
       milestonesForProject = assignIssueToMilestone(
         0,
         0,
         milestonesArrayFromFile,
-        issuesForProject,
+        issuesForProject
       );
 
       milestonesForProject = assignIssueToMilestone(1, 0, milestonesForProject, issuesForProject);
@@ -403,7 +472,7 @@ function getMockData(dataset: number): ProjectIF {
           i,
           randomEmployee,
           issues,
-          employeesArrayFromFile,
+          employeesArrayFromFile
         );
       }
 
@@ -441,43 +510,43 @@ function getMockData(dataset: number): ProjectIF {
         0,
         0,
         issuesArrayFromFile,
-        employeesArrayFromFile,
+        employeesArrayFromFile
       );
       [issuesForProject, employeesForProject] = assignIssueToEmployee(
         1,
         1,
         issuesForProject,
-        employeesForProject,
+        employeesForProject
       );
       [issuesForProject, employeesForProject] = assignIssueToEmployee(
         2,
         1,
         issuesForProject,
-        employeesForProject,
+        employeesForProject
       );
       [issuesForProject, employeesForProject] = assignIssueToEmployee(
         3,
         2,
         issuesForProject,
-        employeesForProject,
+        employeesForProject
       );
       [issuesForProject, employeesForProject] = assignIssueToEmployee(
         4,
         2,
         issuesForProject,
-        employeesForProject,
+        employeesForProject
       );
       [issuesForProject, employeesForProject] = assignIssueToEmployee(
         5,
         2,
         issuesForProject,
-        employeesForProject,
+        employeesForProject
       );
       [issuesForProject, employeesForProject] = assignIssueToEmployee(
         6,
         3,
         issuesForProject,
-        employeesForProject,
+        employeesForProject
       );
 
       const date = new Date(2018, 0o5, 0o5, 17, 23, 42, 11);
@@ -492,17 +561,30 @@ function getMockData(dataset: number): ProjectIF {
       issuesForProject[6].status = Status.Closed;
       issuesForProject[6].closedAt = date; // Set the specific closedAt date
 
-      [issuesForProject[0].status,
-        issuesForProject[0].userStatus] = [Status.InProgress, devStatusList[0]];
+      [issuesForProject[0].status, issuesForProject[0].userStatus] = [
+        Status.InProgress,
+        devStatusList[0],
+      ];
       [issuesForProject[1].userStatus] = [planningStatusList[0]];
-      [issuesForProject[2].status, issuesForProject[2].userStatus,
-        issuesForProject[2].closedAt] = [Status.Closed, testingStatusList[0], date];
-      [issuesForProject[3].status, issuesForProject[3].userStatus,
-        issuesForProject[3].closedAt] = [Status.Closed, testingStatusList[0], date];
-      [issuesForProject[4].status, issuesForProject[4].userStatus,
-        issuesForProject[4].closedAt] = [Status.Closed, testingStatusList[0], date];
-      [issuesForProject[5].status,
-        issuesForProject[5].userStatus] = [Status.InProgress, devStatusList[0]];
+      [issuesForProject[2].status, issuesForProject[2].userStatus, issuesForProject[2].closedAt] = [
+        Status.Closed,
+        testingStatusList[0],
+        date,
+      ];
+      [issuesForProject[3].status, issuesForProject[3].userStatus, issuesForProject[3].closedAt] = [
+        Status.Closed,
+        testingStatusList[0],
+        date,
+      ];
+      [issuesForProject[4].status, issuesForProject[4].userStatus, issuesForProject[4].closedAt] = [
+        Status.Closed,
+        testingStatusList[0],
+        date,
+      ];
+      [issuesForProject[5].status, issuesForProject[5].userStatus] = [
+        Status.InProgress,
+        devStatusList[0],
+      ];
       [issuesForProject[6].userStatus, issuesForProject[6].closedAt] = [testingStatusList[0], date];
 
       return {

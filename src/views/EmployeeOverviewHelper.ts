@@ -21,9 +21,12 @@ export function calculateCssUserBackgroundStyle(employee: EmployeeIF) {
   return { width, height };
 }
 
-export function parseCategoryNames(mapToRead: Map<EmployeeIF, any>) :
-{ firstCategory: string, secondCategory: string, thirdCategory: string } {
-  const categoryNames: { firstCategory: string, secondCategory: string, thirdCategory: string } = {
+export function parseCategoryNames(mapToRead: Map<EmployeeIF, any>): {
+  firstCategory: string;
+  secondCategory: string;
+  thirdCategory: string;
+} {
+  const categoryNames: { firstCategory: string; secondCategory: string; thirdCategory: string } = {
     firstCategory: '',
     secondCategory: '',
     thirdCategory: '',
@@ -35,32 +38,32 @@ export function parseCategoryNames(mapToRead: Map<EmployeeIF, any>) :
 
   if (sampleTuple) {
     const tupleKeys = Object.keys(sampleTuple);
-    [categoryNames.firstCategory,
-      categoryNames.secondCategory,
-      categoryNames.thirdCategory] = tupleKeys;
+    [categoryNames.firstCategory, categoryNames.secondCategory, categoryNames.thirdCategory] =
+      tupleKeys;
   }
 
   return categoryNames;
 }
-export function assignWorkloadMapToBars(workloadMap: Map<EmployeeIF, {
-  planning: number;
-  development: number;
-  testing: number
-}>): Map<EmployeeIF,
-  { firstBar: number; secondBar: number; thirdBar: number }> {
-  const newMap: Map<EmployeeIF,
-  { firstBar: number; secondBar: number; thirdBar: number }> = new Map();
+export function assignWorkloadMapToBars(
+  workloadMap: Map<
+    EmployeeIF,
+    {
+      planning: number;
+      development: number;
+      testing: number;
+    }
+  >
+): Map<EmployeeIF, { firstBar: number; secondBar: number; thirdBar: number }> {
+  const newMap: Map<EmployeeIF, { firstBar: number; secondBar: number; thirdBar: number }> =
+    new Map();
   workloadMap.forEach(
-    (
-      tuple: { planning: number; development: number; testing: number },
-      employee: EmployeeIF,
-    ) => {
-      newMap.set((employee), {
+    (tuple: { planning: number; development: number; testing: number }, employee: EmployeeIF) => {
+      newMap.set(employee, {
         firstBar: tuple.planning,
         secondBar: tuple.development,
         thirdBar: tuple.testing,
       });
-    },
+    }
   );
   return newMap;
 }

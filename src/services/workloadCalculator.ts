@@ -6,7 +6,8 @@ import type { IssueDataIF } from '@/model/IssueDataIF';
 
 // just temporary import
 import getMockData, {
-  devStatusList, nonDisplayedStatusList,
+  devStatusList,
+  nonDisplayedStatusList,
   planningStatusList,
   testingStatusList,
 } from '../assets/__mockdata__/mockDataComposer';
@@ -22,19 +23,15 @@ import getMockData, {
  * @returns {Map} key:Employee,
  * value:{ planning: number; development: number; testing: number }
  */
-function calculateWorkload(
-  project: ProjectIF | null,
-): Map<EmployeeIF, IssueDataIF> {
-  const mapToReturn: Map<
-  EmployeeIF,
-  { planning: number; development: number; testing: number }
-  > = new Map([]);
+function calculateWorkload(project: ProjectIF | null): Map<EmployeeIF, IssueDataIF> {
+  const mapToReturn: Map<EmployeeIF, { planning: number; development: number; testing: number }> =
+    new Map([]);
   const issueSet: Set<IssueIF> = new Set<IssueIF>();
   let projectToCalculate: ProjectIF;
 
   /**
-     * ToDo: decouple the mock data when everything is setup
-     */
+   * ToDo: decouple the mock data when everything is setup
+   */
   if (project === undefined || project === null) {
     projectToCalculate = getMockData(3);
   } else {
@@ -49,9 +46,8 @@ function calculateWorkload(
       let numberInTestingTickets: number;
 
       // checking if the employee is already with values in the map
-      const tuple:
-      | { planning: number; development: number; testing: number }
-      | undefined = mapToReturn.get(issue.assignedTo);
+      const tuple: { planning: number; development: number; testing: number } | undefined =
+        mapToReturn.get(issue.assignedTo);
 
       // setting the values to zero if the employee isn't in the map already
       if (tuple !== undefined) {
@@ -77,8 +73,10 @@ function calculateWorkload(
             development: numberInDevTickets + 1,
             testing: numberInTestingTickets,
           });
-        } else if (testingStatusList.includes(issue.userStatus)
-            || nonDisplayedStatusList.includes(issue.userStatus)) {
+        } else if (
+          testingStatusList.includes(issue.userStatus) ||
+          nonDisplayedStatusList.includes(issue.userStatus)
+        ) {
           mapToReturn.set(issue.assignedTo, {
             planning: numberPlannedTickets,
             development: numberInDevTickets,

@@ -34,7 +34,7 @@ class Issue implements IssueIF {
     closedAt: Date | null,
     dueTo: Date | null,
     status: Status | null,
-    userStatus: string | null,
+    userStatus: string | null
   ) {
     this.id = id;
     this.name = name;
@@ -82,6 +82,4 @@ function countIssuesByStatus(issueList: Issue[], status: Status | null): number 
 }
 
 // export of data array and remain time for ticket calculation
-export {
-  Issue, getTimeLeft, getFormattedDate, getAssignedToName, countIssuesByStatus,
-};
+export { Issue, getTimeLeft, getFormattedDate, getAssignedToName, countIssuesByStatus };
