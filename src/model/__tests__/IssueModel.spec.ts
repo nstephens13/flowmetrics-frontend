@@ -24,6 +24,7 @@ describe('Issue Class', () => {
     const closedAt = null;
     const dueTo = new Date();
     const status = Status.Open;
+    const userStatus = 'Open';
 
     const issue = new Issue(
       id,
@@ -34,7 +35,8 @@ describe('Issue Class', () => {
       createdAt,
       closedAt,
       dueTo,
-      status
+      status,
+      userStatus
     );
 
     expect(issue.id).toBe(id);
@@ -70,6 +72,7 @@ describe('getAssignedToName', () => {
       new Date(),
       null,
       null,
+      null,
       null
     );
     const assignedToName = getAssignedToName(issue);
@@ -89,6 +92,7 @@ describe('getAssignedToName', () => {
         assignedIssues: [],
       },
       new Date(),
+      null,
       null,
       null,
       null
@@ -115,6 +119,7 @@ describe('getFormattedDate', () => {
       new Date(),
       null,
       dueTo,
+      null,
       null
     );
     const formattedDate = getFormattedDate(issue);
@@ -136,6 +141,7 @@ describe('getFormattedDate', () => {
       new Date(),
       null,
       null,
+      null,
       null
     );
     const formattedDate = getFormattedDate(issue);
@@ -145,8 +151,8 @@ describe('getFormattedDate', () => {
 
 describe('getTimeLeft', () => {
   test('returns the number of days left when dueTo is in the future', () => {
-    const currentTime = new Date().getTime();
-    const dueTo = new Date('2023-07-01');
+    const currentTime = new Date();
+    const dueTo = new Date(currentTime.getTime() + 24 * 60 * 60 * 1000);
     const issue = new Issue(
       1,
       'Test Issue',
@@ -161,11 +167,14 @@ describe('getTimeLeft', () => {
       new Date(),
       null,
       dueTo,
+      null,
       null
     );
     const timeLeft = getTimeLeft(issue);
-    const expectedTimeLeft = Math.ceil((dueTo.getTime() - currentTime) / (1000 * 60 * 60 * 24));
-    expect(expectedTimeLeft).toBe(timeLeft);
+    const expectedTimeLeft = Math.ceil(
+      (dueTo.getTime() - currentTime.getTime()) / (1000 * 60 * 60 * 24)
+    );
+    expect(timeLeft).toBe(expectedTimeLeft);
   });
 
   test('returns 0 when dueTo is in the past', () => {
@@ -184,6 +193,7 @@ describe('getTimeLeft', () => {
       new Date(),
       null,
       dueTo,
+      null,
       null
     );
     const timeLeft = getTimeLeft(issue);
@@ -203,6 +213,7 @@ describe('getTimeLeft', () => {
         assignedIssues: [],
       },
       new Date(),
+      null,
       null,
       null,
       null
@@ -228,7 +239,8 @@ describe('countIssuesByStatus', () => {
       new Date(),
       null,
       null,
-      Status.Open
+      Status.Open,
+      null
     ),
     new Issue(
       2,
@@ -244,7 +256,8 @@ describe('countIssuesByStatus', () => {
       new Date(),
       null,
       null,
-      Status.Closed
+      Status.Closed,
+      null
     ),
     new Issue(
       3,
@@ -260,7 +273,8 @@ describe('countIssuesByStatus', () => {
       new Date(),
       null,
       null,
-      Status.InProgress
+      Status.InProgress,
+      null
     ),
     new Issue(
       4,
@@ -276,7 +290,8 @@ describe('countIssuesByStatus', () => {
       new Date(),
       null,
       null,
-      Status.Open
+      Status.Open,
+      null
     ),
     new Issue(
       5,
@@ -292,7 +307,8 @@ describe('countIssuesByStatus', () => {
       new Date(),
       null,
       null,
-      Status.Closed
+      Status.Closed,
+      null
     ),
   ];
 
