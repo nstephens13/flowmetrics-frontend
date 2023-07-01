@@ -8,8 +8,8 @@ import type { IssueIF } from './IssueIF';
  * @prop {Issue[]} assignedIssues a array of Issues - objects that are assigned to this employee
  */
 export interface EmployeeIF {
-  id: number;
-  firstName: string;
-  lastName: string;
-  assignedIssues: IssueIF[];
+  id: number
+  firstName: string
+  lastName: string
+  assignedIssues: IssueIF[]
 }

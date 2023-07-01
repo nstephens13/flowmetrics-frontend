@@ -13,7 +13,8 @@
     "createdAt": "2023-06-01T00:00:00.000Z",
     "closedAt": null,
     "dueTo": "2023-06-30T00:00:00.000Z",
-    "status": "Open"
+    "status": "Open",
+    "userStatus": "Open"
   },
   {
     "id": 148093,
@@ -34,7 +35,8 @@
     "createdAt": "2023-06-02T00:00:00.000Z",
     "closedAt": "2023-06-05T00:00:00.000Z",
     "dueTo": "2023-06-10T00:00:00.000Z",
-    "status": "Closed"
+    "status": "Closed",
+    "userStatus": "Closed"
   },
   {
     "id": 23253,
@@ -55,7 +57,8 @@
     "createdAt": "2023-06-03T00:00:00.000Z",
     "closedAt": null,
     "dueTo": "2023-07-20T00:00:00.000Z",
-    "status": "In Progress"
+    "status": "In Progress",
+    "userStatus": "In Progress"
   },
   {
     "id": 49764,
@@ -71,7 +74,8 @@
     "createdAt": "2023-06-04T00:00:00.000Z",
     "closedAt": null,
     "dueTo": "2023-06-15T00:00:00.000Z",
-    "status": "Open"
+    "status": "Open",
+    "userStatus": "Open"
   },
   {
     "id": 3423455,
@@ -92,7 +96,8 @@
     "createdAt": "2023-06-05T00:00:00.000Z",
     "closedAt": null,
     "dueTo": "2023-06-25T00:00:00.000Z",
-    "status": "In Progress"
+    "status": "In Progress",
+    "userStatus": "In Progress"
   },
   {
     "id": 654353,
@@ -108,7 +113,8 @@
     "createdAt": "2023-06-10T00:00:00.000Z",
     "closedAt": null,
     "dueTo": "2023-06-20T00:00:00.000Z",
-    "status": "Open"
+    "status": "Open",
+    "userStatus": "Open"
   },
   {
     "id": 32542527,
@@ -129,7 +135,8 @@
     "createdAt": "2023-06-15T00:00:00.000Z",
     "closedAt": null,
     "dueTo": "2023-06-30T00:00:00.000Z",
-    "status": ""
+    "status": "",
+    "userStatus": ""
   },
   {
     "id": 345358,
@@ -150,7 +157,8 @@
     "createdAt": "2023-06-20T00:00:00.000Z",
     "closedAt": null,
     "dueTo": "2023-07-10T00:00:00.000Z",
-    "status": "In Progress"
+    "status": "In Progress",
+    "userStatus": "In Progress"
   },
   {
     "id": 9645754,
@@ -171,7 +179,8 @@
     "createdAt": "2023-06-25T00:00:00.000Z",
     "closedAt": null,
     "dueTo": "2023-07-15T00:00:00.000Z",
-    "status": "In Progress"
+    "status": "In Progress",
+    "userStatus": "In Progress"
   },
   {
     "id": 132440,
@@ -192,6 +201,7 @@
     "createdAt": "2023-06-30T00:00:00.000Z",
     "closedAt": null,
     "dueTo": "2023-07-20T00:00:00.000Z",
-    "status": "In Progress"
+    "status": "In Progress",
+    "userStatus": "In Progress"
   }
 ]

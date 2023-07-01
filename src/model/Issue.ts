@@ -23,6 +23,8 @@ class Issue implements IssueIF {
 
   status: Status | null;
 
+  userStatus: string | null;
+
   slaRule: SLARule | null;
 
   constructor(
@@ -35,6 +37,7 @@ class Issue implements IssueIF {
     closedAt: Date | null,
     dueTo: Date | null,
     status: Status | null,
+    userStatus: string | null,
     slaRule: SLARule | null,
   ) {
     this.id = id;
@@ -46,6 +49,7 @@ class Issue implements IssueIF {
     this.closedAt = closedAt;
     this.dueTo = dueTo;
     this.status = status;
+    this.userStatus = userStatus;
     this.slaRule = slaRule;
   }
 }
@@ -61,7 +65,7 @@ function getAssignedToName(issue: Issue): string {
 // function accepts due-to Issue-Object & transforms to date
 function getFormattedDate(issue: Issue): string {
   const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
-  return issue.dueTo ? issue.dueTo.toLocaleDateString(undefined, options) : '';
+  return issue.dueTo ? issue.dueTo.toLocaleDateString('en-US', options) : '';
 }
 
 // accepts due to Issue-Object & transfers to time
