@@ -56,6 +56,7 @@ describe('EmployeeOverview with a simple manual constructed map should render co
       plugins: [PrimeVue, pinia],
       components: {
         Card,
+        Divider,
       },
 
       stubs: {
