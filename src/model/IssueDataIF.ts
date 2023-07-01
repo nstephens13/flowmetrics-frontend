@@ -1,5 +1,5 @@
 export interface IssueDataIF {
-  openIssues: number
-  inProgressIssues: number
-  closedIssues: number
+  planning: number;
+  development: number;
+  testing: number;
 }

@@ -17,5 +17,5 @@ export default mergeConfig(
         reporter: ['cobertura', 'text', 'text-summary'],
       },
     },
-  }),
+  })
 );

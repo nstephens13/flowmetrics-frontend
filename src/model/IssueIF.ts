@@ -3,7 +3,7 @@ import type { EmployeeIF } from './EmployeeIF';
 export enum Status {
   Open = 'Open',
   Closed = 'Closed',
-  InProgress = 'In Progress'
+  InProgress = 'In Progress',
 }
 
 /**
@@ -21,13 +21,14 @@ export enum Status {
 
 // Enum to set status of Issue
 export interface IssueIF {
-  id: number
-  name: string
-  description: string | null
-  assignedTo: EmployeeIF | null
-  createdBy: EmployeeIF
-  createdAt: Date
-  closedAt: Date | null
-  dueTo: Date | null
-  status: Status | null
+  id: number;
+  name: string;
+  description: string | null;
+  assignedTo: EmployeeIF | null;
+  createdBy: EmployeeIF;
+  createdAt: Date;
+  closedAt: Date | null;
+  dueTo: Date | null;
+  status: Status | null;
+  userStatus: string | null;
 }
