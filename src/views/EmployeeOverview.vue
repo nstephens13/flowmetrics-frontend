@@ -178,7 +178,7 @@ function updateFilterConfig() {
 watch(
   () => [selectedView.value, filterConfig.value],
   ([selectedViewItem, filterConfigItem]) => {
-    let projects: ProjectIF[] = [];
+    const projects: ProjectIF[] = [];
     if (typeof filterConfigItem !== 'string') {
       const filteredProjects = filterProjectListWithAProjectWhitelist(
         projectList.value,

@@ -1,4 +1,3 @@
-import { fi } from '@faker-js/faker';
 import type { ProjectIF } from '@/model/ProjectIF';
 
 import type { IssueIF } from '@/model/IssueIF';
