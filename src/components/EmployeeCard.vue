@@ -22,9 +22,7 @@
       <div class="field grid">
         <label for="Open" class="col-3 font-bold">{{ categoryNames.firstCategory }}</label>
         <div class="col-9 md:col-9">
-          <ProgressBar
-            class="planningProgressbar"
-            :value="(issues.planning / totalIssues) * 100"
+          <ProgressBar class="planningProgressbar" :value="(issues.planning / totalIssues) * 100"
             >{{ issues.planning }}
           </ProgressBar>
         </div>
@@ -44,9 +42,7 @@
       <div class="field grid">
         <label for="Closed" class="col-3 font-bold">{{ categoryNames.thirdCategory }}</label>
         <div class="col-9 md:col-9">
-          <ProgressBar
-            class="testingProgressbar"
-            :value="(issues.testing / totalIssues) * 100"
+          <ProgressBar class="testingProgressbar" :value="(issues.testing / totalIssues) * 100"
             >{{ issues.testing }}
           </ProgressBar>
         </div>
@@ -77,13 +73,11 @@ const p = defineProps({
       secondCategory: string;
       thirdCategory: string;
     },
-    required: true, 
+    required: true,
   },
 });
 
-const totalIssues = computed(
-  () => p.issues.planning + p.issues.development + p.issues.testing
-);
+const totalIssues = computed(() => p.issues.planning + p.issues.development + p.issues.testing);
 </script>
 
 <style scoped>

@@ -1,11 +1,5 @@
 import type { EmployeeIF } from './EmployeeIF';
 
-export enum Status {
-  Open = 'Open',
-  Closed = 'Closed',
-  InProgress = 'In Progress',
-}
-
 /**
  *
  * @prop {number} id issue id
@@ -29,6 +23,5 @@ export interface IssueIF {
   createdAt: Date;
   closedAt: Date | null;
   dueTo: Date | null;
-  status: Status | null;
-  userStatus: string | null;
+  status: string | null;
 }

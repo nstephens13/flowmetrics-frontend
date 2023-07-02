@@ -13,25 +13,19 @@
         <template #header>
           <div class="grid gap-3">
             <Dropdown
-              v-model="selectedView"
-              :options="views"
-              optionLabel="displayName"
-              placeholder="Select a View"
-              class="w-full md:w-14rem"
-            />
-            <MultiSelect 
-              v-model="selectedStatuses"
-              :options="statuses"
-              optionLabel="displayName"
-              placeholder="Select FilterConfig"
-              :maxSelectedLabels="1"
-              class="w-full md:w-14rem"
-            />
-            <Dropdown
               v-model="selectedProject"
               :options="projects"
+              @onChange="updateFilterConfig()"
               optionLabel="name"
               placeholder="Select a project"
+              class="w-full md:w-14rem"
+            />
+            <MultiSelect
+              v-model="selectedStatuses"
+              :options="allStatuses"
+              @onChange="updateFilterConfig()"
+              placeholder="Select Status"
+              :maxSelectedLabels="1"
               class="w-full md:w-14rem"
             />
           </div>
@@ -39,9 +33,9 @@
         <template #grid="slotProps">
           <div class="col-12 sm:col-6 lg:col-12 xl:col-4 p-2">
             <div class="p-4 border-1 surface-border border-round shadow-5 hover:bg-gray-50">
-              <EmployeeCard 
-                :employee="slotProps.data.employee" 
-                :issues="slotProps.data.issues" 
+              <EmployeeCard
+                :employee="slotProps.data.employee"
+                :issues="slotProps.data.issues"
                 :categoryNames="categoryNames"
               />
             </div>
@@ -53,75 +47,92 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, watch } from 'vue';
-  import type { Ref } from 'vue';
+import { computed, ref, watch } from 'vue';
+import type { Ref } from 'vue';
+import type { EmployeeIF } from '@/model/EmployeeIF';
+import type { ProjectIF } from '@/model/ProjectIF';
+import type { IssueDataIF } from '@/model/IssueDataIF';
+import calculateWorkload from '@/services/workloadCalculator';
+import getMockData from '@/assets/__mockdata__/mockDataComposer';
+import useFilterConfigStore from '@/store/FilterConfigStore';
+import filterProjectThatHasTheAllowedStatus from '@/services/filter/IssuesStateFilter';
+import EmployeeCard from '@/components/EmployeeCard.vue';
+import { getIssueStatusList } from '@/model/ProjectIF';
 
-  import EmployeeCard from '@/components/EmployeeCard.vue';
-  import calculateWorkload from '@/services/workloadCalculator';
-  import getMockData from '@/assets/__mockdata__/mockDataComposer';
+const allStatuses: Ref<string[]> = ref([]);
 
-  import type { ProjectIF } from '@/model/ProjectIF';
-  import type { EmployeeIF } from '@/model/EmployeeIF';
-  import type { IssueDataIF } from '@/model/IssueDataIF';
-  import type { FilterConfigIF } from '@/model/FilterConfigIF';
+const selectedProject: Ref<ProjectIF> = ref({
+  id: 0,
+  name: 'Project_Name',
+  description: '',
+  milestones: [],
+  issues: [],
+} as ProjectIF);
 
-  const selectedView = ref<string>('workload'); // Default value is 'workload'
-  const views = ref([
-    { id: 'workload', displayName: 'Workload View' },
-    { id: 'amountOfCommits', displayName: 'Amount of Commits' }
-  ]);
+const projects: Ref<ProjectIF[]> = ref([
+  getMockData(1),
+  getMockData(2),
+  getMockData(3),
+  getMockData(53),
+  getMockData(54),
+  getMockData(55),
+  getMockData(6),
+] as ProjectIF[]);
 
-  const selectedStatuses = ref(); // Default value is 'workload'
-  const statuses = ref([
-    { id: 'planned', displayName: 'Planned' },
-    { id: 'design', displayName: 'Design' },
-    { id: 'inWork', displayName: 'In work' },
-    { id: 'review', displayName: 'Review' },
-    { id: 'unitTest', displayName: 'Unit Test' },
-    { id: 'e2e', displayName: 'E2E' },
-    { id: 'closed', displayName: 'Closed' }
-  ]);
+const filterConfigStore = useFilterConfigStore();
+const workload: Ref<Map<EmployeeIF, IssueDataIF>> = ref(calculateWorkload(selectedProject.value));
+const employeeList = ref(
+  Array.from(workload.value, ([employee, issues]) => ({ employee, issues }))
+);
 
-  const projects: Ref<ProjectIF[]> = ref([
-    getMockData(1),
-    getMockData(2),
-    getMockData(3),
-    getMockData(53),
-    getMockData(54),
-    getMockData(55),
-  ] as ProjectIF[]);
-  const selectedProject = ref({
-    id: 0,
-    name: 'Project_Name',
-    description: '',
-    milestones: [],
-    issues: [],
-  } as ProjectIF);
-  
-  const workload: Ref<Map<EmployeeIF, IssueDataIF>> = ref(calculateWorkload(selectedProject.value));
-  const employeeList = ref(
-    Array.from(workload.value, ([employee, issues]) => ({ employee, issues }))
+const categoryNames = ref<{
+  firstCategory: string;
+  secondCategory: string;
+  thirdCategory: string;
+}>({
+  firstCategory: '',
+  secondCategory: '',
+  thirdCategory: '',
+});
+
+const filterConfig = computed(() => filterConfigStore.getFilterConfig);
+const selectedStatuses = ref(filterConfig.value.projectFilter.issueStatusIncludeFilter);
+
+function updateFilterConfig() {
+  const updatedFilterConfig = { ...filterConfig.value };
+  updatedFilterConfig.projectFilter.issueStatusIncludeFilter = selectedStatuses.value;
+  filterConfigStore.setFilterConfig(updatedFilterConfig);
+}
+
+function updateEmployeeList(project: ProjectIF) {
+  const filteredProject: ProjectIF = filterProjectThatHasTheAllowedStatus(
+    project,
+    filterConfig.value
   );
+  const workloadMap = calculateWorkload(filteredProject);
+  employeeList.value = Array.from(workloadMap, ([employee, issues]) => ({ employee, issues }));
+  // filter category names for the issues in the emplyeeList that are the keys of the issues in the workloadMap
+  categoryNames.value = {
+    firstCategory: 'planning',
+    secondCategory: 'development',
+    thirdCategory: 'testing',
+  };
+}
 
-  watch(selectedProject, (selectedProjectInDropdown) => {
-    workload.value = calculateWorkload(selectedProjectInDropdown);
-    employeeList.value = Array.from(workload.value, ([employee, issues]) => ({ employee, issues }));
-  });
+watch(selectedStatuses, () => {
+  updateFilterConfig();
+});
 
-  // define category
-  const categoryNames = ref<{
-    firstCategory: string;
-    secondCategory: string;
-    thirdCategory: string;
-  }>({
-    firstCategory: 'label 1',
-    secondCategory: 'label 2',
-    thirdCategory: 'label 3',
-  });
-  //cate
-  // function to get different category label for different views
-  // watch function for category
+watch(filterConfig, (newConfig) => {
+  selectedStatuses.value = newConfig.projectFilter.issueStatusIncludeFilter;
+  updateEmployeeList(selectedProject.value);
+});
 
+watch(selectedProject, (selectedProjectInDropdown) => {
+  selectedStatuses.value = [];
+  allStatuses.value = getIssueStatusList(selectedProjectInDropdown.issues);
+  updateEmployeeList(selectedProjectInDropdown);
+});
 </script>
 
 <style scoped>

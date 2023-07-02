@@ -59,23 +59,23 @@ function calculateWorkload(project: ProjectIF | null): Map<EmployeeIF, IssueData
         numberInDevTickets = 0;
         numberInTestingTickets = 0;
       }
-      if (issue.userStatus != null) {
+      if (issue.status != null) {
         // if there is no date for closure of the ticket, then it is a still open ticket
-        if (planningStatusList.includes(issue.userStatus)) {
+        if (planningStatusList.includes(issue.status)) {
           mapToReturn.set(issue.assignedTo, {
             planning: numberPlannedTickets + 1,
             development: numberInDevTickets,
             testing: numberInTestingTickets,
           });
-        } else if (devStatusList.includes(issue.userStatus)) {
+        } else if (devStatusList.includes(issue.status)) {
           mapToReturn.set(issue.assignedTo, {
             planning: numberPlannedTickets,
             development: numberInDevTickets + 1,
             testing: numberInTestingTickets,
           });
         } else if (
-          testingStatusList.includes(issue.userStatus) ||
-          nonDisplayedStatusList.includes(issue.userStatus)
+          testingStatusList.includes(issue.status) ||
+          nonDisplayedStatusList.includes(issue.status)
         ) {
           mapToReturn.set(issue.assignedTo, {
             planning: numberPlannedTickets,
