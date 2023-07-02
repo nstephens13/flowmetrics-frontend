@@ -16,7 +16,7 @@
               v-model="selectedView"
               :options="views"
               optionLabel="displayName"
-              placeholder="Select View"
+              placeholder="Select a View"
               class="w-full md:w-14rem"
             />
             <MultiSelect 
@@ -42,7 +42,7 @@
               <EmployeeCard 
                 :employee="slotProps.data.employee" 
                 :issues="slotProps.data.issues" 
-                :categoryNames="slotProps.data.categoryNames"
+                :categoryNames="categoryNames"
               />
             </div>
           </div>
@@ -55,7 +55,7 @@
 <script setup lang="ts">
   import { ref, watch } from 'vue';
   import type { Ref } from 'vue';
-  
+
   import EmployeeCard from '@/components/EmployeeCard.vue';
   import calculateWorkload from '@/services/workloadCalculator';
   import getMockData from '@/assets/__mockdata__/mockDataComposer';
@@ -107,6 +107,20 @@
     workload.value = calculateWorkload(selectedProjectInDropdown);
     employeeList.value = Array.from(workload.value, ([employee, issues]) => ({ employee, issues }));
   });
+
+  // define category
+  const categoryNames = ref<{
+    firstCategory: string;
+    secondCategory: string;
+    thirdCategory: string;
+  }>({
+    firstCategory: 'label 1',
+    secondCategory: 'label 2',
+    thirdCategory: 'label 3',
+  });
+  //cate
+  // function to get different category label for different views
+  // watch function for category
 
 </script>
 

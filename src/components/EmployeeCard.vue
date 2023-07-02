@@ -20,7 +20,7 @@
       </div>
       <!--Open Issues Progress Bar-->
       <div class="field grid">
-        <label for="Open" class="col-3 font-bold">Open</label>
+        <label for="Open" class="col-3 font-bold">{{ categoryNames.firstCategory }}</label>
         <div class="col-9 md:col-9">
           <ProgressBar
             class="planningProgressbar"
@@ -31,7 +31,7 @@
       </div>
       <!--In Progress Issues Progress Bar-->
       <div class="field grid">
-        <label for="In Progress" class="col-3 font-bold">InProgress</label>
+        <label for="In Progress" class="col-3 font-bold">{{ categoryNames.secondCategory }}</label>
         <div class="col-9 md:col-9">
           <ProgressBar
             class="developmentProgressbar"
@@ -42,7 +42,7 @@
       </div>
       <!--Closed Issues Progress Bar-->
       <div class="field grid">
-        <label for="Closed" class="col-3 font-bold">Closed</label>
+        <label for="Closed" class="col-3 font-bold">{{ categoryNames.thirdCategory }}</label>
         <div class="col-9 md:col-9">
           <ProgressBar
             class="testingProgressbar"
