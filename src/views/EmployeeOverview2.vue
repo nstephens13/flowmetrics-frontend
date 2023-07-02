@@ -41,6 +41,7 @@ import calculateWorkload from '@/services/workloadCalculator';
 import type { ProjectIF } from '@/model/ProjectIF';
 import getMockData from '@/assets/__mockdata__/mockDataComposer';
 import type { EmployeeIF } from '@/model/EmployeeIF';
+import type { IssueDataIF } from '@/model/IssueDataIF';
 
 const selectedProject = ref({
   id: 0,
@@ -50,16 +51,7 @@ const selectedProject = ref({
   issues: [],
 } as ProjectIF);
 
-const workload: Ref<
-  Map<
-    EmployeeIF,
-    {
-      openIssues: number;
-      inProgressIssues: number;
-      closedIssues: number;
-    }
-  >
-> = ref(calculateWorkload(selectedProject.value));
+const workload: Ref<Map<EmployeeIF, IssueDataIF>> = ref(calculateWorkload(selectedProject.value));
 const employeeList = ref(
   Array.from(workload.value, ([employee, issues]) => ({ employee, issues }))
 );
