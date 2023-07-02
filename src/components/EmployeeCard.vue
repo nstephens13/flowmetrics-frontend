@@ -23,9 +23,9 @@
         <label for="Open" class="col-3 font-bold">Open</label>
         <div class="col-9 md:col-9">
           <ProgressBar
-            class="openIssuesProgressbar"
-            :value="(issues.openIssues / totalIssues) * 100"
-            >{{ issues.openIssues }}
+            class="planningProgressbar"
+            :value="(issues.planning / totalIssues) * 100"
+            >{{ issues.planning }}
           </ProgressBar>
         </div>
       </div>
@@ -34,9 +34,9 @@
         <label for="In Progress" class="col-3 font-bold">InProgress</label>
         <div class="col-9 md:col-9">
           <ProgressBar
-            class="inProgressIssuesProgressbar"
-            :value="(issues.inProgressIssues / totalIssues) * 100"
-            >{{ issues.inProgressIssues }}
+            class="developmentProgressbar"
+            :value="(issues.development / totalIssues) * 100"
+            >{{ issues.development }}
           </ProgressBar>
         </div>
       </div>
@@ -45,9 +45,9 @@
         <label for="Closed" class="col-3 font-bold">Closed</label>
         <div class="col-9 md:col-9">
           <ProgressBar
-            class="closedIssuesProgressbar"
-            :value="(issues.closedIssues / totalIssues) * 100"
-            >{{ issues.closedIssues }}
+            class="testingProgressbar"
+            :value="(issues.testing / totalIssues) * 100"
+            >{{ issues.testing }}
           </ProgressBar>
         </div>
       </div>
@@ -65,16 +65,16 @@ const p = defineProps({
   },
   issues: {
     type: Object as () => {
-      openIssues: number;
-      inProgressIssues: number;
-      closedIssues: number;
+      planning: number;
+      development: number;
+      testing: number;
     },
     required: true,
   },
 });
 
 const totalIssues = computed(
-  () => p.issues.openIssues + p.issues.inProgressIssues + p.issues.closedIssues
+  () => p.issues.planning + p.issues.development + p.issues.testing
 );
 </script>
 
