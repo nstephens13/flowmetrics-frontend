@@ -3,13 +3,13 @@
     <div class="flex flex-wrap align-items-center justify-content-start gap-1">
       <Avatar
         :label="employee.firstName.charAt(0) + employee.lastName.charAt(0)"
-        class="mr-2"
-        size="large"
-        style="background-color: #2d6dc1; color: #ffffff"
+        class="mr-2" size="large"
+        style="background-color:#2d6dc1; color: #ffffff"
       />
-      <h3 class="EmployeeName" style="margin-right: auto">
-        {{ employee.firstName + ' ' + employee.lastName }}
-      </h3>
+      <h3
+      class="EmployeeName"
+      style="margin-right: auto;"
+      >{{ employee.firstName + " " + employee.lastName }}</h3>
       <Chip :label="'Employee ID : ' + employee.id"></Chip>
     </div>
     <div class="flex flex-column gap-1 py-5">
@@ -22,8 +22,10 @@
       <div class="field grid">
         <label for="Open" class="col-3 font-bold">Open</label>
         <div class="col-9 md:col-9">
-          <ProgressBar class="openIssuesProgressbar" :value="(issues.planning / totalIssues) * 100"
-            >{{ issues.planning }}
+          <ProgressBar
+            class="openIssuesProgressbar"
+            :value="issues.openIssues / (totalIssues) * 100"
+            >{{ issues.openIssues}}
           </ProgressBar>
         </div>
       </div>
@@ -33,8 +35,8 @@
         <div class="col-9 md:col-9">
           <ProgressBar
             class="inProgressIssuesProgressbar"
-            :value="(issues.development / totalIssues) * 100"
-            >{{ issues.development }}
+            :value="issues.inProgressIssues / (totalIssues) * 100"
+            >{{ issues.inProgressIssues }}
           </ProgressBar>
         </div>
       </div>
@@ -42,8 +44,10 @@
       <div class="field grid">
         <label for="Closed" class="col-3 font-bold">Closed</label>
         <div class="col-9 md:col-9">
-          <ProgressBar class="closedIssuesProgressbar" :value="(issues.testing / totalIssues) * 100"
-            >{{ issues.testing }}
+          <ProgressBar
+            class="closedIssuesProgressbar"
+            :value="issues.closedIssues / (totalIssues) * 100"
+            >{{ issues.closedIssues }}
           </ProgressBar>
         </div>
       </div>
@@ -61,15 +65,17 @@ const p = defineProps({
   },
   issues: {
     type: Object as () => {
-      planning: number;
-      development: number;
-      testing: number;
+      openIssues: number;
+      inProgressIssues: number;
+      closedIssues: number;
     },
     required: true,
   },
 });
 
-const totalIssues = computed(() => p.issues.planning + p.issues.development + p.issues.testing);
+const totalIssues = computed(
+  () => p.issues.openIssues + p.issues.inProgressIssues + p.issues.closedIssues,
+);
 </script>
 
 <style scoped>

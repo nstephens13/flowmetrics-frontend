@@ -26,9 +26,9 @@ describe('Employee Card should load all the Components', () => {
         lastName: 'Mustermann',
       },
       issues: {
-        planning: 20,
-        development: 5,
-        testing: 15,
+        openIssues: 20,
+        inProgressIssues: 5,
+        closedIssues: 15,
       },
     },
   });
