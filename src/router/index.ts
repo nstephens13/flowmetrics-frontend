@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import ProjectOverview from '@/views/ProjectOverview.vue';
 import TicketCalculator from '@/views/TicketCalculatorView.vue';
 import SLAComponent from '@/views/SLAComponent.vue';
+import EmployeeOverview from '@/views/EmployeeOverview.vue';
 import EmployeeOverview2 from '@/views/EmployeeOverview2.vue';
 
 const router = createRouter({
@@ -26,6 +27,11 @@ const router = createRouter({
       path: '/sla-management',
       name: 'sla-management',
       component: SLAComponent,
+    },
+    {
+      path: '/employee-overview',
+      name: 'employee-overview',
+      component: EmployeeOverview,
     },
     {
       path: '/employee-overview-2',
