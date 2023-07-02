@@ -20,7 +20,7 @@ describe('Filter Test', () => {
     ];
     const firstStatusList = [...planningStatusList, ...devStatusList];
     const lastStatusList = [...testingStatusList, ...nonDisplayedStatusList];
-    let issueWithLastStatusFound: boolean = false;
+    let issueWithLastStatusFound = false;
 
     // when
 

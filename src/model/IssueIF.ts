@@ -3,7 +3,7 @@ import type { EmployeeIF } from './EmployeeIF';
 export enum Status {
   Open = 'Open',
   Closed = 'Closed',
-  InProgress = 'In Progress'
+  InProgress = 'In Progress',
 }
 
 /**
