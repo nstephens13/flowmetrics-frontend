@@ -1,17 +1,17 @@
-import { describe, test, expect, vi } from 'vitest';
-import { mount } from '@vue/test-utils';
+import { mount, VueWrapper } from '@vue/test-utils';
 import PrimeVue from 'primevue/config';
 import Card from 'primevue/card';
 import Divider from 'primevue/divider';
 import { createPinia } from 'pinia';
+import { beforeEach, describe, expect, test, vi } from 'vitest';
 
-import EmployeeOverview from '../EmployeeOverview.vue';
 import {
   devStatusList,
   nonDisplayedStatusList,
   planningStatusList,
   testingStatusList,
 } from '../../assets/__mockdata__/mockDataComposer';
+import EmployeeOverview from '../EmployeeOverview.vue';
 
 const pinia = createPinia();
 describe('EmployeeOverview with a simple manual constructed map should render correctly', () => {
@@ -42,9 +42,9 @@ describe('EmployeeOverview with a simple manual constructed map should render co
     expect(openBoxes[0].exists()).toBe(true);
     expect(inProgressBoxes[0].exists()).toBe(true);
     expect(closedBoxes[0].exists()).toBe(true);
-    expect(openBoxes.length).toBe(13);
-    expect(inProgressBoxes.length).toBe(13);
-    expect(closedBoxes.length).toBe(13);
+    expect(openBoxes.length).toBe(18);
+    expect(inProgressBoxes.length).toBe(18);
+    expect(closedBoxes.length).toBe(18);
   });
 });
 
@@ -92,8 +92,136 @@ describe('EmployeeOverview with a simple manual constructed map should render co
       ...testingStatusList,
       ...nonDisplayedStatusList,
     ];
-
-    // Assert that the option texts match the expected options
-    expect(optionTexts).toEqual(expectedOptions);
+    expectedOptions.forEach((status) => {
+      expect(optionTexts.includes(status)).toBe(true);
+    });
   });
+});
+describe('Employee View has correct Project Dropdown Menu', () => {
+  const wrapper = mount(EmployeeOverview, {
+    global: {
+      plugins: [PrimeVue, pinia],
+      components: {
+        Card,
+        Divider,
+      },
+
+      stubs: {
+        teleport: false,
+      },
+    },
+  });
+
+  test('it renders the dropdown container correctly', () => {
+    const dropdownContainer = wrapper.findAll('.dropdown-container');
+
+    // Assert the dropdown container exists
+    expect(dropdownContainer[2].exists()).toBe(true);
+
+    // Assert the label is rendered correctly
+    const label = dropdownContainer[2].find('label');
+    expect(label.text()).toBe('Select Projects:');
+
+    // Assert the dropdown button is rendered correctly
+    const dropdownButton = dropdownContainer[2].find('.dropdown-button');
+    expect(dropdownButton.text()).toBe('6 Selected');
+
+    // Assert the dropdown menu is initially hidden
+    const dropdownMenu = dropdownContainer[2].find('.dropdown-menu');
+    expect(dropdownMenu.isVisible()).toBe(false);
+    expect(dropdownMenu.attributes('style')).toBe('display: none;');
+  });
+
+  test('it opens the dropdown menu on button click', async () => {
+    const dropdownContainer = wrapper.findAll('.dropdown-container');
+    const dropdownButton = dropdownContainer[2].find('.dropdown-button');
+    const dropdownMenu = dropdownContainer[2].find('.dropdown-menu');
+    expect(dropdownMenu.attributes('style')).toBe('display: none;');
+    // Click the dropdown button
+    await dropdownButton.trigger('click');
+
+    expect(dropdownMenu.attributes('style')).not.toBe('display: none;');
+  });
+});
+
+describe('Employee View update the filter when the checkboxes are clicked', () => {
+  let wrapper: VueWrapper;
+  beforeEach(() => {
+    wrapper = mount(EmployeeOverview, {
+      global: {
+        plugins: [PrimeVue, pinia],
+        components: {
+          Card,
+          Divider,
+        },
+
+        stubs: {
+          teleport: false,
+        },
+      },
+    });
+  });
+
+  test('it renders the dropdown container correctly', () => {
+    const dropdownContainer = wrapper.findAll('.dropdown-container');
+
+    // Assert the dropdown container exists
+    expect(dropdownContainer[2].exists()).toBe(true);
+
+    // Assert the label is rendered correctly
+    const label = dropdownContainer[2].find('label');
+    expect(label.text()).toBe('Select Projects:');
+
+    // Assert the dropdown button is rendered correctly
+    const dropdownButton = dropdownContainer[2].find('.dropdown-button');
+    expect(dropdownButton.text()).toBe('6 Selected');
+
+    // Assert the dropdown menu is initially hidden
+    const dropdownMenu = dropdownContainer[2].find('.dropdown-menu');
+    expect(dropdownMenu.isVisible()).toBe(false);
+    expect(dropdownMenu.attributes('style')).toBe('display: none;');
+  });
+
+  test('it opens the dropdown menu on button click', async () => {
+    const dropdownContainer = wrapper.findAll('.dropdown-container');
+    const dropdownButton = dropdownContainer[2].find('.dropdown-button');
+    const dropdownMenu = dropdownContainer[2].find('.dropdown-menu');
+    expect(dropdownMenu.attributes('style')).toBe('display: none;');
+    // Click the dropdown button
+    await dropdownButton.trigger('click');
+
+    // Assert the dropdown menu is visible
+    expect(dropdownMenu.attributes('style')).not.toBe('display: none;');
+  });
+
+  test('it updates the selected projects when checkbox is changed', async () => {
+    const checkboxes = wrapper.findAll('input[type="checkbox"]');
+    // Check the checkbox
+    const dropdownContainer = wrapper.findAll('.dropdown-container');
+    const dropdownMenu = dropdownContainer[2].find('.dropdown-menu');
+    expect(dropdownMenu.attributes('style')).toBe('display: none;');
+    const dropdownButton = dropdownContainer[2].find('.dropdown-button');
+    expect(dropdownButton.text()).toBe('6 Selected');
+
+    expect(wrapper.text()).toContain('JOHN DOE');
+
+    // Click the dropdown button
+    await dropdownButton.trigger('click');
+    expect(dropdownMenu.attributes('style')).not.toBe('display: none;');
+    await checkboxes[7].setValue(false); // Index 7 corresponds to the first project checkbox
+    expect(dropdownButton.text()).toBe('5 Selected');
+    await checkboxes[7].setValue(true);
+    expect(dropdownButton.text()).toBe('6 Selected');
+    await checkboxes[7].setValue(false);
+    await checkboxes[8].setValue(false);
+    await checkboxes[9].setValue(false);
+    await checkboxes[10].setValue(false);
+    await checkboxes[11].setValue(false);
+    await checkboxes[12].setValue(false);
+    await dropdownButton.trigger('click');
+    expect(dropdownMenu.attributes('style')).toBe('display: none;');
+    expect(dropdownButton.text()).toBe('0 Selected');
+    expect(wrapper.text()).not.toContain('JOHN DOE');
+  });
+  // Add more test cases as needed for other functionality
 });

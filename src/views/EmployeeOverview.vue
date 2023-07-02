@@ -37,6 +37,25 @@
           </li>
         </ul>
       </div>
+      <div class="dropdown-container">
+        <label>Select Projects: </label>
+        <button class="dropdown-button" @click="isProjectDropdownOpen = !isProjectDropdownOpen">
+          {{ selectedProjects?.length }} Selected
+        </button>
+        <ul v-show="isProjectDropdownOpen" class="dropdown-menu">
+          <li v-for="project in projectList" :key="project.id">
+            <label>
+              <input
+                type="checkbox"
+                :value="project"
+                v-model="selectedProjects"
+                @change="updateFilterConfig"
+              />
+              {{ project.name }}
+            </label>
+          </li>
+        </ul>
+      </div>
     </template>
     <template #content>
       <div
@@ -68,7 +87,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import type { EmployeeIF } from '@/model/EmployeeIF';
 import calculateWorkload from '../services/workloadCalculator';
 import {
@@ -77,18 +96,23 @@ import {
   getCssHeightForStatisticBoxes,
   parseCategoryNames,
 } from './EmployeeOverviewHelper';
-import getMockData, {
+import {
   devStatusList,
   nonDisplayedStatusList,
   planningStatusList,
   testingStatusList,
 } from '@/assets/__mockdata__/mockDataComposer';
 import useFilterConfigStore from '@/store/FilterConfigStore';
-import filterProjectThatHasTheAllowedStatus from '@/services/filter/IssuesStateFilter';
-import type { ProjectIF } from '../model/ProjectIF';
-import type { FilterConfigIF } from '@/model/FilterConfigIF';
+import type { ProjectIF } from '@/model/ProjectIF';
+import {
+  filterIssuesInProjectWithAStatusWhitelist,
+  filterProjectListWithAProjectWhitelist,
+} from '@/services/filter/ProjectsFilter';
+import useProjectsStore from '@/store/ProjectStore';
 
 const filterConfigStore = useFilterConfigStore();
+const projectStore = useProjectsStore();
+
 const employeeMap = ref<Map<EmployeeIF, { firstBar: number; secondBar: number; thirdBar: number }>>(
   new Map()
 );
@@ -102,10 +126,19 @@ const categoryNames = ref<{
   secondCategory: '',
   thirdCategory: '',
 });
-const allStatuses = ref();
-const isDropdownOpen = ref(false);
+const allStatuses = ref([
+  ...planningStatusList,
+  ...devStatusList,
+  ...testingStatusList,
+  ...nonDisplayedStatusList,
+]);
 const filterConfig = computed(() => filterConfigStore.getFilterConfig);
+const projectList = computed(() => projectStore.getProjects);
+filterConfig.value.projectFilter.projectsWhiteList = projectList.value;
 const selectedStatuses = ref(filterConfig.value.projectFilter.issueStatusIncludeFilter);
+const selectedProjects = ref(filterConfig.value.projectFilter.projectsWhiteList);
+const isDropdownOpen = ref(false);
+const isProjectDropdownOpen = ref(false);
 
 const selectedView = ref<string>('workload'); // Default value is 'workload'
 
@@ -119,40 +152,15 @@ function getBoxHeightStyle(count: number) {
   return `height: ${height}px`;
 }
 
-function readCategoriesDescription(mapToRead: Map<EmployeeIF, any>): {
-  firstCategory: string;
-  secondCategory: string;
-  thirdCategory: string;
-} {
-  return parseCategoryNames(mapToRead);
+function showWorkloadView(projects: ProjectIF[]) {
+  const workloadMap = calculateWorkload(projects);
+  employeeMap.value = assignWorkloadMapToBars(workloadMap);
+  categoryNames.value = parseCategoryNames(workloadMap);
 }
 
-function displayWorkload(
-  workloadMap: Map<
-    EmployeeIF,
-    {
-      planning: number;
-      development: number;
-      testing: number;
-    }
-  >
-): Map<EmployeeIF, { firstBar: number; secondBar: number; thirdBar: number }> {
-  return assignWorkloadMapToBars(workloadMap);
-}
-
-function showWorkloadView(config: FilterConfigIF) {
-  const projectToFilter: ProjectIF = getMockData(6);
-  const project: ProjectIF = filterProjectThatHasTheAllowedStatus(projectToFilter, config);
-  const workloadMap = calculateWorkload(project);
-  employeeMap.value = displayWorkload(workloadMap);
-  categoryNames.value = readCategoriesDescription(workloadMap);
-}
-
-function showSecondView(config: FilterConfigIF) {
-  const projectToFilter: ProjectIF = getMockData(6);
-  const project: ProjectIF = filterProjectThatHasTheAllowedStatus(projectToFilter, config);
-  const workloadMap = calculateWorkload(project);
-  employeeMap.value = displayWorkload(workloadMap);
+function showSecondView(projects: ProjectIF[]) {
+  const workloadMap = calculateWorkload(projects);
+  employeeMap.value = assignWorkloadMapToBars(workloadMap);
   categoryNames.value = {
     firstCategory: '<10 commits',
     secondCategory: '10-30 commits',
@@ -162,46 +170,32 @@ function showSecondView(config: FilterConfigIF) {
 function updateFilterConfig() {
   const updatedFilterConfig = { ...filterConfig.value };
   updatedFilterConfig.projectFilter.issueStatusIncludeFilter = selectedStatuses.value;
+  updatedFilterConfig.projectFilter.projectsWhiteList = selectedProjects.value;
   filterConfigStore.setFilterConfig(updatedFilterConfig);
 }
 
 watch(
-  () => [selectedView.value, filterConfigStore.filter],
+  () => [selectedView.value, filterConfig.value],
   ([selectedViewItem, filterConfigItem]) => {
+    let projects: ProjectIF[] = [];
+    if (typeof filterConfigItem !== 'string') {
+      projects = filterProjectListWithAProjectWhitelist(projectList.value, filterConfigItem);
+      projects.forEach((project) => {
+        filterIssuesInProjectWithAStatusWhitelist(project, filterConfigItem);
+      });
+    }
     if (selectedViewItem === 'workload') {
-      if (typeof filterConfigItem === 'string') {
-        // Handle the case when filterConfig is a string
-      } else {
-        showWorkloadView(filterConfigItem);
-      }
+      showWorkloadView(projects);
     } else if (selectedViewItem === 'amount commits') {
-      if (typeof filterConfigItem === 'string') {
-        // Handle the case when filterConfig is a string
-      } else {
-        showSecondView(filterConfigItem);
-      }
+      showSecondView(projects);
     }
   },
   { immediate: true }
 );
-watch(selectedStatuses, () => {
-  updateFilterConfig();
-});
 
 watch(filterConfig, (newConfig) => {
+  selectedProjects.value = newConfig.projectFilter.projectsWhiteList;
   selectedStatuses.value = newConfig.projectFilter.issueStatusIncludeFilter;
-});
-
-onMounted(() => {
-  const statusList: string[] = [
-    ...planningStatusList,
-    ...devStatusList,
-    ...testingStatusList,
-    ...nonDisplayedStatusList,
-  ];
-  allStatuses.value = statusList;
-  // Call showWorkloadView immediately after mounting
-  showWorkloadView(filterConfigStore.filter);
 });
 </script>
 

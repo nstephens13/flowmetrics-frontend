@@ -72,7 +72,7 @@ describe('Workload Calculator should calculate Workload correctly for Mock Data 
   // calling the function that is getting tested
 
   // when
-  const workload = calculateWorkload(project);
+  const workload = calculateWorkload([project]);
 
   // inspecting the result
 
@@ -120,7 +120,7 @@ describe('Workload Calculator should calculate Workload correctly for Mock Data 
   // calling the function that is being tested
 
   // when
-  const workload = calculateWorkload(project);
+  const workload = calculateWorkload([project]);
 
   // inspecting the result
 
@@ -164,7 +164,7 @@ describe('Workload Calculator should calculate Workload correctly for Mock Data 
   const employees: EmployeeIF[] = employeeJson as EmployeeIF[];
 
   // when
-  const workload = calculateWorkload(project);
+  const workload = calculateWorkload([project]);
 
   // then
   test('workload should be a Map', () => {
@@ -193,7 +193,7 @@ describe('Workload Calculator should calculate Workload correctly for Mock Data 
   const project = getMockData(53);
 
   // when
-  const workload = calculateWorkload(project);
+  const workload = calculateWorkload([project]);
 
   // then
   test('workload should be a Map', () => {
@@ -210,7 +210,7 @@ describe('Workload Calculator should calculate Workload correctly for Mock Data 
   const project = getMockData(54);
 
   // when
-  const workload = calculateWorkload(project);
+  const workload = calculateWorkload([project]);
 
   // then
   test('workload should be a Map', () => {

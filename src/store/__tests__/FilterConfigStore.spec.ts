@@ -15,6 +15,7 @@ describe('SLA Store', () => {
     expect(store.getFilterConfig).toEqual({
       id: 1,
       projectFilter: {
+        projectsWhiteList: [],
         issueStatusIncludeFilter: [...planningStatusList, ...devStatusList],
       },
     });
@@ -37,6 +38,7 @@ describe('SLA Store', () => {
     store.setFilterConfig({
       id: 2,
       projectFilter: {
+        projectsWhiteList: [],
         issueStatusIncludeFilter: [...planningStatusList],
       },
     });

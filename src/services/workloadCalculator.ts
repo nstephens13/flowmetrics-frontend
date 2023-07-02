@@ -23,19 +23,19 @@ import getMockData, {
  * @returns {Map} key:Employee,
  * value:{ planning: number; development: number; testing: number }
  */
-function calculateWorkload(project: ProjectIF | null): Map<EmployeeIF, IssueDataIF> {
+function calculateWorkload(projects: ProjectIF[] | null): Map<EmployeeIF, IssueDataIF> {
   const mapToReturn: Map<EmployeeIF, { planning: number; development: number; testing: number }> =
     new Map([]);
   const issueSet: Set<IssueIF> = new Set<IssueIF>();
-  let projectToCalculate: ProjectIF;
+  let projectsToCalculate: ProjectIF[];
 
   /**
    * ToDo: decouple the mock data when everything is setup
    */
-  if (project === undefined || project === null) {
-    projectToCalculate = getMockData(3);
+  if (projects === undefined || projects === null) {
+    projectsToCalculate = [getMockData(3)];
   } else {
-    projectToCalculate = project;
+    projectsToCalculate = projects;
   }
 
   function extractEmployeeAndUpdateEmployeeMap(issue: IssueIF) {
@@ -87,15 +87,17 @@ function calculateWorkload(project: ProjectIF | null): Map<EmployeeIF, IssueData
     }
     issueSet.add(issue);
   }
-
-  projectToCalculate.issues.forEach((issue) => {
-    extractEmployeeAndUpdateEmployeeMap(issue);
-  });
-  projectToCalculate.milestones.forEach((milestone) => {
-    milestone.issues.forEach((issue) => {
+  projectsToCalculate.forEach((project) => {
+    project.issues.forEach((issue) => {
       extractEmployeeAndUpdateEmployeeMap(issue);
     });
+    project.milestones.forEach((milestone) => {
+      milestone.issues.forEach((issue) => {
+        extractEmployeeAndUpdateEmployeeMap(issue);
+      });
+    });
   });
+
   return mapToReturn;
 }
 

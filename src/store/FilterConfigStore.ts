@@ -7,6 +7,7 @@ const useFilterConfigStore = defineStore('filterConfig', {
     filter: {
       id: 1,
       projectFilter: {
+        projectsWhiteList: [],
         issueStatusIncludeFilter: [...planningStatusList, ...devStatusList],
       },
     } as FilterConfigIF,

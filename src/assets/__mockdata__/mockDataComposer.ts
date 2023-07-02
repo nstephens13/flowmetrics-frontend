@@ -348,8 +348,8 @@ function getMockData(dataset: number): ProjectIF {
       });
 
       return {
-        id: 3,
-        name: 'Mocking Bird Project',
+        id: 4,
+        name: faker.science.chemicalElement().name,
         description: 'third mock dataset with a big number of random issues',
         milestones: milestonesArrayFromFile,
         issues: issuesForProject,
@@ -415,8 +415,8 @@ function getMockData(dataset: number): ProjectIF {
       milestonesForProject = assignIssueToMilestone(3, 1, milestonesForProject, issuesForProject);
 
       return {
-        id: 2,
-        name: 'Mocking Bird 2',
+        id: 5,
+        name: faker.science.chemicalElement().name,
         description: 'second mock dataset',
         milestones: milestonesForProject,
         issues: issuesForProject,
@@ -478,7 +478,7 @@ function getMockData(dataset: number): ProjectIF {
 
       return {
         id: 6,
-        name: 'Mocking Bird 6',
+        name: faker.science.chemicalElement().name,
         description: 'sixth mock dataset',
         milestones: milestonesArrayFromFile,
         issues: issuesForProject,

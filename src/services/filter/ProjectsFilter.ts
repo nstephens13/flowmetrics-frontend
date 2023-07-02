@@ -3,7 +3,7 @@ import type { ProjectIF } from '@/model/ProjectIF';
 import type { IssueIF } from '@/model/IssueIF';
 import type { FilterConfigIF } from '@/model/FilterConfigIF';
 
-function filterProjectThatHasTheAllowedStatus(
+export function filterIssuesInProjectWithAStatusWhitelist(
   project: ProjectIF,
   filterConfig: FilterConfigIF
 ): ProjectIF {
@@ -18,4 +18,12 @@ function filterProjectThatHasTheAllowedStatus(
     issues: filteredIssues,
   };
 }
-export default filterProjectThatHasTheAllowedStatus;
+
+export function filterProjectListWithAProjectWhitelist(
+  projects: ProjectIF[],
+  filterConfig: FilterConfigIF
+): ProjectIF[] {
+  return projects.filter((project) =>
+    filterConfig.projectFilter.projectsWhiteList.includes(project)
+  );
+}
