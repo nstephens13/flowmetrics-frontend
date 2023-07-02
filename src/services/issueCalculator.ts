@@ -6,7 +6,7 @@ import getMockData from '../assets/__mockdata__/mockDataComposer';
 /**
  * @brief: The Function map the issues to the Employees.
  *
- * The function takes a array with ProjectIF, loop through all issues,
+ * The function takes an array with ProjectIF, loop through all issues,
  * parses the assigned Employees and return a map where the Employee
  * is the key, and the assigned Issues are in a list.
  *

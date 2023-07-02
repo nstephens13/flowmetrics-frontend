@@ -42,7 +42,7 @@ describe('Issue Calculator should map correctly ', () => {
     assert(Array.isArray(projects[0].issues));
   });
 
-  test('map should have 4 entries', () => {
+  test('map should have 9 entries', () => {
     // when
     const issueMap = mapIssuesToEmployees(projects);
     // then
