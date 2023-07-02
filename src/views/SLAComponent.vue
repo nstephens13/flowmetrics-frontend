@@ -158,7 +158,7 @@ export default defineComponent({
 
     // Options for the max assigned employees dropdown
     const maxAssignedEmployeesOptions = [1, 2, 3, 4, 5];
-    const occurredInOptions = ['Test', 'Before production', 'Within production'];
+    const occurredInOptions = ['Test', 'Pre-production', 'Production'];
 
     return {
       newSubscriber,
