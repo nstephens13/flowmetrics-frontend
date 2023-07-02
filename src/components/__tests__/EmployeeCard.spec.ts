@@ -26,10 +26,15 @@ describe('Employee Card should load all the Components', () => {
         lastName: 'Mustermann',
       },
       issues: {
-        openIssues: 20,
-        inProgressIssues: 5,
-        closedIssues: 15,
+        planning	: 20,
+        development: 5,
+        testing: 15,
       },
+      categoryNames:{
+        firstCategory: 'firstCategory',
+        secondCategory: 'SecondCategory',
+        thirdCategory: 'ThirdCategory',
+      }
     },
   });
 
@@ -62,11 +67,11 @@ describe('Employee Card should load all the Components', () => {
   });
 
   test('Progressbars checks', () => {
-    const progressBar1 = wrapper.find('.openIssuesProgressbar');
+    const progressBar1 = wrapper.find('.planningProgressbar');
     expect(progressBar1.text()).toBe('20');
-    const progressBar2 = wrapper.find('.inProgressIssuesProgressbar');
+    const progressBar2 = wrapper.find('.developmentProgressbar');
     expect(progressBar2.text()).toBe('5');
-    const progressBar3 = wrapper.find('.closedIssuesProgressbar');
+    const progressBar3 = wrapper.find('.testingProgressbar');
     expect(progressBar3.text()).toBe('15');
   });
 });

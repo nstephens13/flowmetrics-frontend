@@ -52,6 +52,6 @@ describe('Menubar Button should open sidebar', () => {
     await button.trigger('click');
     wrapper.findComponent(Menu);
     const menu = await wrapper.getComponent(Sidebar).getComponent(Menu);
-    expect(menu.findAll('.p-menuitem').length).toBe(5);
+    expect(menu.findAll('.p-menuitem').length).toBe(4);
   });
 });

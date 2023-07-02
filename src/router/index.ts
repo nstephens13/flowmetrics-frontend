@@ -29,11 +29,6 @@ const router = createRouter({
       component: SLAComponent,
     },
     {
-      path: '/employee-overview-2',
-      name: 'employee-overview-2',
-      component: EmployeeOverview2,
-    },
-    {
       path: '/employee-overview',
       name: 'employee-overview',
       component: EmployeeOverview,

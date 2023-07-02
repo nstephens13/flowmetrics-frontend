@@ -23,8 +23,7 @@ describe('Issue Class', () => {
     const createdAt = new Date();
     const closedAt = null;
     const dueTo = new Date();
-    const status = Status.Open;
-    const userStatus = 'Open';
+    const status = Status.q;
 
     const issue = new Issue(
       id,
@@ -36,7 +35,6 @@ describe('Issue Class', () => {
       closedAt,
       dueTo,
       status,
-      userStatus
     );
 
     expect(issue.id).toBe(id);
@@ -73,7 +71,6 @@ describe('getAssignedToName', () => {
       null,
       null,
       null,
-      null
     );
     const assignedToName = getAssignedToName(issue);
     expect(assignedToName).toBe('John Doe');
@@ -95,7 +92,6 @@ describe('getAssignedToName', () => {
       null,
       null,
       null,
-      null
     );
     const assignedToName = getAssignedToName(issue);
     expect(assignedToName).toBe('');
@@ -120,7 +116,6 @@ describe('getFormattedDate', () => {
       null,
       dueTo,
       null,
-      null
     );
     const formattedDate = getFormattedDate(issue);
     expect(formattedDate).toBe('July 1, 2023');
@@ -142,7 +137,6 @@ describe('getFormattedDate', () => {
       null,
       null,
       null,
-      null
     );
     const formattedDate = getFormattedDate(issue);
     expect(formattedDate).toBe('');
@@ -168,7 +162,6 @@ describe('getTimeLeft', () => {
       null,
       dueTo,
       null,
-      null
     );
     const timeLeft = getTimeLeft(issue);
     const expectedTimeLeft = Math.ceil(
@@ -194,7 +187,6 @@ describe('getTimeLeft', () => {
       null,
       dueTo,
       null,
-      null
     );
     const timeLeft = getTimeLeft(issue);
     expect(timeLeft).toBe(0);
@@ -216,7 +208,6 @@ describe('getTimeLeft', () => {
       null,
       null,
       null,
-      null
     );
     const timeLeft = getTimeLeft(issue);
     expect(timeLeft).toBeNull();
@@ -240,7 +231,6 @@ describe('countIssuesByStatus', () => {
       null,
       null,
       Status.Open,
-      null
     ),
     new Issue(
       2,
@@ -257,7 +247,6 @@ describe('countIssuesByStatus', () => {
       null,
       null,
       Status.Closed,
-      null
     ),
     new Issue(
       3,
@@ -273,8 +262,7 @@ describe('countIssuesByStatus', () => {
       new Date(),
       null,
       null,
-      Status.InProgress,
-      null
+      Status.InProgress
     ),
     new Issue(
       4,
@@ -290,8 +278,7 @@ describe('countIssuesByStatus', () => {
       new Date(),
       null,
       null,
-      Status.Open,
-      null
+      Status.Open
     ),
     new Issue(
       5,
@@ -307,8 +294,7 @@ describe('countIssuesByStatus', () => {
       new Date(),
       null,
       null,
-      Status.Closed,
-      null
+      Status.Closed
     ),
   ];
 
