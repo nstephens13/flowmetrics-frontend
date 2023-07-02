@@ -12,9 +12,9 @@ class Issue implements IssueIF {
 
   assignedTo: EmployeeIF | null;
 
-  createdBy: EmployeeIF;
+  createdBy: EmployeeIF | null;
 
-  createdAt: Date;
+  createdAt: Date | null;
 
   closedAt: Date | null;
 
