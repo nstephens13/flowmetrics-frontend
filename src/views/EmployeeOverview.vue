@@ -167,6 +167,7 @@ function showSecondView(projects: ProjectIF[]) {
     thirdCategory: '>30 commits',
   };
 }
+
 function updateFilterConfig() {
   const updatedFilterConfig = { ...filterConfig.value };
   updatedFilterConfig.projectFilter.issueStatusIncludeFilter = selectedStatuses.value;
@@ -179,9 +180,12 @@ watch(
   ([selectedViewItem, filterConfigItem]) => {
     let projects: ProjectIF[] = [];
     if (typeof filterConfigItem !== 'string') {
-      projects = filterProjectListWithAProjectWhitelist(projectList.value, filterConfigItem);
-      projects.forEach((project) => {
-        filterIssuesInProjectWithAStatusWhitelist(project, filterConfigItem);
+      const filteredProjects = filterProjectListWithAProjectWhitelist(
+        projectList.value,
+        filterConfigItem
+      );
+      filteredProjects.forEach((project) => {
+        projects.push(filterIssuesInProjectWithAStatusWhitelist(project, filterConfigItem));
       });
     }
     if (selectedViewItem === 'workload') {
@@ -335,6 +339,7 @@ watch(filterConfig, (newConfig) => {
   justify-content: center;
   margin-right: 10px;
 }
+
 .dropdown-container {
   position: relative;
   display: inline-block;
