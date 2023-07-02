@@ -23,7 +23,7 @@
         </template>
         <template #grid="slotProps">
           <div class="col-12 sm:col-6 lg:col-12 xl:col-4 p-2">
-            <div class="p-4 border-1 surface-border border-round shadow-5 hover:bg-gray-50 ">
+            <div class="p-4 border-1 surface-border border-round shadow-5 hover:bg-gray-50">
               <EmployeeCard :employee="slotProps.data.employee" :issues="slotProps.data.issues" />
             </div>
           </div>
@@ -50,13 +50,18 @@ const selectedProject = ref({
   issues: [],
 } as ProjectIF);
 
-const workload: Ref<Map<EmployeeIF, {
-  openIssues: number;
-  inProgressIssues: number;
-  closedIssues: number
-}>> = ref(calculateWorkload(selectedProject.value));
+const workload: Ref<
+  Map<
+    EmployeeIF,
+    {
+      openIssues: number;
+      inProgressIssues: number;
+      closedIssues: number;
+    }
+  >
+> = ref(calculateWorkload(selectedProject.value));
 const employeeList = ref(
-  Array.from(workload.value, ([employee, issues]) => ({ employee, issues })),
+  Array.from(workload.value, ([employee, issues]) => ({ employee, issues }))
 );
 
 watch(selectedProject, (selectedProjectInDropdown) => {

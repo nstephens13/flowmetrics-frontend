@@ -3,13 +3,13 @@
     <div class="flex flex-wrap align-items-center justify-content-start gap-1">
       <Avatar
         :label="employee.firstName.charAt(0) + employee.lastName.charAt(0)"
-        class="mr-2" size="large"
-        style="background-color:#2d6dc1; color: #ffffff"
+        class="mr-2"
+        size="large"
+        style="background-color: #2d6dc1; color: #ffffff"
       />
-      <h3
-      class="EmployeeName"
-      style="margin-right: auto;"
-      >{{ employee.firstName + " " + employee.lastName }}</h3>
+      <h3 class="EmployeeName" style="margin-right: auto">{{
+        employee.firstName + ' ' + employee.lastName
+      }}</h3>
       <Chip :label="'Employee ID : ' + employee.id"></Chip>
     </div>
     <div class="flex flex-column gap-1 py-5">
@@ -24,8 +24,8 @@
         <div class="col-9 md:col-9">
           <ProgressBar
             class="openIssuesProgressbar"
-            :value="issues.openIssues / (totalIssues) * 100"
-            >{{ issues.openIssues}}
+            :value="(issues.openIssues / totalIssues) * 100"
+            >{{ issues.openIssues }}
           </ProgressBar>
         </div>
       </div>
@@ -35,7 +35,7 @@
         <div class="col-9 md:col-9">
           <ProgressBar
             class="inProgressIssuesProgressbar"
-            :value="issues.inProgressIssues / (totalIssues) * 100"
+            :value="(issues.inProgressIssues / totalIssues) * 100"
             >{{ issues.inProgressIssues }}
           </ProgressBar>
         </div>
@@ -46,7 +46,7 @@
         <div class="col-9 md:col-9">
           <ProgressBar
             class="closedIssuesProgressbar"
-            :value="issues.closedIssues / (totalIssues) * 100"
+            :value="(issues.closedIssues / totalIssues) * 100"
             >{{ issues.closedIssues }}
           </ProgressBar>
         </div>
@@ -74,7 +74,7 @@ const p = defineProps({
 });
 
 const totalIssues = computed(
-  () => p.issues.openIssues + p.issues.inProgressIssues + p.issues.closedIssues,
+  () => p.issues.openIssues + p.issues.inProgressIssues + p.issues.closedIssues
 );
 </script>
 
