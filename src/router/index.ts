@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from 'vue-router';
 import ProjectOverview from '@/views/ProjectOverview.vue';
 import TicketCalculator from '@/views/TicketCalculatorView.vue';
 import SLAComponent from '@/views/SLAComponent.vue';
-import EmployeeOverview2 from '@/views/EmployeeOverview2.vue';
 import EmployeeOverview from '@/views/EmployeeOverview.vue';
 
 const router = createRouter({

@@ -12,14 +12,6 @@
       <DataView :value="employeeList" dataKey="employee.id" layout="grid">
         <template #header>
           <div class="grid gap-3">
-            <Dropdown
-              v-model="selectedProject"
-              :options="projects"
-              @onChange="updateFilterConfig()"
-              optionLabel="name"
-              placeholder="Select a project"
-              class="w-full md:w-14rem"
-            />
             <MultiSelect
               v-model="selectedStatuses"
               :options="allStatuses"
@@ -59,25 +51,8 @@ import filterProjectThatHasTheAllowedStatus from '@/services/filter/IssuesStateF
 import EmployeeCard from '@/components/EmployeeCard.vue';
 import { getIssueStatusList } from '@/model/ProjectIF';
 
-const allStatuses: Ref<string[]> = ref([]);
-
-const selectedProject: Ref<ProjectIF> = ref({
-  id: 0,
-  name: 'Project_Name',
-  description: '',
-  milestones: [],
-  issues: [],
-} as ProjectIF);
-
-const projects: Ref<ProjectIF[]> = ref([
-  getMockData(1),
-  getMockData(2),
-  getMockData(3),
-  getMockData(53),
-  getMockData(54),
-  getMockData(55),
-  getMockData(6),
-] as ProjectIF[]);
+const selectedProject: Ref<ProjectIF> = ref(getMockData(3));
+const allStatuses: Ref<string[]> = ref(getIssueStatusList(selectedProject.value.issues));
 
 const filterConfigStore = useFilterConfigStore();
 const workload: Ref<Map<EmployeeIF, IssueDataIF>> = ref(calculateWorkload(selectedProject.value));
@@ -128,10 +103,10 @@ watch(filterConfig, (newConfig) => {
   updateEmployeeList(selectedProject.value);
 });
 
-watch(selectedProject, (selectedProjectInDropdown) => {
+watch(selectedProject, (project) => {
   selectedStatuses.value = [];
-  allStatuses.value = getIssueStatusList(selectedProjectInDropdown.issues);
-  updateEmployeeList(selectedProjectInDropdown);
+  allStatuses.value = getIssueStatusList(project.issues);
+  updateEmployeeList(project);
 });
 </script>
 

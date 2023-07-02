@@ -26,15 +26,15 @@ describe('Employee Card should load all the Components', () => {
         lastName: 'Mustermann',
       },
       issues: {
-        planning	: 20,
+        planning: 20,
         development: 5,
         testing: 15,
       },
-      categoryNames:{
+      categoryNames: {
         firstCategory: 'firstCategory',
         secondCategory: 'SecondCategory',
         thirdCategory: 'ThirdCategory',
-      }
+      },
     },
   });
 
