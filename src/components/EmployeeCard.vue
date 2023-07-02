@@ -71,6 +71,14 @@ const p = defineProps({
     },
     required: true,
   },
+  categoryNames: {
+    type: Object as () => {
+      firstCategory: string;
+      secondCategory: string;
+      thirdCategory: string;
+    },
+    required: true, 
+  },
 });
 
 const totalIssues = computed(
