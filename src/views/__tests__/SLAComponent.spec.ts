@@ -1,8 +1,6 @@
-import {
-  describe, expect, test, vi, afterEach,
-} from 'vitest';
+import { describe, expect, test, vi, afterEach } from 'vitest';
 import { createPinia } from 'pinia';
-import { mount, VueWrapper } from '@vue/test-utils';
+import { mount } from '@vue/test-utils';
 import PrimeVue from 'primevue/config';
 import Card from 'primevue/card';
 import Dropdown from 'primevue/dropdown';
@@ -123,7 +121,8 @@ describe('SLA Component should delete and add categories, and create new rules a
     await addSubscriberButton.trigger('click');
 
     expect(wrapper.vm.newSubscriber).toBe('');
-    expect(wrapper.vm.subscriber).toEqual([{ id: 1, name: 'Customer 1', description: 'Description 1' },
+    expect(wrapper.vm.subscriber).toEqual([
+      { id: 1, name: 'Customer 1', description: 'Description 1' },
       { id: 2, name: 'Customer 2', description: 'Description 2' },
       { id: 3, name: 'Customer 3', description: 'Description 3' },
       { id: 4, name: 'New Subscriber', description: null },
@@ -164,7 +163,11 @@ describe('SLA Component should delete and add categories, and create new rules a
         maxAssignedEmployees: 7,
       },
       {
-        id: 4, name: 'New Rule', durationInDays: null, expirationDate: null, maxAssignedEmployees: 3,
+        id: 4,
+        name: 'New Rule',
+        durationInDays: null,
+        expirationDate: null,
+        maxAssignedEmployees: 3,
       },
     ]);
   });
