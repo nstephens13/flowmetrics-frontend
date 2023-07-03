@@ -5,12 +5,12 @@ import type { FilterConfigIF } from '@/model/FilterConfigIF';
 
 function filterProjectThatHasTheAllowedStatus(
   project: ProjectIF,
-  filterConfig: FilterConfigIF,
+  filterConfig: FilterConfigIF
 ): ProjectIF {
-  const filteredIssues = project.issues.filter((issue: IssueIF) => (
-    issue.userStatus
-            && filterConfig.projectFilter.issueStatusIncludeFilter.includes(issue.userStatus)
-  ));
+  const filteredIssues = project.issues.filter(
+    (issue: IssueIF) =>
+      issue.status && filterConfig.projectFilter.issueStatusIncludeFilter.includes(issue.status)
+  );
 
   return {
     ...project,

@@ -1,6 +1,5 @@
 import type { EmployeeIF } from './EmployeeIF';
 import type { IssueIF } from './IssueIF';
-import { Status } from './IssueIF';
 import type { SLARule } from '@/model/SLARule';
 
 // Issue Class implements IssueIF
@@ -13,17 +12,15 @@ class Issue implements IssueIF {
 
   assignedTo: EmployeeIF | null;
 
-  createdBy: EmployeeIF;
+  createdBy: EmployeeIF | null;
 
-  createdAt: Date;
+  createdAt: Date | null;
 
   closedAt: Date | null;
 
   dueTo: Date | null;
 
-  status: Status | null;
-
-  userStatus: string | null;
+  status: string | null;
 
   slaRule: SLARule | null;
 
@@ -37,7 +34,6 @@ class Issue implements IssueIF {
     closedAt: Date | null,
     dueTo: Date | null,
     status: Status | null,
-    userStatus: string | null,
     slaRule: SLARule | null,
   ) {
     this.id = id;
@@ -49,7 +45,6 @@ class Issue implements IssueIF {
     this.closedAt = closedAt;
     this.dueTo = dueTo;
     this.status = status;
-    this.userStatus = userStatus;
     this.slaRule = slaRule;
   }
 }
@@ -79,7 +74,7 @@ function getTimeLeft(issue: Issue): number | null {
   return null;
 }
 
-function countIssuesByStatus(issueList: Issue[], status: Status | null): number {
+function countIssuesByStatus(issueList: Issue[], status: string | null): number {
   // filter the issue list by status and return the length of the filtered array
   // if the status is null, return the length of the issue list
 
@@ -87,6 +82,4 @@ function countIssuesByStatus(issueList: Issue[], status: Status | null): number 
 }
 
 // export of data array and remain time for ticket calculation
-export {
-  Issue, getTimeLeft, getFormattedDate, getAssignedToName, countIssuesByStatus,
-};
+export { Issue, getTimeLeft, getFormattedDate, getAssignedToName, countIssuesByStatus };
