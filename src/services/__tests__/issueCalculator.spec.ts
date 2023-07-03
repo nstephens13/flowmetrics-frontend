@@ -29,8 +29,7 @@ describe('Issue Calculator should map correctly ', () => {
     createdBy: null,
     createdAt: null,
     closedAt: null,
-    status: null,
-    userStatus: '',
+    status: '',
     dueTo: null,
     assignedTo: testEmployee,
   };
