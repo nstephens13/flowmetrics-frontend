@@ -1,3 +1,4 @@
+import { nonDisplayedStatusList } from '@/assets/__mockdata__/mockDataComposer';
 import type { IssueIF } from './IssueIF';
 import type { MilestoneIF } from './MilestoneIF';
 
@@ -17,3 +18,17 @@ export interface ProjectIF {
   milestones: MilestoneIF[];
   issues: IssueIF[];
 }
+
+function getIssueStatusList(issues: IssueIF[]): string[] {
+  const statusList: string[] = Array.from(
+    new Set(
+      issues
+        .map((issue) => issue.status)
+        .filter((status) => status && !nonDisplayedStatusList.includes(status))
+        .filter((status): status is string => status !== null)
+    )
+  );
+  return statusList;
+}
+
+export { getIssueStatusList };

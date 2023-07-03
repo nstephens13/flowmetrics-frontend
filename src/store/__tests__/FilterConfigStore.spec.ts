@@ -15,7 +15,7 @@ describe('SLA Store', () => {
     expect(store.getFilterConfig).toEqual({
       id: 1,
       projectFilter: {
-        issueStatusIncludeFilter: [...planningStatusList, ...devStatusList],
+        issueStatusIncludeFilter: [],
       },
     });
   });
