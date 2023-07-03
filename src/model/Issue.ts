@@ -33,8 +33,8 @@ class Issue implements IssueIF {
     createdAt: Date,
     closedAt: Date | null,
     dueTo: Date | null,
-    status: Status | null,
-    slaRule: SLARule | null,
+    status: string | null,
+    slaRule: SLARule | null
   ) {
     this.id = id;
     this.name = name;

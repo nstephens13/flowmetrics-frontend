@@ -1,4 +1,5 @@
 import type { EmployeeIF } from './EmployeeIF';
+import type { SLARule } from '@/model/SLARule';
 
 /**
  *
