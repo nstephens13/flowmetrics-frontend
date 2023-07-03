@@ -23,7 +23,7 @@
         <label class="mb-2 font-semibold" for="planningProgressbar">{{
           categoryNames.firstCategory
         }}</label>
-        <div class="">
+        <div>
           <ProgressBar
             class="planningProgressbar"
             id="planningProgressbar"
@@ -37,7 +37,7 @@
         <label class="mb-2 font-semibold" for="developmentProgressbar">{{
           categoryNames.secondCategory
         }}</label>
-        <div class="">
+        <div>
           <ProgressBar
             class="developmentProgressbar"
             id="developmentProgressbar"
@@ -51,7 +51,7 @@
         <label class="mb-2 font-semibold" for="testingProgressbar">{{
           categoryNames.thirdCategory
         }}</label>
-        <div class="">
+        <div>
           <ProgressBar
             class="testingProgressbar"
             id="testingProgressbar"
