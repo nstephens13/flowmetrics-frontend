@@ -12,37 +12,50 @@
       }}</h3>
       <Chip :label="'Employee ID : ' + employee.id"></Chip>
     </div>
-    <div class="flex flex-column gap-1 py-5">
-      <div class="field grid">
+    <div class="flex flex-column gap-1 mt-2">
+      <div class="field mb-0">
         <label for="TotalTickets" class="col-12 font-bold">
           Total Tickets : {{ totalIssues }}
         </label>
       </div>
       <!--Open Issues Progress Bar-->
-      <div class="field grid">
-        <label for="Open" class="col-3 font-bold">{{ categoryNames.firstCategory }}</label>
-        <div class="col-9 md:col-9">
-          <ProgressBar class="planningProgressbar" :value="(issues.planning / totalIssues) * 100"
+      <div class="field mb-0">
+        <label class="mb-2 font-semibold" for="planningProgressbar">{{
+          categoryNames.firstCategory
+        }}</label>
+        <div class="">
+          <ProgressBar
+            class="planningProgressbar"
+            id="planningProgressbar"
+            :value="(issues.planning / totalIssues) * 100"
             >{{ issues.planning }}
           </ProgressBar>
         </div>
       </div>
       <!--In Progress Issues Progress Bar-->
-      <div class="field grid">
-        <label for="In Progress" class="col-3 font-bold">{{ categoryNames.secondCategory }}</label>
-        <div class="col-9 md:col-9">
+      <div class="field mb-0">
+        <label class="mb-2 font-semibold" for="developmentProgressbar">{{
+          categoryNames.secondCategory
+        }}</label>
+        <div class="">
           <ProgressBar
             class="developmentProgressbar"
+            id="developmentProgressbar"
             :value="(issues.development / totalIssues) * 100"
             >{{ issues.development }}
           </ProgressBar>
         </div>
       </div>
       <!--Closed Issues Progress Bar-->
-      <div class="field grid">
-        <label for="Closed" class="col-3 font-bold">{{ categoryNames.thirdCategory }}</label>
-        <div class="col-9 md:col-9">
-          <ProgressBar class="testingProgressbar" :value="(issues.testing / totalIssues) * 100"
+      <div class="field mb-0">
+        <label class="mb-2 font-semibold" for="testingProgressbar">{{
+          categoryNames.thirdCategory
+        }}</label>
+        <div class="">
+          <ProgressBar
+            class="testingProgressbar"
+            id="testingProgressbar"
+            :value="(issues.testing / totalIssues) * 100"
             >{{ issues.testing }}
           </ProgressBar>
         </div>
@@ -86,7 +99,15 @@ const totalIssues = computed(() => p.issues.planning + p.issues.development + p.
   width: 500px;
 }
 
-:deep(.p-progressbar .p-progressbar-value) {
-  background: linear-gradient(to right, #0e448a, #5790db);
+:deep(.developmentProgressbar .p-progressbar-value) {
+  background: linear-gradient(to right, #515f68, #748696);
+}
+
+:deep(.planningProgressbar .p-progressbar-value) {
+  background: linear-gradient(to right, #1961be, #69a5f3);
+}
+
+:deep(.testingProgressbar .p-progressbar-value) {
+  background: linear-gradient(to right, #6d6172, #b595bb);
 }
 </style>
