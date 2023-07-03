@@ -28,7 +28,7 @@ function loadIssueDataFromFile(issues: any): Issue[] {
       assignedTo: issue.assignedTo as EmployeeIF,
       createdBy: issue.createdBy as EmployeeIF,
       closedAt: issue.closedAt ? new Date(issue.closedAt) : null,
-      createdAt: new Date(issue.createdAt),
+      createdAt: issue.createdAt ? new Date(issue.createdAt) : null,
       dueTo: issue.dueTo ? new Date(issue.dueTo) : null,
       status: issue.status as string,
     });
@@ -50,7 +50,6 @@ function assignIssueToEmployee(
     issuesToReturn[issueNumber].assignedTo = employees[employeeNumber];
   }
 
-  employeesToReturn[employeeNumber].assignedIssues.push(issues[issueNumber]);
   return [issuesToReturn, employeesToReturn];
 }
 
