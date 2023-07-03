@@ -55,7 +55,11 @@ const selectedProject: Ref<ProjectIF> = ref(getMockData(3));
 const allStatuses: Ref<string[]> = ref(getIssueStatusList(selectedProject.value.issues));
 
 const filterConfigStore = useFilterConfigStore();
-const workload: Ref<Map<EmployeeIF, IssueDataIF>> = ref(calculateWorkload(selectedProject.value));
+const filterConfig = computed(() => filterConfigStore.getFilterConfig);
+const workload: Ref<Map<EmployeeIF, IssueDataIF>> = ref(
+  calculateWorkload(filterProjectThatHasTheAllowedStatus(selectedProject.value, filterConfig.value))
+);
+
 const employeeList = ref(
   Array.from(workload.value, ([employee, issues]) => ({ employee, issues }))
 );
@@ -70,7 +74,6 @@ const categoryNames = ref<{
   thirdCategory: '',
 });
 
-const filterConfig = computed(() => filterConfigStore.getFilterConfig);
 const selectedStatuses = ref(filterConfig.value.projectFilter.issueStatusIncludeFilter);
 
 function updateFilterConfig() {
@@ -80,11 +83,9 @@ function updateFilterConfig() {
 }
 
 function updateEmployeeList(project: ProjectIF) {
-  const filteredProject: ProjectIF = filterProjectThatHasTheAllowedStatus(
-    project,
-    filterConfig.value
+  const workloadMap = calculateWorkload(
+    filterProjectThatHasTheAllowedStatus(project, filterConfig.value)
   );
-  const workloadMap = calculateWorkload(filteredProject);
   employeeList.value = Array.from(workloadMap, ([employee, issues]) => ({ employee, issues }));
   // filter category names for the issues in the emplyeeList that are the keys of the issues in the workloadMap
   categoryNames.value = {
