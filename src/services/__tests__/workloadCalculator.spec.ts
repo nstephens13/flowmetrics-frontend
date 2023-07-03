@@ -205,6 +205,20 @@ describe('Workload Calculator should calculate Workload correctly for Mock Data 
   });
 });
 
+describe('Workload Calculator should calculate Workload correctly for empty statement', () => {
+  // given
+  const workload = calculateWorkload(null);
+
+  // then
+  test('workload should be a Map', () => {
+    expect(workload).instanceof(Map);
+  });
+
+  test('map should have same size', () => {
+    expect(workload.size).eq(13);
+  });
+});
+
 describe('Workload Calculator should calculate Workload correctly for Mock Data Set 54 ', () => {
   // given
   const project = getMockData(54);

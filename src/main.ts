@@ -18,6 +18,11 @@ import Tree from 'primevue/tree';
 import Divider from 'primevue/divider';
 import Panel from 'primevue/panel';
 import ProgressBar from 'primevue/progressbar';
+import DataView from 'primevue/dataview';
+import DataViewLayoutOptions from 'primevue/dataviewlayoutoptions';
+import AutoComplete from 'primevue/autocomplete';
+import MultiSelect from 'primevue/multiselect';
+import Chip from 'primevue/chip';
 
 import router from './router';
 import App from './App.vue';
@@ -47,5 +52,10 @@ app.component('Tree', Tree);
 app.component('Divider', Divider);
 app.component('Panel', Panel);
 app.component('ProgressBar', ProgressBar);
+app.component('DataView', DataView);
+app.component('DataViewLayoutOptions', DataViewLayoutOptions);
+app.component('AutoComplete', AutoComplete);
+app.component('MultiSelect', MultiSelect);
+app.component('Chip', Chip);
 
 app.mount('#app');

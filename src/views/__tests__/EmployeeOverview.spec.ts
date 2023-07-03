@@ -1,99 +1,46 @@
-import { describe, test, expect, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
+import { describe, expect, test } from 'vitest';
 import PrimeVue from 'primevue/config';
-import Card from 'primevue/card';
-import Divider from 'primevue/divider';
 import { createPinia } from 'pinia';
 
+import Card from 'primevue/card';
+import DataView from 'primevue/dataview';
+import Divider from 'primevue/divider';
+import Avatar from 'primevue/avatar';
+import MultiSelect from 'primevue/multiselect';
+import ProgressBar from 'primevue/progressbar';
+import Chip from 'primevue/chip';
+import router from '@/router/index';
+
 import EmployeeOverview from '../EmployeeOverview.vue';
-import {
-  devStatusList,
-  nonDisplayedStatusList,
-  planningStatusList,
-  testingStatusList,
-} from '../../assets/__mockdata__/mockDataComposer';
 
 const pinia = createPinia();
-describe('EmployeeOverview with a simple manual constructed map should render correctly', () => {
-  // when
+describe('Employee Overview should load all the Components', () => {
   const wrapper = mount(EmployeeOverview, {
     global: {
-      plugins: [PrimeVue, pinia],
+      plugins: [PrimeVue, router, pinia],
       components: {
         Card,
+        DataView,
         Divider,
-      },
-
-      stubs: {
-        teleport: false,
-      },
-    },
-  });
-
-  const openBoxes = wrapper.findAll('.first-bar');
-  const inProgressBoxes = wrapper.findAll('.second-bar');
-  const closedBoxes = wrapper.findAll('.third-bar');
-  // TODO Test dosent test the right thing
-  test('Component should include the Name John Doe', () => {
-    expect(wrapper.text()).toContain('JOHN DOE');
-  });
-
-  test('all Boxes exists exactly one time', () => {
-    expect(openBoxes[0].exists()).toBe(true);
-    expect(inProgressBoxes[0].exists()).toBe(true);
-    expect(closedBoxes[0].exists()).toBe(true);
-    expect(openBoxes.length).toBe(13);
-    expect(inProgressBoxes.length).toBe(13);
-    expect(closedBoxes.length).toBe(13);
-  });
-});
-
-describe('EmployeeOverview with a simple manual constructed map should render correctly', () => {
-  const wrapper = mount(EmployeeOverview, {
-    global: {
-      plugins: [PrimeVue, pinia],
-      components: {
-        Card,
-        Divider,
-      },
-
-      stubs: {
-        teleport: false,
+        MultiSelect,
+        Avatar,
+        ProgressBar,
+        Chip,
       },
     },
   });
 
   test('it mounts', () => {
     expect(wrapper.exists()).toBe(true);
-    expect(wrapper.find('.dropdown-container').isVisible()).toBe(true);
-    expect(wrapper.isVisible()).toBe(true);
+    expect(wrapper.findComponent(Card).isVisible()).toBe(true);
+    expect(wrapper.findComponent(DataView).isVisible()).toBe(true);
+    expect(wrapper.findComponent(Divider).isVisible()).toBe(true);
+    expect(wrapper.findComponent(MultiSelect).isVisible()).toBe(true);
   });
-  test('all strings in the filter dropdown are rendered', async () => {
-    const menu = wrapper.find('.dropdown-menu');
-    expect(menu.attributes('style')).toBe('display: none;');
 
-    // Open the dropdown
-    const dropdownButton = wrapper.find('.dropdown-button');
-
-    const spyButton = vi.spyOn(dropdownButton, 'trigger');
-    // Get all the options in the dropdown
-    await dropdownButton.trigger('click');
-    expect(spyButton).toHaveBeenCalledOnce();
-
-    expect(menu.attributes('style')).not.toBe('display: none;');
-    const dropdownOptions = wrapper.findAll('.dropdown-menu li');
-    // Extract the text of each option
-    const optionTexts = dropdownOptions.map((option) => option.text());
-
-    // Define the expected options based on the mock data
-    const expectedOptions = [
-      ...planningStatusList,
-      ...devStatusList,
-      ...testingStatusList,
-      ...nonDisplayedStatusList,
-    ];
-
-    // Assert that the option texts match the expected options
-    expect(optionTexts).toEqual(expectedOptions);
+  test('Multiselect should contain all options', async () => {
+    const dropdownOptions = wrapper.findComponent(MultiSelect).props('options');
+    expect(dropdownOptions.length).toEqual(2);
   });
 });

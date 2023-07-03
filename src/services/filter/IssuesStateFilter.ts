@@ -9,8 +9,7 @@ function filterProjectThatHasTheAllowedStatus(
 ): ProjectIF {
   const filteredIssues = project.issues.filter(
     (issue: IssueIF) =>
-      issue.userStatus &&
-      filterConfig.projectFilter.issueStatusIncludeFilter.includes(issue.userStatus)
+      issue.status && filterConfig.projectFilter.issueStatusIncludeFilter.includes(issue.status)
   );
 
   return {
