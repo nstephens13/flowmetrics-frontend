@@ -7,16 +7,6 @@ import type { IssueIF } from '../../model/IssueIF';
 
 import employeeJson from '../../assets/__mockdata__/Employees.json';
 
-// Just a Helper Function to create my expected Values to compare with real values
-function assignIssue(
-  project: ProjectIF,
-  employees: EmployeeIF[],
-  issueNumber: number,
-  employeeNumber: number
-) {
-  employees[employeeNumber].assignedIssues.push(project.issues[issueNumber]);
-}
-
 // checking first the mock data, my tools, describe the testcase,
 // you are working in a closed block, see the '{'
 describe('When mock data helper is asked for mock data, there should be correctly constructed mock data object returned ', () => {
@@ -60,17 +50,6 @@ describe('Workload Calculator should calculate Workload correctly for Mock Data 
   const project = getMockData(2);
   const employees: EmployeeIF[] = structuredClone(employeeJson) as EmployeeIF[];
 
-  // assigning the issues to my own employee array as in dataset 2 just for deep equal comparison
-  assignIssue(project, employees, 0, 0);
-  assignIssue(project, employees, 1, 1);
-  assignIssue(project, employees, 2, 1);
-  assignIssue(project, employees, 3, 2);
-  assignIssue(project, employees, 4, 2);
-  assignIssue(project, employees, 5, 2);
-  assignIssue(project, employees, 6, 3);
-
-  // calling the function that is getting tested
-
   // when
   const workload = calculateWorkload([project]);
 
@@ -107,15 +86,6 @@ describe('Workload Calculator should calculate Workload correctly for Mock Data 
   // given
   const project = getMockData(55);
   const employees: EmployeeIF[] = structuredClone(employeeJson) as EmployeeIF[];
-
-  // assigning the issues to my own employee array as in dataset 2 just for deep equal comparison
-  assignIssue(project, employees, 0, 0);
-  assignIssue(project, employees, 1, 1);
-  assignIssue(project, employees, 2, 1);
-  assignIssue(project, employees, 3, 2);
-  assignIssue(project, employees, 4, 2);
-  assignIssue(project, employees, 5, 2);
-  assignIssue(project, employees, 6, 3);
 
   // calling the function that is being tested
 
@@ -177,7 +147,6 @@ describe('Workload Calculator should calculate Workload correctly for Mock Data 
 
   // when
   const employee = workload.keys().next().value;
-  assignIssue(project, employees, 1, 1);
 
   // then
   test('workload should contain correct values', () => {
@@ -202,6 +171,20 @@ describe('Workload Calculator should calculate Workload correctly for Mock Data 
 
   test('map should be empty', () => {
     expect(workload.size).eq(0);
+  });
+});
+
+describe('Workload Calculator should calculate Workload correctly for empty statement', () => {
+  // given
+  const workload = calculateWorkload(null);
+
+  // then
+  test('workload should be a Map', () => {
+    expect(workload).instanceof(Map);
+  });
+
+  test('map should have same size', () => {
+    expect(workload.size).eq(13);
   });
 });
 

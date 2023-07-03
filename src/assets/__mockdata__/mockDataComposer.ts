@@ -2,7 +2,6 @@ import { faker } from '@faker-js/faker';
 import type { ProjectIF } from '@/model/ProjectIF';
 import type { EmployeeIF } from '@/model/EmployeeIF';
 import type { IssueIF } from '@/model/IssueIF';
-import { Status } from '@/model/IssueIF';
 import type { MilestoneIF } from '@/model/MilestoneIF';
 import employeeJson from './Employees.json';
 import issueJson2 from './Issues_2.json';
@@ -10,11 +9,11 @@ import issueJson from './Issues.json';
 import milestoneJson from './Milestones.json';
 import type { Issue } from '@/model/Issue';
 
-export const planningStatusList: string[] = ['planned', 'design'];
-export const devStatusList: string[] = ['in work', 'review'];
+export const planningStatusList: string[] = ['planned', 'design', 'Open'];
+export const devStatusList: string[] = ['in work', 'review', 'In Progress'];
 export const testingStatusList: string[] = ['UnitTest', 'E2E'];
 
-export const nonDisplayedStatusList: string[] = ['closed'];
+export const nonDisplayedStatusList: string[] = ['Closed'];
 function getRandomInt(max: number) {
   return Math.floor(Math.random() * max);
 }
@@ -29,10 +28,9 @@ function loadIssueDataFromFile(issues: any): Issue[] {
       assignedTo: issue.assignedTo as EmployeeIF,
       createdBy: issue.createdBy as EmployeeIF,
       closedAt: issue.closedAt ? new Date(issue.closedAt) : null,
-      createdAt: new Date(issue.createdAt),
+      createdAt: issue.createdAt ? new Date(issue.createdAt) : null,
       dueTo: issue.dueTo ? new Date(issue.dueTo) : null,
-      status: issue.status as Status,
-      userStatus: issue.userStatus as string,
+      status: issue.status as string,
     });
   });
   return issueData;
@@ -52,7 +50,6 @@ function assignIssueToEmployee(
     issuesToReturn[issueNumber].assignedTo = employees[employeeNumber];
   }
 
-  employeesToReturn[employeeNumber].assignedIssues.push(issues[issueNumber]);
   return [issuesToReturn, employeesToReturn];
 }
 
@@ -163,7 +160,7 @@ function getMockData(dataset: number): ProjectIF {
       milestonesForProject = milestonesArrayFromFile;
       [issuesForProject] = assignIssueToEmployee(1, 1, issuesArrayFromFile, employeesArrayFromFile);
       const [planningStatus] = planningStatusList;
-      issuesForProject[1].userStatus = planningStatus;
+      issuesForProject[1].status = planningStatus;
 
       return {
         id: 1,
@@ -232,13 +229,13 @@ function getMockData(dataset: number): ProjectIF {
       milestonesForProject = assignIssueToMilestone(3, 1, milestonesForProject, issuesForProject);
 
       [
-        issuesForProject[0].userStatus,
-        issuesForProject[1].userStatus,
-        issuesForProject[2].userStatus,
-        issuesForProject[3].userStatus,
-        issuesForProject[4].userStatus,
-        issuesForProject[5].userStatus,
-        issuesForProject[6].userStatus,
+        issuesForProject[0].status,
+        issuesForProject[1].status,
+        issuesForProject[2].status,
+        issuesForProject[3].status,
+        issuesForProject[4].status,
+        issuesForProject[5].status,
+        issuesForProject[6].status,
       ] = [
         planningStatusList[0],
         planningStatusList[0],
@@ -260,13 +257,13 @@ function getMockData(dataset: number): ProjectIF {
 
     case 3: {
       for (let i = 0; i < 280; i++) {
-        let status = Status.Open;
+        let status = 'Open';
         let closedAt = null;
 
-        const randomStatus = getRandomInt(3); // 0: Open, 1: Closed, 2: InProgress
+        const randomStatus = getRandomInt(3); // 0: Open, 1: Closed, 2: In Progress
 
         if (randomStatus === 2) {
-          status = Status.InProgress;
+          status = 'In Progress';
         } else if (randomStatus === 1) {
           closedAt = faker.date.recent();
         }
@@ -281,7 +278,6 @@ function getMockData(dataset: number): ProjectIF {
           createdAt: faker.date.past(),
           createdBy: employeesArrayFromFile[getRandomInt(employeesForProject.length)],
           dueTo: faker.date.future(),
-          userStatus: null,
         });
       }
 
@@ -312,13 +308,13 @@ function getMockData(dataset: number): ProjectIF {
         loadArraysFromFile(issueJson2);
 
       for (let i = 0; i < 280; i++) {
-        let status = Status.Open;
+        let status = 'Open';
         let closedAt = null;
 
-        const randomStatus = getRandomInt(3); // 0: Open, 1: Closed, 2: InProgress
+        const randomStatus = getRandomInt(3); // 0: Open, 1: Closed, 2: In Progress
 
         if (randomStatus === 2) {
-          status = Status.InProgress;
+          status = 'In Progress';
         } else if (randomStatus === 1) {
           closedAt = faker.date.recent();
         }
@@ -333,7 +329,6 @@ function getMockData(dataset: number): ProjectIF {
           createdAt: faker.date.past(),
           createdBy: employeesArrayFromFile[getRandomInt(employeesForProject.length)],
           dueTo: faker.date.future(),
-          userStatus: null,
         });
       }
 
@@ -431,12 +426,11 @@ function getMockData(dataset: number): ProjectIF {
           name: faker.company.catchPhrase(),
           description: faker.hacker.phrase(),
           closedAt: null,
-          status: null,
           assignedTo: null,
           createdAt: faker.date.past(),
           createdBy: employeesArrayFromFile[getRandomInt(employeesForProject.length)],
           dueTo: faker.date.future(),
-          userStatus: '',
+          status: '',
         });
       }
 
@@ -445,26 +439,26 @@ function getMockData(dataset: number): ProjectIF {
       const numberOfEmployees = employeesArrayFromFile.length;
 
       for (let i = 0; i < numberOfIssues; i++) {
-        const randomStatus = getRandomInt(4); // 0: Open, 1: Closed, 2: InProgress
+        const randomStatus = getRandomInt(4); // 0: Open, 1: Closed, 2: In Progress
 
         if (randomStatus === 2) {
-          issues[i].status = Status.InProgress;
+          issues[i].status = 'In Progress';
           const [devStatus] = devStatusList;
-          issues[i].userStatus = devStatus;
+          issues[i].status = devStatus;
         } else if (randomStatus === 1) {
           const randomDate = new Date(2018, 0o5, 0o5, 17, 23, 42, 11);
           // Assigning a random closedAt date within the last 30 days
           randomDate.setDate(randomDate.getDate() - getRandomInt(30));
           issues[i].closedAt = randomDate;
           const [testStatus] = testingStatusList;
-          issues[i].userStatus = testStatus;
+          issues[i].status = testStatus;
         } else if (randomStatus === 3) {
           issues[i].closedAt = faker.date.recent();
           const [nonDisplayedStatus] = nonDisplayedStatusList;
-          issues[i].userStatus = nonDisplayedStatus;
+          issues[i].status = nonDisplayedStatus;
         } else {
           const [planningStatus] = planningStatusList;
-          issues[i].userStatus = planningStatus;
+          issues[i].status = planningStatus;
         }
 
         const randomEmployee = getRandomInt(numberOfEmployees);
@@ -550,42 +544,36 @@ function getMockData(dataset: number): ProjectIF {
       );
 
       const date = new Date(2018, 0o5, 0o5, 17, 23, 42, 11);
-      issuesForProject[0].status = Status.InProgress;
-      issuesForProject[2].status = Status.Closed;
+      issuesForProject[0].status = 'In Progress';
+      issuesForProject[2].status = 'Closed';
       issuesForProject[2].closedAt = date; // Set the specific closedAt date
-      issuesForProject[3].status = Status.Closed;
+      issuesForProject[3].status = 'Closed';
       issuesForProject[3].closedAt = date; // Set the specific closedAt date
-      issuesForProject[4].status = Status.Closed;
+      issuesForProject[4].status = 'Closed';
       issuesForProject[4].closedAt = date; // Set the specific closedAt date
-      issuesForProject[5].status = Status.InProgress;
-      issuesForProject[6].status = Status.Closed;
+      issuesForProject[5].status = 'In Progress';
+      issuesForProject[6].status = 'Closed';
       issuesForProject[6].closedAt = date; // Set the specific closedAt date
 
-      [issuesForProject[0].status, issuesForProject[0].userStatus] = [
-        Status.InProgress,
-        devStatusList[0],
-      ];
-      [issuesForProject[1].userStatus] = [planningStatusList[0]];
-      [issuesForProject[2].status, issuesForProject[2].userStatus, issuesForProject[2].closedAt] = [
-        Status.Closed,
+      [issuesForProject[0].status, issuesForProject[0].status] = ['In Progress', devStatusList[0]];
+      [issuesForProject[1].status] = [planningStatusList[0]];
+      [issuesForProject[2].status, issuesForProject[2].status, issuesForProject[2].closedAt] = [
+        'Closed',
         testingStatusList[0],
         date,
       ];
-      [issuesForProject[3].status, issuesForProject[3].userStatus, issuesForProject[3].closedAt] = [
-        Status.Closed,
+      [issuesForProject[3].status, issuesForProject[3].status, issuesForProject[3].closedAt] = [
+        'Closed',
         testingStatusList[0],
         date,
       ];
-      [issuesForProject[4].status, issuesForProject[4].userStatus, issuesForProject[4].closedAt] = [
-        Status.Closed,
+      [issuesForProject[4].status, issuesForProject[4].status, issuesForProject[4].closedAt] = [
+        'Closed',
         testingStatusList[0],
         date,
       ];
-      [issuesForProject[5].status, issuesForProject[5].userStatus] = [
-        Status.InProgress,
-        devStatusList[0],
-      ];
-      [issuesForProject[6].userStatus, issuesForProject[6].closedAt] = [testingStatusList[0], date];
+      [issuesForProject[5].status, issuesForProject[5].status] = ['In Progress', devStatusList[0]];
+      [issuesForProject[6].status, issuesForProject[6].closedAt] = [testingStatusList[0], date];
 
       return {
         id: 55,

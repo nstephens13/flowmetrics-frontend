@@ -16,7 +16,7 @@ describe('SLA Store', () => {
       id: 1,
       projectFilter: {
         projectsWhiteList: [],
-        issueStatusIncludeFilter: [...planningStatusList, ...devStatusList],
+        issueStatusIncludeFilter: [],
       },
     });
   });

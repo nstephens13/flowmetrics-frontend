@@ -1,6 +1,5 @@
 import type { EmployeeIF } from './EmployeeIF';
 import type { IssueIF } from './IssueIF';
-import { Status } from './IssueIF';
 
 // Issue Class implements IssueIF
 class Issue implements IssueIF {
@@ -12,17 +11,15 @@ class Issue implements IssueIF {
 
   assignedTo: EmployeeIF | null;
 
-  createdBy: EmployeeIF;
+  createdBy: EmployeeIF | null;
 
-  createdAt: Date;
+  createdAt: Date | null;
 
   closedAt: Date | null;
 
   dueTo: Date | null;
 
-  status: Status | null;
-
-  userStatus: string | null;
+  status: string | null;
 
   constructor(
     id: number,
@@ -33,8 +30,7 @@ class Issue implements IssueIF {
     createdAt: Date,
     closedAt: Date | null,
     dueTo: Date | null,
-    status: Status | null,
-    userStatus: string | null
+    status: string | null
   ) {
     this.id = id;
     this.name = name;
@@ -45,7 +41,6 @@ class Issue implements IssueIF {
     this.closedAt = closedAt;
     this.dueTo = dueTo;
     this.status = status;
-    this.userStatus = userStatus;
   }
 }
 
@@ -74,7 +69,7 @@ function getTimeLeft(issue: Issue): number | null {
   return null;
 }
 
-function countIssuesByStatus(issueList: Issue[], status: Status | null): number {
+function countIssuesByStatus(issueList: Issue[], status: string | null): number {
   // filter the issue list by status and return the length of the filtered array
   // if the status is null, return the length of the issue list
 

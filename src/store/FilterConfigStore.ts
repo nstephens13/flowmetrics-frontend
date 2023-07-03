@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia';
 import type { FilterConfigIF } from '@/model/FilterConfigIF';
-import { devStatusList, planningStatusList } from '@/assets/__mockdata__/mockDataComposer';
 
 const useFilterConfigStore = defineStore('filterConfig', {
   state: () => ({
@@ -8,7 +7,7 @@ const useFilterConfigStore = defineStore('filterConfig', {
       id: 1,
       projectFilter: {
         projectsWhiteList: [],
-        issueStatusIncludeFilter: [...planningStatusList, ...devStatusList],
+        issueStatusIncludeFilter: [],
       },
     } as FilterConfigIF,
   }),

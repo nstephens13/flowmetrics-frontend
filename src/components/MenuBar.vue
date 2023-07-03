@@ -55,7 +55,7 @@ const items = ref([
 
 <style scoped>
 .p-menubar {
-  background-color: #2196f3;
+  background-color: #2d6dc1;
   color: #ffffff;
   border: 0;
   border-radius: 0;

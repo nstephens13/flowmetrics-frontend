@@ -33,11 +33,11 @@ describe('Filter Test', () => {
     expect(Array.isArray(project.issues)).toBeTruthy();
     expect(project.issues.length > 279).toBeTruthy();
     project.issues.forEach((issue: IssueIF) => {
-      if (issue.userStatus != null) {
-        expect(allStatusList.includes(issue.userStatus));
+      if (issue.status != null) {
+        expect(allStatusList.includes(issue.status));
 
-        if (!firstStatusList.includes(issue.userStatus)) {
-          expect(lastStatusList.includes(issue.userStatus));
+        if (!firstStatusList.includes(issue.status)) {
+          expect(lastStatusList.includes(issue.status));
           issueWithLastStatusFound = true;
         }
       }
@@ -60,9 +60,9 @@ describe('Filter Test', () => {
     // then
     expect(filteredProject.issues.length < amountIssuesBeforeFilter).toBeTruthy();
     filteredProject.issues.forEach((issue: IssueIF) => {
-      if (issue.userStatus != null) {
-        expect(firstStatusList.includes(issue.userStatus));
-        expect(!lastStatusList.includes(issue.userStatus));
+      if (issue.status != null) {
+        expect(firstStatusList.includes(issue.status));
+        expect(!lastStatusList.includes(issue.status));
       }
     });
   });
