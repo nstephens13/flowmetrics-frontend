@@ -42,7 +42,7 @@ const useSLAStore = defineStore('sla', {
     addSubscriber(subscriber: SLASubscriber) {
       this.subscribersIdCount += 1;
       const subscriberToAdd = subscriber;
-      subscriberToAdd.id = this.slaCategoriesIdCount;
+      subscriberToAdd.id = this.subscribersIdCount;
       this.subscriber.push(subscriberToAdd);
     },
     addRule(rule: SLARule) {
