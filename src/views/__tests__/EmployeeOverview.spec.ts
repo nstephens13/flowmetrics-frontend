@@ -40,7 +40,8 @@ describe('Employee Overview should load all the Components', () => {
   });
 
   test('Multiselect should contain all options', async () => {
-    const dropdownOptions = wrapper.findComponent(MultiSelect).props('options');
-    expect(dropdownOptions.length).toEqual(2);
-  });
+    const multiselects = wrapper.findAllComponents(MultiSelect);
+    expect(0).toEqual(multiselects[0].props('options').length);
+    expect(6).toEqual(multiselects[1].props('options').length);
+  })
 });

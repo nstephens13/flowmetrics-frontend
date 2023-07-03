@@ -10,8 +10,7 @@ export function filterIssuesInProjectWithAStatusWhitelist(
 ): ProjectIF {
   const filteredIssues = project.issues.filter(
     (issue: IssueIF) =>
-      issue.userStatus &&
-      filterConfig.projectFilter.issueStatusIncludeFilter.includes(issue.userStatus)
+      issue.status && filterConfig.projectFilter.issueStatusIncludeFilter.includes(issue.status)
   );
   const filteredMilestones: MilestoneIF[] = [];
   project.milestones.forEach((milestone) => {
@@ -24,8 +23,7 @@ export function filterIssuesInProjectWithAStatusWhitelist(
     filteredMilestones.push(newMilestone);
     const issues = milestone.issues.filter(
       (issue: IssueIF) =>
-        issue.userStatus &&
-        filterConfig.projectFilter.issueStatusIncludeFilter.includes(issue.userStatus)
+        issue.status && filterConfig.projectFilter.issueStatusIncludeFilter.includes(issue.status)
     );
     newMilestone.issues = issues;
   });
