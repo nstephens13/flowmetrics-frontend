@@ -1,4 +1,4 @@
-import { expect, test, describe} from 'vitest';
+import { expect, test, describe } from 'vitest';
 import getMockData from '../../assets/__mockdata__/mockDataComposer';
 import type { ProjectIF } from '../../model/ProjectIF';
 import mapIssuesToEmployees from '../issueCalculator';
@@ -15,7 +15,6 @@ describe('Issue Calculator should map correctly ', () => {
     expect(number).eq(0);
   });
 
-
   const testEmployee: EmployeeIF = {
     id: 12,
     firstName: 'TestFirstName',
@@ -23,25 +22,25 @@ describe('Issue Calculator should map correctly ', () => {
   };
 
   // given
-    const additionalIssue: IssueIF = {
-        id: 11,
-        name: 'IssueName',
-        description: '',
-        createdBy: null,
-        createdAt: null,
-        closedAt: null,
-        status: null,
-        userStatus: '',
-        dueTo: null,
-        assignedTo: testEmployee,
-    };
-    const additionalProject: ProjectIF = {
-        id: 4,
-        name: 'additional',
-        description: 'description',
-        milestones: [],
-        issues: [additionalIssue],
-    };
+  const additionalIssue: IssueIF = {
+    id: 11,
+    name: 'IssueName',
+    description: '',
+    createdBy: null,
+    createdAt: null,
+    closedAt: null,
+    status: null,
+    userStatus: '',
+    dueTo: null,
+    assignedTo: testEmployee,
+  };
+  const additionalProject: ProjectIF = {
+    id: 4,
+    name: 'additional',
+    description: 'description',
+    milestones: [],
+    issues: [additionalIssue],
+  };
   test('map should have 9 entries', () => {
     projects.push(getMockData(2));
     expect(Array.isArray(projects[0].issues)).toBe(true);
@@ -56,7 +55,7 @@ describe('Issue Calculator should map correctly ', () => {
   });
 
   test('map should have the additional Issue', () => {
-      projects.push(additionalProject);
+    projects.push(additionalProject);
     // when
     const issueMap = mapIssuesToEmployees(projects);
 
