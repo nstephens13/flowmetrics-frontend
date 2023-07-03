@@ -43,5 +43,5 @@ describe('Employee Overview should load all the Components', () => {
     const multiselects = wrapper.findAllComponents(MultiSelect);
     expect(0).toEqual(multiselects[0].props('options').length);
     expect(6).toEqual(multiselects[1].props('options').length);
-  })
+  });
 });
