@@ -1,5 +1,6 @@
 import type { EmployeeIF } from './EmployeeIF';
 import type { IssueIF } from './IssueIF';
+import type { SLARule } from '@/model/SLARule';
 
 // Issue Class implements IssueIF
 class Issue implements IssueIF {
@@ -21,6 +22,8 @@ class Issue implements IssueIF {
 
   status: string | null;
 
+  assignedSLARule: SLARule | null;
+
   constructor(
     id: number,
     name: string,
@@ -30,7 +33,8 @@ class Issue implements IssueIF {
     createdAt: Date,
     closedAt: Date | null,
     dueTo: Date | null,
-    status: string | null
+    status: string | null,
+    assignedSLARule: SLARule | null
   ) {
     this.id = id;
     this.name = name;
@@ -41,6 +45,7 @@ class Issue implements IssueIF {
     this.closedAt = closedAt;
     this.dueTo = dueTo;
     this.status = status;
+    this.assignedSLARule = assignedSLARule;
   }
 }
 

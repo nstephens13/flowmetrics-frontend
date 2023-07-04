@@ -8,7 +8,4 @@ export interface SLARule {
   durationInDays: number | null;
   expirationDate: Date | null;
   maxAssignedEmployees: number | null;
-  assignedIssues: IssueIF[] | null;
-  category: SLACategory | null;
-  subscriber: SLASubscriber | null;
 }

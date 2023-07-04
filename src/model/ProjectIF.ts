@@ -1,6 +1,7 @@
 import { nonDisplayedStatusList } from '@/assets/__mockdata__/mockDataComposer';
 import type { IssueIF } from './IssueIF';
 import type { MilestoneIF } from './MilestoneIF';
+import type {SLASubscriber} from "@/model/SLASubscriber";
 
 /**
  *
@@ -17,6 +18,7 @@ export interface ProjectIF {
   description: string;
   milestones: MilestoneIF[];
   issues: IssueIF[];
+  slaSubscriber: SLASubscriber | null;
 }
 
 function getIssueStatusList(issues: IssueIF[]): string[] {
