@@ -69,7 +69,7 @@
               :showFilterMatchModes="false"
               :filterMenuStyle="{ width: '7rem' }"
               style="min-width: 10rem"
-              :show-filter-match-modes="false"
+              :show-apply-button="false"
             >
               <template #body="data">
                 <div class="flex align-items-center gap-2">
