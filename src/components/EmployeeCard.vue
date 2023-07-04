@@ -1,64 +1,67 @@
 <template>
-  <div class="card">
-    <div class="flex flex-wrap align-items-center justify-content-start gap-1">
+  <div class="flex flex-column">
+    <div class="flex align-items-center justify-content-center">
       <Avatar
         :label="employee.firstName.charAt(0) + employee.lastName.charAt(0)"
-        class="mr-2"
         size="large"
         style="background-color: #2d6dc1; color: #ffffff"
       />
-      <h3 class="EmployeeName" style="margin-right: auto">{{
-        employee.firstName + ' ' + employee.lastName
-      }}</h3>
-      <Chip :label="'Employee ID : ' + employee.id"></Chip>
     </div>
-    <div class="flex flex-column gap-1 mt-2">
-      <div class="field mb-0">
-        <label for="TotalTickets" class="col-12 font-bold">
-          Total Tickets : {{ totalIssues }}
-        </label>
+    <div class="flex align-items-center justify-content-center">
+      <label class="font-bold text-xl my-1" id="firstName" style="white-space: nowrap">
+        {{ employee.firstName }}
+      </label>
+    </div>
+    <div class="flex align-items-center justify-content-center">
+      <label class="font-bold text-xl mb-1" id="lastName" style="white-space: nowrap">
+        {{ employee.lastName }}
+      </label>
+    </div>
+    <div class="flex align-items-center justify-content-center" style="white-space: nowrap">
+      <label id="ticketCount"> Total Tickets : {{ totalIssues }} </label>
+    </div>
+  </div>
+  <div class="flex flex-column gap-1 mt-2">
+    <!--Open Issues Progress Bar-->
+    <div class="field mb-0">
+      <label class="mb-2 font-semibold" for="planningProgressbar">{{
+        categoryNames.firstCategory
+      }}</label>
+      <div>
+        <ProgressBar
+          class="planningProgressbar"
+          id="planningProgressbar"
+          :value="(issues.planning / totalIssues) * 100"
+          >{{ issues.planning }}
+        </ProgressBar>
       </div>
-      <!--Open Issues Progress Bar-->
-      <div class="field mb-0">
-        <label class="mb-2 font-semibold" for="planningProgressbar">{{
-          categoryNames.firstCategory
-        }}</label>
-        <div>
-          <ProgressBar
-            class="planningProgressbar"
-            id="planningProgressbar"
-            :value="(issues.planning / totalIssues) * 100"
-            >{{ issues.planning }}
-          </ProgressBar>
-        </div>
+    </div>
+    <!--In Progress Issues Progress Bar-->
+    <div class="field mb-0">
+      <label class="mb-2 font-semibold" for="developmentProgressbar">{{
+        categoryNames.secondCategory
+      }}</label>
+      <div>
+        <ProgressBar
+          class="developmentProgressbar"
+          id="developmentProgressbar"
+          :value="(issues.development / totalIssues) * 100"
+          >{{ issues.development }}
+        </ProgressBar>
       </div>
-      <!--In Progress Issues Progress Bar-->
-      <div class="field mb-0">
-        <label class="mb-2 font-semibold" for="developmentProgressbar">{{
-          categoryNames.secondCategory
-        }}</label>
-        <div>
-          <ProgressBar
-            class="developmentProgressbar"
-            id="developmentProgressbar"
-            :value="(issues.development / totalIssues) * 100"
-            >{{ issues.development }}
-          </ProgressBar>
-        </div>
-      </div>
-      <!--Closed Issues Progress Bar-->
-      <div class="field mb-0">
-        <label class="mb-2 font-semibold" for="testingProgressbar">{{
-          categoryNames.thirdCategory
-        }}</label>
-        <div>
-          <ProgressBar
-            class="testingProgressbar"
-            id="testingProgressbar"
-            :value="(issues.testing / totalIssues) * 100"
-            >{{ issues.testing }}
-          </ProgressBar>
-        </div>
+    </div>
+    <!--Closed Issues Progress Bar-->
+    <div class="field mb-0">
+      <label class="mb-2 font-semibold" for="testingProgressbar">{{
+        categoryNames.thirdCategory
+      }}</label>
+      <div>
+        <ProgressBar
+          class="testingProgressbar"
+          id="testingProgressbar"
+          :value="(issues.testing / totalIssues) * 100"
+          >{{ issues.testing }}
+        </ProgressBar>
       </div>
     </div>
   </div>
