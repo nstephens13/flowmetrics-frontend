@@ -7,8 +7,9 @@ import Panel from 'primevue/panel';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import Divider from 'primevue/divider';
+import MultiSelect from 'primevue/multiselect';
 import router from '@/router/index';
-import ProjectDescriptionPanel from '@/components/ProjectDescriptionPanel.vue';
+import ProjectDescriptionPanel from '../ProjectDescriptionPanel.vue';
 
 describe('Project Overview should load all the Components', () => {
   const wrapper = mount(ProjectDescriptionPanel, {
@@ -21,7 +22,11 @@ describe('Project Overview should load all the Components', () => {
         DataTable,
         Column,
         Divider,
+        MultiSelect,
       },
+    },
+    stubs: {
+      teleport: false,
     },
   });
 
@@ -42,7 +47,15 @@ describe('Project Overview should load all the Components', () => {
       .trigger('click')
       .then(() => {
         const dropdownOptions = wrapper.getComponent(Dropdown).props('options');
-        expect(dropdownOptions.length).toEqual(6);
+        expect(6).toEqual(dropdownOptions.length);
       });
+  });
+
+  test('filter menu dropdown button', () => {
+    const tableButton = wrapper.getComponent(DataTable).find('.p-column-filter-menu-button');
+    tableButton.trigger('click').then(() => {
+      const multiSelect = wrapper.getComponent(MultiSelect);
+      expect(3).toEqual(multiSelect.props('options').length);
+    });
   });
 });
