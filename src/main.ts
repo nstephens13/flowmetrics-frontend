@@ -23,7 +23,6 @@ import ProgressBar from 'primevue/progressbar';
 import DataView from 'primevue/dataview';
 import DataViewLayoutOptions from 'primevue/dataviewlayoutoptions';
 import AutoComplete from 'primevue/autocomplete';
-import MultiSelect from 'primevue/multiselect';
 import Chip from 'primevue/chip';
 
 import router from './router';
