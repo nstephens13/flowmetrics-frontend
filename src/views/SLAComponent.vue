@@ -77,7 +77,7 @@
       </div>
     </template>
     <template #footer>
-      <GeneratePDF ></GeneratePDF>
+      <GeneratePDF></GeneratePDF>
     </template>
   </Card>
 </template>

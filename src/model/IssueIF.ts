@@ -1,5 +1,4 @@
 import type { EmployeeIF } from './EmployeeIF';
-import type { SLARule } from '@/model/SLARule';
 
 /**
  *
@@ -25,5 +24,4 @@ export interface IssueIF {
   closedAt: Date | null;
   dueTo: Date | null;
   status: string | null;
-  slaRule: SLARule | null;
 }

@@ -6,6 +6,7 @@ import type { MilestoneIF } from '@/model/MilestoneIF';
 import employeeJson from './Employees.json';
 import issueJson2 from './Issues_2.json';
 import issueJson from './Issues.json';
+import slaRule from './SLARule.json';
 import milestoneJson from './Milestones.json';
 import type { Issue } from '@/model/Issue';
 import type { SLARule } from '@/model/SLARule';
@@ -32,7 +33,6 @@ function loadIssueDataFromFile(issues: any): Issue[] {
       createdAt: issue.createdAt ? new Date(issue.createdAt) : null,
       dueTo: issue.dueTo ? new Date(issue.dueTo) : null,
       status: issue.status as string,
-      slaRule: issue.slaRule as SLARule,
     });
   });
   return issueData;
@@ -65,6 +65,20 @@ function assignIssueToMilestone(
   mileStonesToReturn[milestoneNumber].issues.push(issues[issueNumber]);
 
   return mileStonesToReturn;
+}
+
+function assignIssuesToSLARule(
+  issueNumbers: number[],
+  slaRuleNumber: number,
+  issues: IssueIF[],
+  slaRules: SLARule[]
+) {
+  const slaRulesToReturn = slaRules; // or [...slaRules]; without affecting SLARules?
+  issueNumbers.forEach((issueNumber) => {
+    slaRulesToReturn[slaRuleNumber].assignedIssues.push(issues[issueNumber]);
+  });
+
+  return slaRulesToReturn;
 }
 
 function loadArraysFromFile(
@@ -280,7 +294,6 @@ function getMockData(dataset: number): ProjectIF {
           createdAt: faker.date.past(),
           createdBy: employeesArrayFromFile[getRandomInt(employeesForProject.length)],
           dueTo: faker.date.future(),
-          slaRule: null,
         });
       }
 
@@ -332,7 +345,6 @@ function getMockData(dataset: number): ProjectIF {
           createdAt: faker.date.past(),
           createdBy: employeesArrayFromFile[getRandomInt(employeesForProject.length)],
           dueTo: faker.date.future(),
-          slaRule: null,
         });
       }
 
@@ -435,7 +447,6 @@ function getMockData(dataset: number): ProjectIF {
           createdBy: employeesArrayFromFile[getRandomInt(employeesForProject.length)],
           dueTo: faker.date.future(),
           status: '',
-          slaRule: null,
         });
       }
 
