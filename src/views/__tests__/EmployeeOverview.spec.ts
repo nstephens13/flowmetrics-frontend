@@ -16,8 +16,6 @@ import EmployeeOverview from '../EmployeeOverview.vue';
 
 const pinia = createPinia();
 describe('Employee Overview should load all the Components', () => {
-
-
   const wrapper = mount(EmployeeOverview, {
     global: {
       plugins: [PrimeVue, router, pinia],
