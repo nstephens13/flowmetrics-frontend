@@ -15,3 +15,10 @@
 <script setup lang="ts">
 import TicketCalculator from '@/components/TicketCalculator.vue';
 </script>
+
+<style scoped>
+.p-card {
+  margin: 15px;
+  box-shadow: none;
+}
+</style>

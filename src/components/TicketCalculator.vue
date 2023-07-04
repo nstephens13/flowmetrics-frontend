@@ -14,7 +14,7 @@
         <div class="flex-wrap flex align-items-center justify-content-center">
           <CircularProgressBar
             class="flex align-items-center justify-content-center m-2"
-            :value="countIssuesByStatus(selectedProject.issues, Status.Open)"
+            :value="countIssuesByStatus(selectedProject.issues, 'Open')"
             :max="getIssueCountMax(selectedProject.issues)"
             percentage
             rounded
@@ -22,7 +22,7 @@
           />
           <CircularProgressBar
             class="flex align-items-center justify-content-center m-2"
-            :value="countIssuesByStatus(selectedProject.issues, Status.Closed)"
+            :value="countIssuesByStatus(selectedProject.issues, 'Closed')"
             :max="getIssueCountMax(selectedProject.issues)"
             percentage
             rounded
@@ -30,7 +30,7 @@
           />
           <CircularProgressBar
             class="flex align-items-center justify-content-center m-2"
-            :value="countIssuesByStatus(selectedProject.issues, Status.InProgress)"
+            :value="countIssuesByStatus(selectedProject.issues, 'InProgress')"
             :max="getIssueCountMax(selectedProject.issues)"
             percentage
             rounded
@@ -79,7 +79,6 @@ import CircularProgressBar from '@/components/TicketCalculator/CircularProgressB
 import type { ProjectIF } from '@/model/ProjectIF';
 import getMockData from '@/assets/__mockdata__/mockDataComposer';
 import { countIssuesByStatus, Issue, getTimeLeft } from '@/model/Issue';
-import { Status } from '@/model/IssueIF';
 import type { EmployeeIF } from '@/model/EmployeeIF';
 </script>
 

@@ -20,6 +20,11 @@ import Panel from 'primevue/panel';
 import MultiSelect from 'primevue/multiselect';
 import Tag from 'primevue/tag';
 import ProgressBar from 'primevue/progressbar';
+import DataView from 'primevue/dataview';
+import DataViewLayoutOptions from 'primevue/dataviewlayoutoptions';
+import AutoComplete from 'primevue/autocomplete';
+import MultiSelect from 'primevue/multiselect';
+import Chip from 'primevue/chip';
 
 import router from './router';
 import App from './App.vue';
@@ -51,5 +56,9 @@ app.component('Panel', Panel);
 app.component('ProgressBar', ProgressBar);
 app.component('MultiSelect', MultiSelect);
 app.component('Tag', Tag);
+app.component('DataView', DataView);
+app.component('DataViewLayoutOptions', DataViewLayoutOptions);
+app.component('AutoComplete', AutoComplete);
+app.component('Chip', Chip);
 
 app.mount('#app');

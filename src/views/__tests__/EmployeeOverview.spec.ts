@@ -1,35 +1,46 @@
-import { describe, test, expect } from 'vitest';
 import { mount } from '@vue/test-utils';
+import { describe, expect, test } from 'vitest';
 import PrimeVue from 'primevue/config';
+import { createPinia } from 'pinia';
+
 import Card from 'primevue/card';
+import DataView from 'primevue/dataview';
+import Divider from 'primevue/divider';
+import Avatar from 'primevue/avatar';
+import MultiSelect from 'primevue/multiselect';
+import ProgressBar from 'primevue/progressbar';
+import Chip from 'primevue/chip';
+import router from '@/router/index';
+
 import EmployeeOverview from '../EmployeeOverview.vue';
 
-describe('EmployeeOverview with a simple manual constructed map should render correctly', () => {
-  // when
+const pinia = createPinia();
+describe('Employee Overview should load all the Components', () => {
   const wrapper = mount(EmployeeOverview, {
     global: {
-      plugins: [PrimeVue],
+      plugins: [PrimeVue, router, pinia],
       components: {
         Card,
+        DataView,
+        Divider,
+        MultiSelect,
+        Avatar,
+        ProgressBar,
+        Chip,
       },
     },
   });
 
-  const openBoxes = wrapper.findAll('.open');
-  const inProgressBoxes = wrapper.findAll('.in-progress');
-  const closedBoxes = wrapper.findAll('.closed');
-
-  // TODO Test dosent test the right thing
-  test('Component should include the Name John Doe', () => {
-    expect(wrapper.text()).toContain('JOHN DOE');
+  test('it mounts', () => {
+    expect(wrapper.exists()).toBe(true);
+    expect(wrapper.findComponent(Card).isVisible()).toBe(true);
+    expect(wrapper.findComponent(DataView).isVisible()).toBe(true);
+    expect(wrapper.findComponent(Divider).isVisible()).toBe(true);
+    expect(wrapper.findComponent(MultiSelect).isVisible()).toBe(true);
   });
 
-  test('all Boxes exists exactly one time', () => {
-    expect(openBoxes[0].exists()).toBe(true);
-    expect(inProgressBoxes[0].exists()).toBe(true);
-    expect(closedBoxes[0].exists()).toBe(true);
-    expect(openBoxes.length).toBe(13);
-    expect(inProgressBoxes.length).toBe(13);
-    expect(closedBoxes.length).toBe(13);
+  test('Multiselect should contain all options', async () => {
+    const dropdownOptions = wrapper.findComponent(MultiSelect).props('options');
+    expect(dropdownOptions.length).toEqual(2);
   });
 });
