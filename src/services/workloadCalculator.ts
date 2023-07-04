@@ -5,7 +5,7 @@ import type { IssueIF } from '@/model/IssueIF';
 import type { IssueDataIF } from '@/model/IssueDataIF';
 
 // just temporary import
-import getMockData, {
+import {
   devStatusList,
   nonDisplayedStatusList,
   planningStatusList,
@@ -23,20 +23,10 @@ import getMockData, {
  * @returns {Map} key:Employee,
  * value:{ planning: number; development: number; testing: number }
  */
-function calculateWorkload(projects: ProjectIF[] | null): Map<EmployeeIF, IssueDataIF> {
+export function calculateWorkload(projects: ProjectIF[]): Map<EmployeeIF, IssueDataIF> {
   const mapToReturn: Map<EmployeeIF, { planning: number; development: number; testing: number }> =
     new Map([]);
   const issueSet: Set<IssueIF> = new Set<IssueIF>();
-  let projectsToCalculate: ProjectIF[];
-
-  /**
-   * ToDo: decouple the mock data when everything is setup
-   */
-  if (projects === undefined || projects === null) {
-    projectsToCalculate = [getMockData(3)];
-  } else {
-    projectsToCalculate = projects;
-  }
 
   function extractEmployeeAndUpdateEmployeeMap(issue: IssueIF) {
     // checking if the issue is already done, with a set, and if somebody is assigned
@@ -87,10 +77,12 @@ function calculateWorkload(projects: ProjectIF[] | null): Map<EmployeeIF, IssueD
     }
     issueSet.add(issue);
   }
-  projectsToCalculate.forEach((project) => {
+
+  projects.forEach((project) => {
     project.issues.forEach((issue) => {
       extractEmployeeAndUpdateEmployeeMap(issue);
     });
+
     project.milestones.forEach((milestone) => {
       milestone.issues.forEach((issue) => {
         extractEmployeeAndUpdateEmployeeMap(issue);
@@ -101,4 +93,25 @@ function calculateWorkload(projects: ProjectIF[] | null): Map<EmployeeIF, IssueD
   return mapToReturn;
 }
 
-export default calculateWorkload;
+export function mergeEmployees(
+  workloadMap: Map<EmployeeIF, IssueDataIF>
+): { employee: EmployeeIF; issues: IssueDataIF }[] {
+  const employeeList: { employee: EmployeeIF; issues: IssueDataIF }[] = [];
+  // merge employees with same id in the workloadMap
+  workloadMap.forEach((issues, employee) => {
+    const employeeInList = employeeList.find(
+      (employeeElement) => employeeElement.employee.id === employee.id
+    );
+    if (employeeInList) {
+      employeeInList.issues = {
+        development: employeeInList.issues.development + issues.development,
+        planning: employeeInList.issues.planning + issues.planning,
+        testing: employeeInList.issues.testing + issues.testing,
+      };
+    } else {
+      employeeList.push({ employee, issues });
+    }
+  });
+
+  return employeeList;
+}

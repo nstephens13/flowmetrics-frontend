@@ -20,6 +20,9 @@
     <div class="flex align-items-center justify-content-center" style="white-space: nowrap">
       <label id="ticketCount"> Total Tickets : {{ totalIssues }} </label>
     </div>
+    <div class="flex align-items-center justify-content-center" style="white-space: nowrap">
+      <label id="ticketCount"> ID : {{ employee.id }} </label>
+    </div>
   </div>
   <div class="flex flex-column gap-1 mt-2">
     <!--Open Issues Progress Bar-->

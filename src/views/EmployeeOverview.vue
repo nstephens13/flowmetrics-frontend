@@ -51,7 +51,7 @@ import type { Ref } from 'vue';
 import type { EmployeeIF } from '@/model/EmployeeIF';
 import type { ProjectIF } from '@/model/ProjectIF';
 import type { IssueDataIF } from '@/model/IssueDataIF';
-import calculateWorkload from '@/services/workloadCalculator';
+import { calculateWorkload, mergeEmployees } from '@/services/workloadCalculator';
 import useFilterConfigStore from '@/store/FilterConfigStore';
 import filterProjectThatHasTheAllowedStatus from '@/services/filter/IssuesStateFilter';
 import EmployeeCard from '@/components/EmployeeCard.vue';
@@ -64,14 +64,7 @@ const projectStore = useProjectsStore();
 
 const filterConfig = computed(() => filterConfigStore.getFilterConfig);
 
-[
-  getMockData(1),
-  getMockData(2),
-  getMockData(3),
-  getMockData(4),
-  getMockData(5),
-  getMockData(6),
-].forEach((project) => {
+[getMockData(1), getMockData(3), getMockData(4), getMockData(6)].forEach((project) => {
   projectStore.addProject(project);
 });
 
@@ -105,10 +98,11 @@ const selectedStatuses = ref(filterConfig.value.projectFilter.issueStatusInclude
 const selectedProjects = ref(filterConfig.value.projectFilter.projectsWhiteList);
 
 function updateEmployeeList(projects: ProjectIF[]) {
-  const workloadMap = calculateWorkload(
+  const workloadMap: Map<EmployeeIF, IssueDataIF> = calculateWorkload(
     filterProjectThatHasTheAllowedStatus(projects, filterConfig.value)
   );
-  employeeList.value = Array.from(workloadMap, ([employee, issues]) => ({ employee, issues }));
+
+  employeeList.value = mergeEmployees(workloadMap);
   // filter category names for the issues in the emplyeeList that are the keys of the issues in the workloadMap
   categoryNames.value = {
     firstCategory: 'planning',

@@ -41,7 +41,7 @@ describe('Employee Overview should load all the Components', () => {
 
   test('Multiselect should contain all options', async () => {
     const multiselects = wrapper.findAllComponents(MultiSelect);
-    expect(6).toEqual(multiselects[0].props('options').length);
+    expect(4).toEqual(multiselects[0].props('options').length);
     expect(0).toEqual(multiselects[1].props('options').length);
   });
 
@@ -52,7 +52,7 @@ describe('Employee Overview should load all the Components', () => {
 
   test('Select a project and status on the project multiselector', async () => {
     const multiselects = wrapper.findAllComponents(MultiSelect);
-    multiselects[0].setValue([multiselects[0].props('options')[2]]).finally(() => {
+    multiselects[0].setValue([multiselects[0].props('options')[1]]).finally(() => {
       expect('Mocking Bird Project').toEqual(multiselects[0].find('.p-multiselect-label').text());
       multiselects[1].setValue([multiselects[1].props('options')[0]]).finally(() => {
         expect(13).toEqual(wrapper.getComponent(DataView).props('value').length);
