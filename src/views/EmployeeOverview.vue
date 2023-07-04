@@ -30,8 +30,8 @@
           </div>
         </template>
         <template #grid="slotProps">
-          <div class="col-12 sm:col-6 lg:col-12 xl:col-4 p-2">
-            <div class="p-4 border-1 surface-border border-round shadow-5 hover:bg-gray-50">
+          <div class="xl:col-2 lg:col-3 md:col-4 sm:col-6 col-12 p-2">
+            <div class="p-4 border-1 surface-border border-round shadow-1 hover:bg-gray-50">
               <EmployeeCard
                 :employee="slotProps.data.employee"
                 :issues="slotProps.data.issues"
