@@ -13,17 +13,17 @@
         <template #header>
           <div class="grid gap-3">
             <MultiSelect
-              v-model="selectedStatuses"
-              :options="allStatuses"
-              placeholder="Select Status"
-              :maxSelectedLabels="1"
-              class="w-full md:w-14rem"
-            />
-            <MultiSelect
               v-model="selectedProjects"
               :options="allProjects"
               option-label="name"
               placeholder="Select Projects"
+              :maxSelectedLabels="1"
+              class="w-full md:w-14rem"
+            />
+            <MultiSelect
+              v-model="selectedStatuses"
+              :options="allStatuses"
+              placeholder="Select Status"
               :maxSelectedLabels="1"
               class="w-full md:w-14rem"
             />
