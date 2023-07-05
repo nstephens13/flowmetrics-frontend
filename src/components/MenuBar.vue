@@ -46,9 +46,9 @@ const items = ref([
     to: '/sla-management',
   },
   {
-    label: 'Ticket Calculator',
+    label: 'Issue Calculator',
     icon: 'pi pi-fw pi-ticket',
-    to: '/ticket-calculator',
+    to: '/issue-calculator',
   },
 ]);
 </script>

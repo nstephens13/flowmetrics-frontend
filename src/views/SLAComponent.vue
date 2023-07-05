@@ -62,8 +62,8 @@
           <Column field="subscriber.name" header="Subscriber" />
           <Column field="rule.name" header="Rule" />
           <Column field="rule.durationInDays" header="Duration (Days)" />
-          <Column field="rule.expirationDate" header="Expiration Date" />
-          <Column field="rule.maxAssignedEmployees" header="Max Assigned Employees" />
+          <Column field="rule.expirationDate" header="Due date" />
+          <Column field="rule.maxAssignedEmployees" header="Max assigned employees" />
           <Column header="Delete">
             <template #body="rowData">
               <Button

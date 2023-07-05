@@ -268,6 +268,7 @@ function getMockData(dataset: number): ProjectIF {
 
         if (randomStatus === 2) {
           status = 'In Progress';
+          status = 'In Progress';
         } else if (randomStatus === 1) {
           closedAt = faker.date.recent();
         }
@@ -482,8 +483,8 @@ function getMockData(dataset: number): ProjectIF {
 
       return {
         id: 6,
-        name: 'Mocking Bird 6',
-        description: 'sixth mock dataset',
+        name: faker.science.chemicalElement().name,
+        description: 'Sixth mock dataset',
         milestones: milestonesArrayFromFile,
         issues: issuesForProject,
         slaSubscriber: null,
@@ -694,8 +695,8 @@ function getMockData(dataset: number): ProjectIF {
     default: {
       return {
         id: 0,
-        name: 'default',
-        description: 'a empty project',
+        name: 'Default',
+        description: 'An empty project',
         milestones: [],
         issues: [],
         slaSubscriber: null,
