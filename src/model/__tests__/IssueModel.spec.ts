@@ -22,7 +22,7 @@ describe('Issue Class', () => {
     const closedAt = null;
     const dueTo = new Date();
     const status = 'Open';
-    const statusChanges = 1;
+    const statusChanges = null;
 
     const issue = new Issue(
       id,
@@ -46,6 +46,7 @@ describe('Issue Class', () => {
     expect(issue.closedAt).toBe(closedAt);
     expect(issue.dueTo).toBe(dueTo);
     expect(issue.status).toBe(status);
+    expect(issue.statusChanges).toBe(statusChanges);
   });
 });
 
