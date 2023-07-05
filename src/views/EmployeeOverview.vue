@@ -13,10 +13,17 @@
         <template #header>
           <div class="grid gap-3">
             <MultiSelect
+              v-model="selectedProjects"
+              :options="allProjects"
+              option-label="name"
+              placeholder="Select project"
+              :maxSelectedLabels="1"
+              class="w-full md:w-14rem"
+            />
+            <MultiSelect
               v-model="selectedStatuses"
               :options="allStatuses"
-              @onChange="updateFilterConfig()"
-              placeholder="Select Status"
+              placeholder="Select status"
               :maxSelectedLabels="1"
               class="w-full md:w-14rem"
             />
@@ -44,21 +51,34 @@ import type { Ref } from 'vue';
 import type { EmployeeIF } from '@/model/EmployeeIF';
 import type { ProjectIF } from '@/model/ProjectIF';
 import type { IssueDataIF } from '@/model/IssueDataIF';
-import calculateWorkload from '@/services/workloadCalculator';
-import getMockData from '@/assets/__mockdata__/mockDataComposer';
+import { calculateWorkload, mergeEmployees } from '@/services/workloadCalculator';
 import useFilterConfigStore from '@/store/FilterConfigStore';
 import filterProjectThatHasTheAllowedStatus from '@/services/filter/IssuesStateFilter';
 import EmployeeCard from '@/components/EmployeeCard.vue';
 import { getIssueStatusList } from '@/model/ProjectIF';
-
-const selectedProject: Ref<ProjectIF> = ref(getMockData(3));
-const allStatuses: Ref<string[]> = ref(getIssueStatusList(selectedProject.value.issues));
+import useProjectsStore from '@/store/ProjectStore';
+import getMockData from '@/assets/__mockdata__/mockDataComposer';
 
 const filterConfigStore = useFilterConfigStore();
+const projectStore = useProjectsStore();
+
 const filterConfig = computed(() => filterConfigStore.getFilterConfig);
+
+[getMockData(1), getMockData(3), getMockData(4), getMockData(6)].forEach((project) => {
+  projectStore.addProject(project);
+});
+
 const workload: Ref<Map<EmployeeIF, IssueDataIF>> = ref(
-  calculateWorkload(filterProjectThatHasTheAllowedStatus(selectedProject.value, filterConfig.value))
+  calculateWorkload(filterConfig.value.projectFilter.projectsWhiteList)
 );
+
+const allStatuses: Ref<string[]> = ref(
+  getIssueStatusList(
+    filterConfig.value.projectFilter.projectsWhiteList.flatMap((project) => project.issues)
+  )
+);
+
+const allProjects: Ref<ProjectIF[]> = ref(projectStore.getProjects);
 
 const employeeList = ref(
   Array.from(workload.value, ([employee, issues]) => ({ employee, issues }))
@@ -75,18 +95,14 @@ const categoryNames = ref<{
 });
 
 const selectedStatuses = ref(filterConfig.value.projectFilter.issueStatusIncludeFilter);
+const selectedProjects = ref(filterConfig.value.projectFilter.projectsWhiteList);
 
-function updateFilterConfig() {
-  const updatedFilterConfig = { ...filterConfig.value };
-  updatedFilterConfig.projectFilter.issueStatusIncludeFilter = selectedStatuses.value;
-  filterConfigStore.setFilterConfig(updatedFilterConfig);
-}
-
-function updateEmployeeList(project: ProjectIF) {
-  const workloadMap = calculateWorkload(
-    filterProjectThatHasTheAllowedStatus(project, filterConfig.value)
+function updateEmployeeList(projects: ProjectIF[]) {
+  const workloadMap: Map<EmployeeIF, IssueDataIF> = calculateWorkload(
+    filterProjectThatHasTheAllowedStatus(projects, filterConfig.value)
   );
-  employeeList.value = Array.from(workloadMap, ([employee, issues]) => ({ employee, issues }));
+
+  employeeList.value = mergeEmployees(workloadMap);
   // filter category names for the issues in the emplyeeList that are the keys of the issues in the workloadMap
   categoryNames.value = {
     firstCategory: 'planning',
@@ -95,19 +111,25 @@ function updateEmployeeList(project: ProjectIF) {
   };
 }
 
-watch(selectedStatuses, () => {
-  updateFilterConfig();
-});
+watch(selectedProjects, (projects) => {
+  const updatedFilterConfig = { ...filterConfig.value };
+  updatedFilterConfig.projectFilter.projectsWhiteList = projects;
+  filterConfigStore.setFilterConfig(updatedFilterConfig);
 
-watch(filterConfig, (newConfig) => {
-  selectedStatuses.value = newConfig.projectFilter.issueStatusIncludeFilter;
-  updateEmployeeList(selectedProject.value);
-});
-
-watch(selectedProject, (project) => {
   selectedStatuses.value = [];
-  allStatuses.value = getIssueStatusList(project.issues);
-  updateEmployeeList(project);
+  updateEmployeeList(projects);
+  allStatuses.value = getIssueStatusList(projects.flatMap((project) => project.issues));
+});
+
+watch(selectedStatuses, (statuses) => {
+  const updatedFilterConfig = { ...filterConfig.value };
+  updatedFilterConfig.projectFilter.issueStatusIncludeFilter = statuses;
+  filterConfigStore.setFilterConfig(updatedFilterConfig);
+
+  updateEmployeeList(selectedProjects.value);
+  allStatuses.value = getIssueStatusList(
+    selectedProjects.value.flatMap((project) => project.issues)
+  );
 });
 </script>
 
