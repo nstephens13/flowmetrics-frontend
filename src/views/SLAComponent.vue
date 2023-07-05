@@ -28,9 +28,9 @@
           />
           <Dropdown
             v-model="newOccurredIn"
-              :options="occurredInOptions"
-              placeholder="Occurred in"
-              class="select-employees"
+            :options="occurredInOptions"
+            placeholder="Occurred in"
+            class="select-employees"
           />
           <Button class="add-rule" @click="addRule" label="+"></Button>
         </div>
