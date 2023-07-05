@@ -20,7 +20,7 @@
             <div class="flex flex-row flex-wrap card-container justify-content-left">
               <h4 class="m-2">Project-ID: {{ selectedProject.id }}</h4>
               <h4 class="m-2">Description: {{ selectedProject.description }}</h4>
-              <h4 class="m-2">Total issues : {{ selectedProject.issues.length }}</h4>
+              <h4 class="m-2">Total issues: {{ selectedProject.issues.length }}</h4>
             </div>
           </template>
         </Panel>

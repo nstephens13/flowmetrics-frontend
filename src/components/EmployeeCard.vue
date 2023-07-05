@@ -18,7 +18,7 @@
       </label>
     </div>
     <div class="flex align-items-center justify-content-center" style="white-space: nowrap">
-      <label id="ticketCount"> Total tickets : {{ totalIssues }} </label>
+      <label id="ticketCount"> Total issues: {{ totalIssues }} </label>
     </div>
   </div>
   <div class="flex flex-column gap-1 mt-2">
