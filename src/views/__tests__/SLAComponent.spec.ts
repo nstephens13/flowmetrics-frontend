@@ -101,6 +101,7 @@ describe('SLA Component should delete and add categories, and create new rules a
         id: 2,
         maxAssignedEmployees: 4,
         name: 'Pre-Config 2',
+        occurredIn: null,
       },
       subscriber: {
         description: 'Description 2',
