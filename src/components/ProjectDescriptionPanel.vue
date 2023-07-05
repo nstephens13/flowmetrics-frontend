@@ -59,6 +59,7 @@
             <Column field="closedAt" header="Closed on"></Column>
             <Column field="dueTo" header="Due on"></Column>
             <Column field="status" header="Status"></Column>
+            <Column field="statusChanges" header="Status changes"></Column>
           </DataTable>
         </div>
       </template>
