@@ -69,6 +69,7 @@
               :showFilterMatchModes="false"
               :filterMenuStyle="{ width: '7rem' }"
               style="min-width: 10rem"
+              :show-filter-match-modes="false"
               :show-apply-button="false"
             >
               <template #body="data">
@@ -102,7 +103,6 @@ import { FilterMatchMode } from 'primevue/api';
 import type { EmployeeIF } from '@/model/EmployeeIF';
 import type { ProjectIF } from '@/model/ProjectIF';
 import getMockData from '@/assets/__mockdata__/mockDataComposer';
-import { Status } from '@/model/IssueIF';
 
 const selectedProject = ref({
   id: 0,
@@ -112,7 +112,7 @@ const selectedProject = ref({
   issues: [],
 } as ProjectIF);
 
-const statuses = ref([Status.Closed, Status.Open, Status.InProgress]);
+const statuses = ref(['Closed', 'Open', 'In Progress']);
 
 const filters = ref({
   status: { value: null, matchMode: FilterMatchMode.IN },
