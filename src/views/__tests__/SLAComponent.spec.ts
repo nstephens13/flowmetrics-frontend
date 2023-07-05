@@ -1,5 +1,5 @@
 import { describe, expect, test, vi } from 'vitest';
-import { createTestingPinia } from '@pinia/testing'
+import { createTestingPinia } from '@pinia/testing';
 import { mount } from '@vue/test-utils';
 import InputText from 'primevue/inputtext';
 import PrimeVue from 'primevue/config';
@@ -14,7 +14,7 @@ import router from '@/router';
 
 /* Basic test to ensure, that SLA Component is successfully rendered without any errors */
 describe('SLAComponent', () => {
-  const pinia = createTestingPinia();
+  const pinia = createTestingPinia({ stubActions: false });
   const wrapper = mount(SLAComponent, {
     global: {
       plugins: [PrimeVue, router, pinia],
