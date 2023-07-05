@@ -22,6 +22,7 @@ describe('Issue Class', () => {
     const closedAt = null;
     const dueTo = new Date();
     const status = 'Open';
+    const statusChanges = 1;
 
     const issue = new Issue(
       id,
@@ -32,7 +33,8 @@ describe('Issue Class', () => {
       createdAt,
       closedAt,
       dueTo,
-      status
+      status,
+      statusChanges
     );
 
     expect(issue.id).toBe(id);
@@ -66,6 +68,7 @@ describe('getAssignedToName', () => {
       new Date(),
       null,
       null,
+      null,
       null
     );
     const assignedToName = getAssignedToName(issue);
@@ -84,6 +87,7 @@ describe('getAssignedToName', () => {
         lastName: 'Smith',
       },
       new Date(),
+      null,
       null,
       null,
       null
@@ -109,6 +113,7 @@ describe('getFormattedDate', () => {
       new Date(),
       null,
       dueTo,
+      null,
       null
     );
     const formattedDate = getFormattedDate(issue);
@@ -127,6 +132,7 @@ describe('getFormattedDate', () => {
         lastName: 'Smith',
       },
       new Date(),
+      null,
       null,
       null,
       null
@@ -153,6 +159,7 @@ describe('getTimeLeft', () => {
       new Date(),
       null,
       dueTo,
+      null,
       null
     );
     const timeLeft = getTimeLeft(issue);
@@ -177,6 +184,7 @@ describe('getTimeLeft', () => {
       new Date(),
       null,
       dueTo,
+      null,
       null
     );
     const timeLeft = getTimeLeft(issue);
@@ -195,6 +203,7 @@ describe('getTimeLeft', () => {
         lastName: 'Smith',
       },
       new Date(),
+      null,
       null,
       null,
       null
@@ -219,7 +228,8 @@ describe('countIssuesByStatus', () => {
       new Date(),
       null,
       null,
-      'Open'
+      'Open',
+      null
     ),
     new Issue(
       2,
@@ -234,7 +244,8 @@ describe('countIssuesByStatus', () => {
       new Date(),
       null,
       null,
-      'Closed'
+      'Closed',
+      null
     ),
     new Issue(
       3,
@@ -249,7 +260,8 @@ describe('countIssuesByStatus', () => {
       new Date(),
       null,
       null,
-      'In Progress'
+      'In Progress',
+      null
     ),
     new Issue(
       4,
@@ -264,7 +276,8 @@ describe('countIssuesByStatus', () => {
       new Date(),
       null,
       null,
-      'Open'
+      'Open',
+      null
     ),
     new Issue(
       5,
@@ -279,7 +292,8 @@ describe('countIssuesByStatus', () => {
       new Date(),
       null,
       null,
-      'Closed'
+      'Closed',
+      null
     ),
   ];
 
