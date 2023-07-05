@@ -16,7 +16,7 @@ const useSLAStore = defineStore('sla', {
         name: 'Pre-Config 1',
         durationInDays: 3,
         expirationDate: null,
-        occurredIn: null,
+        occurredIn: 'Test',
       },
       {
         id: 2,
@@ -24,7 +24,7 @@ const useSLAStore = defineStore('sla', {
         durationInDays: null,
         expirationDate: new Date('2023-07-17'),
         maxAssignedEmployees: 4,
-        occurredIn: null,
+        occurredIn: 'Pre-production',
       },
       {
         id: 3,
@@ -32,7 +32,7 @@ const useSLAStore = defineStore('sla', {
         durationInDays: 7,
         expirationDate: new Date('2023-12-19'),
         maxAssignedEmployees: 7,
-        occurredIn: null,
+        occurredIn: 'Production',
       },
     ] as SLARule[],
     slaCategories: [] as SLACategory[],
