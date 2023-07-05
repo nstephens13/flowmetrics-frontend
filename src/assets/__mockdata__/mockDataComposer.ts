@@ -12,8 +12,8 @@ import type { Issue } from '@/model/Issue';
 export const planningStatusList: string[] = ['planned', 'design', 'Open'];
 export const devStatusList: string[] = ['in work', 'review', 'In progress'];
 export const testingStatusList: string[] = ['UnitTest', 'E2E'];
-
 export const nonDisplayedStatusList: string[] = ['Closed'];
+
 function getRandomInt(max: number) {
   return Math.floor(Math.random() * max);
 }
