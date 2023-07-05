@@ -15,87 +15,33 @@ import {
 const UnassignedEmployee: EmployeeIF = {
   id: 0,
   firstName: 'Unassigned',
-  lastName: 'Employee'
-}
-/**
- * This function calculate the workload from a project team, and give the
- * result as a Map, where a Employee is the key and as the value a tuple,
- * the amount of assigned Issues that are open but not closed or In progress, the
- * amount of Issues that are In progress, and the amount that are closed
- *
- * @param project Project Object that should be calculated, if null a project
- * with random mock data will be used
- * @returns {Map} key:Employee,
- * value:{ planning: number; development: number; testing: number }
- */
-export function calculateWorkload(projects: ProjectIF[]): Map<EmployeeIF, IssueDataIF> {
-  let mapToReturn: Map<EmployeeIF, { planning: number; development: number; testing: number }> =
-    new Map([]);
-  let issueSet: Set<IssueIF> = new Set<IssueIF>();
+  lastName: 'Employee',
+};
 
-  projects.forEach((project) => {
-
-    project.issues.forEach((issue) => {
-      const result = extractEmployeeAndUpdateEmployeeMap(issue, issueSet, mapToReturn);
-      issueSet = result.issueSet;
-      mapToReturn = result.mapToReturn;
-    });
-
-    project.milestones.forEach((milestone) => {
-      milestone.issues.forEach((issue) => {
-        const result = extractEmployeeAndUpdateEmployeeMap(issue, issueSet, mapToReturn);
-        issueSet = result.issueSet;
-        mapToReturn = result.mapToReturn;
-      });
-    });
-  });
-  return mapToReturn;
-}
-
-
-export function mergeEmployees(
-  workloadMap: Map<EmployeeIF, IssueDataIF>
-): { employee: EmployeeIF; issues: IssueDataIF }[] {
-  const employeeList: { employee: EmployeeIF; issues: IssueDataIF }[] = [];
-  // merge employees with same id in the workloadMap
-  workloadMap.forEach((issues, employee) => {
-    const employeeInList = employeeList.find(
-      (employeeElement) => employeeElement.employee.id === employee.id
-    );
-    if (employeeInList) {
-      employeeInList.issues = {
-        development: employeeInList.issues.development + issues.development,
-        planning: employeeInList.issues.planning + issues.planning,
-        testing: employeeInList.issues.testing + issues.testing,
-      };
-    } else {
-      employeeList.push({ employee, issues });
+function extractEmployeeAndUpdateEmployeeMap(
+  issue: IssueIF,
+  issueSet: Set<IssueIF>,
+  mapToReturn: Map<
+    EmployeeIF,
+    {
+      planning: number;
+      development: number;
+      testing: number;
     }
-  });
-
-  return employeeList;
-}
-
-
-function extractEmployeeAndUpdateEmployeeMap(issue: IssueIF, issueSet: Set<IssueIF>, mapToReturn: Map<EmployeeIF, {
-  planning: number;
-  development: number;
-  testing: number;
-}>) {
-
+  >
+) {
   let numberPlannedTickets: number;
   let numberInDevTickets: number;
   let numberInTestingTickets: number;
+  const insertEmployee: EmployeeIF = issue.assignedTo ? issue.assignedTo : UnassignedEmployee;
 
-  let tuple: {
-    planning: number;
-    development: number;
-    testing: number;
-  } | undefined;
-
-  // checking if the issue is already done, with a set, and if somebody is assigned
-  let insertEmployee: EmployeeIF = issue.assignedTo? issue.assignedTo : UnassignedEmployee;
-  tuple = mapToReturn.get(insertEmployee);
+  const tuple:
+    | {
+        planning: number;
+        development: number;
+        testing: number;
+      }
+    | undefined = mapToReturn.get(insertEmployee);
 
   if (!issueSet.has(issue)) {
     // setting the values to zero if the employee isn't in the map already
@@ -137,5 +83,61 @@ function extractEmployeeAndUpdateEmployeeMap(issue: IssueIF, issueSet: Set<Issue
 
   issueSet.add(issue);
 
-  return { issueSet, mapToReturn};
+  return { issueSet, mapToReturn };
+}
+/**
+ * This function calculate the workload from a project team, and give the
+ * result as a Map, where a Employee is the key and as the value a tuple,
+ * the amount of assigned Issues that are open but not closed or In progress, the
+ * amount of Issues that are In progress, and the amount that are closed
+ *
+ * @param project Project Object that should be calculated, if null a project
+ * with random mock data will be used
+ * @returns {Map} key:Employee,
+ * value:{ planning: number; development: number; testing: number }
+ */
+export function calculateWorkload(projects: ProjectIF[]): Map<EmployeeIF, IssueDataIF> {
+  let mapToReturn: Map<EmployeeIF, { planning: number; development: number; testing: number }> =
+    new Map([]);
+  let issueSet: Set<IssueIF> = new Set<IssueIF>();
+
+  projects.forEach((project) => {
+    project.issues.forEach((issue) => {
+      const result = extractEmployeeAndUpdateEmployeeMap(issue, issueSet, mapToReturn);
+      issueSet = result.issueSet;
+      mapToReturn = result.mapToReturn;
+    });
+
+    project.milestones.forEach((milestone) => {
+      milestone.issues.forEach((issue) => {
+        const result = extractEmployeeAndUpdateEmployeeMap(issue, issueSet, mapToReturn);
+        issueSet = result.issueSet;
+        mapToReturn = result.mapToReturn;
+      });
+    });
+  });
+  return mapToReturn;
+}
+
+export function mergeEmployees(
+  workloadMap: Map<EmployeeIF, IssueDataIF>
+): { employee: EmployeeIF; issues: IssueDataIF }[] {
+  const employeeList: { employee: EmployeeIF; issues: IssueDataIF }[] = [];
+  // merge employees with same id in the workloadMap
+  workloadMap.forEach((issues, employee) => {
+    const employeeInList = employeeList.find(
+      (employeeElement) => employeeElement.employee.id === employee.id
+    );
+    if (employeeInList) {
+      employeeInList.issues = {
+        development: employeeInList.issues.development + issues.development,
+        planning: employeeInList.issues.planning + issues.planning,
+        testing: employeeInList.issues.testing + issues.testing,
+      };
+    } else {
+      employeeList.push({ employee, issues });
+    }
+  });
+
+  return employeeList;
 }
