@@ -147,6 +147,7 @@ describe('SLA Component should delete and add categories, and create new rules a
         name: 'Pre-Config 1',
         durationInDays: 3,
         expirationDate: null,
+        occurredIn: null,
       },
       {
         id: 2,
@@ -154,6 +155,7 @@ describe('SLA Component should delete and add categories, and create new rules a
         durationInDays: null,
         expirationDate: new Date('2023-07-17'),
         maxAssignedEmployees: 4,
+        occurredIn: null,
       },
       {
         id: 3,
@@ -161,6 +163,7 @@ describe('SLA Component should delete and add categories, and create new rules a
         durationInDays: 7,
         expirationDate: new Date('2023-12-19'),
         maxAssignedEmployees: 7,
+        occurredIn: null,
       },
       {
         id: 4,
@@ -168,13 +171,14 @@ describe('SLA Component should delete and add categories, and create new rules a
         durationInDays: null,
         expirationDate: null,
         maxAssignedEmployees: 3,
+        occurredIn: null,
       },
     ]);
   });
   test('should add a new category when createCategory is called with valid inputs', async () => {
     const dropdowns = wrapper.findAllComponents(Dropdown);
-    const selectSubscriber = dropdowns[1];
-    const selectRule = dropdowns[2];
+    const selectSubscriber = dropdowns[2];
+    const selectRule = dropdowns[3];
     const createCategoryButton = wrapper.find('.add-category');
     const inputCategoryName = wrapper.find('.enter-category');
     // Set the selected subscriber and rule
@@ -202,6 +206,7 @@ describe('SLA Component should delete and add categories, and create new rules a
           id: 2,
           maxAssignedEmployees: 4,
           name: 'Pre-Config 2',
+          occurredIn: null,
         },
         subscriber: {
           description: 'Description 2',
@@ -218,6 +223,7 @@ describe('SLA Component should delete and add categories, and create new rules a
           id: 3,
           maxAssignedEmployees: 7,
           name: 'Pre-Config 3',
+          occurredIn: null,
         },
         subscriber: {
           description: 'Description 3',
@@ -233,6 +239,7 @@ describe('SLA Component should delete and add categories, and create new rules a
           expirationDate: null,
           id: 1,
           name: 'Pre-Config 1',
+          occurredIn: null,
         },
         subscriber: {
           description: 'Description 1',
@@ -249,6 +256,7 @@ describe('SLA Component should delete and add categories, and create new rules a
           id: 2,
           maxAssignedEmployees: 4,
           name: 'Pre-Config 2',
+          occurredIn: null,
         },
         subscriber: {
           description: 'Description 2',
@@ -265,6 +273,7 @@ describe('SLA Component should delete and add categories, and create new rules a
           id: 3,
           maxAssignedEmployees: 7,
           name: 'Pre-Config 3',
+          occurredIn: null,
         },
         subscriber: {
           description: 'Description 3',
