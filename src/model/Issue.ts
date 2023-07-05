@@ -21,6 +21,8 @@ class Issue implements IssueIF {
 
   status: string | null;
 
+  statusChanges: number | null;
+
   constructor(
     id: number,
     name: string,
@@ -30,7 +32,8 @@ class Issue implements IssueIF {
     createdAt: Date,
     closedAt: Date | null,
     dueTo: Date | null,
-    status: string | null
+    status: string | null,
+    statusChanges: number | null
   ) {
     this.id = id;
     this.name = name;
@@ -41,6 +44,7 @@ class Issue implements IssueIF {
     this.closedAt = closedAt;
     this.dueTo = dueTo;
     this.status = status;
+    this.statusChanges = statusChanges;
   }
 }
 
