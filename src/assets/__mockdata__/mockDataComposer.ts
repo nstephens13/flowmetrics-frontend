@@ -31,6 +31,7 @@ function loadIssueDataFromFile(issues: any): Issue[] {
       createdAt: issue.createdAt ? new Date(issue.createdAt) : null,
       dueTo: issue.dueTo ? new Date(issue.dueTo) : null,
       status: issue.status as string,
+      statusChanges: null,
     });
   });
   return issueData;
@@ -268,6 +269,8 @@ function getMockData(dataset: number): ProjectIF {
           closedAt = faker.date.recent();
         }
 
+        const statusChanges = getRandomInt(10);
+
         issuesForProject.push({
           id: i + 1,
           name: faker.company.catchPhrase(),
@@ -278,6 +281,7 @@ function getMockData(dataset: number): ProjectIF {
           createdAt: faker.date.past(),
           createdBy: employeesArrayFromFile[getRandomInt(employeesForProject.length)],
           dueTo: faker.date.future(),
+          statusChanges,
         });
       }
 
@@ -319,6 +323,8 @@ function getMockData(dataset: number): ProjectIF {
           closedAt = faker.date.recent();
         }
 
+        const statusChanges = getRandomInt(10);
+
         issuesForProject.push({
           id: i + 1,
           name: faker.company.catchPhrase(),
@@ -329,6 +335,7 @@ function getMockData(dataset: number): ProjectIF {
           createdAt: faker.date.past(),
           createdBy: employeesArrayFromFile[getRandomInt(employeesForProject.length)],
           dueTo: faker.date.future(),
+          statusChanges,
         });
       }
 
@@ -431,6 +438,7 @@ function getMockData(dataset: number): ProjectIF {
           createdBy: employeesArrayFromFile[getRandomInt(employeesForProject.length)],
           dueTo: faker.date.future(),
           status: '',
+          statusChanges: null,
         });
       }
 
