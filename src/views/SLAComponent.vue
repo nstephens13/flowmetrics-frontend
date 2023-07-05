@@ -30,7 +30,7 @@
             v-model="newOccurredIn"
             :options="occurredInOptions"
             placeholder="Occurred in"
-            class="select-employees"
+            class="select-occurred-in"
           />
           <Button class="add-rule" @click="addRule" label="+"></Button>
         </div>
@@ -220,6 +220,9 @@ export default defineComponent({
   margin-right: 10px;
 }
 .select-employees {
+  margin-right: 10px;
+}
+.select-occurred-in {
   margin-right: 10px;
 }
 .add-rule {
