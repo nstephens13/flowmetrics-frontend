@@ -5,7 +5,7 @@ import type { IssueIF } from '@/model/IssueIF';
 import type { IssueDataIF } from '@/model/IssueDataIF';
 
 // just temporary import
-import getMockData, {
+import {
   devStatusList,
   nonDisplayedStatusList,
   planningStatusList,
@@ -15,28 +15,18 @@ import getMockData, {
 /**
  * This function calculate the workload from a project team, and give the
  * result as a Map, where a Employee is the key and as the value a tuple,
- * the amount of assigned Issues that are open but not closed or in progress, the
- * amount of Issues that are in progress, and the amount that are closed
+ * the amount of assigned Issues that are open but not closed or In progress, the
+ * amount of Issues that are In progress, and the amount that are closed
  *
  * @param project Project Object that should be calculated, if null a project
  * with random mock data will be used
  * @returns {Map} key:Employee,
  * value:{ planning: number; development: number; testing: number }
  */
-function calculateWorkload(project: ProjectIF | null): Map<EmployeeIF, IssueDataIF> {
+export function calculateWorkload(projects: ProjectIF[]): Map<EmployeeIF, IssueDataIF> {
   const mapToReturn: Map<EmployeeIF, { planning: number; development: number; testing: number }> =
     new Map([]);
   const issueSet: Set<IssueIF> = new Set<IssueIF>();
-  let projectToCalculate: ProjectIF;
-
-  /**
-   * ToDo: decouple the mock data when everything is setup
-   */
-  if (project === undefined || project === null) {
-    projectToCalculate = getMockData(3);
-  } else {
-    projectToCalculate = project;
-  }
 
   function extractEmployeeAndUpdateEmployeeMap(issue: IssueIF) {
     // checking if the issue is already done, with a set, and if somebody is assigned
@@ -88,15 +78,40 @@ function calculateWorkload(project: ProjectIF | null): Map<EmployeeIF, IssueData
     issueSet.add(issue);
   }
 
-  projectToCalculate.issues.forEach((issue) => {
-    extractEmployeeAndUpdateEmployeeMap(issue);
-  });
-  projectToCalculate.milestones.forEach((milestone) => {
-    milestone.issues.forEach((issue) => {
+  projects.forEach((project) => {
+    project.issues.forEach((issue) => {
       extractEmployeeAndUpdateEmployeeMap(issue);
     });
+
+    project.milestones.forEach((milestone) => {
+      milestone.issues.forEach((issue) => {
+        extractEmployeeAndUpdateEmployeeMap(issue);
+      });
+    });
   });
+
   return mapToReturn;
 }
 
-export default calculateWorkload;
+export function mergeEmployees(
+  workloadMap: Map<EmployeeIF, IssueDataIF>
+): { employee: EmployeeIF; issues: IssueDataIF }[] {
+  const employeeList: { employee: EmployeeIF; issues: IssueDataIF }[] = [];
+  // merge employees with same id in the workloadMap
+  workloadMap.forEach((issues, employee) => {
+    const employeeInList = employeeList.find(
+      (employeeElement) => employeeElement.employee.id === employee.id
+    );
+    if (employeeInList) {
+      employeeInList.issues = {
+        development: employeeInList.issues.development + issues.development,
+        planning: employeeInList.issues.planning + issues.planning,
+        testing: employeeInList.issues.testing + issues.testing,
+      };
+    } else {
+      employeeList.push({ employee, issues });
+    }
+  });
+
+  return employeeList;
+}

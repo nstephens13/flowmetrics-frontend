@@ -260,10 +260,10 @@ function getMockData(dataset: number): ProjectIF {
         let status = 'Open';
         let closedAt = null;
 
-        const randomStatus = getRandomInt(3); // 0: Open, 1: Closed, 2: In Progress
+        const randomStatus = getRandomInt(3); // 0: Open, 1: Closed, 2: In progress
 
         if (randomStatus === 2) {
-          status = 'In progress';
+          status = 'In Progress';
         } else if (randomStatus === 1) {
           closedAt = faker.date.recent();
         }
@@ -311,10 +311,10 @@ function getMockData(dataset: number): ProjectIF {
         let status = 'Open';
         let closedAt = null;
 
-        const randomStatus = getRandomInt(3); // 0: Open, 1: Closed, 2: In Progress
+        const randomStatus = getRandomInt(3); // 0: Open, 1: Closed, 2: In progress
 
         if (randomStatus === 2) {
-          status = 'In progress';
+          status = 'In Progress';
         } else if (randomStatus === 1) {
           closedAt = faker.date.recent();
         }
@@ -343,8 +343,8 @@ function getMockData(dataset: number): ProjectIF {
       });
 
       return {
-        id: 3,
-        name: 'Mocking Bird Project',
+        id: 4,
+        name: faker.science.chemicalElement().name,
         description: 'third mock dataset with a big number of random issues',
         milestones: milestonesArrayFromFile,
         issues: issuesForProject,
@@ -410,8 +410,8 @@ function getMockData(dataset: number): ProjectIF {
       milestonesForProject = assignIssueToMilestone(3, 1, milestonesForProject, issuesForProject);
 
       return {
-        id: 2,
-        name: 'Mocking Bird 2',
+        id: 5,
+        name: faker.science.chemicalElement().name,
         description: 'second mock dataset',
         milestones: milestonesForProject,
         issues: issuesForProject,
@@ -439,7 +439,7 @@ function getMockData(dataset: number): ProjectIF {
       const numberOfEmployees = employeesArrayFromFile.length;
 
       for (let i = 0; i < numberOfIssues; i++) {
-        const randomStatus = getRandomInt(4); // 0: Open, 1: Closed, 2: In Progress
+        const randomStatus = getRandomInt(4); // 0: Open, 1: Closed, 2: In progress
 
         if (randomStatus === 2) {
           issues[i].status = 'In progress';
@@ -472,8 +472,8 @@ function getMockData(dataset: number): ProjectIF {
 
       return {
         id: 6,
-        name: 'Mocking Bird 6',
-        description: 'sixth mock dataset',
+        name: faker.science.chemicalElement().name,
+        description: 'Sixth mock dataset',
         milestones: milestonesArrayFromFile,
         issues: issuesForProject,
       };
@@ -544,14 +544,14 @@ function getMockData(dataset: number): ProjectIF {
       );
 
       const date = new Date(2018, 0o5, 0o5, 17, 23, 42, 11);
-      issuesForProject[0].status = 'In progress';
+      issuesForProject[0].status = 'In Progress';
       issuesForProject[2].status = 'Closed';
       issuesForProject[2].closedAt = date; // Set the specific closedAt date
       issuesForProject[3].status = 'Closed';
       issuesForProject[3].closedAt = date; // Set the specific closedAt date
       issuesForProject[4].status = 'Closed';
       issuesForProject[4].closedAt = date; // Set the specific closedAt date
-      issuesForProject[5].status = 'In progress';
+      issuesForProject[5].status = 'In Progress';
       issuesForProject[6].status = 'Closed';
       issuesForProject[6].closedAt = date; // Set the specific closedAt date
 
@@ -572,7 +572,7 @@ function getMockData(dataset: number): ProjectIF {
         testingStatusList[0],
         date,
       ];
-      [issuesForProject[5].status, issuesForProject[5].status] = ['In progress', devStatusList[0]];
+      [issuesForProject[5].status, issuesForProject[5].status] = ['In Progress', devStatusList[0]];
       [issuesForProject[6].status, issuesForProject[6].closedAt] = [testingStatusList[0], date];
 
       return {
@@ -587,8 +587,8 @@ function getMockData(dataset: number): ProjectIF {
     default: {
       return {
         id: 0,
-        name: 'default',
-        description: 'a empty project',
+        name: 'Default',
+        description: 'An empty project',
         milestones: [],
         issues: [],
       };
