@@ -1,8 +1,6 @@
 import { mount } from '@vue/test-utils';
-import { describe, expect, test } from 'vitest';
+import { afterAll, afterEach, describe, expect, test } from 'vitest';
 import PrimeVue from 'primevue/config';
-import { createPinia } from 'pinia';
-
 import Card from 'primevue/card';
 import DataView from 'primevue/dataview';
 import Divider from 'primevue/divider';
@@ -11,12 +9,17 @@ import MultiSelect from 'primevue/multiselect';
 import ProgressBar from 'primevue/progressbar';
 import Chip from 'primevue/chip';
 import router from '@/router/index';
+import EmployeeOverview from '@/views/EmployeeOverview.vue';
+import { createTestingPinia } from '@pinia/testing';
+import getMockData from '@/assets/__mockdata__/mockDataComposer';
 
-import EmployeeOverview from '../EmployeeOverview.vue';
 
-const pinia = createPinia();
 describe('Employee Overview should load all the Components', () => {
-  const wrapper = mount(EmployeeOverview, {
+  const pinia = createTestingPinia();
+  const projects = [getMockData(1), getMockData(3), getMockData(4), getMockData(6)];
+  pinia.state.value = {projects: projects};
+
+  let wrapper = mount(EmployeeOverview, {
     global: {
       plugins: [PrimeVue, router, pinia],
       components: {
@@ -40,7 +43,13 @@ describe('Employee Overview should load all the Components', () => {
   });
 
   test('Multiselect should contain all options', async () => {
+    pinia.state.value = {"projects": projects};
+    await wrapper.vm.$nextTick();
+    
     const multiselects = wrapper.findAllComponents(MultiSelect);
+    
+    console.debug(multiselects[0].props('options'));
+    
     expect(4).toEqual(multiselects[0].props('options').length);
     expect(0).toEqual(multiselects[1].props('options').length);
   });
@@ -52,11 +61,14 @@ describe('Employee Overview should load all the Components', () => {
 
   test('Select a project and status on the project multiselector', async () => {
     const multiselects = wrapper.findAllComponents(MultiSelect);
-    multiselects[0].setValue([multiselects[0].props('options')[1]]).finally(() => {
-      expect('Mocking Bird Project').toEqual(multiselects[0].find('.p-multiselect-label').text());
-      multiselects[1].setValue([multiselects[1].props('options')[0]]).finally(() => {
-        expect(13).toEqual(wrapper.getComponent(DataView).props('value').length);
-      });
-    });
+    await multiselects[0].setValue([multiselects[0].props('options')[1]]);
+    
+    expect('Mocking Bird Project').toEqual(multiselects[0].find('.p-multiselect-label').text());
+    expect(2).toEqual(multiselects[1].props('options').length);
+    
+    await multiselects[1].setValue([multiselects[1].props('options')[0]]);
+    await wrapper.vm.$nextTick();
+    const count: number = await wrapper.getComponent(DataView).props('value').length;
+    expect(13).toEqual(count);
   });
 });

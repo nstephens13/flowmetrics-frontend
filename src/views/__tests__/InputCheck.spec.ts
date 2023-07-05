@@ -1,8 +1,5 @@
-import {
-  describe, expect, it, beforeEach, afterEach,
-} from 'vitest';
-import { createApp } from 'vue';
-import { mount, VueWrapper } from '@vue/test-utils';
+import { describe, expect, test, afterAll, beforeAll } from 'vitest';
+import { VueWrapper, mount } from '@vue/test-utils';
 import InputText from 'primevue/inputtext';
 import PrimeVue from 'primevue/config';
 import Dropdown from 'primevue/dropdown';
@@ -10,15 +7,18 @@ import Card from 'primevue/card';
 import Button from 'primevue/button';
 import Column from 'primevue/column';
 import DataTable from 'primevue/datatable';
+import Divider from 'primevue/divider';
+import { createPinia, setActivePinia } from 'pinia';
 import SLAComponent from '@/views/SLAComponent.vue';
-import router from '../../router';
+import router from '@/router';
 
 describe('SLAComponent', () => {
   let wrapper: VueWrapper<any>;
 
-  beforeEach(async () => {
-    const app = createApp(SLAComponent);
-    const wrapper = mount(app, {
+  beforeAll(() => {
+    setActivePinia(createPinia());
+
+    wrapper = mount(SLAComponent, {
       global: {
         plugins: [PrimeVue, router],
         components: {
@@ -28,32 +28,59 @@ describe('SLAComponent', () => {
           Button,
           Column,
           DataTable,
+          Divider,
         },
       },
     });
-    await wrapper.vm.$nextTick();
   });
 
-  afterEach(() => {
+  afterAll(() => {
     wrapper.unmount();
   });
 
-  it('renders the component', () => {
+  test('renders the component', () => {
     expect(wrapper.exists()).toBe(true);
   });
 
-  it('adds a subscriber', async () => {
+  test('adds a subscriber', async () => {
     const subscriberInput = wrapper.find('.enter-subscriber');
     const addButton = wrapper.find('.add-subscriber');
 
     await subscriberInput.setValue('John');
     await addButton.trigger('click');
 
-    const addedSubscriber = wrapper.find('.subscriber-container .subscriber');
-    expect(addedSubscriber.text()).toBe('John');
+    const selectSubscriberDropDown = wrapper
+      .findAllComponents(Dropdown)
+      .find((dropdown) => dropdown.classes('select-subscriber'));
+
+    expect(selectSubscriberDropDown?.props('options')).toContainEqual({
+      description: null,
+      id: 4,
+      name: 'John',
+    });
   });
 
-  it('does not add a subscriber with less than 3 characters', async () => {
+  test('adds a rule', async () => {
+    const ruleInput = wrapper.find('.enter-rule');
+    const addButton = wrapper.find('.add-rule');
+
+    await ruleInput.setValue('Rule 1');
+    await addButton.trigger('click');
+
+    const selectRuleDropDown = wrapper
+      .findAllComponents(Dropdown)
+      .find((dropdown) => dropdown.classes('select-rule'));
+
+    expect(selectRuleDropDown?.props('options')).toContainEqual({
+      durationInDays: null,
+      expirationDate: null,
+      id: 4,
+      maxAssignedEmployees: undefined,
+      name: 'Rule 1',
+    });
+  });
+
+  test('does not add a subscriber with less than 3 characters', async () => {
     const subscriberInput = wrapper.find('.enter-subscriber');
     const addButton = wrapper.find('.add-subscriber');
 
@@ -68,18 +95,7 @@ describe('SLAComponent', () => {
     expect(errorMessage.text()).toBe('Subscriber name must be at least 3 characters.');
   });
 
-  it('adds a rule', async () => {
-    const ruleInput = wrapper.find('.enter-rule');
-    const addButton = wrapper.find('.add-rule');
-
-    await ruleInput.setValue('Rule 1');
-    await addButton.trigger('click');
-
-    const addedRule = wrapper.find('.rule-container .rule');
-    expect(addedRule.text()).toBe('Rule 1');
-  });
-
-  it('does not add a rule with less than 3 characters', async () => {
+  test('does not add a rule with less than 3 characters', async () => {
     const ruleInput = wrapper.find('.enter-rule');
     const addButton = wrapper.find('.add-rule');
 
@@ -94,43 +110,63 @@ describe('SLAComponent', () => {
     expect(errorMessage.text()).toBe('Rule name must be at least 3 characters.');
   });
 
-  it('creates a category', async () => {
+  test('creates a category', async () => {
     // Mock the options for the subscriber and rule dropdowns
     wrapper.setData({
-      subscriber: [
-        { name: 'Subscriber 1' },
-        { name: 'Subscriber 2' },
-      ],
-      rules: [
-        { name: 'Rule 1' },
-        { name: 'Rule 2' },
-      ],
+      subscriber: [{ name: 'Subscriber 1' }, { name: 'Subscriber 2' }],
+      rules: [{ name: 'Rule 1' }, { name: 'Rule 2' }],
     });
 
-    const subscriberDropdown = wrapper.find('.select-subscriber');
-    const ruleDropdown = wrapper.find('.select-rule');
-    const categoryInput = wrapper.find('.enter-category');
-    const addButton = wrapper.find('.add-category');
+    const categoryInput = wrapper
+      .findAllComponents(InputText)
+      .find((input) => input.classes('enter-category'));
 
-    await subscriberDropdown.setValue('Subscriber 1');
-    await ruleDropdown.setValue('Rule 1');
-    await categoryInput.setValue('Category 1');
-    await addButton.trigger('click');
+    const addButton = wrapper
+      .findAllComponents(Button)
+      .find((button) => button.classes('add-category'));
 
-    const addedCategory = wrapper.find('.category-container .category');
-    expect(addedCategory.text()).toBe('Category 1');
+    const selectSubscriberDropDown = wrapper
+      .findAllComponents(Dropdown)
+      .find((dropdown) => dropdown.classes('select-subscriber'));
+
+    const selectRuleDropDown = wrapper
+      .findAllComponents(Dropdown)
+      .find((dropdown) => dropdown.classes('select-rule'));
+
+    selectSubscriberDropDown?.setValue('Subscriber 1');
+    selectRuleDropDown?.setValue('Rule 1');
+    categoryInput?.setValue('Category 1');
+    addButton?.trigger('click').finally(() => {
+      const dataTableElementSize = wrapper.getComponent(DataTable).findAll('tr').length;
+      expect(7).toEqual(dataTableElementSize);
+      const datatableElements = wrapper.getComponent(DataTable).findAll('tr');
+      expect('Category 1').toEqual(
+        datatableElements[datatableElements.length - 1].findAll('td')[0].text()
+      );
+    });
   });
 
-  it('does not create a category with less than 3 characters', async () => {
-    const subscriberDropdown = wrapper.find('.select-subscriber');
-    const ruleDropdown = wrapper.find('.select-rule');
-    const categoryInput = wrapper.find('.enter-category');
-    const addButton = wrapper.find('.add-category');
+  test('does not create a category with less than 3 characters', async () => {
+    const selectSubscriberDropDown = wrapper
+      .findAllComponents(Dropdown)
+      .find((dropdown) => dropdown.classes('select-subscriber'));
 
-    await subscriberDropdown.setValue('Subscriber 1');
-    await ruleDropdown.setValue('Rule 1');
-    await categoryInput.setValue('Ca');
-    await addButton.trigger('click');
+    const selectRuleDropDown = wrapper
+      .findAllComponents(Dropdown)
+      .find((dropdown) => dropdown.classes('select-rule'));
+
+    const categoryInput = wrapper
+      .findAllComponents(InputText)
+      .find((input) => input.classes('enter-category'));
+
+    const addButton = wrapper
+      .findAllComponents(Button)
+      .find((button) => button.classes('add-category'));
+
+    await selectSubscriberDropDown?.setValue('Subscriber 1');
+    await selectRuleDropDown?.setValue('Rule 1');
+    await categoryInput?.setValue('Ca');
+    await addButton?.trigger('click');
 
     const addedCategory = wrapper.find('.category-container .category');
     expect(addedCategory.exists()).toBe(false);
@@ -140,7 +176,7 @@ describe('SLAComponent', () => {
     expect(errorMessage.text()).toBe('Category name must be at least 3 characters.');
   });
 
-  it('deletes a category', async () => {
+  test('deletes a category', async () => {
     // Mock the categories data
     wrapper.setData({
       categories: [
@@ -149,10 +185,8 @@ describe('SLAComponent', () => {
       ],
     });
 
-    const deleteButton = wrapper.find('.category-container .delete-button');
-
+    const deleteButton = wrapper.findAll('.p-button-danger')[0];
     await deleteButton.trigger('click');
-
     const deletedCategory = wrapper.find('.category-container .category');
     expect(deletedCategory.exists()).toBe(false);
   });
