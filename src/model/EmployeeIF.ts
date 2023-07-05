@@ -1,5 +1,3 @@
-import type { IssueIF } from './IssueIF';
-
 /**
  *
  * @prop {number} id employee id
@@ -11,5 +9,4 @@ export interface EmployeeIF {
   id: number;
   firstName: string;
   lastName: string;
-  assignedIssues: IssueIF[];
 }

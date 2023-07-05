@@ -1,6 +1,9 @@
 <template>
   <Card class="background-card">
-    <template #title>SLA Management View</template>
+    <template #title>
+      SLA Management View
+      <Divider></Divider>
+    </template>
     <template #content>
       <div>
         <h3>Add SLA Subscriber</h3>
@@ -24,7 +27,7 @@
             class="select-employees"
           />
           <Dropdown
-              v-model="newOccurredIn"
+            v-model="newOccurredIn"
               :options="occurredInOptions"
               placeholder="Occurred in"
               class="select-employees"
@@ -65,9 +68,9 @@
           <Column field="subscriber.name" header="Subscriber" />
           <Column field="rule.name" header="Rule" />
           <Column field="rule.durationInDays" header="Duration (Days)" />
-          <Column field="rule.expirationDate" header="Expiration Date" />
+          <Column field="rule.expirationDate" header="Due date" />
           <Column field="rule.occurredIn" header="Occurred in" />
-          <Column field="rule.maxAssignedEmployees" header="Max Assigned Employees" />
+          <Column field="rule.maxAssignedEmployees" header="Max assigned employees" />
           <Column header="Delete">
             <template #body="rowData">
               <Button

@@ -1,6 +1,5 @@
 import type { EmployeeIF } from './EmployeeIF';
 import type { IssueIF } from './IssueIF';
-import { Status } from './IssueIF';
 
 // Issue Class implements IssueIF
 class Issue implements IssueIF {
@@ -12,15 +11,15 @@ class Issue implements IssueIF {
 
   assignedTo: EmployeeIF | null;
 
-  createdBy: EmployeeIF;
+  createdBy: EmployeeIF | null;
 
-  createdAt: Date;
+  createdAt: Date | null;
 
   closedAt: Date | null;
 
   dueTo: Date | null;
 
-  status: Status | null;
+  status: string | null;
 
   constructor(
     id: number,
@@ -31,7 +30,7 @@ class Issue implements IssueIF {
     createdAt: Date,
     closedAt: Date | null,
     dueTo: Date | null,
-    status: Status | null,
+    status: string | null
   ) {
     this.id = id;
     this.name = name;
@@ -56,7 +55,7 @@ function getAssignedToName(issue: Issue): string {
 // function accepts due-to Issue-Object & transforms to date
 function getFormattedDate(issue: Issue): string {
   const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
-  return issue.dueTo ? issue.dueTo.toLocaleDateString(undefined, options) : '';
+  return issue.dueTo ? issue.dueTo.toLocaleDateString('en-US', options) : '';
 }
 
 // accepts due to Issue-Object & transfers to time
@@ -70,7 +69,7 @@ function getTimeLeft(issue: Issue): number | null {
   return null;
 }
 
-function countIssuesByStatus(issueList: Issue[], status: Status | null): number {
+function countIssuesByStatus(issueList: Issue[], status: string | null): number {
   // filter the issue list by status and return the length of the filtered array
   // if the status is null, return the length of the issue list
 
@@ -78,6 +77,4 @@ function countIssuesByStatus(issueList: Issue[], status: Status | null): number 
 }
 
 // export of data array and remain time for ticket calculation
-export {
-  Issue, getTimeLeft, getFormattedDate, getAssignedToName, countIssuesByStatus,
-};
+export { Issue, getTimeLeft, getFormattedDate, getAssignedToName, countIssuesByStatus };

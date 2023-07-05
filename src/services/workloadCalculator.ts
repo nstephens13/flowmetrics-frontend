@@ -1,99 +1,117 @@
 import type { ProjectIF } from '@/model/ProjectIF';
 import type { EmployeeIF } from '@/model/EmployeeIF';
 import type { IssueIF } from '@/model/IssueIF';
-import { Status } from '../model/IssueIF';
+
+import type { IssueDataIF } from '@/model/IssueDataIF';
 
 // just temporary import
-import getMockData from '../assets/__mockdata__/mockDataComposer';
+import {
+  devStatusList,
+  nonDisplayedStatusList,
+  planningStatusList,
+  testingStatusList,
+} from '../assets/__mockdata__/mockDataComposer';
 
 /**
  * This function calculate the workload from a project team, and give the
  * result as a Map, where a Employee is the key and as the value a tuple,
- * the amount of assigned Issues that are open but not closed or in progress, the
- * amount of Issues that are in progress, and the amount that are closed
+ * the amount of assigned Issues that are open but not closed or In progress, the
+ * amount of Issues that are In progress, and the amount that are closed
  *
  * @param project Project Object that should be calculated, if null a project
  * with random mock data will be used
  * @returns {Map} key:Employee,
- * value:{ openIssues: number; inProgressIssues: number; closedIssues: number }
+ * value:{ planning: number; development: number; testing: number }
  */
-function calculateWorkload(
-  project: ProjectIF | null,
-): Map<EmployeeIF, { openIssues: number; inProgressIssues: number; closedIssues: number }> {
-  const mapToReturn: Map<
-  EmployeeIF,
-  { openIssues: number; inProgressIssues: number; closedIssues: number }
-  > = new Map([]);
+export function calculateWorkload(projects: ProjectIF[]): Map<EmployeeIF, IssueDataIF> {
+  const mapToReturn: Map<EmployeeIF, { planning: number; development: number; testing: number }> =
+    new Map([]);
   const issueSet: Set<IssueIF> = new Set<IssueIF>();
-  let projectToCalculate: ProjectIF;
-
-  /**
-   * ToDo: decouple the mock data when everything is setup
-   */
-  if (project === undefined || project === null) {
-    projectToCalculate = getMockData(3);
-  } else {
-    projectToCalculate = project;
-  }
 
   function extractEmployeeAndUpdateEmployeeMap(issue: IssueIF) {
     // checking if the issue is already done, with a set, and if somebody is assigned
     if (!issueSet.has(issue) && issue.assignedTo !== null && issue.assignedTo !== undefined) {
-      let numberOpenTickets: number;
-      let numberInProgressTickets: number;
-      let numberClosedTickets: number;
+      let numberPlannedTickets: number;
+      let numberInDevTickets: number;
+      let numberInTestingTickets: number;
 
       // checking if the employee is already with values in the map
-      const tuple:
-      | { openIssues: number; inProgressIssues: number; closedIssues: number }
-      | undefined = mapToReturn.get(issue.assignedTo);
+      const tuple: { planning: number; development: number; testing: number } | undefined =
+        mapToReturn.get(issue.assignedTo);
 
       // setting the values to zero if the employee isn't in the map already
       if (tuple !== undefined) {
-        numberOpenTickets = tuple.openIssues;
-        numberInProgressTickets = tuple.inProgressIssues;
-        numberClosedTickets = tuple.closedIssues;
+        numberPlannedTickets = tuple.planning;
+        numberInDevTickets = tuple.development;
+        numberInTestingTickets = tuple.testing;
       } else {
-        numberOpenTickets = 0;
-        numberInProgressTickets = 0;
-        numberClosedTickets = 0;
+        numberPlannedTickets = 0;
+        numberInDevTickets = 0;
+        numberInTestingTickets = 0;
       }
-
-      // if there is no date for closure of the ticket, then it is a still open ticket
-      if (issue.closedAt === undefined || issue.closedAt === null) {
-        if (issue.status === Status.InProgress) {
+      if (issue.status != null) {
+        // if there is no date for closure of the ticket, then it is a still open ticket
+        if (planningStatusList.includes(issue.status)) {
           mapToReturn.set(issue.assignedTo, {
-            openIssues: numberOpenTickets,
-            inProgressIssues: numberInProgressTickets + 1,
-            closedIssues: numberClosedTickets,
+            planning: numberPlannedTickets + 1,
+            development: numberInDevTickets,
+            testing: numberInTestingTickets,
           });
-        } else {
+        } else if (devStatusList.includes(issue.status)) {
           mapToReturn.set(issue.assignedTo, {
-            openIssues: numberOpenTickets + 1,
-            inProgressIssues: numberInProgressTickets,
-            closedIssues: numberClosedTickets,
+            planning: numberPlannedTickets,
+            development: numberInDevTickets + 1,
+            testing: numberInTestingTickets,
+          });
+        } else if (
+          testingStatusList.includes(issue.status) ||
+          nonDisplayedStatusList.includes(issue.status)
+        ) {
+          mapToReturn.set(issue.assignedTo, {
+            planning: numberPlannedTickets,
+            development: numberInDevTickets,
+            testing: numberInTestingTickets + 1,
           });
         }
-      } else {
-        mapToReturn.set(issue.assignedTo, {
-          openIssues: numberOpenTickets,
-          inProgressIssues: numberInProgressTickets,
-          closedIssues: numberClosedTickets + 1,
-        });
       }
-      issueSet.add(issue);
     }
+    issueSet.add(issue);
   }
 
-  projectToCalculate.issues.forEach((issue) => {
-    extractEmployeeAndUpdateEmployeeMap(issue);
-  });
-  projectToCalculate.milestones.forEach((milestone) => {
-    milestone.issues.forEach((issue) => {
+  projects.forEach((project) => {
+    project.issues.forEach((issue) => {
       extractEmployeeAndUpdateEmployeeMap(issue);
     });
+
+    project.milestones.forEach((milestone) => {
+      milestone.issues.forEach((issue) => {
+        extractEmployeeAndUpdateEmployeeMap(issue);
+      });
+    });
   });
+
   return mapToReturn;
 }
 
-export default calculateWorkload;
+export function mergeEmployees(
+  workloadMap: Map<EmployeeIF, IssueDataIF>
+): { employee: EmployeeIF; issues: IssueDataIF }[] {
+  const employeeList: { employee: EmployeeIF; issues: IssueDataIF }[] = [];
+  // merge employees with same id in the workloadMap
+  workloadMap.forEach((issues, employee) => {
+    const employeeInList = employeeList.find(
+      (employeeElement) => employeeElement.employee.id === employee.id
+    );
+    if (employeeInList) {
+      employeeInList.issues = {
+        development: employeeInList.issues.development + issues.development,
+        planning: employeeInList.issues.planning + issues.planning,
+        testing: employeeInList.issues.testing + issues.testing,
+      };
+    } else {
+      employeeList.push({ employee, issues });
+    }
+  });
+
+  return employeeList;
+}

@@ -7,12 +7,12 @@ import Panel from 'primevue/panel';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import Divider from 'primevue/divider';
-import CircularProgressBar from '@/components/TicketCalculator/CircularProgressBar.vue';
-import router from '@/router/index';
-import TicketCalculator from '../TicketCalculator.vue';
+import CircularProgressBar from '../IssueCalculator/CircularProgressBar.vue';
+import router from '../../router';
+import IssueCalculator from '../IssueCalculator.vue';
 
 describe('Project Overview should load all the Components', () => {
-  const wrapper = mount(TicketCalculator, {
+  const wrapper = mount(IssueCalculator, {
     global: {
       plugins: [PrimeVue, router],
       components: {
