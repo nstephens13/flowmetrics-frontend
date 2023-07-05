@@ -27,9 +27,13 @@ const generatePDF = () => {
   doc.text('SLA Rule Report', 10, 15);
   doc.setFontSize(12);
   // Document content
-  let y = 30;
+  let ySLA = 30;
+  let yIssue = 30;
   slaRulesSet.forEach((slaRule) => {
-    doc.text(`SLA Rule ID: ${slaRule.id} Name: ${slaRule.name}`, 10, (y += 10));
+    doc.text(`SLA Rule ID: ${slaRule.id} Name: ${slaRule.name}`, 10, (ySLA += 10));
+    issues.forEach((issue) => {
+      doc.text(`Issue ID: ${issue.id}`, 10, (yIssue += 10));
+    });
   });
   doc.save('SLARuleReport.pdf');
 };
