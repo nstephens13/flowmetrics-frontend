@@ -9,8 +9,8 @@ import issueJson from './Issues.json';
 import milestoneJson from './Milestones.json';
 import type { Issue } from '@/model/Issue';
 
-export const planningStatusList: string[] = ['planned', 'design', 'Open'];
-export const devStatusList: string[] = ['in work', 'review', 'In progress'];
+export const planningStatusList: string[] = ['Planned', 'Design', 'Open'];
+export const devStatusList: string[] = ['In work', 'Review', 'In progress'];
 export const testingStatusList: string[] = ['UnitTest', 'E2E'];
 
 export const nonDisplayedStatusList: string[] = ['Closed'];
