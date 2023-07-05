@@ -55,7 +55,7 @@ describe('Employee Overview should load all the Components', () => {
     multiselects[0].setValue([multiselects[0].props('options')[1]]).finally(() => {
       expect('Mocking Bird Project').toEqual(multiselects[0].find('.p-multiselect-label').text());
       multiselects[1].setValue([multiselects[1].props('options')[0]]).finally(() => {
-        expect(13).toEqual(wrapper.getComponent(DataView).props('value').length);
+        expect(14).toEqual(wrapper.getComponent(DataView).props('value').length);
       });
     });
   });
