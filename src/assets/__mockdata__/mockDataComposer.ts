@@ -493,7 +493,7 @@ function getMockData(dataset: number): ProjectIF {
     // SLA Rules MockData
     case 7: {
       const issues: IssueIF[] = [];
-      // Random Erstellung von 280 Issues
+      // 280 random issues
       for (let i = 0; i < 280; i++) {
         issues.push({
           id: i + 1,
@@ -575,8 +575,8 @@ function getMockData(dataset: number): ProjectIF {
       }
       return {
         id: 7,
-        name: 'Mocking Bird 7',
-        description: 'seventh mock dataset',
+        name: faker.science.chemicalElement().name,
+        description: faker.company.catchPhrase(),
         milestones: milestonesArrayFromFile,
         issues: issuesForProject,
         slaSubscriber: null,
