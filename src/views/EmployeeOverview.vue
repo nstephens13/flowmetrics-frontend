@@ -16,7 +16,7 @@
               v-model="selectedStatuses"
               :options="allStatuses"
               @onChange="updateFilterConfig()"
-              placeholder="Select Status"
+              placeholder="Select status"
               :maxSelectedLabels="1"
               class="w-full md:w-14rem"
             />
@@ -87,11 +87,11 @@ function updateEmployeeList(project: ProjectIF) {
     filterProjectThatHasTheAllowedStatus(project, filterConfig.value)
   );
   employeeList.value = Array.from(workloadMap, ([employee, issues]) => ({ employee, issues }));
-  // filter category names for the issues in the emplyeeList that are the keys of the issues in the workloadMap
+  // filter category names for the issues in the employeeList that are the keys of the issues in the workloadMap
   categoryNames.value = {
-    firstCategory: 'planning',
-    secondCategory: 'development',
-    thirdCategory: 'testing',
+    firstCategory: 'Planning',
+    secondCategory: 'Development',
+    thirdCategory: 'Testing',
   };
 }
 
