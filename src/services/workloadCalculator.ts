@@ -15,8 +15,8 @@ import {
 /**
  * This function calculate the workload from a project team, and give the
  * result as a Map, where a Employee is the key and as the value a tuple,
- * the amount of assigned Issues that are open but not closed or in progress, the
- * amount of Issues that are in progress, and the amount that are closed
+ * the amount of assigned Issues that are open but not closed or In progress, the
+ * amount of Issues that are In progress, and the amount that are closed
  *
  * @param project Project Object that should be calculated, if null a project
  * with random mock data will be used

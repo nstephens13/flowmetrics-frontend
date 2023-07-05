@@ -16,14 +16,14 @@
               v-model="selectedProjects"
               :options="allProjects"
               option-label="name"
-              placeholder="Select Projects"
+              placeholder="Select project"
               :maxSelectedLabels="1"
               class="w-full md:w-14rem"
             />
             <MultiSelect
               v-model="selectedStatuses"
               :options="allStatuses"
-              placeholder="Select Status"
+              placeholder="Select status"
               :maxSelectedLabels="1"
               class="w-full md:w-14rem"
             />

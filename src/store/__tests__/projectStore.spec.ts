@@ -35,7 +35,7 @@ describe('useProjectsStore', () => {
         },
         {
           id: 3,
-          status: 'In Progress',
+          status: 'In progress',
           name: 'Issue 3',
           description: 'Issue 3 description',
           assignedTo: { id: 6, firstName: 'Gabi', lastName: 'Winkler' },
@@ -72,7 +72,7 @@ describe('useProjectsStore', () => {
         },
         {
           id: 3,
-          status: 'In Progress',
+          status: 'In progress',
           name: 'Issue 3',
           description: 'Issue 3 description',
           assignedTo: { id: 6, firstName: 'Gabi', lastName: 'Winkler' },
@@ -102,7 +102,7 @@ describe('useProjectsStore', () => {
         },
         {
           id: 3,
-          status: 'In Progress',
+          status: 'In progress',
           name: 'Issue 3',
           description: 'Issue 3 description',
           assignedTo: { id: 6, firstName: 'Gabi', lastName: 'Winkler' },
