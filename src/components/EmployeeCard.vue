@@ -36,7 +36,7 @@
         </ProgressBar>
       </div>
     </div>
-    <!--In progress Issues Progress Bar-->
+    <!--In Progress Issues Progress Bar-->
     <div class="field mb-0">
       <label class="mb-2 font-semibold" for="developmentProgressbar">{{
         categoryNames.secondCategory

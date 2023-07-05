@@ -11,7 +11,7 @@ import type { Issue } from '@/model/Issue';
 import type { SLARule } from '@/model/SLARule';
 
 export const planningStatusList: string[] = ['planned', 'design', 'Open'];
-export const devStatusList: string[] = ['in work', 'review', 'In progress'];
+export const devStatusList: string[] = ['in work', 'review', 'In Progress'];
 export const testingStatusList: string[] = ['UnitTest', 'E2E'];
 
 export const nonDisplayedStatusList: string[] = ['Closed'];
@@ -264,10 +264,10 @@ function getMockData(dataset: number): ProjectIF {
         let status = 'Open';
         let closedAt = null;
 
-        const randomStatus = getRandomInt(3); // 0: Open, 1: Closed, 2: In progress
+        const randomStatus = getRandomInt(3); // 0: Open, 1: Closed, 2: In Progress
 
         if (randomStatus === 2) {
-          status = 'In progress';
+          status = 'In Progress';
         } else if (randomStatus === 1) {
           closedAt = faker.date.recent();
         }
@@ -317,10 +317,10 @@ function getMockData(dataset: number): ProjectIF {
         let status = 'Open';
         let closedAt = null;
 
-        const randomStatus = getRandomInt(3); // 0: Open, 1: Closed, 2: In progress
+        const randomStatus = getRandomInt(3); // 0: Open, 1: Closed, 2: In Progress
 
         if (randomStatus === 2) {
-          status = 'In progress';
+          status = 'In Progress';
         } else if (randomStatus === 1) {
           closedAt = faker.date.recent();
         }
@@ -350,8 +350,8 @@ function getMockData(dataset: number): ProjectIF {
       });
 
       return {
-        id: 4,
-        name: faker.science.chemicalElement().name,
+        id: 3,
+        name: 'Mocking Bird Project',
         description: 'third mock dataset with a big number of random issues',
         milestones: milestonesArrayFromFile,
         issues: issuesForProject,
@@ -418,8 +418,8 @@ function getMockData(dataset: number): ProjectIF {
       milestonesForProject = assignIssueToMilestone(3, 1, milestonesForProject, issuesForProject);
 
       return {
-        id: 5,
-        name: faker.science.chemicalElement().name,
+        id: 2,
+        name: 'Mocking Bird 2',
         description: 'second mock dataset',
         milestones: milestonesForProject,
         issues: issuesForProject,
@@ -449,10 +449,10 @@ function getMockData(dataset: number): ProjectIF {
       const numberOfEmployees = employeesArrayFromFile.length;
 
       for (let i = 0; i < numberOfIssues; i++) {
-        const randomStatus = getRandomInt(4); // 0: Open, 1: Closed, 2: In progress
+        const randomStatus = getRandomInt(4); // 0: Open, 1: Closed, 2: In Progress
 
         if (randomStatus === 2) {
-          issues[i].status = 'In progress';
+          issues[i].status = 'In Progress';
           const [devStatus] = devStatusList;
           issues[i].status = devStatus;
         } else if (randomStatus === 1) {
@@ -482,7 +482,7 @@ function getMockData(dataset: number): ProjectIF {
 
       return {
         id: 6,
-        name: faker.science.chemicalElement().name,
+        name: 'Mocking Bird 6',
         description: 'sixth mock dataset',
         milestones: milestonesArrayFromFile,
         issues: issuesForProject,
@@ -493,7 +493,7 @@ function getMockData(dataset: number): ProjectIF {
     // SLA Rules MockData
     case 7: {
       const issues: IssueIF[] = [];
-      // 280 random issues
+      // Random Erstellung von 280 Issues
       for (let i = 0; i < 280; i++) {
         issues.push({
           id: i + 1,
@@ -575,8 +575,8 @@ function getMockData(dataset: number): ProjectIF {
       }
       return {
         id: 7,
-        name: faker.science.chemicalElement().name,
-        description: faker.company.catchPhrase(),
+        name: 'Mocking Bird 7',
+        description: 'seventh mock dataset',
         milestones: milestonesArrayFromFile,
         issues: issuesForProject,
         slaSubscriber: null,
@@ -650,18 +650,18 @@ function getMockData(dataset: number): ProjectIF {
       );
 
       const date = new Date(2018, 0o5, 0o5, 17, 23, 42, 11);
-      issuesForProject[0].status = 'In progress';
+      issuesForProject[0].status = 'In Progress';
       issuesForProject[2].status = 'Closed';
       issuesForProject[2].closedAt = date; // Set the specific closedAt date
       issuesForProject[3].status = 'Closed';
       issuesForProject[3].closedAt = date; // Set the specific closedAt date
       issuesForProject[4].status = 'Closed';
       issuesForProject[4].closedAt = date; // Set the specific closedAt date
-      issuesForProject[5].status = 'In progress';
+      issuesForProject[5].status = 'In Progress';
       issuesForProject[6].status = 'Closed';
       issuesForProject[6].closedAt = date; // Set the specific closedAt date
 
-      [issuesForProject[0].status, issuesForProject[0].status] = ['In progress', devStatusList[0]];
+      [issuesForProject[0].status, issuesForProject[0].status] = ['In Progress', devStatusList[0]];
       [issuesForProject[1].status] = [planningStatusList[0]];
       [issuesForProject[2].status, issuesForProject[2].status, issuesForProject[2].closedAt] = [
         'Closed',
@@ -678,7 +678,7 @@ function getMockData(dataset: number): ProjectIF {
         testingStatusList[0],
         date,
       ];
-      [issuesForProject[5].status, issuesForProject[5].status] = ['In progress', devStatusList[0]];
+      [issuesForProject[5].status, issuesForProject[5].status] = ['In Progress', devStatusList[0]];
       [issuesForProject[6].status, issuesForProject[6].closedAt] = [testingStatusList[0], date];
 
       return {

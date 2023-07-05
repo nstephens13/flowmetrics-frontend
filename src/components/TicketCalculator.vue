@@ -34,7 +34,7 @@
             :max="getIssueCountMax(selectedProject.issues)"
             percentage
             rounded
-            title="In progress"
+            title="In Progress"
           />
         </div>
         <div class="flex-grow-1 flex align-items-center justify-content-center"></div>

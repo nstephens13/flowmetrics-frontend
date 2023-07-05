@@ -1,15 +1,13 @@
 import { defineStore } from 'pinia';
-import type { FilterConfigIF, ProjectFilterConfigIF } from '@/model/FilterConfigIF';
-import type { ProjectIF } from '@/model/ProjectIF';
+import type { FilterConfigIF } from '@/model/FilterConfigIF';
 
 const useFilterConfigStore = defineStore('filterConfig', {
   state: () => ({
     filter: {
       id: 1,
       projectFilter: {
-        projectsWhiteList: [] as ProjectIF[],
-        issueStatusIncludeFilter: [] as string[],
-      } as ProjectFilterConfigIF,
+        issueStatusIncludeFilter: [],
+      },
     } as FilterConfigIF,
   }),
 
