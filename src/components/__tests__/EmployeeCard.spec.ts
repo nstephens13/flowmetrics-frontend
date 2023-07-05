@@ -41,7 +41,6 @@ describe('Employee Card should load all the Components', () => {
   test('it mounts', () => {
     expect(wrapper.exists()).toBe(true);
     expect(wrapper.getComponent(Avatar).isVisible()).toBe(true);
-    expect(wrapper.getComponent(Chip).isVisible()).toBe(true);
     expect(wrapper.getComponent(ProgressBar).isVisible()).toBe(true);
   });
 
@@ -50,16 +49,15 @@ describe('Employee Card should load all the Components', () => {
   });
 
   test('checks for Employee Name', () => {
-    const employeeName = wrapper.find('.EmployeeName');
-    expect(employeeName.text()).toBe('Erika Mustermann');
-  });
+    const employeeFirstName = wrapper.find('#firstName');
+    expect(employeeFirstName.text()).toBe('Erika');
 
-  test('Label on Chip component', () => {
-    expect(wrapper.getComponent(Chip).props('label')).toBe('Employee ID : 19');
+    const employeeLastName = wrapper.find('#lastName');
+    expect(employeeLastName.text()).toBe('Mustermann');
   });
 
   test('checks for total tickets', () => {
-    const label = wrapper.find('label[for="TotalTickets"]');
+    const label = wrapper.find('#ticketCount');
     const labelText = label.text();
     const expectedTotalTickets = 40;
 
