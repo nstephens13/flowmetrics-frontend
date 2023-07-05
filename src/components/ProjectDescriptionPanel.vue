@@ -1,5 +1,5 @@
 <template>
-  <div class="card" style="position: relative;">
+  <div class="card" style="position: relative">
     <Card>
       <template #title>
         Project Overview
@@ -9,17 +9,19 @@
         <Panel>
           <template #icons>
             <Dropdown
-            v-model="selectedProject"
-            :options="projects"
-            optionLabel="name"
-            placeholder="Select a project"
-            class="w-full md:w-14rem"
+              v-model="selectedProject"
+              :options="projects"
+              optionLabel="name"
+              placeholder="Select a project"
+              class="w-full md:w-14rem"
             />
           </template>
           <template #default>
-            Project-ID: {{ selectedProject.id }}<br>
-            Description: {{ selectedProject.description }}<br>
-            Total issues : {{ selectedProject.issues.length }}<br>
+            <div class="flex flex-row flex-wrap card-container justify-content-left">
+              <h4 class="m-2">Project-ID: {{ selectedProject.id }}</h4>
+              <h4 class="m-2">Description: {{ selectedProject.description }}</h4>
+              <h4 class="m-2">Total issues: {{ selectedProject.issues.length }}</h4>
+            </div>
           </template>
         </Panel>
       </template>
@@ -28,21 +30,31 @@
   <div class="card">
     <Card>
       <template #title>
-        Tickets
+        Issues
         <Divider></Divider>
       </template>
       <template #content>
         <div class="card">
-          <DataTable :value="selectedProjectIssues" showGridlines>
-            <Column field="id" header="Ticket-ID"></Column>
+          <DataTable
+            paginator
+            :rows="10"
+            :rowsPerPageOptions="[10, 20, 50, 100]"
+            :value="selectedProject.issues"
+            showGridlines
+          >
+            <Column field="id" header="Issue-ID"></Column>
             <Column field="name" header="Name"></Column>
             <Column field="description" header="Description"></Column>
-            <Column field="assignedTo" header="Assigned To">
+            <Column field="assignedTo" header="Assigned to">
               <template #body="slotProps">
                 {{ printAssignedTo(slotProps.data.assignedTo) }}
               </template>
             </Column>
-            <Column field="createdBy" header="Created by"></Column>
+            <Column field="createdBy" header="Created by">
+              <template #body="slotProps">
+                {{ printAssignedTo(slotProps.data.assignedTo) }}
+              </template>
+            </Column>
             <Column field="createdAt" header="Created on"></Column>
             <Column field="closedAt" header="Closed on"></Column>
             <Column field="dueTo" header="Due on"></Column>
@@ -55,55 +67,40 @@
 </template>
 
 <script setup lang="ts">
-import { defineComponent } from 'vue';
-import type { ProjectIF } from '@/model/ProjectIF';
-
-import getMockData from '../assets/__mockdata__/mockDataComposer';
-import type { IssueIF } from '@/model/IssueIF';
+import { ref } from 'vue';
+import type { Ref } from 'vue';
 import type { EmployeeIF } from '@/model/EmployeeIF';
+import type { ProjectIF } from '@/model/ProjectIF';
+import getMockData from '@/assets/__mockdata__/mockDataComposer';
+
+const selectedProject = ref({
+  id: 0,
+  name: 'Project_Name',
+  description: '',
+  milestones: [],
+  issues: [],
+} as ProjectIF);
 
 function printAssignedTo(employee: EmployeeIF | null): string {
   const firstName = employee?.firstName ?? '';
   const lastName = employee?.lastName ?? '';
   return `${firstName} ${lastName}`;
 }
-
-defineExpose({ printAssignedTo });
 </script>
 
 <script lang="ts">
-
-export default defineComponent({
-  name: 'ProjectDescriptionPanel',
-  data() {
-    return {
-      selectedProject: {
-        id: 0,
-        name: 'Project_Name',
-        description: '',
-        milestones: [],
-        issues: [],
-      } as ProjectIF,
-      projects: [
-        getMockData(1),
-        getMockData(2),
-        getMockData(3),
-        getMockData(53),
-        getMockData(54),
-        getMockData(55),
-      ] as ProjectIF[],
-    };
-  },
-  computed: {
-    selectedProjectIssues(): IssueIF[] {
-      return this.selectedProject.issues;
-    },
-  },
-});
+const projects: Ref<ProjectIF[]> = ref([
+  getMockData(1),
+  getMockData(2),
+  getMockData(3),
+  getMockData(53),
+  getMockData(54),
+  getMockData(55),
+] as ProjectIF[]);
 </script>
 
 <style scoped>
-.p-card{
+.p-card {
   margin: 15px;
   box-shadow: none;
 }
