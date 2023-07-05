@@ -32,7 +32,6 @@ export function calculateWorkload(projects: ProjectIF[]): Map<EmployeeIF, IssueD
   const mapToReturn: Map<EmployeeIF, { planning: number; development: number; testing: number }> =
     new Map([]);
   const issueSet: Set<IssueIF> = new Set<IssueIF>();
-
   function extractEmployeeAndUpdateEmployeeMap(issue: IssueIF) {
 
     let numberPlannedTickets: number;
@@ -43,7 +42,7 @@ export function calculateWorkload(projects: ProjectIF[]): Map<EmployeeIF, IssueD
       planning: number;
       development: number;
       testing: number;
-    } | undefined
+    } | undefined;
 
     // checking if the issue is already done, with a set, and if somebody is assigned
     if (!issueSet.has(issue)) {
@@ -133,6 +132,7 @@ export function calculateWorkload(projects: ProjectIF[]): Map<EmployeeIF, IssueD
       extractEmployeeAndUpdateEmployeeMap(issue);
     });
 
+    //DN
     project.milestones.forEach((milestone) => {
       milestone.issues.forEach((issue) => {
         extractEmployeeAndUpdateEmployeeMap(issue);
