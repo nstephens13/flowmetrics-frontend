@@ -11,7 +11,8 @@ import type {SLARule} from "@/model/SLARule";
  * @prop {Date} createdAt the Date when the issue was created
  * @prop {Date| null} closedAt the Date when the issue was closed
  * @prop {Date| null} dueTo Due date for the Issue
- * @prop {Status} status the Status of ticket-progress
+ * @prop {Status} status the Status of issue-progress
+ * @prop {SLARule} assignedSLARule the assigned SLA rule of the issue
  */
 
 // Enum to set status of Issue
