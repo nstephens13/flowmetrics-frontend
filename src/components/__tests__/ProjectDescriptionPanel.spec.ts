@@ -55,7 +55,7 @@ describe('Project Overview should load all the Components', () => {
     const tableButton = wrapper.getComponent(DataTable).find('.p-column-filter-menu-button');
     tableButton.trigger('click').then(() => {
       const multiSelect = wrapper.getComponent(MultiSelect);
-      expect(3).toEqual(multiSelect.props('options').length);
+      expect(2).toEqual(multiSelect.props('options').length);
     });
   });
 });

@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import ProjectOverview from '@/views/ProjectOverview.vue';
-import TicketCalculator from '@/views/TicketCalculatorView.vue';
+import IssueCalculator from '@/views/IssueCalculator.vue';
 import SLAComponent from '@/views/SLAComponent.vue';
 import EmployeeOverview from '@/views/EmployeeOverview.vue';
 
@@ -18,9 +18,9 @@ const router = createRouter({
       component: ProjectOverview,
     },
     {
-      path: '/ticket-calculator',
-      name: 'ticket-calculator',
-      component: TicketCalculator,
+      path: '/issue-calculator',
+      name: 'issue-calculator',
+      component: IssueCalculator,
     },
     {
       path: '/sla-management',

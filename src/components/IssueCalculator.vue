@@ -18,7 +18,7 @@
             :max="getIssueCountMax(selectedProject.issues)"
             percentage
             rounded
-            title="Open Tickets"
+            title="Open issues"
           />
           <CircularProgressBar
             class="flex align-items-center justify-content-center m-2"
@@ -26,7 +26,7 @@
             :max="getIssueCountMax(selectedProject.issues)"
             percentage
             rounded
-            title="Closed Tickets"
+            title="Closed issues"
           />
           <CircularProgressBar
             class="flex align-items-center justify-content-center m-2"
@@ -34,7 +34,7 @@
             :max="getIssueCountMax(selectedProject.issues)"
             percentage
             rounded
-            title="In Progress"
+            title="In progress"
           />
         </div>
         <div class="flex-grow-1 flex align-items-center justify-content-center"></div>
@@ -50,14 +50,14 @@
         :value="selectedProject.issues"
         showGridlines
       >
-        <Column field="id" header="Ticket-ID"></Column>
+        <Column field="id" header="Issue-ID"></Column>
         <Column field="status" header="Status">
           <template #body="slotProps">
             {{ slotProps.data.status?.toString() }}
           </template>
         </Column>
-        <Column field="dueTo" header="Due Date"></Column>
-        <Column header="Time left">
+        <Column field="dueTo" header="Due date"></Column>
+        <Column header="Time left (Days)">
           <template #body="slotProps">
             {{ getTimeLeft(slotProps.data) }}
           </template>
@@ -75,7 +75,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import type { Ref } from 'vue';
-import CircularProgressBar from '@/components/TicketCalculator/CircularProgressBar.vue';
+import CircularProgressBar from '@/components/IssueCalculator/CircularProgressBar.vue';
 import type { ProjectIF } from '@/model/ProjectIF';
 import getMockData from '@/assets/__mockdata__/mockDataComposer';
 import { countIssuesByStatus, Issue, getTimeLeft } from '@/model/Issue';

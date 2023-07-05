@@ -20,7 +20,7 @@
             <div class="flex flex-row flex-wrap card-container justify-content-left">
               <h4 class="m-2">Project-ID: {{ selectedProject.id }}</h4>
               <h4 class="m-2">Description: {{ selectedProject.description }}</h4>
-              <h4 class="m-2">Total issues : {{ selectedProject.issues.length }}</h4>
+              <h4 class="m-2">Total issues: {{ selectedProject.issues.length }}</h4>
             </div>
           </template>
         </Panel>
@@ -30,7 +30,7 @@
   <div class="card">
     <Card>
       <template #title>
-        Tickets
+        Issues
         <Divider></Divider>
       </template>
       <template #content>
@@ -45,12 +45,13 @@
             :value="selectedProject.issues"
             showGridlines
           >
+            <Column field="id" header="Issue-ID"></Column>
             <template #empty> No issues found. </template>
             <template #loading> Loading issues. Please wait. </template>
             <Column field="id" header="Ticket-ID"></Column>
             <Column field="name" header="Name"></Column>
             <Column field="description" header="Description"></Column>
-            <Column field="assignedTo" header="Assigned To">
+            <Column field="assignedTo" header="Assigned to">
               <template #body="slotProps">
                 {{ printAssignedTo(slotProps.data.assignedTo) }}
               </template>
@@ -96,8 +97,8 @@
 </template>
 
 <script setup lang="ts">
-import type { Ref } from 'vue';
 import { ref } from 'vue';
+import type { Ref } from 'vue';
 import { FilterMatchMode } from 'primevue/api';
 import type { EmployeeIF } from '@/model/EmployeeIF';
 import type { ProjectIF } from '@/model/ProjectIF';
@@ -111,7 +112,9 @@ const selectedProject = ref({
   issues: [],
 } as ProjectIF);
 
-const statuses = ref(['Closed', 'Open', 'In Progress']);
+const statuses = ref(['Open', 'In progress']);
+
+//  const statuses = ref(['Closed', 'Open', 'In progress']);
 
 const filters = ref({
   status: { value: null, matchMode: FilterMatchMode.IN },
