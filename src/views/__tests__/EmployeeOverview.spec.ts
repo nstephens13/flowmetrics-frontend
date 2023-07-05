@@ -13,11 +13,19 @@ import router from '@/router/index';
 import EmployeeOverview from '@/views/EmployeeOverview.vue';
 
 describe('Employee Overview should load all the Components', () => {
-  const pinia = createTestingPinia({ stubActions: false });
-
   const wrapper = mount(EmployeeOverview, {
     global: {
-      plugins: [PrimeVue, router, pinia],
+      plugins: [
+        PrimeVue,
+        router,
+        createTestingPinia({
+          stubActions: false,
+          initialState: {
+            projects: [],
+            filter: {},
+          },
+        }),
+      ],
       components: {
         Card,
         DataView,
@@ -38,7 +46,7 @@ describe('Employee Overview should load all the Components', () => {
     expect(wrapper.findComponent(MultiSelect).isVisible()).toBe(true);
   });
 
-  test('Multiselect should contain all options', async () => {
+  test('Multiselect should contain all options', () => {
     const multiselects = wrapper.findAllComponents(MultiSelect);
     expect(4).toEqual(multiselects[0].props('options').length);
     expect(0).toEqual(multiselects[1].props('options').length);
@@ -49,16 +57,18 @@ describe('Employee Overview should load all the Components', () => {
     expect(title.text()).toBe('Employee Overview');
   });
 
-  test('Select a project and status on the project multiselector', async () => {
+  test('Select a project and status on the project multiselector', () => {
     const multiselects = wrapper.findAllComponents(MultiSelect);
-    await multiselects[0].setValue([multiselects[0].props('options')[1]]);
+    multiselects[0].setValue([multiselects[0].props('options')[1]]).then(() => {
+      expect('Mocking Bird Project').toEqual(multiselects[0].find('.p-multiselect-label').text());
+      expect(2).toEqual(multiselects[1].props('options').length);
 
-    expect('Mocking Bird Project').toEqual(multiselects[0].find('.p-multiselect-label').text());
-    expect(2).toEqual(multiselects[1].props('options').length);
-
-    await multiselects[1].setValue([multiselects[1].props('options')[0]]);
-    await wrapper.vm.$nextTick();
-    const count: number = await wrapper.getComponent(DataView).props('value').length;
-    expect(13).toEqual(count);
+      multiselects[1].setValue([multiselects[1].props('options')[0]]).then(() => {
+        // wait for the DOM update with nextTick
+        wrapper.vm.$nextTick(() => {
+          expect(13).toEqual(wrapper.findComponent(DataView).props('value').length);
+        });
+      });
+    });
   });
 });
