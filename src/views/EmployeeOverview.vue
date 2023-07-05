@@ -105,9 +105,9 @@ function updateEmployeeList(projects: ProjectIF[]) {
   employeeList.value = mergeEmployees(workloadMap);
   // filter category names for the issues in the emplyeeList that are the keys of the issues in the workloadMap
   categoryNames.value = {
-    firstCategory: 'planning',
-    secondCategory: 'development',
-    thirdCategory: 'testing',
+    firstCategory: 'Planning',
+    secondCategory: 'Development',
+    thirdCategory: 'Testing',
   };
 }
 

@@ -9,8 +9,8 @@ import issueJson from './Issues.json';
 import milestoneJson from './Milestones.json';
 import type { Issue } from '@/model/Issue';
 
-export const planningStatusList: string[] = ['planned', 'design', 'Open'];
-export const devStatusList: string[] = ['in work', 'review', 'In progress'];
+export const planningStatusList: string[] = ['Planned', 'Design', 'Open'];
+export const devStatusList: string[] = ['In work', 'Review', 'In progress'];
 export const testingStatusList: string[] = ['UnitTest', 'E2E'];
 
 export const nonDisplayedStatusList: string[] = ['Closed'];
@@ -263,7 +263,7 @@ function getMockData(dataset: number): ProjectIF {
         const randomStatus = getRandomInt(3); // 0: Open, 1: Closed, 2: In progress
 
         if (randomStatus === 2) {
-          status = 'In progress';
+          status = 'In Progress';
         } else if (randomStatus === 1) {
           closedAt = faker.date.recent();
         }
@@ -314,7 +314,7 @@ function getMockData(dataset: number): ProjectIF {
         const randomStatus = getRandomInt(3); // 0: Open, 1: Closed, 2: In progress
 
         if (randomStatus === 2) {
-          status = 'In progress';
+          status = 'In Progress';
         } else if (randomStatus === 1) {
           closedAt = faker.date.recent();
         }
@@ -473,7 +473,7 @@ function getMockData(dataset: number): ProjectIF {
       return {
         id: 6,
         name: faker.science.chemicalElement().name,
-        description: 'sixth mock dataset',
+        description: 'Sixth mock dataset',
         milestones: milestonesArrayFromFile,
         issues: issuesForProject,
       };
@@ -544,14 +544,14 @@ function getMockData(dataset: number): ProjectIF {
       );
 
       const date = new Date(2018, 0o5, 0o5, 17, 23, 42, 11);
-      issuesForProject[0].status = 'In progress';
+      issuesForProject[0].status = 'In Progress';
       issuesForProject[2].status = 'Closed';
       issuesForProject[2].closedAt = date; // Set the specific closedAt date
       issuesForProject[3].status = 'Closed';
       issuesForProject[3].closedAt = date; // Set the specific closedAt date
       issuesForProject[4].status = 'Closed';
       issuesForProject[4].closedAt = date; // Set the specific closedAt date
-      issuesForProject[5].status = 'In progress';
+      issuesForProject[5].status = 'In Progress';
       issuesForProject[6].status = 'Closed';
       issuesForProject[6].closedAt = date; // Set the specific closedAt date
 
@@ -572,7 +572,7 @@ function getMockData(dataset: number): ProjectIF {
         testingStatusList[0],
         date,
       ];
-      [issuesForProject[5].status, issuesForProject[5].status] = ['In progress', devStatusList[0]];
+      [issuesForProject[5].status, issuesForProject[5].status] = ['In Progress', devStatusList[0]];
       [issuesForProject[6].status, issuesForProject[6].closedAt] = [testingStatusList[0], date];
 
       return {
@@ -587,8 +587,8 @@ function getMockData(dataset: number): ProjectIF {
     default: {
       return {
         id: 0,
-        name: 'default',
-        description: 'a empty project',
+        name: 'Default',
+        description: 'An empty project',
         milestones: [],
         issues: [],
       };
