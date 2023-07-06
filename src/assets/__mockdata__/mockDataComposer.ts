@@ -9,11 +9,11 @@ import issueJson from './Issues.json';
 import milestoneJson from './Milestones.json';
 import type { Issue } from '@/model/Issue';
 
-export const planningStatusList: string[] = ['planned', 'design', 'Open'];
-export const devStatusList: string[] = ['in work', 'review', 'In Progress'];
+export const planningStatusList: string[] = ['Planned', 'Design', 'Open'];
+export const devStatusList: string[] = ['In work', 'Review', 'In progress'];
 export const testingStatusList: string[] = ['UnitTest', 'E2E'];
-
 export const nonDisplayedStatusList: string[] = ['Closed'];
+
 function getRandomInt(max: number) {
   return Math.floor(Math.random() * max);
 }
@@ -261,7 +261,7 @@ function getMockData(dataset: number): ProjectIF {
         let status = 'Open';
         let closedAt = null;
 
-        const randomStatus = getRandomInt(3); // 0: Open, 1: Closed, 2: In Progress
+        const randomStatus = getRandomInt(3); // 0: Open, 1: Closed, 2: In progress
 
         if (randomStatus === 2) {
           status = 'In Progress';
@@ -315,7 +315,7 @@ function getMockData(dataset: number): ProjectIF {
         let status = 'Open';
         let closedAt = null;
 
-        const randomStatus = getRandomInt(3); // 0: Open, 1: Closed, 2: In Progress
+        const randomStatus = getRandomInt(3); // 0: Open, 1: Closed, 2: In progress
 
         if (randomStatus === 2) {
           status = 'In Progress';
@@ -350,8 +350,8 @@ function getMockData(dataset: number): ProjectIF {
       });
 
       return {
-        id: 3,
-        name: 'Mocking Bird Project',
+        id: 4,
+        name: faker.science.chemicalElement().name,
         description: 'third mock dataset with a big number of random issues',
         milestones: milestonesArrayFromFile,
         issues: issuesForProject,
@@ -417,8 +417,8 @@ function getMockData(dataset: number): ProjectIF {
       milestonesForProject = assignIssueToMilestone(3, 1, milestonesForProject, issuesForProject);
 
       return {
-        id: 2,
-        name: 'Mocking Bird 2',
+        id: 5,
+        name: faker.science.chemicalElement().name,
         description: 'second mock dataset',
         milestones: milestonesForProject,
         issues: issuesForProject,
@@ -447,10 +447,10 @@ function getMockData(dataset: number): ProjectIF {
       const numberOfEmployees = employeesArrayFromFile.length;
 
       for (let i = 0; i < numberOfIssues; i++) {
-        const randomStatus = getRandomInt(4); // 0: Open, 1: Closed, 2: In Progress
+        const randomStatus = getRandomInt(4); // 0: Open, 1: Closed, 2: In progress
 
         if (randomStatus === 2) {
-          issues[i].status = 'In Progress';
+          issues[i].status = 'In progress';
           const [devStatus] = devStatusList;
           issues[i].status = devStatus;
         } else if (randomStatus === 1) {
@@ -480,8 +480,8 @@ function getMockData(dataset: number): ProjectIF {
 
       return {
         id: 6,
-        name: 'Mocking Bird 6',
-        description: 'sixth mock dataset',
+        name: faker.science.chemicalElement().name,
+        description: 'Sixth mock dataset',
         milestones: milestonesArrayFromFile,
         issues: issuesForProject,
       };
@@ -563,7 +563,7 @@ function getMockData(dataset: number): ProjectIF {
       issuesForProject[6].status = 'Closed';
       issuesForProject[6].closedAt = date; // Set the specific closedAt date
 
-      [issuesForProject[0].status, issuesForProject[0].status] = ['In Progress', devStatusList[0]];
+      [issuesForProject[0].status, issuesForProject[0].status] = ['In progress', devStatusList[0]];
       [issuesForProject[1].status] = [planningStatusList[0]];
       [issuesForProject[2].status, issuesForProject[2].status, issuesForProject[2].closedAt] = [
         'Closed',
@@ -595,8 +595,8 @@ function getMockData(dataset: number): ProjectIF {
     default: {
       return {
         id: 0,
-        name: 'default',
-        description: 'a empty project',
+        name: 'Default',
+        description: 'An empty project',
         milestones: [],
         issues: [],
       };

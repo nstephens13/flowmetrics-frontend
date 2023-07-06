@@ -1,64 +1,32 @@
-<template>
-  <Card>
-    <template #title>
-      <div class="grid">
-        <div class="col-12">
-          <label class="PageTitel">Employee Overview</label>
-        </div>
-      </div>
-      <Divider />
-    </template>
-    <template #content>
-      <DataView :value="employeeList" dataKey="employee.id" layout="grid">
-        <template #header>
-          <div class="grid gap-3">
-            <MultiSelect
-              v-model="selectedStatuses"
-              :options="allStatuses"
-              @onChange="updateFilterConfig()"
-              placeholder="Select Status"
-              :maxSelectedLabels="1"
-              class="w-full md:w-14rem"
-            />
-          </div>
-        </template>
-        <template #grid="slotProps">
-          <div class="col-12 sm:col-6 lg:col-12 xl:col-4 p-2">
-            <div class="p-4 border-1 surface-border border-round shadow-5 hover:bg-gray-50">
-              <EmployeeCard
-                :employee="slotProps.data.employee"
-                :issues="slotProps.data.issues"
-                :categoryNames="categoryNames"
-              />
-            </div>
-          </div>
-        </template>
-      </DataView>
-    </template>
-  </Card>
-</template>
-
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue';
+import { computed, ref } from 'vue';
 import type { Ref } from 'vue';
 import type { EmployeeIF } from '@/model/EmployeeIF';
 import type { ProjectIF } from '@/model/ProjectIF';
 import type { IssueDataIF } from '@/model/IssueDataIF';
-import calculateWorkload from '@/services/workloadCalculator';
-import getMockData from '@/assets/__mockdata__/mockDataComposer';
+import { calculateWorkload, mergeEmployees } from '@/services/workloadCalculator';
 import useFilterConfigStore from '@/store/FilterConfigStore';
 import filterProjectThatHasTheAllowedStatus from '@/services/filter/IssuesStateFilter';
 import EmployeeCard from '@/components/EmployeeCard.vue';
 import { getIssueStatusList } from '@/model/ProjectIF';
-
-const selectedProject: Ref<ProjectIF> = ref(getMockData(3));
-const allStatuses: Ref<string[]> = ref(getIssueStatusList(selectedProject.value.issues));
+import useProjectsStore from '@/store/ProjectStore';
 
 const filterConfigStore = useFilterConfigStore();
+const projectStore = useProjectsStore();
+
 const filterConfig = computed(() => filterConfigStore.getFilterConfig);
+
 const workload: Ref<Map<EmployeeIF, IssueDataIF>> = ref(
-  calculateWorkload(filterProjectThatHasTheAllowedStatus(selectedProject.value, filterConfig.value))
+  calculateWorkload(filterConfig.value.projectFilter.projectsWhiteList)
 );
+
+const allStatuses: Ref<string[]> = ref(
+  getIssueStatusList(
+    filterConfig.value.projectFilter.projectsWhiteList.flatMap((project) => project.issues)
+  )
+);
+
+const allProjects: Ref<ProjectIF[]> = ref(projectStore.getProjects);
 
 const employeeList = ref(
   Array.from(workload.value, ([employee, issues]) => ({ employee, issues }))
@@ -74,42 +42,98 @@ const categoryNames = ref<{
   thirdCategory: '',
 });
 
-const selectedStatuses = ref(filterConfig.value.projectFilter.issueStatusIncludeFilter);
+const selectedStatuses: Ref<string[]> = ref([]);
+const selectedProjects: Ref<ProjectIF[]> = ref([]);
 
-function updateFilterConfig() {
-  const updatedFilterConfig = { ...filterConfig.value };
-  updatedFilterConfig.projectFilter.issueStatusIncludeFilter = selectedStatuses.value;
-  filterConfigStore.setFilterConfig(updatedFilterConfig);
-}
-
-function updateEmployeeList(project: ProjectIF) {
-  const workloadMap = calculateWorkload(
-    filterProjectThatHasTheAllowedStatus(project, filterConfig.value)
+function updateEmployeeList() {
+  const workloadMap: Map<EmployeeIF, IssueDataIF> = calculateWorkload(
+    filterProjectThatHasTheAllowedStatus(filterConfig.value)
   );
-  employeeList.value = Array.from(workloadMap, ([employee, issues]) => ({ employee, issues }));
-  // filter category names for the issues in the emplyeeList that are the keys of the issues in the workloadMap
+
+  employeeList.value = mergeEmployees(workloadMap);
   categoryNames.value = {
-    firstCategory: 'planning',
-    secondCategory: 'development',
-    thirdCategory: 'testing',
+    firstCategory: 'Planning',
+    secondCategory: 'Development',
+    thirdCategory: 'Testing',
   };
 }
 
-watch(selectedStatuses, () => {
-  updateFilterConfig();
-});
-
-watch(filterConfig, (newConfig) => {
-  selectedStatuses.value = newConfig.projectFilter.issueStatusIncludeFilter;
-  updateEmployeeList(selectedProject.value);
-});
-
-watch(selectedProject, (project) => {
+function updateSelectedProjects() {
   selectedStatuses.value = [];
-  allStatuses.value = getIssueStatusList(project.issues);
-  updateEmployeeList(project);
-});
+  const updatedFilterConfig = filterConfig.value;
+  updatedFilterConfig.projectFilter.projectsWhiteList = selectedProjects.value;
+  updatedFilterConfig.projectFilter.issueStatusIncludeFilter = [];
+  filterConfigStore.setFilterConfig(updatedFilterConfig);
+  updateEmployeeList();
+  allStatuses.value = getIssueStatusList(
+    filterConfig.value.projectFilter.projectsWhiteList.flatMap((project) => project.issues)
+  );
+}
+
+function updateSelectedStatuses() {
+  const updatedFilterConfig = filterConfig.value;
+  updatedFilterConfig.projectFilter.issueStatusIncludeFilter = selectedStatuses.value;
+  filterConfigStore.setFilterConfig(updatedFilterConfig);
+
+  updateEmployeeList();
+  allStatuses.value = getIssueStatusList(
+    selectedProjects.value.flatMap((project) => project.issues)
+  );
+}
+
+selectedProjects.value = filterConfig.value.projectFilter.projectsWhiteList;
+selectedStatuses.value = filterConfig.value.projectFilter.issueStatusIncludeFilter;
+updateEmployeeList();
 </script>
+
+<template>
+  <Card>
+    <template #title>
+      <div class="grid">
+        <div class="col-12">
+          <label class="PageTitel">Employee Overview</label>
+        </div>
+      </div>
+      <Divider />
+    </template>
+    <template #content>
+      <DataView :value="employeeList" dataKey="employee.id" layout="grid">
+        <template #header>
+          <div class="grid gap-3">
+            <MultiSelect
+              v-model="selectedProjects"
+              :options="allProjects"
+              option-label="name"
+              @change="updateSelectedProjects()"
+              placeholder="Select project"
+              :maxSelectedLabels="1"
+              class="w-full md:w-14rem"
+            />
+            <MultiSelect
+              v-model="selectedStatuses"
+              :options="allStatuses"
+              placeholder="Select status"
+              @change="updateSelectedStatuses()"
+              :maxSelectedLabels="1"
+              class="w-full md:w-14rem"
+            />
+          </div>
+        </template>
+        <template #grid="slotProps">
+          <div class="xl:col-2 lg:col-3 md:col-4 sm:col-6 col-12 p-2">
+            <div class="p-4 border-1 surface-border border-round shadow-1 hover:bg-gray-50">
+              <EmployeeCard
+                :employee="slotProps.data.employee"
+                :issues="slotProps.data.issues"
+                :categoryNames="categoryNames"
+              />
+            </div>
+          </div>
+        </template>
+      </DataView>
+    </template>
+  </Card>
+</template>
 
 <style scoped>
 .p-card {

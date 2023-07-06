@@ -1,4 +1,7 @@
+import type { ProjectIF } from '@/model/ProjectIF';
+
 export interface ProjectFilterConfigIF {
+  projectsWhiteList: ProjectIF[];
   issueStatusIncludeFilter: string[];
 }
 

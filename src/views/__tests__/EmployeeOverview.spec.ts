@@ -1,8 +1,6 @@
 import { mount } from '@vue/test-utils';
 import { describe, expect, test } from 'vitest';
 import PrimeVue from 'primevue/config';
-import { createPinia } from 'pinia';
-
 import Card from 'primevue/card';
 import DataView from 'primevue/dataview';
 import Divider from 'primevue/divider';
@@ -10,15 +8,24 @@ import Avatar from 'primevue/avatar';
 import MultiSelect from 'primevue/multiselect';
 import ProgressBar from 'primevue/progressbar';
 import Chip from 'primevue/chip';
+import { createTestingPinia } from '@pinia/testing';
 import router from '@/router/index';
+import EmployeeOverview from '@/views/EmployeeOverview.vue';
 
-import EmployeeOverview from '../EmployeeOverview.vue';
-
-const pinia = createPinia();
 describe('Employee Overview should load all the Components', () => {
   const wrapper = mount(EmployeeOverview, {
     global: {
-      plugins: [PrimeVue, router, pinia],
+      plugins: [
+        PrimeVue,
+        router,
+        createTestingPinia({
+          stubActions: false,
+          initialState: {
+            projects: [],
+            filter: {},
+          },
+        }),
+      ],
       components: {
         Card,
         DataView,
@@ -39,8 +46,14 @@ describe('Employee Overview should load all the Components', () => {
     expect(wrapper.findComponent(MultiSelect).isVisible()).toBe(true);
   });
 
-  test('Multiselect should contain all options', async () => {
-    const dropdownOptions = wrapper.findComponent(MultiSelect).props('options');
-    expect(dropdownOptions.length).toEqual(2);
+  test('Multiselect should contain all options', () => {
+    const multiselects = wrapper.findAllComponents(MultiSelect);
+    expect(4).toEqual(multiselects[0].props('options').length);
+    expect(0).toEqual(multiselects[1].props('options').length);
+  });
+
+  test('displays the correct title', () => {
+    const title = wrapper.find('.PageTitel');
+    expect(title.text()).toBe('Employee Overview');
   });
 });

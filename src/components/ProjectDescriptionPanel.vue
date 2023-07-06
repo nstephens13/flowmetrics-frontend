@@ -20,7 +20,7 @@
             <div class="flex flex-row flex-wrap card-container justify-content-left">
               <h4 class="m-2">Project-ID: {{ selectedProject.id }}</h4>
               <h4 class="m-2">Description: {{ selectedProject.description }}</h4>
-              <h4 class="m-2">Total issues : {{ selectedProject.issues.length }}</h4>
+              <h4 class="m-2">Total issues: {{ selectedProject.issues.length }}</h4>
             </div>
           </template>
         </Panel>
@@ -30,7 +30,7 @@
   <div class="card">
     <Card>
       <template #title>
-        Tickets
+        Issues
         <Divider></Divider>
       </template>
       <template #content>
@@ -42,10 +42,10 @@
             :value="selectedProject.issues"
             showGridlines
           >
-            <Column field="id" header="Ticket-ID"></Column>
+            <Column field="id" header="Issue-ID"></Column>
             <Column field="name" header="Name"></Column>
             <Column field="description" header="Description"></Column>
-            <Column field="assignedTo" header="Assigned To">
+            <Column field="assignedTo" header="Assigned to">
               <template #body="slotProps">
                 {{ printAssignedTo(slotProps.data.assignedTo) }}
               </template>
