@@ -25,9 +25,6 @@ describe('Project Overview should load all the Components', () => {
         MultiSelect,
       },
     },
-    stubs: {
-      teleport: false,
-    },
   });
 
   test('it mounts', () => {
@@ -52,10 +49,18 @@ describe('Project Overview should load all the Components', () => {
   });
 
   test('filter menu dropdown button', () => {
-    const tableButton = wrapper.getComponent(DataTable).find('.p-column-filter-menu-button');
-    tableButton.trigger('click').then(() => {
-      const multiSelect = wrapper.getComponent(MultiSelect);
-      expect(2).toEqual(multiSelect.props('options').length);
-    });
+    const dropdownOptions = wrapper.getComponent(Dropdown).props('options');
+    wrapper.getComponent(Dropdown).vm.$emit('change', dropdownOptions[0]);
+
+    wrapper
+      .getComponent(Dropdown)
+      .setValue(dropdownOptions[5])
+      .then(() => {
+        const tableButton = wrapper.getComponent(DataTable).find('.p-column-filter-menu-button');
+        tableButton.trigger('click').then(() => {
+          const multiSelect = wrapper.getComponent(MultiSelect);
+          expect(3).toEqual(multiSelect.props('options').length);
+        });
+      });
   });
 });

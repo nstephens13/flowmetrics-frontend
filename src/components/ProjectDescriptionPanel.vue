@@ -97,11 +97,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import type { Ref } from 'vue';
 import { FilterMatchMode } from 'primevue/api';
 import type { EmployeeIF } from '@/model/EmployeeIF';
-import type { ProjectIF } from '@/model/ProjectIF';
+import { getIssueStatusList, type ProjectIF } from '@/model/ProjectIF';
 import getMockData from '@/assets/__mockdata__/mockDataComposer';
 
 const selectedProject = ref({
@@ -112,9 +112,7 @@ const selectedProject = ref({
   issues: [],
 } as ProjectIF);
 
-const statuses = ref(['Open', 'In progress']);
-
-//  const statuses = ref(['Closed', 'Open', 'In progress']);
+const statuses: Ref<string[]> = ref([]);
 
 const filters = ref({
   status: { value: null, matchMode: FilterMatchMode.IN },
@@ -125,6 +123,10 @@ function printAssignedTo(employee: EmployeeIF | null): string {
   const lastName = employee?.lastName ?? '';
   return `${firstName} ${lastName}`;
 }
+
+watch(selectedProject, () => {
+  statuses.value = getIssueStatusList(selectedProject.value.issues);
+});
 
 const projects: Ref<ProjectIF[]> = ref([
   getMockData(1),
