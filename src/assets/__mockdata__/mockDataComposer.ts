@@ -571,7 +571,7 @@ function getMockData(dataset: number): ProjectIF {
       const slaRuleArray: SLARule[] = [slaRule1, slaRule2, slaRule3];
 
       for (let i = 0; i < numberOfIssues; i++) {
-        const randomSLARule = getRandomInt(2); // 0: SLA Rule 1, 1: SLA Rule 2, 2: SLA Rule 3
+        const randomSLARule = getRandomInt(3); // 0: SLA Rule 1, 1: SLA Rule 2, 2: SLA Rule 3
         issues[i].assignedSLARule = slaRuleArray[randomSLARule];
       }
       return {
