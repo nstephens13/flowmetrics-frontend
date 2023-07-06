@@ -135,3 +135,10 @@ const projects: Ref<ProjectIF[]> = ref([
   getMockData(55),
 ] as ProjectIF[]);
 </script>
+
+<style scoped>
+.p-card {
+  margin: 15px;
+  box-shadow: none;
+}
+</style>
