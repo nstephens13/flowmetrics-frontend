@@ -10,8 +10,81 @@ import {
   nonDisplayedStatusList,
   planningStatusList,
   testingStatusList,
-} from '../assets/__mockdata__/mockDataComposer';
+} from '@/assets/__mockdata__/mockDataComposer';
 
+const UnassignedEmployee: EmployeeIF = {
+  id: 0,
+  firstName: 'Unassigned',
+  lastName: 'Employee',
+};
+
+function extractEmployeeAndUpdateEmployeeMap(
+  issue: IssueIF,
+  issueSet: Set<IssueIF>,
+  mapToReturn: Map<
+    EmployeeIF,
+    {
+      planning: number;
+      development: number;
+      testing: number;
+    }
+  >
+) {
+  let numberPlannedTickets: number;
+  let numberInDevTickets: number;
+  let numberInTestingTickets: number;
+  const insertEmployee: EmployeeIF = issue.assignedTo ? issue.assignedTo : UnassignedEmployee;
+
+  const tuple:
+    | {
+        planning: number;
+        development: number;
+        testing: number;
+      }
+    | undefined = mapToReturn.get(insertEmployee);
+
+  if (!issueSet.has(issue)) {
+    // setting the values to zero if the employee isn't in the map already
+    if (tuple !== undefined) {
+      numberPlannedTickets = tuple.planning;
+      numberInDevTickets = tuple.development;
+      numberInTestingTickets = tuple.testing;
+    } else {
+      numberPlannedTickets = 0;
+      numberInDevTickets = 0;
+      numberInTestingTickets = 0;
+    }
+    if (issue.status != null) {
+      // if there is no date for closure of the ticket, then it is a still open ticket
+      if (planningStatusList.includes(issue.status)) {
+        mapToReturn.set(insertEmployee, {
+          planning: numberPlannedTickets + 1,
+          development: numberInDevTickets,
+          testing: numberInTestingTickets,
+        });
+      } else if (devStatusList.includes(issue.status)) {
+        mapToReturn.set(insertEmployee, {
+          planning: numberPlannedTickets,
+          development: numberInDevTickets + 1,
+          testing: numberInTestingTickets,
+        });
+      } else if (
+        testingStatusList.includes(issue.status) ||
+        nonDisplayedStatusList.includes(issue.status)
+      ) {
+        mapToReturn.set(insertEmployee, {
+          planning: numberPlannedTickets,
+          development: numberInDevTickets,
+          testing: numberInTestingTickets + 1,
+        });
+      }
+    }
+  }
+
+  issueSet.add(issue);
+
+  return { issueSet, mapToReturn };
+}
 /**
  * This function calculate the workload from a project team, and give the
  * result as a Map, where a Employee is the key and as the value a tuple,
@@ -24,72 +97,25 @@ import {
  * value:{ planning: number; development: number; testing: number }
  */
 export function calculateWorkload(projects: ProjectIF[]): Map<EmployeeIF, IssueDataIF> {
-  const mapToReturn: Map<EmployeeIF, { planning: number; development: number; testing: number }> =
+  let mapToReturn: Map<EmployeeIF, { planning: number; development: number; testing: number }> =
     new Map([]);
-  const issueSet: Set<IssueIF> = new Set<IssueIF>();
-
-  function extractEmployeeAndUpdateEmployeeMap(issue: IssueIF) {
-    // checking if the issue is already done, with a set, and if somebody is assigned
-    if (!issueSet.has(issue) && issue.assignedTo !== null && issue.assignedTo !== undefined) {
-      let numberPlannedTickets: number;
-      let numberInDevTickets: number;
-      let numberInTestingTickets: number;
-
-      // checking if the employee is already with values in the map
-      const tuple: { planning: number; development: number; testing: number } | undefined =
-        mapToReturn.get(issue.assignedTo);
-
-      // setting the values to zero if the employee isn't in the map already
-      if (tuple !== undefined) {
-        numberPlannedTickets = tuple.planning;
-        numberInDevTickets = tuple.development;
-        numberInTestingTickets = tuple.testing;
-      } else {
-        numberPlannedTickets = 0;
-        numberInDevTickets = 0;
-        numberInTestingTickets = 0;
-      }
-      if (issue.status != null) {
-        // if there is no date for closure of the ticket, then it is a still open ticket
-        if (planningStatusList.includes(issue.status)) {
-          mapToReturn.set(issue.assignedTo, {
-            planning: numberPlannedTickets + 1,
-            development: numberInDevTickets,
-            testing: numberInTestingTickets,
-          });
-        } else if (devStatusList.includes(issue.status)) {
-          mapToReturn.set(issue.assignedTo, {
-            planning: numberPlannedTickets,
-            development: numberInDevTickets + 1,
-            testing: numberInTestingTickets,
-          });
-        } else if (
-          testingStatusList.includes(issue.status) ||
-          nonDisplayedStatusList.includes(issue.status)
-        ) {
-          mapToReturn.set(issue.assignedTo, {
-            planning: numberPlannedTickets,
-            development: numberInDevTickets,
-            testing: numberInTestingTickets + 1,
-          });
-        }
-      }
-    }
-    issueSet.add(issue);
-  }
+  let issueSet: Set<IssueIF> = new Set<IssueIF>();
 
   projects.forEach((project) => {
     project.issues.forEach((issue) => {
-      extractEmployeeAndUpdateEmployeeMap(issue);
+      const result = extractEmployeeAndUpdateEmployeeMap(issue, issueSet, mapToReturn);
+      issueSet = result.issueSet;
+      mapToReturn = result.mapToReturn;
     });
 
     project.milestones.forEach((milestone) => {
       milestone.issues.forEach((issue) => {
-        extractEmployeeAndUpdateEmployeeMap(issue);
+        const result = extractEmployeeAndUpdateEmployeeMap(issue, issueSet, mapToReturn);
+        issueSet = result.issueSet;
+        mapToReturn = result.mapToReturn;
       });
     });
   });
-
   return mapToReturn;
 }
 
