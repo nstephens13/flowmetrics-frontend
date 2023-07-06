@@ -1,4 +1,5 @@
 import { describe, expect, test } from 'vitest';
+import { render, screen, fireEvent } from '@testing-library/vue';
 import { mount } from '@vue/test-utils';
 import Button from 'primevue/button';
 import PrimeVue from 'primevue/config';
