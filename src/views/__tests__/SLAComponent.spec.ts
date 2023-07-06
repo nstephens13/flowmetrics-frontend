@@ -68,11 +68,12 @@ describe('SLAComponent', () => {
       .find((dropdown) => dropdown.classes('select-rule'));
 
     expect(selectRuleDropDown?.props('options')).toContainEqual({
+      id: 4,
+      name: 'Rule 1',
       durationInDays: null,
       expirationDate: null,
-      id: 4,
       maxAssignedEmployees: undefined,
-      name: 'Rule 1',
+      occurredIn: null,
     });
   });
 
@@ -202,5 +203,174 @@ describe('SLAComponent', () => {
     // Get all the options in the dropdown
     await dropdownButton.trigger('click');
     expect(spyButton).toHaveBeenCalledOnce();
+  });
+
+  test('deleteCategory method is called with the correct rowData when the delete button is clicked', async () => {
+    // Find the delete button and trigger the click event
+    const deleteButton = wrapper.find('.p-button-danger');
+    await deleteButton.trigger('click');
+
+    const dataTableElementSize = wrapper.getComponent(DataTable).findAll('tr').length;
+    expect(4).toEqual(dataTableElementSize);
+  });
+
+  test('should add a new subscriber when addSubscriber is called', async () => {
+    const addSubscriberButton = wrapper.find('.add-subscriber');
+    const inputSubscriber = wrapper.find('.enter-subscriber');
+
+    await inputSubscriber.setValue('New Subscriber');
+    await addSubscriberButton.trigger('click');
+
+    const selectSubscriberDropDown = wrapper
+      .findAllComponents(Dropdown)
+      .find((dropdown) => dropdown.classes('select-subscriber'));
+
+    expect(inputSubscriber.text()).toBe('');
+    expect(selectSubscriberDropDown?.props('options')).toEqual([
+      { id: 1, name: 'Customer 1', description: 'Description 1' },
+      { id: 2, name: 'Customer 2', description: 'Description 2' },
+      { id: 3, name: 'Customer 3', description: 'Description 3' },
+      { id: 4, name: 'John', description: null },
+      { id: 5, name: 'New Subscriber', description: null },
+    ]);
+  });
+
+  test('should add a new rule when addRule is called', async () => {
+    const addRuleButton = wrapper.find('.add-rule');
+    const inputRuleName = wrapper.find('.enter-rule'); // Update this line
+    const selectEmployeesDropdown = wrapper.getComponent(Dropdown);
+
+    await inputRuleName.setValue('New Rule');
+    await selectEmployeesDropdown.vm.$emit('update:modelValue', 3);
+    await addRuleButton.trigger('click');
+
+    const selectEmployeesCount = wrapper
+      .findAllComponents(Dropdown)
+      .find((dropdown) => dropdown.classes('select-employees'));
+
+    expect(inputRuleName.text()).toBe('');
+    expect(selectEmployeesCount?.props('modelValue')).toBe(null);
+
+    const selectRuleDropDown = wrapper
+      .findAllComponents(Dropdown)
+      .find((dropdown) => dropdown.classes('select-rule'));
+
+    expect(selectRuleDropDown?.props('options')).toEqual([
+      {
+        id: 1,
+        name: 'Pre-Config 1',
+        durationInDays: 3,
+        expirationDate: null,
+        occurredIn: 'Test',
+      },
+      {
+        id: 2,
+        name: 'Pre-Config 2',
+        durationInDays: null,
+        expirationDate: new Date('2023-07-17'),
+        maxAssignedEmployees: 4,
+        occurredIn: 'Pre-production',
+      },
+      {
+        id: 3,
+        name: 'Pre-Config 3',
+        durationInDays: 7,
+        expirationDate: new Date('2023-12-19'),
+        maxAssignedEmployees: 7,
+        occurredIn: 'Production',
+      },
+      {
+        id: 4,
+        name: 'Rule 1',
+        durationInDays: null,
+        expirationDate: null,
+        maxAssignedEmployees: undefined,
+        occurredIn: null,
+      },
+      {
+        id: 5,
+        name: 'New Rule',
+        durationInDays: null,
+        expirationDate: null,
+        maxAssignedEmployees: 3,
+        occurredIn: null,
+      },
+    ]);
+  });
+  test('should add a new category when createCategory is called with valid inputs', async () => {
+    const dropdowns = wrapper.findAllComponents(Dropdown);
+    const selectSubscriber = dropdowns[2];
+    const selectRule = dropdowns[3];
+    const createCategoryButton = wrapper.find('.add-category');
+    const inputCategoryName = wrapper.find('.enter-category');
+    // Set the selected subscriber and rule
+    await selectSubscriber.setValue({ id: 7, name: 'Subscriber 7' });
+    await selectRule.setValue({ id: 7, name: 'Rule 7' });
+
+    // Set the category name
+    await inputCategoryName.setValue('New Category');
+
+    // Trigger the createCategory method
+    await createCategoryButton.trigger('click');
+
+    // Assert the changes in the component's data and store
+
+    const selectSubscriberDropDown = wrapper
+      .findAllComponents(Dropdown)
+      .find((dropdown) => dropdown.classes('select-subscriber'));
+
+    const selectRuleDropDown = wrapper
+      .findAllComponents(Dropdown)
+      .find((dropdown) => dropdown.classes('select-subscriber'));
+
+    const inputCategory = wrapper
+      .findAllComponents(InputText)
+      .find((dropdown) => dropdown.classes('enter-category'));
+
+    expect(selectSubscriberDropDown?.props('modelValue')).toBe(null);
+    expect(selectRuleDropDown?.props('modelValue')).toBe(null);
+    expect(inputCategory?.text()).toBe('');
+
+    const dataTable = wrapper.getComponent(DataTable);
+    expect(dataTable.props('value')).toEqual([
+      {
+        id: 4,
+        name: 'savedConfig_4',
+        subscriber: { id: 2, name: 'Customer 2', description: 'Description 2' },
+        rule: {
+          id: 2,
+          name: 'Pre-Config 2',
+          durationInDays: null,
+          expirationDate: new Date('2023-07-17'),
+          maxAssignedEmployees: 4,
+          occurredIn: 'Pre-production',
+        },
+      },
+      {
+        id: 5,
+        name: 'savedConfig_5',
+        subscriber: { id: 3, name: 'Customer 3', description: 'Description 3' },
+        rule: {
+          id: 3,
+          name: 'Pre-Config 3',
+          durationInDays: 7,
+          expirationDate: new Date('2023-12-19'),
+          maxAssignedEmployees: 7,
+          occurredIn: 'Production',
+        },
+      },
+      {
+        id: 6,
+        name: 'Category 1',
+        subscriber: 'Subscriber 1',
+        rule: 'Rule 1',
+      },
+      {
+        id: 7,
+        name: 'New Category',
+        subscriber: { id: 7, name: 'Subscriber 7' },
+        rule: { id: 7, name: 'Rule 7' },
+      },
+    ]);
   });
 });
