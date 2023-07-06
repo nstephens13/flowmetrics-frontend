@@ -10,7 +10,7 @@ import employeeJson from '../../assets/__mockdata__/Employees.json';
 // checking first the mock data, my tools, describe the testcase,
 // you are working in a closed block, see the '{'
 describe('When mock data helper is asked for mock data, there should be correctly constructed mock data object returned ', () => {
-  // given and when togehter, scroll to next test to see a better example
+  // given and when together, scroll to next test to see a better example
   // given+when
   const project: ProjectIF = getMockData(1);
   const loadedIssues: IssueIF[] = project.issues;
