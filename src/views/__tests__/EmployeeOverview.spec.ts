@@ -66,7 +66,9 @@ describe('Employee Overview should load all the Components', () => {
       multiselects[1].setValue([multiselects[1].props('options')[0]]).then(() => {
         // wait for the DOM update with nextTick
         wrapper.vm.$nextTick(() => {
-          expect(14).toEqual(wrapper.findComponent(DataView).props('value').length);
+          wrapper.findComponent(DataView).vm.$nextTick(() => {
+            expect(14).toEqual(wrapper.findComponent(DataView).props('value').length);
+          });
         });
       });
     });
