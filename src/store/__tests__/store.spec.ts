@@ -31,6 +31,7 @@ describe('SLA Store', () => {
     durationInDays: 3,
     expirationDate: null,
     maxAssignedEmployees: 5,
+    occurredIn: null,
   };
   test('adds Rules', () => {
     store.addRule(rule);

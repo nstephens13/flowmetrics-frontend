@@ -29,6 +29,12 @@
             placeholder="Select max assigned employees"
             class="select-employees"
           />
+          <Dropdown
+            v-model="newOccurredIn"
+            :options="occurredInOptions"
+            placeholder="Occurred in"
+            class="select-occurred-in"
+          />
           <Button class="add-rule" @click="addRule" label="+"></Button>
           <div v-if="!isRuleNameValid" class="error-message">{{ ruleErrorMessage }}</div>
         </div>
@@ -70,6 +76,7 @@
           <Column field="rule.name" header="Rule" />
           <Column field="rule.durationInDays" header="Duration (Days)" />
           <Column field="rule.expirationDate" header="Due date" />
+          <Column field="rule.occurredIn" header="Occurred in" />
           <Column field="rule.maxAssignedEmployees" header="Max assigned employees" />
           <Column header="Delete">
             <template #body="rowData">
@@ -106,11 +113,13 @@ export default defineComponent({
       newRuleName: ref(''),
       newRuleMaxAssignedEmployees: ref(),
       isRuleNameValid: ref(true),
+      newOccurredIn: ref(null),
       selectedSubscriber: ref(null),
       selectedRule: ref(null),
       categoryName: ref(''),
       isSLACategoryNameValid: ref(true),
       maxAssignedEmployeesOptions: [1, 2, 3, 4, 5],
+      occurredInOptions: ['Test', 'Pre-production', 'Production'],
     };
   },
   methods: {
@@ -141,10 +150,12 @@ export default defineComponent({
         durationInDays: null,
         expirationDate: null,
         maxAssignedEmployees: this.newRuleMaxAssignedEmployees,
+        occurredIn: this.newOccurredIn,
       };
       this.slaStore.addRule(rule);
       this.newRuleName = '';
       this.newRuleMaxAssignedEmployees = null;
+      this.newOccurredIn = null;
     },
     createCategory() {
       if (this.categoryName.trim().length < 3) {
@@ -227,6 +238,9 @@ export default defineComponent({
   margin-right: 10px;
 }
 .select-employees {
+  margin-right: 10px;
+}
+.select-occurred-in {
   margin-right: 10px;
 }
 .add-rule {

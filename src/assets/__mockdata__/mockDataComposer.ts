@@ -264,7 +264,7 @@ function getMockData(dataset: number): ProjectIF {
         const randomStatus = getRandomInt(3); // 0: Open, 1: Closed, 2: In progress
 
         if (randomStatus === 2) {
-          status = 'In Progress';
+          status = 'In progress';
         } else if (randomStatus === 1) {
           closedAt = faker.date.recent();
         }
@@ -318,7 +318,7 @@ function getMockData(dataset: number): ProjectIF {
         const randomStatus = getRandomInt(3); // 0: Open, 1: Closed, 2: In progress
 
         if (randomStatus === 2) {
-          status = 'In Progress';
+          status = 'In progress';
         } else if (randomStatus === 1) {
           closedAt = faker.date.recent();
         }
@@ -552,14 +552,14 @@ function getMockData(dataset: number): ProjectIF {
       );
 
       const date = new Date(2018, 0o5, 0o5, 17, 23, 42, 11);
-      issuesForProject[0].status = 'In Progress';
+      issuesForProject[0].status = 'In progress';
       issuesForProject[2].status = 'Closed';
       issuesForProject[2].closedAt = date; // Set the specific closedAt date
       issuesForProject[3].status = 'Closed';
       issuesForProject[3].closedAt = date; // Set the specific closedAt date
       issuesForProject[4].status = 'Closed';
       issuesForProject[4].closedAt = date; // Set the specific closedAt date
-      issuesForProject[5].status = 'In Progress';
+      issuesForProject[5].status = 'In progress';
       issuesForProject[6].status = 'Closed';
       issuesForProject[6].closedAt = date; // Set the specific closedAt date
 
@@ -580,7 +580,7 @@ function getMockData(dataset: number): ProjectIF {
         testingStatusList[0],
         date,
       ];
-      [issuesForProject[5].status, issuesForProject[5].status] = ['In Progress', devStatusList[0]];
+      [issuesForProject[5].status, issuesForProject[5].status] = ['In progress', devStatusList[0]];
       [issuesForProject[6].status, issuesForProject[6].closedAt] = [testingStatusList[0], date];
 
       return {
