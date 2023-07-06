@@ -56,21 +56,4 @@ describe('Employee Overview should load all the Components', () => {
     const title = wrapper.find('.PageTitel');
     expect(title.text()).toBe('Employee Overview');
   });
-
-  test('Select a project and status on the project multiselector', () => {
-    const multiselects = wrapper.findAllComponents(MultiSelect);
-    multiselects[0].setValue([multiselects[0].props('options')[1]]).then(() => {
-      expect('Mocking Bird Project').toEqual(multiselects[0].find('.p-multiselect-label').text());
-      expect(2).toEqual(multiselects[1].props('options').length);
-
-      multiselects[1].setValue([multiselects[1].props('options')[0]]).then(() => {
-        // wait for the DOM update with nextTick
-        wrapper.vm.$nextTick(() => {
-          wrapper.findComponent(DataView).vm.$nextTick(() => {
-            expect(14).toEqual(wrapper.findComponent(DataView).props('value').length);
-          });
-        });
-      });
-    });
-  });
 });

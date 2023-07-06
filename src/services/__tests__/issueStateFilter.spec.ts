@@ -75,7 +75,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
       },
     };
 
-    const filteredProjects = filterProjectThatHasTheAllowedStatus(projects, filterConfig);
+    const filteredProjects = filterProjectThatHasTheAllowedStatus(filterConfig);
 
     assert.deepStrictEqual(filteredProjects, [
       {

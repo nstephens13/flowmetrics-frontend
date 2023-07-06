@@ -1,52 +1,5 @@
-<template>
-  <Card>
-    <template #title>
-      <div class="grid">
-        <div class="col-12">
-          <label class="PageTitel">Employee Overview</label>
-        </div>
-      </div>
-      <Divider />
-    </template>
-    <template #content>
-      <DataView :value="employeeList" dataKey="employee.id" layout="grid">
-        <template #header>
-          <div class="grid gap-3">
-            <MultiSelect
-              v-model="selectedProjects"
-              :options="allProjects"
-              option-label="name"
-              placeholder="Select project"
-              :maxSelectedLabels="1"
-              class="w-full md:w-14rem"
-            />
-            <MultiSelect
-              v-model="selectedStatuses"
-              :options="allStatuses"
-              placeholder="Select status"
-              :maxSelectedLabels="1"
-              class="w-full md:w-14rem"
-            />
-          </div>
-        </template>
-        <template #grid="slotProps">
-          <div class="xl:col-2 lg:col-3 md:col-4 sm:col-6 col-12 p-2">
-            <div class="p-4 border-1 surface-border border-round shadow-1 hover:bg-gray-50">
-              <EmployeeCard
-                :employee="slotProps.data.employee"
-                :issues="slotProps.data.issues"
-                :categoryNames="categoryNames"
-              />
-            </div>
-          </div>
-        </template>
-      </DataView>
-    </template>
-  </Card>
-</template>
-
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue';
+import { computed, ref } from 'vue';
 import type { Ref } from 'vue';
 import type { EmployeeIF } from '@/model/EmployeeIF';
 import type { ProjectIF } from '@/model/ProjectIF';
@@ -57,16 +10,11 @@ import filterProjectThatHasTheAllowedStatus from '@/services/filter/IssuesStateF
 import EmployeeCard from '@/components/EmployeeCard.vue';
 import { getIssueStatusList } from '@/model/ProjectIF';
 import useProjectsStore from '@/store/ProjectStore';
-import getMockData from '@/assets/__mockdata__/mockDataComposer';
 
 const filterConfigStore = useFilterConfigStore();
 const projectStore = useProjectsStore();
 
 const filterConfig = computed(() => filterConfigStore.getFilterConfig);
-
-[getMockData(1), getMockData(3), getMockData(4), getMockData(6)].forEach((project) => {
-  projectStore.addProject(project);
-});
 
 const workload: Ref<Map<EmployeeIF, IssueDataIF>> = ref(
   calculateWorkload(filterConfig.value.projectFilter.projectsWhiteList)
@@ -94,16 +42,15 @@ const categoryNames = ref<{
   thirdCategory: '',
 });
 
-const selectedStatuses = ref(filterConfig.value.projectFilter.issueStatusIncludeFilter);
-const selectedProjects = ref(filterConfig.value.projectFilter.projectsWhiteList);
+const selectedStatuses: Ref<string[]> = ref([]);
+const selectedProjects: Ref<ProjectIF[]> = ref([]);
 
-function updateEmployeeList(projects: ProjectIF[]) {
+function updateEmployeeList() {
   const workloadMap: Map<EmployeeIF, IssueDataIF> = calculateWorkload(
-    filterProjectThatHasTheAllowedStatus(projects, filterConfig.value)
+    filterProjectThatHasTheAllowedStatus(filterConfig.value)
   );
 
   employeeList.value = mergeEmployees(workloadMap);
-  // filter category names for the issues in the emplyeeList that are the keys of the issues in the workloadMap
   categoryNames.value = {
     firstCategory: 'Planning',
     secondCategory: 'Development',
@@ -111,27 +58,83 @@ function updateEmployeeList(projects: ProjectIF[]) {
   };
 }
 
-watch(selectedProjects, (projects) => {
-  const updatedFilterConfig = { ...filterConfig.value };
-  updatedFilterConfig.projectFilter.projectsWhiteList = projects;
-  filterConfigStore.setFilterConfig(updatedFilterConfig);
-
+function updateSelectedProjects() {
   selectedStatuses.value = [];
-  updateEmployeeList(projects);
-  allStatuses.value = getIssueStatusList(projects.flatMap((project) => project.issues));
-});
-
-watch(selectedStatuses, (statuses) => {
-  const updatedFilterConfig = { ...filterConfig.value };
-  updatedFilterConfig.projectFilter.issueStatusIncludeFilter = statuses;
+  const updatedFilterConfig = filterConfig.value;
+  updatedFilterConfig.projectFilter.projectsWhiteList = selectedProjects.value;
+  updatedFilterConfig.projectFilter.issueStatusIncludeFilter = [];
   filterConfigStore.setFilterConfig(updatedFilterConfig);
 
-  updateEmployeeList(selectedProjects.value);
+  updateEmployeeList();
+  allStatuses.value = getIssueStatusList(
+    filterConfig.value.projectFilter.projectsWhiteList.flatMap((project) => project.issues)
+  );
+}
+
+function updateSelectedStatuses() {
+  const updatedFilterConfig = filterConfig.value;
+  updatedFilterConfig.projectFilter.issueStatusIncludeFilter = selectedStatuses.value;
+  filterConfigStore.setFilterConfig(updatedFilterConfig);
+
+  updateEmployeeList();
   allStatuses.value = getIssueStatusList(
     selectedProjects.value.flatMap((project) => project.issues)
   );
-});
+}
+
+selectedProjects.value = filterConfig.value.projectFilter.projectsWhiteList;
+selectedStatuses.value = filterConfig.value.projectFilter.issueStatusIncludeFilter;
+updateEmployeeList();
 </script>
+
+<template>
+  <Card>
+    <template #title>
+      <div class="grid">
+        <div class="col-12">
+          <label class="PageTitel">Employee Overview</label>
+        </div>
+      </div>
+      <Divider />
+    </template>
+    <template #content>
+      <DataView :value="employeeList" dataKey="employee.id" layout="grid">
+        <template #header>
+          <div class="grid gap-3">
+            <MultiSelect
+              v-model="selectedProjects"
+              :options="allProjects"
+              option-label="name"
+              @change="updateSelectedProjects()"
+              placeholder="Select project"
+              :maxSelectedLabels="1"
+              class="w-full md:w-14rem"
+            />
+            <MultiSelect
+              v-model="selectedStatuses"
+              :options="allStatuses"
+              placeholder="Select status"
+              @change="updateSelectedStatuses()"
+              :maxSelectedLabels="1"
+              class="w-full md:w-14rem"
+            />
+          </div>
+        </template>
+        <template #grid="slotProps">
+          <div class="xl:col-2 lg:col-3 md:col-4 sm:col-6 col-12 p-2">
+            <div class="p-4 border-1 surface-border border-round shadow-1 hover:bg-gray-50">
+              <EmployeeCard
+                :employee="slotProps.data.employee"
+                :issues="slotProps.data.issues"
+                :categoryNames="categoryNames"
+              />
+            </div>
+          </div>
+        </template>
+      </DataView>
+    </template>
+  </Card>
+</template>
 
 <style scoped>
 .p-card {
