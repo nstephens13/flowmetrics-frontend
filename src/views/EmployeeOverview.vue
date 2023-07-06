@@ -64,7 +64,6 @@ function updateSelectedProjects() {
   updatedFilterConfig.projectFilter.projectsWhiteList = selectedProjects.value;
   updatedFilterConfig.projectFilter.issueStatusIncludeFilter = [];
   filterConfigStore.setFilterConfig(updatedFilterConfig);
-
   updateEmployeeList();
   allStatuses.value = getIssueStatusList(
     filterConfig.value.projectFilter.projectsWhiteList.flatMap((project) => project.issues)
