@@ -261,7 +261,7 @@ describe('countIssuesByStatus', () => {
       new Date(),
       null,
       null,
-      'In Progress',
+      'In progress',
       null
     ),
     new Issue(
@@ -301,7 +301,7 @@ describe('countIssuesByStatus', () => {
   test('returns the count of issues with the specified status', () => {
     const openIssuesCount = countIssuesByStatus(issueList, 'Open');
     const closedIssuesCount = countIssuesByStatus(issueList, 'Closed');
-    const inProgressIssuesCount = countIssuesByStatus(issueList, 'In Progress');
+    const inProgressIssuesCount = countIssuesByStatus(issueList, 'In progress');
 
     expect(openIssuesCount).toBe(2);
     expect(closedIssuesCount).toBe(2);
