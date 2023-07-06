@@ -20,28 +20,51 @@ issues.forEach((issue) => {
   }
 });
 
+const headerNames = [
+  'id',
+  'name',
+  'description',
+  'assignedTo',
+  'createdBy',
+  'createdAt',
+  'closedAt',
+  'dueTo',
+  'status',
+];
+//map IssueIF[] to '{ [key: string]: string; }[]'
+const mappedIssues = issues.map(issue =>
+  { key: issue.id, value: issue }
+)
+
 const generatePDF = () => {
   // Create a new PDF
   const doc = new jsPDF('landscape', 'mm', 'a4');
   // Attributes needed for the PDF
   const current = new Date();
   const date = `${current.getDate()}/${current.getMonth()}/${current.getFullYear()}`;
-  doc.setProperties(issues, slaRulesSet);
+  // doc.setProperties(issues, slaRulesSet); -> is this right?
   // Document setup
-  // doc.setFont('Helvetica'); -> does not work
+  // doc.setLineWidth(10);
   // Document title
+  doc.setFont('Helvetica', '', 'bold');
   doc.setFontSize(16);
   doc.text('SLA Rule Report', 10, 15);
   doc.text(date, 265, 15);
   doc.line(10, 20, 287, 22);
   // Document content
+  doc.table(10, 25, issues, headerNames, '');
+  doc.setFont('Helvetica', 'normal');
   doc.setFontSize(12);
-  let ySLA = 30;
+  let ySLA = 25;
   let yIssue = 30;
   slaRulesSet.forEach((slaRule) => {
-    doc.text(`SLA Rule ID: ${slaRule.id} Name: ${slaRule.name}`, 10, (ySLA += 10));
+    doc.text(
+      `ID: ${slaRule.id} Name: ${slaRule.name} Duration time (Days): ${slaRule.durationInDays} Expiration date: ${slaRule.expirationDate} Max assigned employees: ${slaRule.maxAssignedEmployees}`,
+      10,
+      (ySLA += 10)
+    );
     issues.forEach((issue) => {
-      doc.text(`Issue ID: ${issue.id}`, 10, (yIssue += 10));
+      doc.text(`ID: ${issue.id} Name: ${issue.name} `, 10, (yIssue += 10));
       // if issues at the end of the page
       // doc.addPage('landscape', 'mm', 'a4');
     });
