@@ -14,6 +14,9 @@
             class="enter-subscriber"
           />
           <Button class="add-subscriber" @click="addSubscriber" label="+"></Button>
+          <div v-if="!isSubscriberNameValid" class="error-message">
+            {{ SubscriberErrorMessage }}
+          </div>
         </div>
       </div>
       <div>
@@ -33,6 +36,7 @@
             class="select-occurred-in"
           />
           <Button class="add-rule" @click="addRule" label="+"></Button>
+          <div v-if="!isRuleNameValid" class="error-message">{{ ruleErrorMessage }}</div>
         </div>
       </div>
       <div>
@@ -58,6 +62,9 @@
             class="enter-category"
           />
           <Button class="add-category" @click="createCategory" label="+"></Button>
+          <div v-if="!isSLACategoryNameValid" class="error-message">
+            {{ categoryErrorMessage }}
+          </div>
         </div>
       </div>
 
@@ -87,7 +94,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed } from 'vue';
+import { defineComponent, ref } from 'vue';
 import useSLAStore from '@/store/store';
 import type { SLASubscriber } from '@/model/SLASubscriber';
 import type { SLARule } from '@/model/SLARule';
@@ -95,92 +102,103 @@ import type { SLACategory } from '@/model/SLACategory';
 
 export default defineComponent({
   name: 'SLAComponent',
-  setup() {
-    const slaStore = useSLAStore();
-    const newSubscriber = ref('');
-    const newRuleName = ref('');
-    const newRuleMaxAssignedEmployees = ref(null);
-    const newOccurredIn = ref(null);
-    const selectedSubscriber = ref(null);
-    const selectedRule = ref(null);
-    const categoryName = ref('');
-
-    slaStore.initializeCategories();
-
-    // Get categories, deadlines, and rules from the store
-    const subscriber = computed(() => slaStore.subscriber);
-    const rules = computed(() => slaStore.rules);
-    const categories = computed(() => slaStore.slaCategories);
-
+  mounted() {
+    this.slaStore.initializeCategories();
+  },
+  data() {
+    return {
+      slaStore: useSLAStore(),
+      newSubscriber: ref(''),
+      isSubscriberNameValid: ref(true),
+      newRuleName: ref(''),
+      newRuleMaxAssignedEmployees: ref(),
+      isRuleNameValid: ref(true),
+      newOccurredIn: ref(null),
+      selectedSubscriber: ref(null),
+      selectedRule: ref(null),
+      categoryName: ref(''),
+      isSLACategoryNameValid: ref(true),
+      maxAssignedEmployeesOptions: [1, 2, 3, 4, 5],
+      occurredInOptions: ['Test', 'Pre-production', 'Production'],
+    };
+  },
+  methods: {
     // Add a new subscriber to the store
-    const addSubscriber = () => {
-      const subscriberToAdd: SLASubscriber = {
+    addSubscriber() {
+      if (this.newSubscriber.trim().length < 3) {
+        this.isSubscriberNameValid = false;
+        return;
+      }
+      this.isSubscriberNameValid = true;
+      const subscriber: SLASubscriber = {
         id: null,
-        name: newSubscriber.value.trim(),
+        name: this.newSubscriber.trim(),
         description: null,
       };
-      slaStore.addSubscriber(subscriberToAdd);
-      newSubscriber.value = '';
-    };
-
-    // Add a new rule to the store
-    const addRule = () => {
+      this.slaStore.addSubscriber(subscriber);
+      this.newSubscriber = '';
+    },
+    addRule() {
+      if (this.newRuleName.trim().length < 3) {
+        this.isRuleNameValid = false;
+        return;
+      }
+      this.isRuleNameValid = true;
       const rule: SLARule = {
         id: null,
-        name: newRuleName.value.trim(),
+        name: this.newRuleName.trim(),
         durationInDays: null,
         expirationDate: null,
-        maxAssignedEmployees: newRuleMaxAssignedEmployees.value,
-        occurredIn: newOccurredIn.value,
+        maxAssignedEmployees: this.newRuleMaxAssignedEmployees,
+        occurredIn: this.newOccurredIn,
       };
-      slaStore.addRule(rule);
-      newRuleName.value = '';
-      newRuleMaxAssignedEmployees.value = null;
-      newOccurredIn.value = null;
-    };
-
-    // Create a new SLA category using selected subscriber and rule
-    const createCategory = () => {
-      if (selectedSubscriber.value && selectedRule.value) {
+      this.slaStore.addRule(rule);
+      this.newRuleName = '';
+      this.newRuleMaxAssignedEmployees = null;
+      this.newOccurredIn = null;
+    },
+    createCategory() {
+      if (this.categoryName.trim().length < 3) {
+        this.isSLACategoryNameValid = false;
+        return;
+      }
+      this.isSLACategoryNameValid = true;
+      if (this.selectedSubscriber && this.selectedRule) {
         const category: SLACategory = {
           id: null,
-          name: categoryName.value.trim() || null,
-          subscriber: selectedSubscriber.value,
-          rule: selectedRule.value,
+          name: this.categoryName.trim() || null,
+          subscriber: this.selectedSubscriber,
+          rule: this.selectedRule,
         };
-        slaStore.addSLACategory(category);
-        selectedSubscriber.value = null;
-        selectedRule.value = null;
-        categoryName.value = '';
+        this.slaStore.addSLACategory(category);
+        this.selectedSubscriber = null;
+        this.selectedRule = null;
+        this.categoryName = '';
       }
-    };
-    const deleteCategory = (category: SLACategory) => {
-      slaStore.deleteSLACategory(category);
-    };
-    // Template for the delete button in each row
-
-    // Options for the max assigned employees dropdown
-    const maxAssignedEmployeesOptions = [1, 2, 3, 4, 5];
-    const occurredInOptions = ['Test', 'Pre-production', 'Production'];
-
-    return {
-      newSubscriber,
-      newRuleName,
-      newRuleMaxAssignedEmployees,
-      newOccurredIn,
-      selectedSubscriber,
-      selectedRule,
-      categoryName,
-      subscriber,
-      rules,
-      maxAssignedEmployeesOptions,
-      occurredInOptions,
-      addSubscriber,
-      addRule,
-      createCategory,
-      categories,
-      deleteCategory,
-    };
+    },
+    deleteCategory(category: SLACategory) {
+      this.slaStore.deleteSLACategory(category);
+    },
+  },
+  computed: {
+    subscriber(): SLASubscriber[] {
+      return this.slaStore.subscriber;
+    },
+    rules(): any {
+      return this.slaStore.rules;
+    },
+    categories(): SLACategory[] {
+      return this.slaStore.slaCategories;
+    },
+    SubscriberErrorMessage(): any {
+      return !this.isSubscriberNameValid ? 'Subscriber name must be at least 3 characters.' : '';
+    },
+    ruleErrorMessage(): any {
+      return !this.isRuleNameValid ? 'Rule name must be at least 3 characters.' : '';
+    },
+    categoryErrorMessage(): any {
+      return !this.isSLACategoryNameValid ? 'Category name must be at least 3 characters.' : '';
+    },
   },
 });
 </script>
@@ -271,5 +289,13 @@ export default defineComponent({
 .trash-size {
   color: white;
   font-size: 5px;
+}
+.error-message {
+  display: block;
+  color: red;
+  font-size: 16px;
+  margin-top: 4px;
+  font-family: inherit;
+  margin-left: 10px;
 }
 </style>

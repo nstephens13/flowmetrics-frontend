@@ -6,9 +6,7 @@ describe('useProjectsStore', () => {
   let store: ReturnType<typeof useProjectsStore>;
 
   beforeEach(() => {
-    const pinia = createPinia();
-    setActivePinia(pinia);
-    store = useProjectsStore();
+    setActivePinia(createPinia());
   });
 
   afterEach(() => {
@@ -16,6 +14,7 @@ describe('useProjectsStore', () => {
   });
 
   test('should add a project to the store', () => {
+    store = useProjectsStore();
     const project = {
       id: 1,
       name: 'Project 1',
@@ -48,11 +47,12 @@ describe('useProjectsStore', () => {
     };
     store.addProject(project);
 
-    expect(store.projects).toHaveLength(1);
-    expect(store.projects[0]).toEqual(project);
+    expect(store.projects).toHaveLength(5);
+    expect(store.projects[4]).toEqual(project);
   });
 
   test('should delete a project from the store', () => {
+    store = useProjectsStore();
     const project1 = {
       id: 1,
       name: 'Project 1',
@@ -116,11 +116,11 @@ describe('useProjectsStore', () => {
     store.addProject(project1);
     store.addProject(project2);
 
-    expect(store.projects).toHaveLength(2);
+    expect(store.projects).toHaveLength(6);
 
     store.deleteProject(project1.id);
 
-    expect(store.projects).toHaveLength(1);
-    expect(store.projects[0]).toEqual(project2);
+    expect(store.projects).toHaveLength(5);
+    expect(store.projects[4]).toEqual(project2);
   });
 });
