@@ -5,7 +5,7 @@ import type { IssueIF } from '@/model/IssueIF';
 import type { IssueDataIF } from '@/model/IssueDataIF';
 
 // just temporary import
-import getMockData, {
+import {
   devStatusList,
   nonDisplayedStatusList,
   planningStatusList,
@@ -119,4 +119,25 @@ export function calculateWorkload(projects: ProjectIF[]): Map<EmployeeIF, IssueD
   return mapToReturn;
 }
 
-export default calculateWorkload;
+export function mergeEmployees(
+  workloadMap: Map<EmployeeIF, IssueDataIF>
+): { employee: EmployeeIF; issues: IssueDataIF }[] {
+  const employeeList: { employee: EmployeeIF; issues: IssueDataIF }[] = [];
+  // merge employees with same id in the workloadMap
+  workloadMap.forEach((issues, employee) => {
+    const employeeInList = employeeList.find(
+      (employeeElement) => employeeElement.employee.id === employee.id
+    );
+    if (employeeInList) {
+      employeeInList.issues = {
+        development: employeeInList.issues.development + issues.development,
+        planning: employeeInList.issues.planning + issues.planning,
+        testing: employeeInList.issues.testing + issues.testing,
+      };
+    } else {
+      employeeList.push({ employee, issues });
+    }
+  });
+
+  return employeeList;
+}

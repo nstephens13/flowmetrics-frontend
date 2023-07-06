@@ -1,3 +1,91 @@
+<script setup lang="ts">
+import { computed, ref } from 'vue';
+import type { Ref } from 'vue';
+import type { EmployeeIF } from '@/model/EmployeeIF';
+import type { ProjectIF } from '@/model/ProjectIF';
+import type { IssueDataIF } from '@/model/IssueDataIF';
+import { calculateWorkload, mergeEmployees } from '@/services/workloadCalculator';
+import useFilterConfigStore from '@/store/FilterConfigStore';
+import filterProjectThatHasTheAllowedStatus from '@/services/filter/IssuesStateFilter';
+import EmployeeCard from '@/components/EmployeeCard.vue';
+import { getIssueStatusList } from '@/model/ProjectIF';
+import useProjectsStore from '@/store/ProjectStore';
+
+const filterConfigStore = useFilterConfigStore();
+const projectStore = useProjectsStore();
+
+const filterConfig = computed(() => filterConfigStore.getFilterConfig);
+
+const workload: Ref<Map<EmployeeIF, IssueDataIF>> = ref(
+  calculateWorkload(filterConfig.value.projectFilter.projectsWhiteList)
+);
+
+const allStatuses: Ref<string[]> = ref(
+  getIssueStatusList(
+    filterConfig.value.projectFilter.projectsWhiteList.flatMap((project) => project.issues)
+  )
+);
+
+const allProjects: Ref<ProjectIF[]> = ref(projectStore.getProjects);
+
+const employeeList = ref(
+  Array.from(workload.value, ([employee, issues]) => ({ employee, issues }))
+);
+
+const categoryNames = ref<{
+  firstCategory: string;
+  secondCategory: string;
+  thirdCategory: string;
+}>({
+  firstCategory: '',
+  secondCategory: '',
+  thirdCategory: '',
+});
+
+const selectedStatuses: Ref<string[]> = ref([]);
+const selectedProjects: Ref<ProjectIF[]> = ref([]);
+
+function updateEmployeeList() {
+  const workloadMap: Map<EmployeeIF, IssueDataIF> = calculateWorkload(
+    filterProjectThatHasTheAllowedStatus(filterConfig.value)
+  );
+
+  employeeList.value = mergeEmployees(workloadMap);
+  categoryNames.value = {
+    firstCategory: 'Planning',
+    secondCategory: 'Development',
+    thirdCategory: 'Testing',
+  };
+}
+
+function updateSelectedProjects() {
+  selectedStatuses.value = [];
+  const updatedFilterConfig = filterConfig.value;
+  updatedFilterConfig.projectFilter.projectsWhiteList = selectedProjects.value;
+  updatedFilterConfig.projectFilter.issueStatusIncludeFilter = [];
+  filterConfigStore.setFilterConfig(updatedFilterConfig);
+  updateEmployeeList();
+  allStatuses.value = getIssueStatusList(
+    filterConfig.value.projectFilter.projectsWhiteList.flatMap((project) => project.issues)
+  );
+}
+
+function updateSelectedStatuses() {
+  const updatedFilterConfig = filterConfig.value;
+  updatedFilterConfig.projectFilter.issueStatusIncludeFilter = selectedStatuses.value;
+  filterConfigStore.setFilterConfig(updatedFilterConfig);
+
+  updateEmployeeList();
+  allStatuses.value = getIssueStatusList(
+    selectedProjects.value.flatMap((project) => project.issues)
+  );
+}
+
+selectedProjects.value = filterConfig.value.projectFilter.projectsWhiteList;
+selectedStatuses.value = filterConfig.value.projectFilter.issueStatusIncludeFilter;
+updateEmployeeList();
+</script>
+
 <template>
   <Card>
     <template #title>
@@ -13,10 +101,19 @@
         <template #header>
           <div class="grid gap-3">
             <MultiSelect
+              v-model="selectedProjects"
+              :options="allProjects"
+              option-label="name"
+              @change="updateSelectedProjects()"
+              placeholder="Select project"
+              :maxSelectedLabels="1"
+              class="w-full md:w-14rem"
+            />
+            <MultiSelect
               v-model="selectedStatuses"
               :options="allStatuses"
-              @onChange="updateFilterConfig()"
-              placeholder="Select Status"
+              placeholder="Select status"
+              @change="updateSelectedStatuses()"
               :maxSelectedLabels="1"
               class="w-full md:w-14rem"
             />
@@ -37,79 +134,6 @@
     </template>
   </Card>
 </template>
-
-<script setup lang="ts">
-import { computed, ref, watch } from 'vue';
-import type { Ref } from 'vue';
-import type { EmployeeIF } from '@/model/EmployeeIF';
-import type { ProjectIF } from '@/model/ProjectIF';
-import type { IssueDataIF } from '@/model/IssueDataIF';
-import calculateWorkload from '@/services/workloadCalculator';
-import getMockData from '@/assets/__mockdata__/mockDataComposer';
-import useFilterConfigStore from '@/store/FilterConfigStore';
-import filterProjectThatHasTheAllowedStatus from '@/services/filter/IssuesStateFilter';
-import EmployeeCard from '@/components/EmployeeCard.vue';
-import { getIssueStatusList } from '@/model/ProjectIF';
-
-const selectedProject: Ref<ProjectIF> = ref(getMockData(3));
-const allStatuses: Ref<string[]> = ref(getIssueStatusList(selectedProject.value.issues));
-
-const filterConfigStore = useFilterConfigStore();
-const filterConfig = computed(() => filterConfigStore.getFilterConfig);
-const workload: Ref<Map<EmployeeIF, IssueDataIF>> = ref(
-  calculateWorkload(filterProjectThatHasTheAllowedStatus(selectedProject.value, filterConfig.value))
-);
-
-const employeeList = ref(
-  Array.from(workload.value, ([employee, issues]) => ({ employee, issues }))
-);
-
-const categoryNames = ref<{
-  firstCategory: string;
-  secondCategory: string;
-  thirdCategory: string;
-}>({
-  firstCategory: '',
-  secondCategory: '',
-  thirdCategory: '',
-});
-
-const selectedStatuses = ref(filterConfig.value.projectFilter.issueStatusIncludeFilter);
-
-function updateFilterConfig() {
-  const updatedFilterConfig = { ...filterConfig.value };
-  updatedFilterConfig.projectFilter.issueStatusIncludeFilter = selectedStatuses.value;
-  filterConfigStore.setFilterConfig(updatedFilterConfig);
-}
-
-function updateEmployeeList(project: ProjectIF) {
-  const workloadMap = calculateWorkload(
-    filterProjectThatHasTheAllowedStatus(project, filterConfig.value)
-  );
-  employeeList.value = Array.from(workloadMap, ([employee, issues]) => ({ employee, issues }));
-  // filter category names for the issues in the emplyeeList that are the keys of the issues in the workloadMap
-  categoryNames.value = {
-    firstCategory: 'Planning',
-    secondCategory: 'Development',
-    thirdCategory: 'Testing',
-  };
-}
-
-watch(selectedStatuses, () => {
-  updateFilterConfig();
-});
-
-watch(filterConfig, (newConfig) => {
-  selectedStatuses.value = newConfig.projectFilter.issueStatusIncludeFilter;
-  updateEmployeeList(selectedProject.value);
-});
-
-watch(selectedProject, (project) => {
-  selectedStatuses.value = [];
-  allStatuses.value = getIssueStatusList(project.issues);
-  updateEmployeeList(project);
-});
-</script>
 
 <style scoped>
 .p-card {

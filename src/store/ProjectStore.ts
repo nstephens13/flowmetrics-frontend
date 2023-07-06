@@ -1,9 +1,10 @@
 import { defineStore } from 'pinia';
 import type { ProjectIF } from '../model/ProjectIF';
+import getMockData from '@/assets/__mockdata__/mockDataComposer';
 
 const useProjectsStore = defineStore('projects', {
   state: () => ({
-    projects: [] as ProjectIF[],
+    projects: [getMockData(1), getMockData(3), getMockData(4), getMockData(6)] as ProjectIF[],
   }),
 
   getters: {

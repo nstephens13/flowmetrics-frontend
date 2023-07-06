@@ -92,7 +92,7 @@ import GeneratePDF from '@/components/GeneratePDF.vue';
 
 export default defineComponent({
   name: 'SLAComponent',
-  components: {GeneratePDF},
+  components: { GeneratePDF },
   setup() {
     const slaStore = useSLAStore();
     const newSubscriber = ref('');

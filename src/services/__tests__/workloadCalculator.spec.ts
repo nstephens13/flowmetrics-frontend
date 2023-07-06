@@ -1,6 +1,6 @@
 import { assert, expect, test, describe } from 'vitest';
 import getMockData from '@/assets/__mockdata__/mockDataComposer';
-import calculateWorkload from '@/services/workloadCalculator';
+import { calculateWorkload } from '@/services/workloadCalculator';
 import type { EmployeeIF } from '../../model/EmployeeIF';
 import type { ProjectIF } from '../../model/ProjectIF';
 import type { IssueIF } from '../../model/IssueIF';
@@ -51,7 +51,7 @@ describe('Workload Calculator should calculate Workload correctly for Mock Data 
   const employees: EmployeeIF[] = structuredClone(employeeJson) as EmployeeIF[];
 
   // when
-  const workload = calculateWorkload(project);
+  const workload = calculateWorkload([project]);
 
   // inspecting the result
 
@@ -90,7 +90,7 @@ describe('Workload Calculator should calculate Workload correctly for Mock Data 
   // calling the function that is being tested
 
   // when
-  const workload = calculateWorkload(project);
+  const workload = calculateWorkload([project]);
 
   // inspecting the result
 
@@ -116,7 +116,7 @@ describe('Workload Calculator should calculate Workload correctly for Mock Data 
         employees.forEach((emp) => {
           if (employee.id === emp.id) {
             expect(employee).toEqual(emp);
-            expect(tuple.planning).toBe(openIssuesList[employee.id - 1]);
+            expect(openIssuesList[employee.id - 1]).toBe(tuple.planning);
             expect(tuple.development).toBe(inProgressIssuesList[employee.id - 1]);
             expect(tuple.testing).toBe(closedIssuesList[employee.id - 1]);
           }
@@ -134,7 +134,7 @@ describe('Workload Calculator should calculate Workload correctly for Mock Data 
   const employees: EmployeeIF[] = employeeJson as EmployeeIF[];
 
   // when
-  const workload = calculateWorkload(project);
+  const workload = calculateWorkload([project]);
 
   // then
   test('workload should be a Map', () => {
@@ -162,7 +162,7 @@ describe('Workload Calculator should calculate Workload correctly for Mock Data 
   const project = getMockData(53);
 
   // when
-  const workload = calculateWorkload(project);
+  const workload = calculateWorkload([project]);
 
   // then
   test('workload should be a Map', () => {
@@ -176,7 +176,7 @@ describe('Workload Calculator should calculate Workload correctly for Mock Data 
 
 describe('Workload Calculator should calculate Workload correctly for empty statement', () => {
   // given
-  const workload = calculateWorkload(null);
+  const workload = calculateWorkload([]);
 
   // then
   test('workload should be a Map', () => {
@@ -184,7 +184,7 @@ describe('Workload Calculator should calculate Workload correctly for empty stat
   });
 
   test('map should have same size', () => {
-    expect(workload.size).eq(13);
+    expect(0).eq(workload.size);
   });
 });
 
@@ -193,7 +193,7 @@ describe('Workload Calculator should calculate Workload correctly for Mock Data 
   const project = getMockData(54);
 
   // when
-  const workload = calculateWorkload(project);
+  const workload = calculateWorkload([project]);
 
   // then
   test('workload should be a Map', () => {
@@ -201,6 +201,6 @@ describe('Workload Calculator should calculate Workload correctly for Mock Data 
   });
 
   test('map should be empty', () => {
-    expect(workload.size).eq(0);
+    expect(0).eq(workload.size);
   });
 });

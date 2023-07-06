@@ -1,7 +1,7 @@
 import { nonDisplayedStatusList } from '@/assets/__mockdata__/mockDataComposer';
 import type { IssueIF } from './IssueIF';
 import type { MilestoneIF } from './MilestoneIF';
-import type {SLASubscriber} from "@/model/SLASubscriber";
+import type { SLASubscriber } from '@/model/SLASubscriber';
 
 /**
  *
