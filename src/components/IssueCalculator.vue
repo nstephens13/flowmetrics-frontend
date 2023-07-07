@@ -83,6 +83,8 @@ import type { EmployeeIF } from '@/model/EmployeeIF';
 </script>
 
 <script lang="ts">
+
+// Create a reference for the selectedProject with initial data
 const selectedProject: Ref<ProjectIF> = ref({
   id: 0,
   name: 'Project_Name',
@@ -91,8 +93,15 @@ const selectedProject: Ref<ProjectIF> = ref({
   issues: [],
 } as ProjectIF);
 
+// Create a reference for the projects array with mock data
 const projects: Ref<ProjectIF[]> = ref([getMockData(4), getMockData(5)] as ProjectIF[]);
 
+/**
+ * Returns the maximum issue count from the given array of issues.
+ * If the issues array is empty, the function returns 100.
+ * @param issues An array of issues
+ * @returns The maximum issue count
+ */
 function getIssueCountMax(issues: Issue[]): number {
   if (issues.length === 0) {
     return 100;
@@ -100,6 +109,12 @@ function getIssueCountMax(issues: Issue[]): number {
   return issues.length;
 }
 
+/**
+ * Returns the full name of the assigned employee.
+ * If the employee is null, it returns an empty string.
+ * @param employee An instance of EmployeeIF or null
+ * @returns The formatted full name of the employee
+ */
 function printAssignedTo(employee: EmployeeIF | null): string {
   const firstName = employee?.firstName ?? '';
   const lastName = employee?.lastName ?? '';

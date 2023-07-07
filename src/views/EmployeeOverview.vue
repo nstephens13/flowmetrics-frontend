@@ -11,27 +11,34 @@ import EmployeeCard from '@/components/EmployeeCard.vue';
 import { getIssueStatusList } from '@/model/ProjectIF';
 import useProjectsStore from '@/store/ProjectStore';
 
+// Create a reference to the FilterConfigStore and ProjectStore instances
 const filterConfigStore = useFilterConfigStore();
 const projectStore = useProjectsStore();
 
+// Create a computed reference to the filterConfig from the FilterConfigStore
 const filterConfig = computed(() => filterConfigStore.getFilterConfig);
 
+// Create a reference to the calculated workload based on the project whitelist in the filterConfig
 const workload: Ref<Map<EmployeeIF, IssueDataIF>> = ref(
   calculateWorkload(filterConfig.value.projectFilter.projectsWhiteList)
 );
 
+// Create a reference to all the issue statuses from the projects in the filterConfig
 const allStatuses: Ref<string[]> = ref(
   getIssueStatusList(
     filterConfig.value.projectFilter.projectsWhiteList.flatMap((project) => project.issues)
   )
 );
 
+// Create a reference to all the projects from the ProjectStore
 const allProjects: Ref<ProjectIF[]> = ref(projectStore.getProjects);
 
+// Create a reference to the employee list based on the workload data
 const employeeList = ref(
   Array.from(workload.value, ([employee, issues]) => ({ employee, issues }))
 );
 
+// Create a reference to the category names with initial empty values
 const categoryNames = ref<{
   firstCategory: string;
   secondCategory: string;
@@ -42,15 +49,21 @@ const categoryNames = ref<{
   thirdCategory: '',
 });
 
+// Create references for selectedStatuses and selectedProjects
 const selectedStatuses: Ref<string[]> = ref([]);
 const selectedProjects: Ref<ProjectIF[]> = ref([]);
 
+// Function to update the employee list and category names
 function updateEmployeeList() {
+  // Calculate the workload based on the filtered projects in the filterConfig
   const workloadMap: Map<EmployeeIF, IssueDataIF> = calculateWorkload(
     filterProjectThatHasTheAllowedStatus(filterConfig.value)
   );
 
+  // Update the employee list by merging the workload data
   employeeList.value = mergeEmployees(workloadMap);
+
+  // Set the category names to predefined values
   categoryNames.value = {
     firstCategory: 'Planning',
     secondCategory: 'Development',
@@ -58,31 +71,43 @@ function updateEmployeeList() {
   };
 }
 
+// Function to update the selected projects and trigger employee list update
 function updateSelectedProjects() {
+  // Clear the selected statuses
   selectedStatuses.value = [];
+
+  // Update the filterConfig with the selected projects
   const updatedFilterConfig = filterConfig.value;
   updatedFilterConfig.projectFilter.projectsWhiteList = selectedProjects.value;
   updatedFilterConfig.projectFilter.issueStatusIncludeFilter = [];
   filterConfigStore.setFilterConfig(updatedFilterConfig);
+
+  // Update the employee list and allStatuses
   updateEmployeeList();
   allStatuses.value = getIssueStatusList(
     filterConfig.value.projectFilter.projectsWhiteList.flatMap((project) => project.issues)
   );
 }
 
+// Function to update the selected statuses and trigger employee list update
 function updateSelectedStatuses() {
+  // Update the filterConfig with the selected statuses
   const updatedFilterConfig = filterConfig.value;
   updatedFilterConfig.projectFilter.issueStatusIncludeFilter = selectedStatuses.value;
   filterConfigStore.setFilterConfig(updatedFilterConfig);
 
+  // Update the employee list and allStatuses
   updateEmployeeList();
   allStatuses.value = getIssueStatusList(
     selectedProjects.value.flatMap((project) => project.issues)
   );
 }
 
+// Initialize the selectedProjects and selectedStatuses references
 selectedProjects.value = filterConfig.value.projectFilter.projectsWhiteList;
 selectedStatuses.value = filterConfig.value.projectFilter.issueStatusIncludeFilter;
+
+// Initial update of the employee list
 updateEmployeeList();
 </script>
 

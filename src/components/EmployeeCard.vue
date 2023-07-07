@@ -70,7 +70,8 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 
-const p = defineProps({
+// Define the props for the component
+const prop = defineProps({
   employee: {
     type: Object,
     required: true,
@@ -92,24 +93,17 @@ const p = defineProps({
     required: true,
   },
 });
-
-const totalIssues = computed(() => p.issues.planning + p.issues.development + p.issues.testing);
+// Calculate the total number of issues by summing up the counts in the 'issues' prop
+const totalIssues = computed(() => prop.issues.planning + prop.issues.development + prop.issues.testing);
 </script>
 
 <style scoped>
-.p-card {
-  margin: 15px;
-  width: 500px;
-}
-
 :deep(.developmentProgressbar .p-progressbar-value) {
   background: linear-gradient(to right, #515f68, #748696);
 }
-
 :deep(.planningProgressbar .p-progressbar-value) {
   background: linear-gradient(to right, #1961be, #69a5f3);
 }
-
 :deep(.testingProgressbar .p-progressbar-value) {
   background: linear-gradient(to right, #6d6172, #b595bb);
 }
