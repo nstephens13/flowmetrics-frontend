@@ -29,15 +29,15 @@ describe('SLAComponent', () => {
       },
     },
   });
-
+  // Test to check if the component is rendered
   test('Should render component', () => {
     expect(wrapper.exists()).toBe(true);
   });
-
+  // Test to check if the component is rendered
   test('renders the component', () => {
     expect(wrapper.exists()).toBe(true);
   });
-
+  // Test to add a subscriber
   test('adds a subscriber', async () => {
     const subscriberInput = wrapper.find('.enter-subscriber');
     const addButton = wrapper.find('.add-subscriber');
@@ -55,7 +55,7 @@ describe('SLAComponent', () => {
       name: 'John',
     });
   });
-
+  // Test to add a rule
   test('adds a rule', async () => {
     const ruleInput = wrapper.find('.enter-rule');
     const addButton = wrapper.find('.add-rule');
@@ -76,7 +76,7 @@ describe('SLAComponent', () => {
       occurredIn: null,
     });
   });
-
+  // Test to check if a subscriber with less than 3 characters is not added
   test('does not add a subscriber with less than 3 characters', async () => {
     const subscriberInput = wrapper.find('.enter-subscriber');
     const addButton = wrapper.find('.add-subscriber');
@@ -91,7 +91,7 @@ describe('SLAComponent', () => {
     expect(errorMessage.exists()).toBe(true);
     expect(errorMessage.text()).toBe('Subscriber name must be at least 3 characters.');
   });
-
+  // Test to check if a rule with less than 3 characters is not added
   test('does not add a rule with less than 3 characters', async () => {
     const ruleInput = wrapper.find('.enter-rule');
     const addButton = wrapper.find('.add-rule');
@@ -106,7 +106,7 @@ describe('SLAComponent', () => {
     expect(errorMessage.exists()).toBe(true);
     expect(errorMessage.text()).toBe('Rule name must be at least 3 characters.');
   });
-
+  // Test to create a category
   test('creates a category', async () => {
     // Mock the options for the subscriber and rule dropdowns
     wrapper.setData({
@@ -142,7 +142,7 @@ describe('SLAComponent', () => {
       );
     });
   });
-
+  // Test to check if a category with less than 3 characters is not created
   test('does not create a category with less than 3 characters', async () => {
     const selectSubscriberDropDown = wrapper
       .findAllComponents(Dropdown)
@@ -172,7 +172,7 @@ describe('SLAComponent', () => {
     expect(errorMessage.exists()).toBe(true);
     expect(errorMessage.text()).toBe('Category name must be at least 3 characters.');
   });
-
+  // Test to delete a category
   test('deletes a category', async () => {
     // Mock the categories data
     wrapper.setData({
@@ -187,7 +187,7 @@ describe('SLAComponent', () => {
     const deletedCategory = wrapper.find('.category-container .category');
     expect(deletedCategory.exists()).toBe(false);
   });
-
+  // Test to check if the component mounts successfully
   test('it mounts', () => {
     expect(wrapper.exists()).toBe(true);
     expect(wrapper.isVisible()).toBe(true);
@@ -196,7 +196,7 @@ describe('SLAComponent', () => {
     expect(wrapper.find('.category-container').isVisible()).toBe(true);
     expect(wrapper.getComponent(DataTable).isVisible()).toBe(true);
   });
-
+  // Test to check if all strings in the filter dropdown are rendered
   test('all strings in the filter dropdown are rendered', async () => {
     const dropdownButton = wrapper.find('.p-button-danger');
     const spyButton = vi.spyOn(dropdownButton, 'trigger');
@@ -204,7 +204,7 @@ describe('SLAComponent', () => {
     await dropdownButton.trigger('click');
     expect(spyButton).toHaveBeenCalledOnce();
   });
-
+  // Test to check if the deleteCategory method is called with the correct rowData when the delete button is clicked
   test('deleteCategory method is called with the correct rowData when the delete button is clicked', async () => {
     // Find the delete button and trigger the click event
     const deleteButton = wrapper.find('.p-button-danger');
@@ -213,7 +213,7 @@ describe('SLAComponent', () => {
     const dataTableElementSize = wrapper.getComponent(DataTable).findAll('tr').length;
     expect(4).toEqual(dataTableElementSize);
   });
-
+  // Test to add a new subscriber using addSubscriber method
   test('should add a new subscriber when addSubscriber is called', async () => {
     const addSubscriberButton = wrapper.find('.add-subscriber');
     const inputSubscriber = wrapper.find('.enter-subscriber');
@@ -234,7 +234,7 @@ describe('SLAComponent', () => {
       { id: 5, name: 'New Subscriber', description: null },
     ]);
   });
-
+  // Test to add a new rule using addRule method
   test('should add a new rule when addRule is called', async () => {
     const addRuleButton = wrapper.find('.add-rule');
     const inputRuleName = wrapper.find('.enter-rule'); // Update this line
@@ -297,6 +297,7 @@ describe('SLAComponent', () => {
       },
     ]);
   });
+  // Test to add a new category using createCategory method with valid inputs
   test('should add a new category when createCategory is called with valid inputs', async () => {
     const dropdowns = wrapper.findAllComponents(Dropdown);
     const selectSubscriber = dropdowns[2];

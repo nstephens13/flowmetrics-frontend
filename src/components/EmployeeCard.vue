@@ -94,7 +94,9 @@ const prop = defineProps({
   },
 });
 // Calculate the total number of issues by summing up the counts in the 'issues' prop
-const totalIssues = computed(() => prop.issues.planning + prop.issues.development + prop.issues.testing);
+const totalIssues = computed(
+  () => prop.issues.planning + prop.issues.development + prop.issues.testing
+);
 </script>
 
 <style scoped>

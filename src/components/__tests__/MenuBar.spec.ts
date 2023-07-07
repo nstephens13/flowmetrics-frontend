@@ -8,7 +8,9 @@ import Menubar from 'primevue/menubar';
 import router from '@/router/index';
 import MenuBar from '@/components/MenuBar.vue';
 
+// Describe block for the test suite
 describe('Menubar Button should open sidebar', () => {
+  // Mounting the MenuBar component with necessary configuration
   const wrapper = mount(MenuBar, {
     global: {
       plugins: [PrimeVue, router],
@@ -24,6 +26,7 @@ describe('Menubar Button should open sidebar', () => {
     },
   });
 
+  // Test to check if the component mounts successfully
   test('it mounts', () => {
     expect(wrapper.exists()).toBe(true);
     expect(wrapper.getComponent(Menubar).isVisible()).toBe(true);
@@ -31,6 +34,7 @@ describe('Menubar Button should open sidebar', () => {
     expect(wrapper.isVisible()).toBe(true);
   });
 
+  // Test to check opening and closing of the sidebar
   test('should open and close sidebar', async () => {
     let menubar = wrapper.findComponent(Menu);
     expect(menubar.exists()).toBe(false);
@@ -45,6 +49,7 @@ describe('Menubar Button should open sidebar', () => {
     expect(wrapper.getComponent(Sidebar).vm.$props.visible).toBe(false);
   });
 
+  // Test to check the number of items in the sidebar menu
   test('sidebar menu four items', async () => {
     const menubar = wrapper.findComponent(Menu);
     expect(menubar.exists()).toBe(false);

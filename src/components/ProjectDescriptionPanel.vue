@@ -143,7 +143,6 @@ const projects: Ref<ProjectIF[]> = ref([
   getMockData(54),
   getMockData(55),
 ] as ProjectIF[]);
-
 </script>
 
 <style scoped>

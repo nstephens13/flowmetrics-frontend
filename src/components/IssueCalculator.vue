@@ -83,7 +83,6 @@ import type { EmployeeIF } from '@/model/EmployeeIF';
 </script>
 
 <script lang="ts">
-
 // Create a reference for the selectedProject with initial data
 const selectedProject: Ref<ProjectIF> = ref({
   id: 0,

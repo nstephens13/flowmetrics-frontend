@@ -12,7 +12,9 @@ import { createTestingPinia } from '@pinia/testing';
 import router from '@/router/index';
 import EmployeeOverview from '@/views/EmployeeOverview.vue';
 
+// Describe block for the test suite
 describe('Employee Overview should load all the Components', () => {
+  // Mounting the EmployeeOverview component with necessary configuration
   const wrapper = mount(EmployeeOverview, {
     global: {
       plugins: [
@@ -38,6 +40,7 @@ describe('Employee Overview should load all the Components', () => {
     },
   });
 
+  // Test to check if the component mounts successfully
   test('it mounts', () => {
     expect(wrapper.exists()).toBe(true);
     expect(wrapper.findComponent(Card).isVisible()).toBe(true);
@@ -46,12 +49,14 @@ describe('Employee Overview should load all the Components', () => {
     expect(wrapper.findComponent(MultiSelect).isVisible()).toBe(true);
   });
 
+  // Test to check the options in the multiselect component
   test('Multiselect should contain all options', () => {
     const multiselects = wrapper.findAllComponents(MultiSelect);
     expect(4).toEqual(multiselects[0].props('options').length);
     expect(0).toEqual(multiselects[1].props('options').length);
   });
 
+  // Test to check the displayed title
   test('displays the correct title', () => {
     const title = wrapper.find('.PageTitel');
     expect(title.text()).toBe('Employee Overview');

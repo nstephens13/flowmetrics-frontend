@@ -29,7 +29,7 @@ import { ref } from 'vue';
 
 const productName = 'FlowMetrics';
 const visible = ref();
-//Items to be listed in Sidebar
+// Items to be listed in Sidebar
 const items = ref([
   {
     label: 'Project Overview',

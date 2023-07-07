@@ -11,7 +11,9 @@ import MultiSelect from 'primevue/multiselect';
 import router from '@/router/index';
 import ProjectDescriptionPanel from '../ProjectDescriptionPanel.vue';
 
+// Describe block for the test suite
 describe('Project Overview should load all the Components', () => {
+  // Mounting the ProjectDescriptionPanel component with necessary configuration
   const wrapper = mount(ProjectDescriptionPanel, {
     global: {
       plugins: [PrimeVue, router],
@@ -27,6 +29,7 @@ describe('Project Overview should load all the Components', () => {
     },
   });
 
+  // Test to check if the component mounts successfully
   test('it mounts', () => {
     expect(wrapper.exists()).toBe(true);
     expect(wrapper.getComponent(Dropdown).isVisible()).toBe(true);
@@ -34,10 +37,12 @@ describe('Project Overview should load all the Components', () => {
     expect(wrapper.getComponent(Panel).isVisible()).toBe(true);
   });
 
+  // Test to check the placeholder text of the dropdown select
   test('Dropdown select should be shown and in English', () => {
     expect(wrapper.getComponent(Dropdown).props('placeholder')).toBe('Select a project');
   });
 
+  // Test to check the number of options in the dropdown selection
   test('Dropdown Selection should contain all projects', () => {
     wrapper
       .getComponent(Dropdown)
@@ -48,6 +53,7 @@ describe('Project Overview should load all the Components', () => {
       });
   });
 
+  // Test to check the filter menu dropdown button
   test('filter menu dropdown button', () => {
     const dropdownOptions = wrapper.getComponent(Dropdown).props('options');
     wrapper.getComponent(Dropdown).vm.$emit('change', dropdownOptions[0]);
