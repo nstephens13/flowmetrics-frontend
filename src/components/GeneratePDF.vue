@@ -30,7 +30,7 @@ const generatePDF = () => {
     issue.id,
     issue.name,
     issue.description,
-    issue.assignedSLARule,
+    issue.assignedSLARule?.name,
   ]);
 
   const current = new Date();
