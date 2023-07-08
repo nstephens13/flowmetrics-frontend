@@ -1,7 +1,6 @@
 import type { ProjectIF } from '@/model/ProjectIF';
 import type { EmployeeIF } from '@/model/EmployeeIF';
 import type { IssueIF } from '@/model/IssueIF';
-
 import type { IssueDataIF } from '@/model/IssueDataIF';
 
 // just temporary import
@@ -18,6 +17,14 @@ const UnassignedEmployee: EmployeeIF = {
   lastName: 'Employee',
 };
 
+/**
+ * Extracts the employee from an issue, updates the employee map, and returns the updated issue set and map.
+ *
+ * @param issue - The issue to extract the employee from.
+ * @param issueSet - The set of issues encountered so far.
+ * @param mapToReturn - The map of employees and their workload data.
+ * @returns An object containing the updated issue set and map.
+ */
 function extractEmployeeAndUpdateEmployeeMap(
   issue: IssueIF,
   issueSet: Set<IssueIF>,
@@ -85,16 +92,12 @@ function extractEmployeeAndUpdateEmployeeMap(
 
   return { issueSet, mapToReturn };
 }
+
 /**
- * This function calculate the workload from a project team, and give the
- * result as a Map, where a Employee is the key and as the value a tuple,
- * the amount of assigned Issues that are open but not closed or In progress, the
- * amount of Issues that are In progress, and the amount that are closed
+ * Calculates the workload from a project team and returns the result as a map.
  *
- * @param project Project Object that should be calculated, if null a project
- * with random mock data will be used
- * @returns {Map} key:Employee,
- * value:{ planning: number; development: number; testing: number }
+ * @param projects - Array of projects to calculate the workload from.
+ * @returns A map with employee as the key and their workload data as the value.
  */
 export function calculateWorkload(projects: ProjectIF[]): Map<EmployeeIF, IssueDataIF> {
   let mapToReturn: Map<EmployeeIF, { planning: number; development: number; testing: number }> =
@@ -119,6 +122,12 @@ export function calculateWorkload(projects: ProjectIF[]): Map<EmployeeIF, IssueD
   return mapToReturn;
 }
 
+/**
+ * Merges employees with the same ID in the workload map and returns an array of merged employee data.
+ *
+ * @param workloadMap - The map of employee workload data.
+ * @returns An array of objects containing merged employee and their workload data.
+ */
 export function mergeEmployees(
   workloadMap: Map<EmployeeIF, IssueDataIF>
 ): { employee: EmployeeIF; issues: IssueDataIF }[] {
