@@ -9,15 +9,26 @@ import issueJson from './Issues.json';
 import milestoneJson from './Milestones.json';
 import type { Issue } from '@/model/Issue';
 
+// Define lists of different category with statuses
 export const planningStatusList: string[] = ['Planned', 'Design', 'Open'];
 export const devStatusList: string[] = ['In work', 'Review', 'In progress'];
 export const testingStatusList: string[] = ['UnitTest', 'E2E'];
 export const nonDisplayedStatusList: string[] = ['Closed'];
 
+/**
+ * Generates a random integer between 0 and the specified maximum value (exclusive).
+ * @param max - The maximum value.
+ * @returns The random integer.
+ */
 function getRandomInt(max: number) {
   return Math.floor(Math.random() * max);
 }
 
+/**
+ * Loads issue data from a file and returns an array of Issue objects.
+ * @param issues - The issue data from the file.
+ * @returns An array of Issue objects.
+ */
 function loadIssueDataFromFile(issues: any): Issue[] {
   const issueData: Issue[] = [];
   structuredClone(issues).forEach((issue: IssueIF) => {
@@ -37,6 +48,14 @@ function loadIssueDataFromFile(issues: any): Issue[] {
   return issueData;
 }
 
+/**
+ * Assigns an issue to an employee.
+ * @param issueNumber - The index of the issue.
+ * @param employeeNumber - The index of the employee.
+ * @param issues - The array of issues.
+ * @param employees - The array of employees.
+ * @returns The updated arrays of issues and employees.
+ */
 function assignIssueToEmployee(
   issueNumber: number,
   employeeNumber: number,
@@ -54,6 +73,14 @@ function assignIssueToEmployee(
   return [issuesToReturn, employeesToReturn];
 }
 
+/**
+ * Assigns an issue to a milestone.
+ * @param issueNumber - The index of the issue.
+ * @param milestoneNumber - The index of the milestone.
+ * @param milestones - The array of milestones.
+ * @param issues - The array of issues.
+ * @returns The updated array of milestones.
+ */
 function assignIssueToMilestone(
   issueNumber: number,
   milestoneNumber: number,
@@ -66,6 +93,11 @@ function assignIssueToMilestone(
   return mileStonesToReturn;
 }
 
+/**
+ * Loads arrays of employees, issues, and milestones from files.
+ * @param issueFile - The issue data file.
+ * @returns An array containing the loaded arrays of employees, issues, and milestones.
+ */
 function loadArraysFromFile(
   issueFile:
     | (
@@ -143,6 +175,7 @@ function loadArraysFromFile(
  * if no parameter is used ist data set 3.
  *
  * @param dataset the number of the dataset that should be returned
+ * @returns The mock data based on the specified dataset.
  */
 function getMockData(dataset: number): ProjectIF {
   let [employeesArrayFromFile, issuesArrayFromFile, milestonesArrayFromFile]: [
