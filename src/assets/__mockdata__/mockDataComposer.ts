@@ -289,7 +289,7 @@ function getMockData(dataset: number): ProjectIF {
     }
 
     case 3: {
-      for (let i = 0; i < 280; i++) {
+      for (let iterator = 0; iterator < 280; iterator++) {
         let status = 'Open';
         let closedAt = null;
 
@@ -304,7 +304,7 @@ function getMockData(dataset: number): ProjectIF {
         const statusChanges = getRandomInt(10);
 
         issuesForProject.push({
-          id: i + 1,
+          id: iterator + 1,
           name: faker.company.catchPhrase(),
           description: faker.hacker.phrase(),
           closedAt,
@@ -343,7 +343,7 @@ function getMockData(dataset: number): ProjectIF {
       [employeesArrayFromFile, issuesArrayFromFile, milestonesArrayFromFile] =
         loadArraysFromFile(issueJson2);
 
-      for (let i = 0; i < 280; i++) {
+      for (let iterator = 0; iterator < 280; iterator++) {
         let status = 'Open';
         let closedAt = null;
 
@@ -358,7 +358,7 @@ function getMockData(dataset: number): ProjectIF {
         const statusChanges = getRandomInt(10);
 
         issuesForProject.push({
-          id: i + 1,
+          id: iterator + 1,
           name: faker.company.catchPhrase(),
           description: faker.hacker.phrase(),
           closedAt,
@@ -459,9 +459,9 @@ function getMockData(dataset: number): ProjectIF {
 
     case 6: {
       const issues: IssueIF[] = [];
-      for (let i = 0; i < 280; i++) {
+      for (let iterator = 0; iterator < 280; iterator++) {
         issues.push({
-          id: i + 1,
+          id: iterator + 1,
           name: faker.company.catchPhrase(),
           description: faker.hacker.phrase(),
           closedAt: null,
@@ -478,32 +478,32 @@ function getMockData(dataset: number): ProjectIF {
       const numberOfIssues = issues.length;
       const numberOfEmployees = employeesArrayFromFile.length;
 
-      for (let i = 0; i < numberOfIssues; i++) {
+      for (let iterator = 0; iterator < numberOfIssues; iterator++) {
         const randomStatus = getRandomInt(4); // 0: Open, 1: Closed, 2: In progress
 
         if (randomStatus === 2) {
-          issues[i].status = 'In progress';
+          issues[iterator].status = 'In progress';
           const [devStatus] = devStatusList;
-          issues[i].status = devStatus;
+          issues[iterator].status = devStatus;
         } else if (randomStatus === 1) {
           const randomDate = new Date(2018, 0o5, 0o5, 17, 23, 42, 11);
           // Assigning a random closedAt date within the last 30 days
           randomDate.setDate(randomDate.getDate() - getRandomInt(30));
-          issues[i].closedAt = randomDate;
+          issues[iterator].closedAt = randomDate;
           const [testStatus] = testingStatusList;
-          issues[i].status = testStatus;
+          issues[iterator].status = testStatus;
         } else if (randomStatus === 3) {
-          issues[i].closedAt = faker.date.recent();
+          issues[iterator].closedAt = faker.date.recent();
           const [nonDisplayedStatus] = nonDisplayedStatusList;
-          issues[i].status = nonDisplayedStatus;
+          issues[iterator].status = nonDisplayedStatus;
         } else {
           const [planningStatus] = planningStatusList;
-          issues[i].status = planningStatus;
+          issues[iterator].status = planningStatus;
         }
 
         const randomEmployee = getRandomInt(numberOfEmployees);
         [issuesForProject, employeesForProject] = assignIssueToEmployee(
-          i,
+          iterator,
           randomEmployee,
           issues,
           employeesArrayFromFile
