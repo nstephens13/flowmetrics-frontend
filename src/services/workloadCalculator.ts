@@ -62,7 +62,6 @@ function extractEmployeeAndUpdateEmployeeMap(
       numberInTestingTickets = 0;
     }
     if (issue.status != null) {
-      // if there is no date for closure of the ticket, then it is a still open ticket
       if (planningStatusList.includes(issue.status)) {
         mapToReturn.set(insertEmployee, {
           planning: numberPlannedTickets + 1,
