@@ -105,14 +105,19 @@ const fillingCircleClasses = computed(() => ({
   'circle-progress__line--filled': isLimitReached.value,
   'circle-progress__line--unfilled': !isLimitReached.value,
 }));
+
 // Computed property for the formatted current value (either the value or the maximum)
 const currentFormatted = computed(() => (isLimitReached.value ? props.max : props.value));
+
 // Ref for the filling circle element
 const fillingCircle = ref(null);
+
 // Ref for the radius value
 const radius = ref(48);
+
 // Computed property for the dash array value based on the radius
 const dashArray = computed(() => radius.value * Math.PI * 2);
+
 // Computed property for the dash offset value based on the current value and maximum
 const dashOffset = computed(() => {
   if (props.reversedFilling) {
@@ -120,8 +125,10 @@ const dashOffset = computed(() => {
   }
   return dashArray.value - (dashArray.value * currentFormatted.value) / props.max;
 });
+
 // Computed property for the percentage value
 const getPercentage = computed(() => `${Math.floor((props.value / props.max) * 100)}%`);
+
 // Computed property for the filling circle styles
 const fillingCircleStyles = computed(() => ({
   strokeDashoffset: dashOffset.value,
