@@ -171,8 +171,8 @@ function loadArraysFromFile(
 }
 
 /**
- * This function creates different mock data sets depending on the number passed. 
- * If no number is passed, data set 3 is returned.
+ * This function creates different mock data sets depending on the number passed
+ * If no number is passed, data set 3 is returned
  * @param dataset the number of the dataset that should be returned
  * @returns The mock data based on the specified dataset.
  */
