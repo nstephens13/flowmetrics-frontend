@@ -6,9 +6,7 @@ describe('useProjectsStore', () => {
   let store: ReturnType<typeof useProjectsStore>;
 
   beforeEach(() => {
-    const pinia = createPinia();
-    setActivePinia(pinia);
-    store = useProjectsStore();
+    setActivePinia(createPinia());
   });
 
   afterEach(() => {
@@ -16,11 +14,13 @@ describe('useProjectsStore', () => {
   });
 
   test('should add a project to the store', () => {
+    store = useProjectsStore();
     const project = {
       id: 1,
       name: 'Project 1',
       description: 'Project 1 description',
       milestones: [],
+      slaSubscriber: null,
       issues: [
         {
           id: 1,
@@ -32,6 +32,8 @@ describe('useProjectsStore', () => {
           dueTo: new Date('2021-01-01'),
           createdAt: new Date('2021-01-01'),
           closedAt: new Date('2021-01-02'),
+          statusChanges: null,
+          assignedSLARule: null,
         },
         {
           id: 3,
@@ -43,21 +45,25 @@ describe('useProjectsStore', () => {
           dueTo: new Date('2021-01-01'),
           createdAt: new Date('2021-01-01'),
           closedAt: new Date('2021-01-02'),
+          statusChanges: null,
+          assignedSLARule: null,
         },
       ],
     };
     store.addProject(project);
 
-    expect(store.projects).toHaveLength(1);
-    expect(store.projects[0]).toEqual(project);
+    expect(store.projects).toHaveLength(5);
+    expect(store.projects[4]).toEqual(project);
   });
 
   test('should delete a project from the store', () => {
+    store = useProjectsStore();
     const project1 = {
       id: 1,
       name: 'Project 1',
       description: 'Project 1 description',
       milestones: [],
+      slaSubscriber: null,
       issues: [
         {
           id: 1,
@@ -69,6 +75,8 @@ describe('useProjectsStore', () => {
           dueTo: new Date('2021-01-01'),
           createdAt: new Date('2021-01-01'),
           closedAt: new Date('2021-01-02'),
+          statusChanges: null,
+          assignedSLARule: null,
         },
         {
           id: 3,
@@ -80,6 +88,8 @@ describe('useProjectsStore', () => {
           dueTo: new Date('2021-01-01'),
           createdAt: new Date('2021-01-01'),
           closedAt: new Date('2021-01-02'),
+          statusChanges: null,
+          assignedSLARule: null,
         },
       ],
     };
@@ -88,6 +98,7 @@ describe('useProjectsStore', () => {
       name: 'Project 2',
       description: 'Project 2 description',
       milestones: [],
+      slaSubscriber: null,
       issues: [
         {
           id: 5,
@@ -99,6 +110,8 @@ describe('useProjectsStore', () => {
           dueTo: new Date('2021-01-01'),
           createdAt: new Date('2021-01-01'),
           closedAt: new Date('2021-01-02'),
+          statusChanges: null,
+          assignedSLARule: null,
         },
         {
           id: 3,
@@ -110,17 +123,19 @@ describe('useProjectsStore', () => {
           dueTo: new Date('2021-01-01'),
           createdAt: new Date('2021-01-01'),
           closedAt: new Date('2021-01-02'),
+          statusChanges: null,
+          assignedSLARule: null,
         },
       ],
     };
     store.addProject(project1);
     store.addProject(project2);
 
-    expect(store.projects).toHaveLength(2);
+    expect(store.projects).toHaveLength(6);
 
     store.deleteProject(project1.id);
 
-    expect(store.projects).toHaveLength(1);
-    expect(store.projects[0]).toEqual(project2);
+    expect(store.projects).toHaveLength(5);
+    expect(store.projects[4]).toEqual(project2);
   });
 });

@@ -89,6 +89,7 @@ const selectedProject: Ref<ProjectIF> = ref({
   description: '',
   milestones: [],
   issues: [],
+  slaSubscriber: null,
 } as ProjectIF);
 
 const projects: Ref<ProjectIF[]> = ref([getMockData(4), getMockData(5)] as ProjectIF[]);

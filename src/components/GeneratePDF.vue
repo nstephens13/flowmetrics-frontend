@@ -9,33 +9,27 @@ import autoTable from 'jspdf-autotable';
 import getMockData from '@/assets/__mockdata__/mockDataComposer';
 import type { ProjectIF } from '@/model/ProjectIF';
 import type { IssueIF } from '@/model/IssueIF';
-import type { SLARule } from '@/model/SLARule';
 
 const project = getMockData(7) as ProjectIF;
 const issues = project.issues as IssueIF[];
-const slaRulesSet: Set<SLARule> = new Set<SLARule>();
-
-issues.forEach((issue) => {
-  if (issue.assignedSLARule != null) {
-    slaRulesSet.add(issue.assignedSLARule);
-  }
-});
 
 const generatePDF = () => {
   // Create a new PDF
   const doc = new jsPDF('landscape', 'mm', 'a4');
 
-  const headerNames = [['ID', 'Name', 'Description', 'Assigned SLA Rule']];
+  const headerNames = [
+    { id: 'ID', name: 'Name', description: 'Description', assignedSLARule: 'Assigned SLA Rule' },
+  ];
+  // map the array of issues to a RowInput array
   const issueArray = issues.map((issue) => [
     issue.id,
     issue.name,
     issue.description,
-    issue.assignedSLARule?.name,
+    issue.assignedSLARule?.name ? issue.assignedSLARule.name : 'No SLA Rule assigned',
   ]);
 
   const current = new Date();
   const date = `${current.getDate()}/${current.getMonth()}/${current.getFullYear()}`;
-  // doc.setProperties(issues, slaRulesSet); -> is this right?
   // Document title
   doc.setFont('Helvetica', '', 'bold');
   doc.setFontSize(14);

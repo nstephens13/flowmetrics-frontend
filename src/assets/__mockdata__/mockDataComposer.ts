@@ -32,6 +32,7 @@ function loadIssueDataFromFile(issues: any): Issue[] {
       createdAt: issue.createdAt ? new Date(issue.createdAt) : null,
       dueTo: issue.dueTo ? new Date(issue.dueTo) : null,
       status: issue.status as string,
+      statusChanges: null,
       assignedSLARule: issue.assignedSLARule ? issue.assignedSLARule : null,
     });
   });
@@ -268,10 +269,11 @@ function getMockData(dataset: number): ProjectIF {
 
         if (randomStatus === 2) {
           status = 'In Progress';
-          status = 'In Progress';
         } else if (randomStatus === 1) {
           closedAt = faker.date.recent();
         }
+
+        const statusChanges = getRandomInt(10);
 
         issuesForProject.push({
           id: i + 1,
@@ -283,6 +285,7 @@ function getMockData(dataset: number): ProjectIF {
           createdAt: faker.date.past(),
           createdBy: employeesArrayFromFile[getRandomInt(employeesForProject.length)],
           dueTo: faker.date.future(),
+          statusChanges,
           assignedSLARule: null,
         });
       }
@@ -326,6 +329,8 @@ function getMockData(dataset: number): ProjectIF {
           closedAt = faker.date.recent();
         }
 
+        const statusChanges = getRandomInt(10);
+
         issuesForProject.push({
           id: i + 1,
           name: faker.company.catchPhrase(),
@@ -336,6 +341,7 @@ function getMockData(dataset: number): ProjectIF {
           createdAt: faker.date.past(),
           createdBy: employeesArrayFromFile[getRandomInt(employeesForProject.length)],
           dueTo: faker.date.future(),
+          statusChanges,
           assignedSLARule: null,
         });
       }
@@ -441,6 +447,7 @@ function getMockData(dataset: number): ProjectIF {
           createdBy: employeesArrayFromFile[getRandomInt(employeesForProject.length)],
           dueTo: faker.date.future(),
           status: '',
+          statusChanges: null,
           assignedSLARule: null,
         });
       }
@@ -506,6 +513,7 @@ function getMockData(dataset: number): ProjectIF {
           createdBy: employeesArrayFromFile[getRandomInt(employeesForProject.length)],
           dueTo: faker.date.future(),
           status: '',
+          statusChanges: 0,
           assignedSLARule: null,
         });
       }
@@ -552,6 +560,7 @@ function getMockData(dataset: number): ProjectIF {
         durationInDays: 3,
         expirationDate: new Date('2023-08-17T00:00:00.000Z'),
         maxAssignedEmployees: 3,
+        occurredIn: null,
       };
       const slaRule2: SLARule = {
         id: 2,
@@ -559,6 +568,7 @@ function getMockData(dataset: number): ProjectIF {
         durationInDays: 5,
         expirationDate: new Date('2023-08-20T00:00:00.000Z'),
         maxAssignedEmployees: 3,
+        occurredIn: null,
       };
       const slaRule3: SLARule = {
         id: 3,
@@ -566,6 +576,7 @@ function getMockData(dataset: number): ProjectIF {
         durationInDays: 2,
         expirationDate: new Date('2023-08-16T00:00:00.000Z'),
         maxAssignedEmployees: 1,
+        occurredIn: null,
       };
 
       const slaRuleArray: SLARule[] = [slaRule1, slaRule2, slaRule3];
