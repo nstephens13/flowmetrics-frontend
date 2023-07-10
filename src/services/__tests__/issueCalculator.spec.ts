@@ -33,12 +33,14 @@ describe('Issue Calculator should map correctly ', () => {
     dueTo: null,
     assignedTo: testEmployee,
     statusChanges: null,
+    assignedSLARule: null,
   };
   const additionalProject: ProjectIF = {
     id: 4,
     name: 'additional',
     description: 'description',
     milestones: [],
+    slaSubscriber: null,
     issues: [additionalIssue],
   };
   test('map should have 9 entries', () => {

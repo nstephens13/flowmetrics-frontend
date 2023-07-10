@@ -8,10 +8,11 @@ import issueJson2 from './Issues_2.json';
 import issueJson from './Issues.json';
 import milestoneJson from './Milestones.json';
 import type { Issue } from '@/model/Issue';
+import type { SLARule } from '@/model/SLARule';
 
 // Define lists of different category with statuses
 export const planningStatusList: string[] = ['Planned', 'Design', 'Open'];
-export const devStatusList: string[] = ['In work', 'Review', 'In progress'];
+export const devStatusList: string[] = ['In Work', 'Review', 'In Progress'];
 export const testingStatusList: string[] = ['UnitTest', 'E2E'];
 export const nonDisplayedStatusList: string[] = ['Closed'];
 
@@ -43,6 +44,7 @@ function loadIssueDataFromFile(issues: any): Issue[] {
       dueTo: issue.dueTo ? new Date(issue.dueTo) : null,
       status: issue.status as string,
       statusChanges: null,
+      assignedSLARule: issue.assignedSLARule ? issue.assignedSLARule : null,
     });
   });
   return issueData;
@@ -201,6 +203,7 @@ function getMockData(dataset: number): ProjectIF {
         description: faker.company.catchPhrase(),
         milestones: milestonesForProject,
         issues: issuesForProject,
+        slaSubscriber: null,
       };
     }
 
@@ -285,6 +288,7 @@ function getMockData(dataset: number): ProjectIF {
         description: faker.company.catchPhrase(),
         milestones: milestonesForProject,
         issues: issuesForProject,
+        slaSubscriber: null,
       };
     }
 
@@ -293,10 +297,10 @@ function getMockData(dataset: number): ProjectIF {
         let status = 'Open';
         let closedAt = null;
 
-        const randomStatus = getRandomInt(3); // 0: Open, 1: Closed, 2: In progress
+        const randomStatus = getRandomInt(3); // 0: Open, 1: Closed, 2: In Progress
 
         if (randomStatus === 2) {
-          status = 'In progress';
+          status = 'In Progress';
         } else if (randomStatus === 1) {
           closedAt = faker.date.recent();
         }
@@ -314,6 +318,7 @@ function getMockData(dataset: number): ProjectIF {
           createdBy: employeesArrayFromFile[getRandomInt(employeesForProject.length)],
           dueTo: faker.date.future(),
           statusChanges,
+          assignedSLARule: null,
         });
       }
 
@@ -336,6 +341,7 @@ function getMockData(dataset: number): ProjectIF {
         description: 'third mock dataset with a big number of random issues',
         milestones: milestonesArrayFromFile,
         issues: issuesForProject,
+        slaSubscriber: null,
       };
     }
 
@@ -347,10 +353,10 @@ function getMockData(dataset: number): ProjectIF {
         let status = 'Open';
         let closedAt = null;
 
-        const randomStatus = getRandomInt(3); // 0: Open, 1: Closed, 2: In progress
+        const randomStatus = getRandomInt(3); // 0: Open, 1: Closed, 2: In Progress
 
         if (randomStatus === 2) {
-          status = 'In progress';
+          status = 'In Progress';
         } else if (randomStatus === 1) {
           closedAt = faker.date.recent();
         }
@@ -368,6 +374,7 @@ function getMockData(dataset: number): ProjectIF {
           createdBy: employeesArrayFromFile[getRandomInt(employeesForProject.length)],
           dueTo: faker.date.future(),
           statusChanges,
+          assignedSLARule: null,
         });
       }
 
@@ -382,11 +389,12 @@ function getMockData(dataset: number): ProjectIF {
       });
 
       return {
-        id: 4,
-        name: faker.science.chemicalElement().name,
+        id: 3,
+        name: 'Mocking Bird Project',
         description: 'third mock dataset with a big number of random issues',
         milestones: milestonesArrayFromFile,
         issues: issuesForProject,
+        slaSubscriber: null,
       };
     }
 
@@ -449,11 +457,12 @@ function getMockData(dataset: number): ProjectIF {
       milestonesForProject = assignIssueToMilestone(3, 1, milestonesForProject, issuesForProject);
 
       return {
-        id: 5,
-        name: faker.science.chemicalElement().name,
+        id: 2,
+        name: 'Mocking Bird 2',
         description: 'second mock dataset',
         milestones: milestonesForProject,
         issues: issuesForProject,
+        slaSubscriber: null,
       };
     }
 
@@ -471,6 +480,7 @@ function getMockData(dataset: number): ProjectIF {
           dueTo: faker.date.future(),
           status: '',
           statusChanges: null,
+          assignedSLARule: null,
         });
       }
 
@@ -479,10 +489,10 @@ function getMockData(dataset: number): ProjectIF {
       const numberOfEmployees = employeesArrayFromFile.length;
 
       for (let iterator = 0; iterator < numberOfIssues; iterator++) {
-        const randomStatus = getRandomInt(4); // 0: Open, 1: Closed, 2: In progress
+        const randomStatus = getRandomInt(4); // 0: Open, 1: Closed, 2: In Progress
 
         if (randomStatus === 2) {
-          issues[iterator].status = 'In progress';
+          issues[iterator].status = 'In Progress';
           const [devStatus] = devStatusList;
           issues[iterator].status = devStatus;
         } else if (randomStatus === 1) {
@@ -516,6 +526,104 @@ function getMockData(dataset: number): ProjectIF {
         description: 'Sixth mock dataset',
         milestones: milestonesArrayFromFile,
         issues: issuesForProject,
+        slaSubscriber: null,
+      };
+    }
+
+    // SLA Rules MockData
+    case 7: {
+      const issues: IssueIF[] = [];
+      // Random Erstellung von 280 Issues
+      for (let i = 0; i < 280; i++) {
+        issues.push({
+          id: i + 1,
+          name: faker.company.catchPhrase(),
+          description: faker.hacker.phrase(),
+          closedAt: null,
+          assignedTo: null,
+          createdAt: faker.date.past(),
+          createdBy: employeesArrayFromFile[getRandomInt(employeesForProject.length)],
+          dueTo: faker.date.future(),
+          status: '',
+          statusChanges: 0,
+          assignedSLARule: null,
+        });
+      }
+
+      // issues = issuesArray;
+      const numberOfIssues = issues.length;
+      const numberOfEmployees = employeesArrayFromFile.length;
+
+      for (let iterator = 0; iterator < numberOfIssues; iterator++) {
+        const randomStatus = getRandomInt(4); // 0: Open, 1: Closed, 2: In Progress
+
+        if (randomStatus === 2) {
+          issues[iterator].status = 'In Progress';
+          const [devStatus] = devStatusList;
+          issues[iterator].status = devStatus;
+        } else if (randomStatus === 1) {
+          const randomDate = new Date(2018, 0o5, 0o5, 17, 23, 42, 11);
+          // Assigning a random closedAt date within the last 30 days
+          randomDate.setDate(randomDate.getDate() - getRandomInt(30));
+          issues[iterator].closedAt = randomDate;
+          const [testStatus] = testingStatusList;
+          issues[iterator].status = testStatus;
+        } else if (randomStatus === 3) {
+          issues[iterator].closedAt = faker.date.recent();
+          const [nonDisplayedStatus] = nonDisplayedStatusList;
+          issues[iterator].status = nonDisplayedStatus;
+        } else {
+          const [planningStatus] = planningStatusList;
+          issues[iterator].status = planningStatus;
+        }
+
+        const randomEmployee = getRandomInt(numberOfEmployees);
+        [issuesForProject, employeesForProject] = assignIssueToEmployee(
+          iterator,
+          randomEmployee,
+          issues,
+          employeesArrayFromFile
+        );
+      }
+
+      const slaRule1: SLARule = {
+        id: 1,
+        name: 'SLA Rule 1',
+        durationInDays: 3,
+        expirationDate: new Date('2023-08-17T00:00:00.000Z'),
+        maxAssignedEmployees: 3,
+        occurredIn: null,
+      };
+      const slaRule2: SLARule = {
+        id: 2,
+        name: 'SLA Rule 2',
+        durationInDays: 5,
+        expirationDate: new Date('2023-08-20T00:00:00.000Z'),
+        maxAssignedEmployees: 3,
+        occurredIn: null,
+      };
+      const slaRule3: SLARule = {
+        id: 3,
+        name: 'SLA Rule 3',
+        durationInDays: 2,
+        expirationDate: new Date('2023-08-16T00:00:00.000Z'),
+        maxAssignedEmployees: 1,
+        occurredIn: null,
+      };
+
+      const slaRuleArray: SLARule[] = [slaRule1, slaRule2, slaRule3];
+
+      for (let i = 0; i < numberOfIssues; i++) {
+        const randomSLARule = getRandomInt(3); // 0: SLA Rule 1, 1: SLA Rule 2, 2: SLA Rule 3
+        issues[i].assignedSLARule = slaRuleArray[randomSLARule];
+      }
+      return {
+        id: 7,
+        name: 'Mocking Bird 7',
+        description: 'seventh mock dataset',
+        milestones: milestonesArrayFromFile,
+        issues: issuesForProject,
+        slaSubscriber: null,
       };
     }
 
@@ -527,6 +635,7 @@ function getMockData(dataset: number): ProjectIF {
         description: faker.company.catchPhrase(),
         issues: [],
         milestones: [],
+        slaSubscriber: null,
       };
     }
     case 54: {
@@ -536,6 +645,7 @@ function getMockData(dataset: number): ProjectIF {
         description: faker.company.catchPhrase(),
         milestones: milestonesArrayFromFile,
         issues: [],
+        slaSubscriber: null,
       };
     }
 
@@ -584,18 +694,18 @@ function getMockData(dataset: number): ProjectIF {
       );
 
       const date = new Date(2018, 0o5, 0o5, 17, 23, 42, 11);
-      issuesForProject[0].status = 'In progress';
+      issuesForProject[0].status = 'In Progress';
       issuesForProject[2].status = 'Closed';
       issuesForProject[2].closedAt = date; // Set the specific closedAt date
       issuesForProject[3].status = 'Closed';
       issuesForProject[3].closedAt = date; // Set the specific closedAt date
       issuesForProject[4].status = 'Closed';
       issuesForProject[4].closedAt = date; // Set the specific closedAt date
-      issuesForProject[5].status = 'In progress';
+      issuesForProject[5].status = 'In Progress';
       issuesForProject[6].status = 'Closed';
       issuesForProject[6].closedAt = date; // Set the specific closedAt date
 
-      [issuesForProject[0].status, issuesForProject[0].status] = ['In progress', devStatusList[0]];
+      [issuesForProject[0].status, issuesForProject[0].status] = ['In Progress', devStatusList[0]];
       [issuesForProject[1].status] = [planningStatusList[0]];
       [issuesForProject[2].status, issuesForProject[2].status, issuesForProject[2].closedAt] = [
         'Closed',
@@ -612,7 +722,7 @@ function getMockData(dataset: number): ProjectIF {
         testingStatusList[0],
         date,
       ];
-      [issuesForProject[5].status, issuesForProject[5].status] = ['In progress', devStatusList[0]];
+      [issuesForProject[5].status, issuesForProject[5].status] = ['In Progress', devStatusList[0]];
       [issuesForProject[6].status, issuesForProject[6].closedAt] = [testingStatusList[0], date];
 
       return {
@@ -621,6 +731,7 @@ function getMockData(dataset: number): ProjectIF {
         description: faker.company.catchPhrase(),
         milestones: milestonesArrayFromFile,
         issues: issuesForProject,
+        slaSubscriber: null,
       };
     }
 
@@ -631,6 +742,7 @@ function getMockData(dataset: number): ProjectIF {
         description: 'An empty project',
         milestones: [],
         issues: [],
+        slaSubscriber: null,
       };
     }
   }

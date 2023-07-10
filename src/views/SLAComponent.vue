@@ -90,6 +90,9 @@
         </DataTable>
       </div>
     </template>
+    <template #footer>
+      <GeneratePDF></GeneratePDF>
+    </template>
   </Card>
 </template>
 
@@ -99,6 +102,7 @@ import useSLAStore from '@/store/store';
 import type { SLASubscriber } from '@/model/SLASubscriber';
 import type { SLARule } from '@/model/SLARule';
 import type { SLACategory } from '@/model/SLACategory';
+import GeneratePDF from '@/components/GeneratePDF.vue';
 
 // Define the 'SLAComponent' component
 export default defineComponent({
@@ -106,6 +110,7 @@ export default defineComponent({
   mounted() {
     this.slaStore.initializeCategories();
   },
+  components: { GeneratePDF },
   data() {
     return {
       slaStore: useSLAStore(),

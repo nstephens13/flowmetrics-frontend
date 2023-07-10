@@ -42,6 +42,7 @@ module.exports = {
     'import/no-unresolved': 0,
     '@typescript-eslint/no-explicit-any': 0,
     'linebreak-style': ['error', 'unix'],
+    'new-cap': 0,
   },
   plugins: ['@typescript-eslint', 'prettier'],
   overrides: [
