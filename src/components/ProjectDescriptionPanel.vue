@@ -48,7 +48,6 @@
             <Column field="id" header="Issue-ID"></Column>
             <template #empty> No issues found. </template>
             <template #loading> Loading issues. Please wait. </template>
-            <Column field="id" header="Ticket-ID"></Column>
             <Column field="name" header="Name"></Column>
             <Column field="description" header="Description"></Column>
             <Column field="assignedTo" header="Assigned to">
