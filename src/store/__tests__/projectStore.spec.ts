@@ -20,6 +20,7 @@ describe('useProjectsStore', () => {
       name: 'Project 1',
       description: 'Project 1 description',
       milestones: [],
+      slaSubscriber: null,
       issues: [
         {
           id: 1,
@@ -32,6 +33,7 @@ describe('useProjectsStore', () => {
           createdAt: new Date('2021-01-01'),
           closedAt: new Date('2021-01-02'),
           statusChanges: null,
+          assignedSLARule: null,
         },
         {
           id: 3,
@@ -44,6 +46,7 @@ describe('useProjectsStore', () => {
           createdAt: new Date('2021-01-01'),
           closedAt: new Date('2021-01-02'),
           statusChanges: null,
+          assignedSLARule: null,
         },
       ],
     };
@@ -60,6 +63,7 @@ describe('useProjectsStore', () => {
       name: 'Project 1',
       description: 'Project 1 description',
       milestones: [],
+      slaSubscriber: null,
       issues: [
         {
           id: 1,
@@ -72,6 +76,7 @@ describe('useProjectsStore', () => {
           createdAt: new Date('2021-01-01'),
           closedAt: new Date('2021-01-02'),
           statusChanges: null,
+          assignedSLARule: null,
         },
         {
           id: 3,
@@ -84,6 +89,7 @@ describe('useProjectsStore', () => {
           createdAt: new Date('2021-01-01'),
           closedAt: new Date('2021-01-02'),
           statusChanges: null,
+          assignedSLARule: null,
         },
       ],
     };
@@ -92,6 +98,7 @@ describe('useProjectsStore', () => {
       name: 'Project 2',
       description: 'Project 2 description',
       milestones: [],
+      slaSubscriber: null,
       issues: [
         {
           id: 5,
@@ -104,6 +111,7 @@ describe('useProjectsStore', () => {
           createdAt: new Date('2021-01-01'),
           closedAt: new Date('2021-01-02'),
           statusChanges: null,
+          assignedSLARule: null,
         },
         {
           id: 3,
@@ -116,6 +124,7 @@ describe('useProjectsStore', () => {
           createdAt: new Date('2021-01-01'),
           closedAt: new Date('2021-01-02'),
           statusChanges: null,
+          assignedSLARule: null,
         },
       ],
     };

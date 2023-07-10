@@ -10,6 +10,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
         name: 'Project 1',
         description: 'Project 1 description',
         milestones: [],
+        slaSubscriber: null,
         issues: [
           {
             id: 1,
@@ -22,10 +23,11 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
             createdAt: new Date('2021-01-01'),
             closedAt: new Date('2021-01-02'),
             statusChanges: null,
+            assignedSLARule: null,
           },
           {
             id: 3,
-            status: 'In progress',
+            status: 'In Progress',
             name: 'Issue 3',
             description: 'Issue 3 description',
             assignedTo: { id: 6, firstName: 'Gabi', lastName: 'Winkler' },
@@ -34,6 +36,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
             createdAt: new Date('2021-01-01'),
             closedAt: new Date('2021-01-02'),
             statusChanges: null,
+            assignedSLARule: null,
           },
         ],
       },
@@ -42,6 +45,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
         name: 'Project 2',
         description: 'Project 2 description',
         milestones: [],
+        slaSubscriber: null,
         issues: [
           {
             id: 5,
@@ -54,10 +58,11 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
             createdAt: new Date('2021-01-01'),
             closedAt: new Date('2021-01-02'),
             statusChanges: null,
+            assignedSLARule: null,
           },
           {
             id: 3,
-            status: 'In progress',
+            status: 'In Progress',
             name: 'Issue 3',
             description: 'Issue 3 description',
             assignedTo: { id: 6, firstName: 'Gabi', lastName: 'Winkler' },
@@ -66,6 +71,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
             createdAt: new Date('2021-01-01'),
             closedAt: new Date('2021-01-02'),
             statusChanges: null,
+            assignedSLARule: null,
           },
         ],
       },
@@ -75,18 +81,18 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
       id: 4,
       projectFilter: {
         projectsWhiteList: projects,
-        issueStatusIncludeFilter: ['Open', 'In progress'],
+        issueStatusIncludeFilter: ['Open', 'In Progress'],
       },
     };
 
     const filteredProjects = filterProjectThatHasTheAllowedStatus(filterConfig);
-
     assert.deepStrictEqual(filteredProjects, [
       {
         id: 1,
         name: 'Project 1',
         description: 'Project 1 description',
         milestones: [],
+        slaSubscriber: null,
         issues: [
           {
             id: 1,
@@ -99,10 +105,11 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
             createdAt: new Date('2021-01-01'),
             closedAt: new Date('2021-01-02'),
             statusChanges: null,
+            assignedSLARule: null,
           },
           {
             id: 3,
-            status: 'In progress',
+            status: 'In Progress',
             name: 'Issue 3',
             description: 'Issue 3 description',
             assignedTo: { id: 6, firstName: 'Gabi', lastName: 'Winkler' },
@@ -111,6 +118,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
             createdAt: new Date('2021-01-01'),
             closedAt: new Date('2021-01-02'),
             statusChanges: null,
+            assignedSLARule: null,
           },
         ],
       },
@@ -119,6 +127,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
         name: 'Project 2',
         description: 'Project 2 description',
         milestones: [],
+        slaSubscriber: null,
         issues: [
           {
             id: 5,
@@ -131,10 +140,11 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
             createdAt: new Date('2021-01-01'),
             closedAt: new Date('2021-01-02'),
             statusChanges: null,
+            assignedSLARule: null,
           },
           {
             id: 3,
-            status: 'In progress',
+            status: 'In Progress',
             name: 'Issue 3',
             description: 'Issue 3 description',
             assignedTo: { id: 6, firstName: 'Gabi', lastName: 'Winkler' },
@@ -143,6 +153,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
             createdAt: new Date('2021-01-01'),
             closedAt: new Date('2021-01-02'),
             statusChanges: null,
+            assignedSLARule: null,
           },
         ],
       },

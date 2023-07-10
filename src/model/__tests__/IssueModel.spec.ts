@@ -23,6 +23,7 @@ describe('Issue Class', () => {
     const dueTo = new Date();
     const status = 'Open';
     const statusChanges = null;
+    const assignedSLARule = null;
 
     const issue = new Issue(
       id,
@@ -34,7 +35,8 @@ describe('Issue Class', () => {
       closedAt,
       dueTo,
       status,
-      statusChanges
+      statusChanges,
+      assignedSLARule
     );
 
     expect(issue.id).toBe(id);
@@ -70,6 +72,7 @@ describe('getAssignedToName', () => {
       null,
       null,
       null,
+      null,
       null
     );
     const assignedToName = getAssignedToName(issue);
@@ -88,6 +91,7 @@ describe('getAssignedToName', () => {
         lastName: 'Smith',
       },
       new Date(),
+      null,
       null,
       null,
       null,
@@ -115,6 +119,7 @@ describe('getFormattedDate', () => {
       null,
       dueTo,
       null,
+      null,
       null
     );
     const formattedDate = getFormattedDate(issue);
@@ -133,6 +138,7 @@ describe('getFormattedDate', () => {
         lastName: 'Smith',
       },
       new Date(),
+      null,
       null,
       null,
       null,
@@ -161,6 +167,7 @@ describe('getTimeLeft', () => {
       null,
       dueTo,
       null,
+      null,
       null
     );
     const timeLeft = getTimeLeft(issue);
@@ -186,6 +193,7 @@ describe('getTimeLeft', () => {
       null,
       dueTo,
       null,
+      null,
       null
     );
     const timeLeft = getTimeLeft(issue);
@@ -204,6 +212,7 @@ describe('getTimeLeft', () => {
         lastName: 'Smith',
       },
       new Date(),
+      null,
       null,
       null,
       null,
@@ -230,6 +239,7 @@ describe('countIssuesByStatus', () => {
       null,
       null,
       'Open',
+      null,
       null
     ),
     new Issue(
@@ -246,6 +256,7 @@ describe('countIssuesByStatus', () => {
       null,
       null,
       'Closed',
+      null,
       null
     ),
     new Issue(
@@ -261,7 +272,8 @@ describe('countIssuesByStatus', () => {
       new Date(),
       null,
       null,
-      'In progress',
+      'In Progress',
+      null,
       null
     ),
     new Issue(
@@ -278,6 +290,7 @@ describe('countIssuesByStatus', () => {
       null,
       null,
       'Open',
+      null,
       null
     ),
     new Issue(
@@ -294,6 +307,7 @@ describe('countIssuesByStatus', () => {
       null,
       null,
       'Closed',
+      null,
       null
     ),
   ];
@@ -301,7 +315,7 @@ describe('countIssuesByStatus', () => {
   test('returns the count of issues with the specified status', () => {
     const openIssuesCount = countIssuesByStatus(issueList, 'Open');
     const closedIssuesCount = countIssuesByStatus(issueList, 'Closed');
-    const inProgressIssuesCount = countIssuesByStatus(issueList, 'In progress');
+    const inProgressIssuesCount = countIssuesByStatus(issueList, 'In Progress');
 
     expect(openIssuesCount).toBe(2);
     expect(closedIssuesCount).toBe(2);
