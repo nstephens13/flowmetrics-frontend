@@ -104,6 +104,7 @@ import type { SLARule } from '@/model/SLARule';
 import type { SLACategory } from '@/model/SLACategory';
 import GeneratePDF from '@/components/GeneratePDF.vue';
 
+// Define the 'SLAComponent' component
 export default defineComponent({
   name: 'SLAComponent',
   mounted() {
@@ -143,6 +144,7 @@ export default defineComponent({
       this.slaStore.addSubscriber(subscriber);
       this.newSubscriber = '';
     },
+    // Add a new rule to the store
     addRule() {
       if (this.newRuleName.trim().length < 3) {
         this.isRuleNameValid = false;
@@ -162,6 +164,7 @@ export default defineComponent({
       this.newRuleMaxAssignedEmployees = null;
       this.newOccurredIn = null;
     },
+    // Create a new category in the store
     createCategory() {
       if (this.categoryName.trim().length < 3) {
         this.isSLACategoryNameValid = false;
@@ -181,26 +184,33 @@ export default defineComponent({
         this.categoryName = '';
       }
     },
+    // Delete a category from the store
     deleteCategory(category: SLACategory) {
       this.slaStore.deleteSLACategory(category);
     },
   },
   computed: {
+    // Retrieve the subscribers from the store
     subscriber(): SLASubscriber[] {
       return this.slaStore.subscriber;
     },
+    // Retrieve the rules from the store
     rules(): any {
       return this.slaStore.rules;
     },
+    // Retrieve the SLA categories from the store
     categories(): SLACategory[] {
       return this.slaStore.slaCategories;
     },
+    // Error message for invalid subscriber name
     SubscriberErrorMessage(): any {
       return !this.isSubscriberNameValid ? 'Subscriber name must be at least 3 characters.' : '';
     },
+    // Error message for invalid rule name
     ruleErrorMessage(): any {
       return !this.isRuleNameValid ? 'Rule name must be at least 3 characters.' : '';
     },
+    // Error message for invalid category name
     categoryErrorMessage(): any {
       return !this.isSLACategoryNameValid ? 'Category name must be at least 3 characters.' : '';
     },

@@ -104,6 +104,7 @@ import type { EmployeeIF } from '@/model/EmployeeIF';
 import { getIssueStatusList, type ProjectIF } from '@/model/ProjectIF';
 import getMockData from '@/assets/__mockdata__/mockDataComposer';
 
+// Create a reference for the selectedProject with initial data
 const selectedProject = ref({
   id: 0,
   name: 'Project_Name',
@@ -113,22 +114,27 @@ const selectedProject = ref({
   slaSubscriber: null,
 } as ProjectIF);
 
+// Create a reference for the statuses array
 const statuses: Ref<string[]> = ref([]);
 
+// Create a reference for the filters object with initial configuration
 const filters = ref({
   status: { value: null, matchMode: FilterMatchMode.IN },
 });
 
+// Function to print the assigned employee's full name
 function printAssignedTo(employee: EmployeeIF | null): string {
   const firstName = employee?.firstName ?? '';
   const lastName = employee?.lastName ?? '';
   return `${firstName} ${lastName}`;
 }
 
+// Watch for changes in the selectedProject and update the statuses array
 watch(selectedProject, () => {
   statuses.value = getIssueStatusList(selectedProject.value.issues);
 });
 
+// Create a reference for the projects array with mock data
 const projects: Ref<ProjectIF[]> = ref([
   getMockData(1),
   getMockData(2),

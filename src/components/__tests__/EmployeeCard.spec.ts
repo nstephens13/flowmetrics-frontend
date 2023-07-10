@@ -9,7 +9,9 @@ import router from '@/router/index';
 
 import EmployeeCard from '../EmployeeCard.vue';
 
+// Describe block for the test suite
 describe('Employee Card should load all the Components', () => {
+  // Mounting the EmployeeCard component with necessary configuration
   const wrapper = mount(EmployeeCard, {
     global: {
       plugins: [PrimeVue, router],
@@ -20,6 +22,7 @@ describe('Employee Card should load all the Components', () => {
       },
     },
     propsData: {
+      // Props data for the EmployeeCard component
       employee: {
         id: 19,
         firstName: 'Erika',
@@ -38,16 +41,19 @@ describe('Employee Card should load all the Components', () => {
     },
   });
 
+  // Test to check if the component mounts successfully
   test('it mounts', () => {
     expect(wrapper.exists()).toBe(true);
     expect(wrapper.getComponent(Avatar).isVisible()).toBe(true);
     expect(wrapper.getComponent(ProgressBar).isVisible()).toBe(true);
   });
 
+  // Test to check the label on the Avatar component
   test('Label on Avatar Component', () => {
     expect(wrapper.getComponent(Avatar).props('label')).toBe('EM');
   });
 
+  // Test to check the employee's first and last name
   test('checks for Employee Name', () => {
     const employeeFirstName = wrapper.find('#firstName');
     expect(employeeFirstName.text()).toBe('Erika');
@@ -56,6 +62,7 @@ describe('Employee Card should load all the Components', () => {
     expect(employeeLastName.text()).toBe('Mustermann');
   });
 
+  // Test to check the total number of tickets
   test('checks for total tickets', () => {
     const label = wrapper.find('#ticketCount');
     const labelText = label.text();
@@ -64,6 +71,7 @@ describe('Employee Card should load all the Components', () => {
     expect(labelText).toContain(expectedTotalTickets);
   });
 
+  // Test to check the progress values for different categories
   test('Progressbars checks', () => {
     const progressBar1 = wrapper.find('.planningProgressbar');
     expect(progressBar1.text()).toBe('20');

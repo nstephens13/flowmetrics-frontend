@@ -10,15 +10,26 @@ import milestoneJson from './Milestones.json';
 import type { Issue } from '@/model/Issue';
 import type { SLARule } from '@/model/SLARule';
 
-export const planningStatusList: string[] = ['planned', 'design', 'Open'];
-export const devStatusList: string[] = ['in work', 'review', 'In Progress'];
+// Define lists of different category with statuses
+export const planningStatusList: string[] = ['Planned', 'Design', 'Open'];
+export const devStatusList: string[] = ['In Work', 'Review', 'In Progress'];
 export const testingStatusList: string[] = ['UnitTest', 'E2E'];
 export const nonDisplayedStatusList: string[] = ['Closed'];
 
+/**
+ * Generates a random integer between 0 and the specified maximum value (exclusive).
+ * @param max - The maximum value.
+ * @returns The random integer.
+ */
 function getRandomInt(max: number) {
   return Math.floor(Math.random() * max);
 }
 
+/**
+ * Loads issue data from a file and returns an array of Issue objects.
+ * @param issues - The issue data from the file.
+ * @returns An array of Issue objects.
+ */
 function loadIssueDataFromFile(issues: any): Issue[] {
   const issueData: Issue[] = [];
   structuredClone(issues).forEach((issue: IssueIF) => {
@@ -39,6 +50,14 @@ function loadIssueDataFromFile(issues: any): Issue[] {
   return issueData;
 }
 
+/**
+ * Assigns an issue to an employee.
+ * @param issueNumber - The index of the issue.
+ * @param employeeNumber - The index of the employee.
+ * @param issues - The array of issues.
+ * @param employees - The array of employees.
+ * @returns The updated arrays of issues and employees.
+ */
 function assignIssueToEmployee(
   issueNumber: number,
   employeeNumber: number,
@@ -56,6 +75,14 @@ function assignIssueToEmployee(
   return [issuesToReturn, employeesToReturn];
 }
 
+/**
+ * Assigns an issue to a milestone.
+ * @param issueNumber - The index of the issue.
+ * @param milestoneNumber - The index of the milestone.
+ * @param milestones - The array of milestones.
+ * @param issues - The array of issues.
+ * @returns The updated array of milestones.
+ */
 function assignIssueToMilestone(
   issueNumber: number,
   milestoneNumber: number,
@@ -68,6 +95,11 @@ function assignIssueToMilestone(
   return mileStonesToReturn;
 }
 
+/**
+ * Loads arrays of employees, issues, and milestones from files.
+ * @param issueFile - The issue data file.
+ * @returns An array containing the loaded arrays of employees, issues, and milestones.
+ */
 function loadArraysFromFile(
   issueFile:
     | (
@@ -141,10 +173,10 @@ function loadArraysFromFile(
 }
 
 /**
- * This function composes different mock data sets, the default value
- * if no parameter is used ist data set 3.
- *
+ * This function creates different mock data sets depending on the number passed
+ * If no number is passed, data set 3 is returned
  * @param dataset the number of the dataset that should be returned
+ * @returns The mock data based on the specified dataset.
  */
 function getMockData(dataset: number): ProjectIF {
   let [employeesArrayFromFile, issuesArrayFromFile, milestonesArrayFromFile]: [
@@ -261,7 +293,7 @@ function getMockData(dataset: number): ProjectIF {
     }
 
     case 3: {
-      for (let i = 0; i < 280; i++) {
+      for (let iterator = 0; iterator < 280; iterator++) {
         let status = 'Open';
         let closedAt = null;
 
@@ -276,7 +308,7 @@ function getMockData(dataset: number): ProjectIF {
         const statusChanges = getRandomInt(10);
 
         issuesForProject.push({
-          id: i + 1,
+          id: iterator + 1,
           name: faker.company.catchPhrase(),
           description: faker.hacker.phrase(),
           closedAt,
@@ -317,7 +349,7 @@ function getMockData(dataset: number): ProjectIF {
       [employeesArrayFromFile, issuesArrayFromFile, milestonesArrayFromFile] =
         loadArraysFromFile(issueJson2);
 
-      for (let i = 0; i < 280; i++) {
+      for (let iterator = 0; iterator < 280; iterator++) {
         let status = 'Open';
         let closedAt = null;
 
@@ -332,7 +364,7 @@ function getMockData(dataset: number): ProjectIF {
         const statusChanges = getRandomInt(10);
 
         issuesForProject.push({
-          id: i + 1,
+          id: iterator + 1,
           name: faker.company.catchPhrase(),
           description: faker.hacker.phrase(),
           closedAt,
@@ -436,9 +468,9 @@ function getMockData(dataset: number): ProjectIF {
 
     case 6: {
       const issues: IssueIF[] = [];
-      for (let i = 0; i < 280; i++) {
+      for (let iterator = 0; iterator < 280; iterator++) {
         issues.push({
-          id: i + 1,
+          id: iterator + 1,
           name: faker.company.catchPhrase(),
           description: faker.hacker.phrase(),
           closedAt: null,
@@ -456,32 +488,32 @@ function getMockData(dataset: number): ProjectIF {
       const numberOfIssues = issues.length;
       const numberOfEmployees = employeesArrayFromFile.length;
 
-      for (let i = 0; i < numberOfIssues; i++) {
+      for (let iterator = 0; iterator < numberOfIssues; iterator++) {
         const randomStatus = getRandomInt(4); // 0: Open, 1: Closed, 2: In Progress
 
         if (randomStatus === 2) {
-          issues[i].status = 'In Progress';
+          issues[iterator].status = 'In Progress';
           const [devStatus] = devStatusList;
-          issues[i].status = devStatus;
+          issues[iterator].status = devStatus;
         } else if (randomStatus === 1) {
           const randomDate = new Date(2018, 0o5, 0o5, 17, 23, 42, 11);
           // Assigning a random closedAt date within the last 30 days
           randomDate.setDate(randomDate.getDate() - getRandomInt(30));
-          issues[i].closedAt = randomDate;
+          issues[iterator].closedAt = randomDate;
           const [testStatus] = testingStatusList;
-          issues[i].status = testStatus;
+          issues[iterator].status = testStatus;
         } else if (randomStatus === 3) {
-          issues[i].closedAt = faker.date.recent();
+          issues[iterator].closedAt = faker.date.recent();
           const [nonDisplayedStatus] = nonDisplayedStatusList;
-          issues[i].status = nonDisplayedStatus;
+          issues[iterator].status = nonDisplayedStatus;
         } else {
           const [planningStatus] = planningStatusList;
-          issues[i].status = planningStatus;
+          issues[iterator].status = planningStatus;
         }
 
         const randomEmployee = getRandomInt(numberOfEmployees);
         [issuesForProject, employeesForProject] = assignIssueToEmployee(
-          i,
+          iterator,
           randomEmployee,
           issues,
           employeesArrayFromFile
@@ -522,32 +554,32 @@ function getMockData(dataset: number): ProjectIF {
       const numberOfIssues = issues.length;
       const numberOfEmployees = employeesArrayFromFile.length;
 
-      for (let i = 0; i < numberOfIssues; i++) {
+      for (let iterator = 0; iterator < numberOfIssues; iterator++) {
         const randomStatus = getRandomInt(4); // 0: Open, 1: Closed, 2: In Progress
 
         if (randomStatus === 2) {
-          issues[i].status = 'In Progress';
+          issues[iterator].status = 'In Progress';
           const [devStatus] = devStatusList;
-          issues[i].status = devStatus;
+          issues[iterator].status = devStatus;
         } else if (randomStatus === 1) {
           const randomDate = new Date(2018, 0o5, 0o5, 17, 23, 42, 11);
           // Assigning a random closedAt date within the last 30 days
           randomDate.setDate(randomDate.getDate() - getRandomInt(30));
-          issues[i].closedAt = randomDate;
+          issues[iterator].closedAt = randomDate;
           const [testStatus] = testingStatusList;
-          issues[i].status = testStatus;
+          issues[iterator].status = testStatus;
         } else if (randomStatus === 3) {
-          issues[i].closedAt = faker.date.recent();
+          issues[iterator].closedAt = faker.date.recent();
           const [nonDisplayedStatus] = nonDisplayedStatusList;
-          issues[i].status = nonDisplayedStatus;
+          issues[iterator].status = nonDisplayedStatus;
         } else {
           const [planningStatus] = planningStatusList;
-          issues[i].status = planningStatus;
+          issues[iterator].status = planningStatus;
         }
 
         const randomEmployee = getRandomInt(numberOfEmployees);
         [issuesForProject, employeesForProject] = assignIssueToEmployee(
-          i,
+          iterator,
           randomEmployee,
           issues,
           employeesArrayFromFile

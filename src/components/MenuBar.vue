@@ -14,7 +14,7 @@
           </Button>
         </div>
         <div>
-          <h2 id="productName">{{ title }}</h2>
+          <h2 id="productName">{{ productName }}</h2>
         </div>
       </div>
       <Sidebar v-model:visible="visible">
@@ -27,8 +27,9 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-const title = 'FlowMetrics';
+const productName = 'FlowMetrics';
 const visible = ref();
+// Items to be listed in Sidebar
 const items = ref([
   {
     label: 'Project Overview',

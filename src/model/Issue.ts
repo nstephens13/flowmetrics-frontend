@@ -53,7 +53,11 @@ class Issue implements IssueIF {
   }
 }
 
-// function to return assigned name
+/**
+ * Returns the name of the employee assigned to the issue.
+ * @param issue - The Issue object.
+ * @returns The assigned employee's name.
+ */
 function getAssignedToName(issue: Issue): string {
   if (issue.assignedTo) {
     return `${issue.assignedTo.firstName} ${issue.assignedTo.lastName}`;
@@ -61,13 +65,21 @@ function getAssignedToName(issue: Issue): string {
   return '';
 }
 
-// function accepts due-to Issue-Object & transforms to date
+/**
+ * Returns the formatted due date of the issue.
+ * @param issue - The Issue object.
+ * @returns The formatted due date string.
+ */
 function getFormattedDate(issue: Issue): string {
   const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
   return issue.dueTo ? issue.dueTo.toLocaleDateString('en-US', options) : '';
 }
 
-// accepts due to Issue-Object & transfers to time
+/**
+ * Returns the number of days left until the due date of the issue.
+ * @param issue - The Issue object.
+ * @returns The number of days left, or null if no due date is set.
+ */
 function getTimeLeft(issue: Issue): number | null {
   if (issue.dueTo) {
     const currentTime = new Date().getTime();
@@ -78,10 +90,14 @@ function getTimeLeft(issue: Issue): number | null {
   return null;
 }
 
+/**
+ * Counts the number of issues in the given issue list with the specified status.
+ * If the status is null, counts all the issues in the list.
+ * @param issueList - The list of issues.
+ * @param status - The status of the issues to count.
+ * @returns The count of issues.
+ */
 function countIssuesByStatus(issueList: Issue[], status: string | null): number {
-  // filter the issue list by status and return the length of the filtered array
-  // if the status is null, return the length of the issue list
-
   return (status ? issueList.filter((issue) => issue.status === status) : issueList).length;
 }
 
