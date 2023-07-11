@@ -14,7 +14,7 @@
           </Button>
         </div>
         <div>
-          <h2 id="productName">{{ title }}</h2>
+          <h2 id="productName">{{ productName }}</h2>
         </div>
       </div>
       <Sidebar v-model:visible="visible">
@@ -27,13 +27,14 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-const title = 'FlowMetrics';
+const productName = 'FlowMetrics';
 const visible = ref();
+// Items to be listed in Sidebar
 const items = ref([
   {
     label: 'Project Overview',
     icon: 'pi pi-fw pi-book',
-    to: '/ProjectOverview',
+    to: '/project-overview',
   },
   {
     label: 'Employee Overview',
@@ -45,12 +46,17 @@ const items = ref([
     icon: 'pi pi-fw pi-filter',
     to: '/sla-management',
   },
+  {
+    label: 'Issue Calculator',
+    icon: 'pi pi-fw pi-ticket',
+    to: '/issue-calculator',
+  },
 ]);
 </script>
 
 <style scoped>
 .p-menubar {
-  background-color: #2196f3;
+  background-color: #2d6dc1;
   color: #ffffff;
   border: 0;
   border-radius: 0;

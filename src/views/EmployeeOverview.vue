@@ -1,182 +1,168 @@
+<script setup lang="ts">
+import { computed, ref } from 'vue';
+import type { Ref } from 'vue';
+import type { EmployeeIF } from '@/model/EmployeeIF';
+import type { ProjectIF } from '@/model/ProjectIF';
+import type { IssueDataIF } from '@/model/IssueDataIF';
+import { calculateWorkload, mergeEmployees } from '@/services/workloadCalculator';
+import useFilterConfigStore from '@/store/FilterConfigStore';
+import filterProjectThatHasTheAllowedStatus from '@/services/filter/IssuesStateFilter';
+import EmployeeCard from '@/components/EmployeeCard.vue';
+import { getIssueStatusList } from '@/model/ProjectIF';
+import useProjectsStore from '@/store/ProjectStore';
+
+// Create a reference to the FilterConfigStore and ProjectStore instances
+const filterConfigStore = useFilterConfigStore();
+const projectStore = useProjectsStore();
+
+// Create a computed reference to the filterConfig from the FilterConfigStore
+const filterConfig = computed(() => filterConfigStore.getFilterConfig);
+
+// Create a reference to the calculated workload based on the project whitelist in the filterConfig
+const workload: Ref<Map<EmployeeIF, IssueDataIF>> = ref(
+  calculateWorkload(filterConfig.value.projectFilter.projectsWhiteList)
+);
+
+// Create a reference to all the issue statuses from the projects in the filterConfig
+const allStatuses: Ref<string[]> = ref(
+  getIssueStatusList(
+    filterConfig.value.projectFilter.projectsWhiteList.flatMap((project) => project.issues)
+  )
+);
+
+// Create a reference to all the projects from the ProjectStore
+const allProjects: Ref<ProjectIF[]> = ref(projectStore.getProjects);
+
+// Create a reference to the employee list based on the workload data
+const employeeList = ref(
+  Array.from(workload.value, ([employee, issues]) => ({ employee, issues }))
+);
+
+// Create a reference to the category names with initial empty values
+const categoryNames = ref<{
+  firstCategory: string;
+  secondCategory: string;
+  thirdCategory: string;
+}>({
+  firstCategory: '',
+  secondCategory: '',
+  thirdCategory: '',
+});
+
+// Create references for selectedStatuses and selectedProjects
+const selectedStatuses: Ref<string[]> = ref([]);
+const selectedProjects: Ref<ProjectIF[]> = ref([]);
+
+// Function to update the employee list and category names
+function updateEmployeeList() {
+  // Calculate the workload based on the filtered projects in the filterConfig
+  const workloadMap: Map<EmployeeIF, IssueDataIF> = calculateWorkload(
+    filterProjectThatHasTheAllowedStatus(filterConfig.value)
+  );
+
+  // Update the employee list by merging the workload data
+  employeeList.value = mergeEmployees(workloadMap);
+
+  // Set the category names to predefined values
+  categoryNames.value = {
+    firstCategory: 'Planning',
+    secondCategory: 'Development',
+    thirdCategory: 'Testing',
+  };
+}
+
+// Function to update the selected projects and trigger employee list update
+function updateSelectedProjects() {
+  // Clear the selected statuses
+  selectedStatuses.value = [];
+
+  // Update the filterConfig with the selected projects
+  const updatedFilterConfig = filterConfig.value;
+  updatedFilterConfig.projectFilter.projectsWhiteList = selectedProjects.value;
+  updatedFilterConfig.projectFilter.issueStatusIncludeFilter = [];
+  filterConfigStore.setFilterConfig(updatedFilterConfig);
+
+  // Update the employee list and allStatuses
+  updateEmployeeList();
+  allStatuses.value = getIssueStatusList(
+    filterConfig.value.projectFilter.projectsWhiteList.flatMap((project) => project.issues)
+  );
+}
+
+// Function to update the selected statuses and trigger employee list update
+function updateSelectedStatuses() {
+  // Update the filterConfig with the selected statuses
+  const updatedFilterConfig = filterConfig.value;
+  updatedFilterConfig.projectFilter.issueStatusIncludeFilter = selectedStatuses.value;
+  filterConfigStore.setFilterConfig(updatedFilterConfig);
+
+  // Update the employee list and allStatuses
+  updateEmployeeList();
+  allStatuses.value = getIssueStatusList(
+    selectedProjects.value.flatMap((project) => project.issues)
+  );
+}
+
+// Initialize the selectedProjects and selectedStatuses references
+selectedProjects.value = filterConfig.value.projectFilter.projectsWhiteList;
+selectedStatuses.value = filterConfig.value.projectFilter.issueStatusIncludeFilter;
+
+// Initial update of the employee list
+updateEmployeeList();
+</script>
+
 <template>
-  <Card class="background-card">
-    <template #title
-      >Employee Overview
-      <div class="legend-container">
-        <div class="open-legend"></div>
-        <h6 class="open-font-size">OPEN</h6>
-        <div class="in-progress-legend"></div>
-        <h6 class="in-progress-font-size">IN PROGRESS</h6>
-        <div class="closed-legend"></div>
-        <h6 class="closed-font-size">CLOSED</h6>
+  <Card>
+    <template #title>
+      <div class="grid">
+        <div class="col-12">
+          <label class="PageTitel">Employee Overview</label>
+        </div>
       </div>
+      <Divider />
     </template>
-
     <template #content>
-      <div
-        v-for="[employee, employeeData] in employeeMap"
-        :key="employee.id"
-        class="employee-container"
-      >
-        <div class="user-container">
-          <div class="icon-background">
-            <span class="pi pi-user user-size"></span>
+      <DataView :value="employeeList" dataKey="employee.id" layout="grid">
+        <template #header>
+          <div class="grid gap-3">
+            <MultiSelect
+              v-model="selectedProjects"
+              :options="allProjects"
+              option-label="name"
+              @change="updateSelectedProjects()"
+              placeholder="Select project"
+              :maxSelectedLabels="1"
+              class="w-full md:w-14rem"
+            />
+            <MultiSelect
+              v-model="selectedStatuses"
+              :options="allStatuses"
+              placeholder="Select status"
+              @change="updateSelectedStatuses()"
+              :maxSelectedLabels="1"
+              class="w-full md:w-14rem"
+            />
           </div>
-
-          <div :style="getUserNameBackgroundStyle(employee)" class="user-name-background">
-            <div class="user-name">
-              {{ employee.firstName.toUpperCase() }}
-              {{ employee.lastName.toUpperCase() }}
+        </template>
+        <template #grid="slotProps">
+          <div class="xl:col-2 lg:col-3 md:col-4 sm:col-6 col-12 p-2">
+            <div class="p-4 border-1 surface-border border-round shadow-1 hover:bg-gray-50">
+              <EmployeeCard
+                :employee="slotProps.data.employee"
+                :issues="slotProps.data.issues"
+                :categoryNames="categoryNames"
+              />
             </div>
           </div>
-        </div>
-
-        <div class="statistics-container">
-          <div class="open" :style="getBoxHeightStyle(employeeData.openIssues)"></div>
-          <div class="in-progress" :style="getBoxHeightStyle(employeeData.inProgressIssues)"></div>
-          <div class="closed" :style="getBoxHeightStyle(employeeData.closedIssues)"></div>
-        </div>
-      </div>
+        </template>
+      </DataView>
     </template>
   </Card>
 </template>
 
-<script setup lang="ts">
-import { ref } from 'vue';
-import type { EmployeeIF } from '@/model/EmployeeIF';
-import calculateWorkload from '../services/workloadCalculator';
-import { calculateCssUserBackgroundStyle, getCssHeightForStatisticBoxes } from './EmployeeOverviewHelper';
-
-const employeeMap = ref<
-Map<EmployeeIF, { openIssues: number; inProgressIssues: number; closedIssues: number }>
->(calculateWorkload(null));
-
-function getUserNameBackgroundStyle(employee: EmployeeIF): string {
-  const { width, height } = calculateCssUserBackgroundStyle(employee);
-  return `width: ${width}px; height: ${height}px`;
-}
-
-function getBoxHeightStyle(count: number) {
-  const height = getCssHeightForStatisticBoxes(count);
-  return `height: ${height}px`;
-}
-</script>
-
-<style>
-/* Card Component */
-.background-card {
-  width: auto;
-  height: auto;
-}
-/* Container for legend */
-.legend-container {
-  display: inline-flex;
-  align-items: center; /* Center vertically */
-  margin-left: 60px;
-}
-/* Legend */
-.open-legend {
-  width: 20px;
-  height: 20px;
-  background-color: rgba(128, 128, 128, 0.8); /* RGB values and opacity */
-}
-.open-font-size {
-  font-size: 12px;
-  margin-left: 10px;
-}
-.in-progress-legend {
-  width: 20px;
-  height: 20px;
-  background-color: rgba(128, 128, 128, 0.5); /* RGB values and opacity */
-  margin-left: 30px;
-}
-.in-progress-font-size {
-  font-size: 12px;
-  margin-left: 10px;
-}
-.closed-legend {
-  width: 20px;
-  height: 20px;
-  background-color: rgba(128, 128, 128, 0.3); /* RGB values and opacity */
-  margin-left: 30px;
-}
-.closed-font-size {
-  font-size: 12px;
-  margin-left: 10px;
-}
-/* Container for icon with background, user name with background and statistics */
-.employee-container {
-  display: inline-flex;
-  align-items: center; /* Center vertically */
-  margin-bottom: 40px;
-  margin-right: 40px;
-  justify-content: center; /* Center horizontally */
-}
-/* Container for icon with background and user name with background */
-.user-container {
-  display: flex;
-  align-items: center; /* Center vertically */
-  flex-direction: column;
-  justify-content: center; /* Center horizontally */
-}
-/* Employee icon and background */
-.icon-background {
-  width: 60px;
-  height: 60px;
-  background-color: rgba(128, 128, 128, 0.9); /* RGB values and opacity */
-  border-radius: 5%; /* Change roundness of edges */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.user-size {
-  font-size: 40px;
-  color: white;
-}
-/* User name and background */
-.user-name-background {
-  background-color: rgba(45, 108, 193, 0.9);
-  border-radius: 0.5em;
-  display: flex; /* Centers the name */
-  align-items: center;
-  justify-content: center;
-  padding: 0 10px;
-  margin-top: 10px;
-}
-.user-name {
-  font-size: 11px;
-  color: white;
-  text-align: center;
-}
-/* Container for statistics */
-.statistics-container {
-  display: flex;
-  align-items: flex-end; /* Align items to the bottom */
-  align-self: end;
-}
-.open {
-  width: 20px;
-  background-color: rgba(128, 128, 128, 0.8); /* RGB values and opacity */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-left: 10px;
-  margin-right: 10px;
-}
-.in-progress {
-  width: 20px;
-  background-color: rgba(128, 128, 128, 0.5); /* RGB values and opacity */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 10px;
-}
-.closed {
-  width: 20px;
-  background-color: rgba(128, 128, 128, 0.3); /* RGB values and opacity */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 10px;
+<style scoped>
+.p-card {
+  margin: 15px;
+  box-shadow: none;
 }
 </style>

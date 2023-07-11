@@ -8,6 +8,7 @@ export default mergeConfig(
   defineConfig({
     test: {
       environment: 'jsdom',
+      globals: true,
       exclude: [...configDefaults.exclude, 'e2e/*'],
       root: fileURLToPath(new URL('./', import.meta.url)),
       transformMode: {
@@ -17,5 +18,5 @@ export default mergeConfig(
         reporter: ['cobertura', 'text', 'text-summary'],
       },
     },
-  }),
+  })
 );

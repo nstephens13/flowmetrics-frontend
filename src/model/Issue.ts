@@ -1,7 +1,6 @@
 import type { EmployeeIF } from './EmployeeIF';
 import type { IssueIF } from './IssueIF';
-import { Status } from './IssueIF';
-import IssueJson2 from '../assets/__mockdata__/Issues_2.json';
+import type { SLARule } from '@/model/SLARule';
 
 // Issue Class implements IssueIF
 class Issue implements IssueIF {
@@ -13,15 +12,19 @@ class Issue implements IssueIF {
 
   assignedTo: EmployeeIF | null;
 
-  createdBy: EmployeeIF;
+  createdBy: EmployeeIF | null;
 
-  createdAt: Date;
+  createdAt: Date | null;
 
   closedAt: Date | null;
 
   dueTo: Date | null;
 
-  status: Status | null;
+  status: string | null;
+
+  statusChanges: number | null;
+
+  assignedSLARule: SLARule | null;
 
   constructor(
     id: number,
@@ -32,7 +35,9 @@ class Issue implements IssueIF {
     createdAt: Date,
     closedAt: Date | null,
     dueTo: Date | null,
-    status: Status | null,
+    status: string | null,
+    statusChanges: number | null,
+    assignedSLARule: SLARule | null
   ) {
     this.id = id;
     this.name = name;
@@ -43,33 +48,16 @@ class Issue implements IssueIF {
     this.closedAt = closedAt;
     this.dueTo = dueTo;
     this.status = status;
+    this.statusChanges = statusChanges;
+    this.assignedSLARule = assignedSLARule;
   }
 }
 
-function loadIssueDataFromFile(issueJson: Array<any>): Issue[] {
-  const issueData: Issue[] = [];
-  structuredClone(issueJson).forEach((issue) => {
-    issueData.push({
-      id: issue.id,
-      name: issue.name,
-      description: issue.description,
-      assignedTo: issue.assignedTo,
-      createdBy: issue.createdBy,
-      closedAt: issue.closedAt ? new Date(issue.closedAt) : null,
-      createdAt: new Date(issue.createdAt),
-      dueTo: issue.dueTo ? new Date(issue.dueTo) : null,
-      status: issue.status,
-    });
-  });
-  return issueData;
-}
-
-// builds array of objects uses data given, creates Issue objects
-function getArrayOfIssues(): Issue[] {
-  return loadIssueDataFromFile(IssueJson2);
-}
-
-// function to return assigned name
+/**
+ * Returns the name of the employee assigned to the issue.
+ * @param issue - The Issue object.
+ * @returns The assigned employee's name.
+ */
 function getAssignedToName(issue: Issue): string {
   if (issue.assignedTo) {
     return `${issue.assignedTo.firstName} ${issue.assignedTo.lastName}`;
@@ -77,13 +65,21 @@ function getAssignedToName(issue: Issue): string {
   return '';
 }
 
-// function accepts due-to Issue-Object & transforms to date
+/**
+ * Returns the formatted due date of the issue.
+ * @param issue - The Issue object.
+ * @returns The formatted due date string.
+ */
 function getFormattedDate(issue: Issue): string {
   const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
-  return issue.dueTo ? issue.dueTo.toLocaleDateString(undefined, options) : '';
+  return issue.dueTo ? issue.dueTo.toLocaleDateString('en-US', options) : '';
 }
 
-// accepts due to Issue-Object & transfers to time
+/**
+ * Returns the number of days left until the due date of the issue.
+ * @param issue - The Issue object.
+ * @returns The number of days left, or null if no due date is set.
+ */
 function getTimeLeft(issue: Issue): number | null {
   if (issue.dueTo) {
     const currentTime = new Date().getTime();
@@ -94,15 +90,16 @@ function getTimeLeft(issue: Issue): number | null {
   return null;
 }
 
-function countIssuesByStatus(issueList: Issue[], status: Status | null): number {
-  // filter the issue list by status and return the length of the filtered array
-  // if the status is null, return the length of the issue list
-
+/**
+ * Counts the number of issues in the given issue list with the specified status.
+ * If the status is null, counts all the issues in the list.
+ * @param issueList - The list of issues.
+ * @param status - The status of the issues to count.
+ * @returns The count of issues.
+ */
+function countIssuesByStatus(issueList: Issue[], status: string | null): number {
   return (status ? issueList.filter((issue) => issue.status === status) : issueList).length;
 }
 
 // export of data array and remain time for ticket calculation
-export {
-  Issue, getArrayOfIssues, getTimeLeft, getFormattedDate,
-  getAssignedToName, countIssuesByStatus,
-};
+export { Issue, getTimeLeft, getFormattedDate, getAssignedToName, countIssuesByStatus };

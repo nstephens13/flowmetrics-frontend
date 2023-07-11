@@ -1,10 +1,5 @@
 import type { EmployeeIF } from './EmployeeIF';
-
-export enum Status {
-  Open,
-  Closed,
-  InProgress
-}
+import type { SLARule } from '@/model/SLARule';
 
 /**
  *
@@ -16,18 +11,21 @@ export enum Status {
  * @prop {Date} createdAt the Date when the issue was created
  * @prop {Date| null} closedAt the Date when the issue was closed
  * @prop {Date| null} dueTo Due date for the Issue
- * @prop {Status} status the Status of ticket-progress
+ * @prop {Status} status the Status of issue-progress
+ * @prop {SLARule} assignedSLARule the assigned SLA rule of the issue
  */
 
 // Enum to set status of Issue
 export interface IssueIF {
-  id: number
-  name: string
-  description: string | null
-  assignedTo: EmployeeIF | null
-  createdBy: EmployeeIF
-  createdAt: Date
-  closedAt: Date | null
-  dueTo: Date | null
-  status: Status | null
+  id: number;
+  name: string;
+  description: string | null;
+  assignedTo: EmployeeIF | null;
+  createdBy: EmployeeIF | null;
+  createdAt: Date | null;
+  closedAt: Date | null;
+  dueTo: Date | null;
+  status: string | null;
+  statusChanges: number | null;
+  assignedSLARule: SLARule | null;
 }

@@ -3,44 +3,48 @@ require('@rushstack/eslint-patch/modern-module-resolution');
 
 module.exports = {
   root: true,
+  parser: 'vue-eslint-parser',
+  parserOptions: {
+    parser: '@typescript-eslint/parser',
+    ecmaVersion: 'latest',
+  },
   extends: [
     'plugin:vue/vue3-essential',
     'eslint:recommended',
     'airbnb-base',
+    'prettier',
+    '@vue/typescript/recommended',
     '@vue/eslint-config-typescript',
     'plugin:import/typescript',
   ],
-  parserOptions: {
-    ecmaVersion: 'latest',
+  settings: {
+    'import/extensions': ['.js', '.jsx', '.ts', '.tsx', '.mjs'],
   },
   rules: {
-    '@typescript-eslint/indent': ['error', 2],
-    '@typescript-eslint/no-unused-vars': 'error',
-    'no-plusplus': ['error', { allowForLoopAfterthoughts: true }],
-    'no-shadow': 'off',
-    '@typescript-eslint/no-shadow': 'warn',
-    'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
-    'import/no-unresolved': 0,
-    'linebreak-style': ['error', 'unix'],
+    'prettier/prettier': 'error',
     'import/extensions': [
-      'error',
+      'warn',
       'ignorePackages',
       {
         js: 'never',
         jsx: 'never',
         ts: 'never',
         tsx: 'never',
+        '': 'never',
       },
     ],
+    '@typescript-eslint/indent': 0,
+    '@typescript-eslint/no-unused-vars': 'error',
+    'no-plusplus': ['error', { allowForLoopAfterthoughts: true }],
+    'no-shadow': 'off',
+    '@typescript-eslint/no-shadow': 'warn',
+    'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
+    'import/no-unresolved': 0,
+    '@typescript-eslint/no-explicit-any': 0,
+    'linebreak-style': ['error', 'unix'],
+    'new-cap': 0,
   },
-  plugins: ['@typescript-eslint'],
-  settings: {
-    'import/resolver': {
-      node: {
-        extensions: ['.js', '.jsx', '.ts', '.tsx'],
-      },
-    },
-  },
+  plugins: ['@typescript-eslint', 'prettier'],
   overrides: [
     {
       files: ['src/main.ts', 'src/shims-vue.d.ts'],
@@ -52,5 +56,4 @@ module.exports = {
       },
     },
   ],
-
 };

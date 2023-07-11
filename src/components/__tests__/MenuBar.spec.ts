@@ -5,10 +5,12 @@ import Sidebar from 'primevue/sidebar';
 import Menu from 'primevue/menu';
 import PrimeVue from 'primevue/config';
 import Menubar from 'primevue/menubar';
-import router from '../../router';
-import MenuBar from '../MenuBar.vue';
+import router from '@/router/index';
+import MenuBar from '@/components/MenuBar.vue';
 
+// Describe block for the test suite
 describe('Menubar Button should open sidebar', () => {
+  // Mounting the MenuBar component with necessary configuration
   const wrapper = mount(MenuBar, {
     global: {
       plugins: [PrimeVue, router],
@@ -24,6 +26,7 @@ describe('Menubar Button should open sidebar', () => {
     },
   });
 
+  // Test to check if the component mounts successfully
   test('it mounts', () => {
     expect(wrapper.exists()).toBe(true);
     expect(wrapper.getComponent(Menubar).isVisible()).toBe(true);
@@ -31,6 +34,7 @@ describe('Menubar Button should open sidebar', () => {
     expect(wrapper.isVisible()).toBe(true);
   });
 
+  // Test to check opening and closing of the sidebar
   test('should open and close sidebar', async () => {
     let menubar = wrapper.findComponent(Menu);
     expect(menubar.exists()).toBe(false);
@@ -45,13 +49,14 @@ describe('Menubar Button should open sidebar', () => {
     expect(wrapper.getComponent(Sidebar).vm.$props.visible).toBe(false);
   });
 
-  test('sidebar menu three items', async () => {
+  // Test to check the number of items in the sidebar menu
+  test('sidebar menu four items', async () => {
     const menubar = wrapper.findComponent(Menu);
     expect(menubar.exists()).toBe(false);
     const button = wrapper.getComponent(Menubar).findComponent(Button);
     await button.trigger('click');
     wrapper.findComponent(Menu);
     const menu = await wrapper.getComponent(Sidebar).getComponent(Menu);
-    expect(menu.findAll('.p-menuitem').length).toBe(3);
+    expect(menu.findAll('.p-menuitem').length).toBe(4);
   });
 });
