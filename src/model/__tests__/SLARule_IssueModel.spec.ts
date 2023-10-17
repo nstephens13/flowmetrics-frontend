@@ -71,6 +71,7 @@ test('getSLARules returns an empty array when assignedSLARule is null', () => {
           };
       
           const assignedSLARules = issue.assignedSLARule;
+          expect(Array.isArray(assignedSLARules)).toBe(true);
           expect(assignedSLARules).toEqual(slarules);
         });
       });
