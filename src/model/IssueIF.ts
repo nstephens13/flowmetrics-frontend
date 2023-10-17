@@ -12,7 +12,7 @@ import type { SLARule } from '@/model/SLARule';
  * @prop {Date| null} closedAt the Date when the issue was closed
  * @prop {Date| null} dueTo Due date for the Issue
  * @prop {Status} status the Status of issue-progress
- * @prop {SLARule[]} assignedSLARules an array of assigned SLA rules for the issue */
+ * @prop {SLARule[]} assignedSLARule an array of assigned SLA rules for the issue */
 
 // Enum to set status of Issue
 export interface IssueIF {
@@ -26,5 +26,5 @@ export interface IssueIF {
   dueTo: Date | null;
   status: string | null;
   statusChanges: number | null;
-  assignedSLARules: SLARule[]| null;
+  assignedSLARule: SLARule[]| null;
 }
