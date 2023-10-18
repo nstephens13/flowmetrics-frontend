@@ -27,5 +27,5 @@ export interface IssueIF {
   dueTo: Date | null;
   status: string | null;
   statusChanges: number | null;
-  assignedSLARule: SLARule | null;
+  assignedSLARule: SLARule[] | null;
 }

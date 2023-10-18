@@ -24,7 +24,7 @@ class Issue implements IssueIF {
 
   statusChanges: number | null;
 
-  assignedSLARule: SLARule | null;
+  assignedSLARule: SLARule[] | null;
 
   constructor(
     id: number,
@@ -37,7 +37,7 @@ class Issue implements IssueIF {
     dueTo: Date | null,
     status: string | null,
     statusChanges: number | null,
-    assignedSLARule: SLARule | null
+    assignedSLARule: SLARule[] | null
   ) {
     this.id = id;
     this.name = name;
