@@ -116,10 +116,10 @@ updateEmployeeList();
     <template #title>
       <div class="grid">
         <div class="col-12">
-          <label class="PageTitel">Employee Overview</label>
+          <label class="PageTitel"><p>Employee Overview</p></label>
+          <Divider />
         </div>
       </div>
-      <Divider />
     </template>
     <template #content>
       <DataView :value="employeeList" dataKey="employee.id" layout="grid">

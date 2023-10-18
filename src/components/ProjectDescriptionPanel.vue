@@ -2,8 +2,8 @@
   <div class="card" style="position: relative">
     <Card>
       <template #title>
-        Project Overview
-        <Divider></Divider>
+        <p>Project Overview</p>
+        <Divider layout="horizontal"></Divider>
       </template>
       <template #content>
         <Panel>
