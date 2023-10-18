@@ -2,7 +2,7 @@
   <Card class="background-card">
     <template #title>
       <h3>SLA Management View</h3>
-      <Divider></Divider>
+      <Divider class="p-divider p-divider-horizontal divider-position" />
     </template>
     <template #content>
       <div>
@@ -312,5 +312,8 @@ export default defineComponent({
   margin-top: 4px;
   font-family: inherit;
   margin-left: 10px;
+}
+.divider-position {
+  width: 95%;
 }
 </style>

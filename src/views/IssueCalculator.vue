@@ -3,7 +3,7 @@
     <Card>
       <template #title>
         <p>Issue Calculator</p>
-        <Divider></Divider>
+        <Divider class="p-divider p-divider-horizontal divider-position" />
       </template>
       <template #content>
         <IssueCalculator></IssueCalculator>
@@ -20,5 +20,8 @@ import IssueCalculator from '@/components/IssueCalculator.vue';
 .p-card {
   margin: 15px;
   box-shadow: none;
+}
+.divider-position {
+  width: 96%;
 }
 </style>
