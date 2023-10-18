@@ -116,7 +116,7 @@ updateEmployeeList();
     <template #title>
       <div class="grid">
         <div class="col-12">
-          <label class="PageTitel"><p>Employee Overview</p></label>
+          <p>Employee Overview</p>
           <Divider />
         </div>
       </div>
