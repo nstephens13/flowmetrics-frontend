@@ -1,7 +1,7 @@
 <template>
   <Card class="background-card">
     <template #title>
-      <h3>SLA Management View</h3>
+      <h4>SLA Management View</h4>
       <Divider class="p-divider p-divider-horizontal divider-position" />
     </template>
     <template #content>
