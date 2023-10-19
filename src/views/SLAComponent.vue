@@ -98,7 +98,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import useSLAStore from '@/store/store';
+import { useSLAStore } from '@/store/FlowmetricsStore';
 import type { SLASubscriber } from '@/model/SLASubscriber';
 import type { SLARule } from '@/model/SLARule';
 import type { SLACategory } from '@/model/SLACategory';
