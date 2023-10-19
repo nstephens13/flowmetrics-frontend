@@ -2,12 +2,11 @@ import { defineStore } from 'pinia';
 import type { SLASubscriber } from '@/model/SLASubscriber';
 import type { SLARule } from '@/model/SLARule';
 import type { SLACategory } from '@/model/SLACategory';
-import type { ProjectIF } from '../model/ProjectIF';
-import type { FilterConfigIF, ProjectFilterConfigIF } from '@/model/FilterConfigIF';
 import type { ProjectIF } from '@/model/ProjectIF';
+import type { FilterConfigIF, ProjectFilterConfigIF } from '@/model/FilterConfigIF';
 import getMockData from '@/assets/__mockdata__/mockDataComposer';
 
-const useSLAStore = defineStore('sla', {
+export const useSLAStore = defineStore('sla', {
   state: () => ({
     subscriber: [
       { id: 1, name: 'Customer 1', description: 'Description 1' },
@@ -90,9 +89,7 @@ const useSLAStore = defineStore('sla', {
   },
 });
 
-export default useSLAStore;
-
-const useProjectsStore = defineStore('projects', {
+export const useProjectsStore = defineStore('projects', {
   state: () => ({
     projects: [getMockData(1), getMockData(3), getMockData(4), getMockData(6)] as ProjectIF[],
   }),
@@ -117,9 +114,7 @@ const useProjectsStore = defineStore('projects', {
   },
 });
 
-export default useProjectsStore;
-
-const useFilterConfigStore = defineStore('filterConfig', {
+export const useFilterConfigStore = defineStore('filterConfig', {
   state: () => ({
     filter: {
       id: 1,
@@ -142,5 +137,3 @@ const useFilterConfigStore = defineStore('filterConfig', {
     },
   },
 });
-
-export default useFilterConfigStore;
