@@ -15,7 +15,7 @@
           />
           <Button
             class="add-subscriber"
-            label="+"
+            icon="pi pi-plus"
             @click="addSubscriber"
             style="background-color: #2d6dc1"
           ></Button>
@@ -42,7 +42,7 @@
           />
           <Button
             class="add-rule"
-            label="+"
+            icon="pi pi-plus"
             @click="addRule"
             style="background-color: #2d6dc1"
           ></Button>
@@ -73,7 +73,7 @@
           />
           <Button
             class="add-category"
-            label="+"
+            icon="pi pi-plus"
             @click="createCategory"
             style="background-color: #2d6dc1"
           ></Button>
