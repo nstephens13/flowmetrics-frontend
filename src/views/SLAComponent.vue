@@ -279,17 +279,6 @@ export default defineComponent({
   margin-right: 10px;
 }
 /* Delete Button */
-.p-button-danger {
-  background-color: red;
-  color: white;
-  border: none;
-  height: 30px;
-  width: 30px;
-}
-.trash-size {
-  color: white;
-  font-size: 5px;
-}
 .error-message {
   display: block;
   color: red;
