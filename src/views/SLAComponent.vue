@@ -13,7 +13,12 @@
             placeholder="Enter subscriber name"
             class="enter-subscriber"
           />
-          <Button label="+" @click="addSubscriber" style="background-color: #2d6dc1"></Button>
+          <Button
+            class="add-subscriber"
+            label="+"
+            @click="addSubscriber"
+            style="background-color: #2d6dc1"
+          ></Button>
           <div v-if="!isSubscriberNameValid" class="error-message">
             {{ SubscriberErrorMessage }}
           </div>
@@ -35,7 +40,12 @@
             placeholder="Occurred in"
             class="select-occurred-in"
           />
-          <Button label="+" @click="addRule" style="background-color: #2d6dc1"></Button>
+          <Button
+            class="add-rule"
+            label="+"
+            @click="addRule"
+            style="background-color: #2d6dc1"
+          ></Button>
           <div v-if="!isRuleNameValid" class="error-message">{{ ruleErrorMessage }}</div>
         </div>
       </div>
@@ -61,7 +71,12 @@
             placeholder="Enter category name"
             class="enter-category"
           />
-          <Button label="+" @click="createCategory" style="background-color: #2d6dc1"></Button>
+          <Button
+            class="add-category"
+            label="+"
+            @click="createCategory"
+            style="background-color: #2d6dc1"
+          ></Button>
           <div v-if="!isSLACategoryNameValid" class="error-message">
             {{ categoryErrorMessage }}
           </div>
