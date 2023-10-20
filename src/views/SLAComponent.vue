@@ -278,7 +278,7 @@ export default defineComponent({
 .enter-category {
   margin-right: 10px;
 }
-/* Delete Button */
+/* Error messages */
 .error-message {
   display: block;
   color: red;
