@@ -1,5 +1,5 @@
 <template>
-  <Button class="generatePDF" label="Generate PDF" @click="generatePDF"></Button>
+  <Button label="Generate PDF" @click="generatePDF" style="background-color: #2d6dc1"></Button>
 </template>
 
 <script setup lang="ts">
@@ -46,8 +46,4 @@ const generatePDF = () => {
 };
 </script>
 
-<style scoped>
-.generatePDF {
-  background-color: mediumseagreen;
-}
-</style>
+<style scoped></style>
