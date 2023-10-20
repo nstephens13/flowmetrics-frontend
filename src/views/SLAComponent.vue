@@ -13,7 +13,7 @@
             placeholder="Enter subscriber name"
             class="enter-subscriber"
           />
-          <Button class="add-subscriber" @click="addSubscriber" label="+"></Button>
+          <Button label="+" @click="addSubscriber" style="background-color: #2d6dc1"></Button>
           <div v-if="!isSubscriberNameValid" class="error-message">
             {{ SubscriberErrorMessage }}
           </div>
@@ -35,7 +35,7 @@
             placeholder="Occurred in"
             class="select-occurred-in"
           />
-          <Button class="add-rule" @click="addRule" label="+"></Button>
+          <Button label="+" @click="addRule" style="background-color: #2d6dc1"></Button>
           <div v-if="!isRuleNameValid" class="error-message">{{ ruleErrorMessage }}</div>
         </div>
       </div>
@@ -61,7 +61,7 @@
             placeholder="Enter category name"
             class="enter-category"
           />
-          <Button class="add-category" @click="createCategory" label="+"></Button>
+          <Button label="+" @click="createCategory" style="background-color: #2d6dc1"></Button>
           <div v-if="!isSLACategoryNameValid" class="error-message">
             {{ categoryErrorMessage }}
           </div>
@@ -233,16 +233,6 @@ export default defineComponent({
 .enter-subscriber {
   margin-right: 10px;
 }
-.add-subscriber {
-  background-color: mediumseagreen;
-  color: white;
-  border: none;
-  justify-content: center;
-  height: 30px;
-  width: 30px;
-  padding: 0;
-  font-size: 12px;
-}
 /* Add SLA Rule Container */
 .rule-container {
   display: flex;
@@ -258,16 +248,6 @@ export default defineComponent({
 .select-occurred-in {
   margin-right: 10px;
 }
-.add-rule {
-  background-color: mediumseagreen;
-  color: white;
-  border: none;
-  justify-content: center;
-  height: 30px;
-  width: 30px;
-  padding: 0;
-  font-size: 12px;
-}
 /* Add new SLA Category Container */
 .category-container {
   display: flex;
@@ -282,16 +262,6 @@ export default defineComponent({
 }
 .enter-category {
   margin-right: 10px;
-}
-.add-category {
-  background-color: mediumseagreen;
-  color: white;
-  border: none;
-  justify-content: center;
-  height: 30px;
-  width: 30px;
-  padding: 0;
-  font-size: 12px;
 }
 /* Delete Button */
 .p-button-danger {
