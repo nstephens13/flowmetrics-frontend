@@ -27,11 +27,11 @@
       </template>
     </Card>
   </div>
-  <div class="card">
+  <div class="card" style="position: relative">
     <Card>
       <template #title>
-        Issues
-        <Divider></Divider>
+        <p>Issues</p>
+        <Divider class="p-divider p-divider-horizontal divider-position" />
       </template>
       <template #content>
         <div class="card">
