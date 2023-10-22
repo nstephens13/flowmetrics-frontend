@@ -314,6 +314,6 @@ export default defineComponent({
   margin-left: 10px;
 }
 .divider-position {
-  width: 95%;
+  width: 99%;
 }
 </style>

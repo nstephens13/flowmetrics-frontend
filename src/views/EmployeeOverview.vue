@@ -166,6 +166,6 @@ updateEmployeeList();
   box-shadow: none;
 }
 .divider-position {
-  width: 96%;
+  width: 100%;
 }
 </style>
