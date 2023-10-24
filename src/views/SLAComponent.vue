@@ -1,5 +1,5 @@
 <template>
-  <Card class="background-card">
+  <Card>
     <template #title>
       SLA Management View
       <Divider></Divider>
@@ -233,58 +233,4 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
-/* View background */
-.background-card {
-  height: auto;
-  width: auto;
-}
-/* Add Subscriber Container */
-.subscriber-container {
-  display: flex;
-  align-items: center;
-  margin-bottom: 40px;
-}
-.enter-subscriber {
-  margin-right: 10px;
-}
-/* Add SLA Rule Container */
-.rule-container {
-  display: flex;
-  align-items: center;
-  margin-bottom: 40px;
-}
-.enter-rule {
-  margin-right: 10px;
-}
-.select-employees {
-  margin-right: 10px;
-}
-.select-occurred-in {
-  margin-right: 10px;
-}
-/* Add new SLA Category Container */
-.category-container {
-  display: flex;
-  align-items: center;
-  margin-bottom: 40px;
-}
-.select-subscriber {
-  margin-right: 10px;
-}
-.select-rule {
-  margin-right: 10px;
-}
-.enter-category {
-  margin-right: 10px;
-}
-/* Error messages */
-.error-message {
-  display: block;
-  color: red;
-  font-size: 16px;
-  margin-top: 4px;
-  font-family: inherit;
-  margin-left: 10px;
-}
-</style>
+<style scoped></style>
