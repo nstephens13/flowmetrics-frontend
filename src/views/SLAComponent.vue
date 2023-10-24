@@ -19,7 +19,7 @@
             @click="addSubscriber"
             style="background-color: #2d6dc1"
           ></Button>
-          <div v-if="!isSubscriberNameValid" class="error-message">
+          <div v-if="!isSubscriberNameValid" class="error-message m-1 text-red-500">
             {{ SubscriberErrorMessage }}
           </div>
         </div>
@@ -46,7 +46,9 @@
             @click="addRule"
             style="background-color: #2d6dc1"
           ></Button>
-          <div v-if="!isRuleNameValid" class="error-message">{{ ruleErrorMessage }}</div>
+          <div v-if="!isRuleNameValid" class="error-message m-1 text-red-500">{{
+            ruleErrorMessage
+          }}</div>
         </div>
       </div>
       <div>
@@ -77,7 +79,7 @@
             @click="createCategory"
             style="background-color: #2d6dc1"
           ></Button>
-          <div v-if="!isSLACategoryNameValid" class="error-message">
+          <div v-if="!isSLACategoryNameValid" class="error-message m-1 text-red-500">
             {{ categoryErrorMessage }}
           </div>
         </div>
