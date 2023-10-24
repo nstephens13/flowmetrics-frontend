@@ -11,10 +11,10 @@
           <InputText
             v-model="newSubscriber"
             placeholder="Enter subscriber name"
-            class="enter-subscriber"
+            class="enter-subscriber m-1"
           />
           <Button
-            class="add-subscriber"
+            class="add-subscriber m-1"
             icon="pi pi-plus"
             @click="addSubscriber"
             style="background-color: #2d6dc1"
@@ -26,22 +26,22 @@
       </div>
       <div>
         <h3>Add SLA Rule</h3>
-        <div class="rule-container">
-          <InputText v-model="newRuleName" placeholder="Enter rule name" class="enter-rule" />
+        <div class="rule-container m-1">
+          <InputText v-model="newRuleName" placeholder="Enter rule name" class="enter-rule m-1" />
           <Dropdown
             v-model="newRuleMaxAssignedEmployees"
             :options="maxAssignedEmployeesOptions"
             placeholder="Select max assigned employees"
-            class="select-employees"
+            class="select-employees m-1"
           />
           <Dropdown
             v-model="newOccurredIn"
             :options="occurredInOptions"
             placeholder="Occurred in"
-            class="select-occurred-in"
+            class="select-occurred-in m-1"
           />
           <Button
-            class="add-rule"
+            class="add-rule m-1"
             icon="pi pi-plus"
             @click="addRule"
             style="background-color: #2d6dc1"
@@ -51,28 +51,28 @@
       </div>
       <div>
         <h3>Add new SLA Category</h3>
-        <div class="category-container">
+        <div class="category-container m-1">
           <Dropdown
             v-model="selectedSubscriber"
             :options="subscriber"
             optionLabel="name"
             placeholder="Select subscriber"
-            class="select-subscriber"
+            class="select-subscriber m-1"
           />
           <Dropdown
             v-model="selectedRule"
             :options="rules"
             optionLabel="name"
             placeholder="Select rule"
-            class="select-rule"
+            class="select-rule m-1"
           />
           <InputText
             v-model="categoryName"
             placeholder="Enter category name"
-            class="enter-category"
+            class="enter-category m-1"
           />
           <Button
-            class="add-category"
+            class="add-category m-1"
             icon="pi pi-plus"
             @click="createCategory"
             style="background-color: #2d6dc1"
@@ -97,7 +97,7 @@
             <template #body="rowData">
               <Button
                 icon="pi pi-trash"
-                class="p-button-danger trash-size"
+                class="p-button-danger trash-size m-1"
                 @click="deleteCategory(rowData.data)"
               ></Button>
             </template>
