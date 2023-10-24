@@ -28,4 +28,5 @@ export interface IssueIF {
   status: string | null;
   statusChanges: number | null;
   assignedSLARule: SLARule | null;
+  lastStatusChange: Date | null;
 }

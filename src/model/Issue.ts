@@ -1,6 +1,6 @@
-import type { EmployeeIF } from './EmployeeIF';
-import type { IssueIF } from './IssueIF';
-import type { SLARule } from '@/model/SLARule';
+import type {EmployeeIF} from './EmployeeIF';
+import type {IssueIF} from './IssueIF';
+import type {SLARule} from '@/model/SLARule';
 
 // Issue Class implements IssueIF
 class Issue implements IssueIF {
@@ -26,6 +26,8 @@ class Issue implements IssueIF {
 
   assignedSLARule: SLARule | null;
 
+  lastStatusChange: Date | null;
+
   constructor(
     id: number,
     name: string,
@@ -37,7 +39,8 @@ class Issue implements IssueIF {
     dueTo: Date | null,
     status: string | null,
     statusChanges: number | null,
-    assignedSLARule: SLARule | null
+    assignedSLARule: SLARule | null,
+    lastStatusChange: Date | null
   ) {
     this.id = id;
     this.name = name;
@@ -50,6 +53,7 @@ class Issue implements IssueIF {
     this.status = status;
     this.statusChanges = statusChanges;
     this.assignedSLARule = assignedSLARule;
+    this.lastStatusChange = lastStatusChange;
   }
 }
 
@@ -103,3 +107,12 @@ function countIssuesByStatus(issueList: Issue[], status: string | null): number 
 
 // export of data array and remain time for ticket calculation
 export { Issue, getTimeLeft, getFormattedDate, getAssignedToName, countIssuesByStatus };
+
+function getLayingTime(issue: Issue): string {
+  if (issue.lastStatusChange == null) {
+    return '0';
+  }
+  const currentTime: Date = new Date();
+  const difference: number = currentTime.valueOf() - issue.lastStatusChange.valueOf();
+  return (difference * 3600000).toString(); // time in hours
+}
