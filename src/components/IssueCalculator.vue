@@ -62,6 +62,11 @@
             {{ getTimeLeft(slotProps.data) }}
           </template>
         </Column>
+        <Column header="Laying time (Days)">
+          <template #body="slotProps">
+            {{ printLayingTime(slotProps.data) }}
+          </template>
+        </Column>
         <Column field="assignedTo" header="Assigned to">
           <template #body="slotProps">
             {{ printAssignedTo(slotProps.data.assignedTo) }}
@@ -84,6 +89,8 @@ import type { EmployeeIF } from '@/model/EmployeeIF';
 
 <script lang="ts">
 // Create a reference for the selectedProject with initial data
+import type { IssueIF } from '@/model/IssueIF';
+
 const selectedProject: Ref<ProjectIF> = ref({
   id: 0,
   name: 'Project_Name',
@@ -120,6 +127,16 @@ function printAssignedTo(employee: EmployeeIF | null): string {
   const lastName = employee?.lastName ?? '';
   return `${firstName} ${lastName}`;
 }
+
+function printLayingTime(issue: Issue): string {
+  if (issue.lastStatusChange == null) {
+    return '0';
+  }
+  const currentTime: Date = new Date();
+  const difference: number = currentTime.valueOf() - issue.lastStatusChange.valueOf();
+  return (difference.toString() / 86400000).toFixed(2).toString();
+}
+
 </script>
 
 <style scoped>

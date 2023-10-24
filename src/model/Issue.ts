@@ -107,12 +107,3 @@ function countIssuesByStatus(issueList: Issue[], status: string | null): number 
 
 // export of data array and remain time for ticket calculation
 export { Issue, getTimeLeft, getFormattedDate, getAssignedToName, countIssuesByStatus };
-
-function getLayingTime(issue: Issue): string {
-  if (issue.lastStatusChange == null) {
-    return '0';
-  }
-  const currentTime: Date = new Date();
-  const difference: number = currentTime.valueOf() - issue.lastStatusChange.valueOf();
-  return (difference * 3600000).toString(); // time in hours
-}
