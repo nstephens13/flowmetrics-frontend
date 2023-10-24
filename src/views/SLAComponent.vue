@@ -14,7 +14,7 @@
             class="enter-subscriber"
           />
           <Button
-            class="add-subscriber"
+            class="add-subscriber min-w-max"
             icon="pi pi-plus"
             @click="addSubscriber"
             style="background-color: #2d6dc1"
@@ -41,7 +41,7 @@
             class="select-occurred-in"
           />
           <Button
-            class="add-rule"
+            class="add-rule min-w-max"
             icon="pi pi-plus"
             @click="addRule"
             style="background-color: #2d6dc1"
@@ -72,7 +72,7 @@
             class="enter-category"
           />
           <Button
-            class="add-category"
+            class="add-category min-w-max"
             icon="pi pi-plus"
             @click="createCategory"
             style="background-color: #2d6dc1"
