@@ -89,7 +89,6 @@ import type { EmployeeIF } from '@/model/EmployeeIF';
 
 <script lang="ts">
 // Create a reference for the selectedProject with initial data
-import type { IssueIF } from '@/model/IssueIF';
 
 const selectedProject: Ref<ProjectIF> = ref({
   id: 0,
@@ -128,15 +127,19 @@ function printAssignedTo(employee: EmployeeIF | null): string {
   return `${firstName} ${lastName}`;
 }
 
-function printLayingTime(issue: Issue): string {
+/**
+ * if time since last status change is null, return 0
+ * @param issue an instance of an IssueIF
+ * @return laying time in days
+ */
+function printLayingTime(issue: IssueIF): string {
   if (issue.lastStatusChange == null) {
     return '0';
   }
   const currentTime: Date = new Date();
   const difference: number = currentTime.valueOf() - issue.lastStatusChange.valueOf();
-  return (difference.toString() / 86400000).toFixed(2).toString();
+  return (difference / 86400000).toFixed(2).toString();
 }
-
 </script>
 
 <style scoped>

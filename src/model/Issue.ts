@@ -1,6 +1,6 @@
-import type {EmployeeIF} from './EmployeeIF';
-import type {IssueIF} from './IssueIF';
-import type {SLARule} from '@/model/SLARule';
+import type { EmployeeIF } from './EmployeeIF';
+import type { IssueIF } from './IssueIF';
+import type { SLARule } from '@/model/SLARule';
 
 // Issue Class implements IssueIF
 class Issue implements IssueIF {
