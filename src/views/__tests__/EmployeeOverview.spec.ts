@@ -58,7 +58,7 @@ describe('Employee Overview should load all the Components', () => {
 
   // Test to check the displayed title
   test('displays the correct title', () => {
-    const title = wrapper.find('.PageTitel');
+    const title = wrapper.find('.grid p');
     expect(title.text()).toBe('Employee Overview');
   });
 });
