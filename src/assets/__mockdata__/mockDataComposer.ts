@@ -45,6 +45,7 @@ function loadIssueDataFromFile(issues: any): Issue[] {
       status: issue.status as string,
       statusChanges: null,
       assignedSLARule: issue.assignedSLARule ? issue.assignedSLARule : null,
+      lastStatusChange: faker.date.recent(),
     });
   });
   return issueData;
@@ -319,6 +320,7 @@ function getMockData(dataset: number): ProjectIF {
           dueTo: faker.date.future(),
           statusChanges,
           assignedSLARule: null,
+          lastStatusChange: faker.date.recent(),
         });
       }
 
@@ -375,6 +377,10 @@ function getMockData(dataset: number): ProjectIF {
           dueTo: faker.date.future(),
           statusChanges,
           assignedSLARule: null,
+          lastStatusChange: faker.date.between({
+            from: new Date().valueOf() - 259200000,
+            to: new Date().valueOf(),
+          }), // 259200000 is 3 days in ms
         });
       }
 
@@ -481,6 +487,7 @@ function getMockData(dataset: number): ProjectIF {
           status: '',
           statusChanges: null,
           assignedSLARule: null,
+          lastStatusChange: faker.date.recent(),
         });
       }
 
@@ -547,6 +554,7 @@ function getMockData(dataset: number): ProjectIF {
           status: '',
           statusChanges: 0,
           assignedSLARule: null,
+          lastStatusChange: faker.date.recent(),
         });
       }
 
