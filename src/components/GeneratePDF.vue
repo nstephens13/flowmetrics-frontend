@@ -1,5 +1,9 @@
 <template>
-  <Button label="Generate PDF" @click="generatePDF" style="background-color: var(--flowMetricsBlue)"></Button>
+  <Button
+    label="Generate PDF"
+    @click="generatePDF"
+    style="background-color: var(--flowMetricsBlue)"
+  ></Button>
 </template>
 
 <script setup lang="ts">
