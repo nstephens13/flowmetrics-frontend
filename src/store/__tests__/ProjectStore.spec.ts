@@ -138,4 +138,19 @@ describe('useProjectStore', () => {
     expect(store.projects).toHaveLength(1);
     expect(store.projects[0]).toEqual(project2);
   });
+  test('should not delete a project from the Project store if the id is not found', () => {
+    store = useProjectsStore();
+    store.addProject(project1);
+    store.addProject(project2);
+    expect(store.projects).toHaveLength(2);
+    store.deleteProject(3);
+    expect(store.projects).toHaveLength(2);
+  });
+  test('should return all projects from the Project store', () => {
+    store = useProjectsStore();
+    store.addProject(project1);
+    store.addProject(project2);
+    expect(store.projects).toHaveLength(2);
+    expect(store.getProjects).toEqual([project1, project2]);
+  });
 });
