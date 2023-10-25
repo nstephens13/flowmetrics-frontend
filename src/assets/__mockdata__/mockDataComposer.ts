@@ -377,7 +377,10 @@ function getMockData(dataset: number): ProjectIF {
           dueTo: faker.date.future(),
           statusChanges,
           assignedSLARule: null,
-          lastStatusChange: faker.date.recent(),
+          lastStatusChange: faker.date.between({
+            from: new Date().valueOf() - 259200000,
+            to: new Date().valueOf(),
+          }), // 259200000 is 3 days in ms
         });
       }
 
