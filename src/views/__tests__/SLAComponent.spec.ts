@@ -1,6 +1,6 @@
 import { describe, expect, test, vi } from 'vitest';
 import { createTestingPinia } from '@pinia/testing';
-import { mount } from '@vue/test-utils';
+import { mount, VueWrapper } from '@vue/test-utils';
 import InputText from 'primevue/inputtext';
 import PrimeVue from 'primevue/config';
 import Dropdown from 'primevue/dropdown';
@@ -14,8 +14,8 @@ import router from '@/router';
 import useSLAStore from '../../store/SLAStore';
 
 describe('SLAComponent Test with Store Data', () => {
-  let slaStore = null;
-  let wrapper = null;
+  let slaStore: any;
+  let wrapper: VueWrapper<any>;
 
   beforeEach(() => {
     wrapper = mount(SLAComponent, {
