@@ -11,10 +11,83 @@ import DataTable from 'primevue/datatable';
 import Divider from 'primevue/divider';
 import SLAComponent from '@/views/SLAComponent.vue';
 import router from '@/router';
+import useSLAStore from '../../store/SLAStore';
+
+describe('SLAComponent Test with Store Data', () => {
+  let slaStore = null;
+  let wrapper = null;
+
+  beforeEach(() => {
+    wrapper = mount(SLAComponent, {
+      global: {
+        plugins: [
+          PrimeVue,
+          router,
+          createTestingPinia({
+            createSpy: vi.fn,
+            stubActions: false,
+            initialState: {
+              sla: {
+                slaCategories: [
+                  {
+                    id: 1,
+                    name: 'Category 1',
+                    rule: null,
+                    subscriber: null,
+                  },
+                ],
+              },
+            },
+          }),
+        ],
+        components: {
+          InputText,
+          Dropdown,
+          Card,
+          Button,
+          Column,
+          DataTable,
+          Divider,
+        },
+      },
+    });
+
+    slaStore = useSLAStore();
+  });
+
+  afterEach(() => {
+    wrapper.unmount();
+  });
+
+  // Test to check if the deleteCategory method is called with the correct rowData when the delete button is clicked
+  it('deleteCategory method is called with the correct rowData when the delete button is clicked', async () => {
+    // Find the delete button and trigger the click event
+    const deleteButton = wrapper.find('.p-button-danger');
+    await deleteButton.trigger('click');
+
+    expect(slaStore.slaCategories).toHaveLength(0);
+    expect(slaStore.deleteSLACategory).toHaveBeenCalledTimes(1);
+  });
+
+  // Test to check if all strings in the filter dropdown are rendered
+  test('all strings in the filter dropdown are rendered', async () => {
+    const deleteButton = wrapper.find('.p-button-danger');
+    const spyButton = vi.spyOn(deleteButton, 'trigger');
+    // Get all the options in the dropdown
+    await deleteButton.trigger('click');
+    expect(spyButton).toHaveBeenCalledOnce();
+  });
+});
 
 /* Basic test to ensure, that SLA Component is successfully rendered without any errors */
 describe('SLAComponent', () => {
-  const pinia = createTestingPinia({ stubActions: false });
+  const pinia = createTestingPinia({
+    initialState: {
+      rules: [],
+      subscriber: [],
+    },
+    stubActions: false,
+  });
   const wrapper = mount(SLAComponent, {
     global: {
       plugins: [PrimeVue, router, pinia],
@@ -29,6 +102,7 @@ describe('SLAComponent', () => {
       },
     },
   });
+
   // Test to check if the component is rendered
   test('Should render component', () => {
     expect(wrapper.exists()).toBe(true);
@@ -51,7 +125,7 @@ describe('SLAComponent', () => {
 
     expect(selectSubscriberDropDown?.props('options')).toContainEqual({
       description: null,
-      id: 4,
+      id: 1,
       name: 'John',
     });
   });
@@ -68,7 +142,7 @@ describe('SLAComponent', () => {
       .find((dropdown) => dropdown.classes('select-rule'));
 
     expect(selectRuleDropDown?.props('options')).toContainEqual({
-      id: 4,
+      id: 1,
       name: 'Rule 1',
       durationInDays: null,
       expirationDate: null,
@@ -135,7 +209,7 @@ describe('SLAComponent', () => {
     categoryInput?.setValue('Category 1');
     addButton?.trigger('click').finally(() => {
       const dataTableElementSize = wrapper.getComponent(DataTable).findAll('tr').length;
-      expect(7).toEqual(dataTableElementSize);
+      expect(2).toEqual(dataTableElementSize);
       const datatableElements = wrapper.getComponent(DataTable).findAll('tr');
       expect('Category 1').toEqual(
         datatableElements[datatableElements.length - 1].findAll('td')[0].text()
@@ -177,8 +251,14 @@ describe('SLAComponent', () => {
     // Mock the categories data
     wrapper.setData({
       categories: [
-        { name: 'Category 1', id: 1 },
-        { name: 'Category 2', id: 2 },
+        {
+          name: 'Category 1',
+          id: 1,
+        },
+        {
+          name: 'Category 2',
+          id: 2,
+        },
       ],
     });
 
@@ -196,23 +276,7 @@ describe('SLAComponent', () => {
     expect(wrapper.find('.category-container').isVisible()).toBe(true);
     expect(wrapper.getComponent(DataTable).isVisible()).toBe(true);
   });
-  // Test to check if all strings in the filter dropdown are rendered
-  test('all strings in the filter dropdown are rendered', async () => {
-    const dropdownButton = wrapper.find('.p-button-danger');
-    const spyButton = vi.spyOn(dropdownButton, 'trigger');
-    // Get all the options in the dropdown
-    await dropdownButton.trigger('click');
-    expect(spyButton).toHaveBeenCalledOnce();
-  });
-  // Test to check if the deleteCategory method is called with the correct rowData when the delete button is clicked
-  test('deleteCategory method is called with the correct rowData when the delete button is clicked', async () => {
-    // Find the delete button and trigger the click event
-    const deleteButton = wrapper.find('.p-button-danger');
-    await deleteButton.trigger('click');
 
-    const dataTableElementSize = wrapper.getComponent(DataTable).findAll('tr').length;
-    expect(4).toEqual(dataTableElementSize);
-  });
   // Test to add a new subscriber using addSubscriber method
   test('should add a new subscriber when addSubscriber is called', async () => {
     const addSubscriberButton = wrapper.find('.add-subscriber');
@@ -227,11 +291,16 @@ describe('SLAComponent', () => {
 
     expect(inputSubscriber.text()).toBe('');
     expect(selectSubscriberDropDown?.props('options')).toEqual([
-      { id: 1, name: 'Customer 1', description: 'Description 1' },
-      { id: 2, name: 'Customer 2', description: 'Description 2' },
-      { id: 3, name: 'Customer 3', description: 'Description 3' },
-      { id: 4, name: 'John', description: null },
-      { id: 5, name: 'New Subscriber', description: null },
+      {
+        id: 1,
+        name: 'John',
+        description: null,
+      },
+      {
+        id: 2,
+        name: 'New Subscriber',
+        description: null,
+      },
     ]);
   });
   // Test to add a new rule using addRule method
@@ -258,41 +327,18 @@ describe('SLAComponent', () => {
     expect(selectRuleDropDown?.props('options')).toEqual([
       {
         id: 1,
-        name: 'Pre-Config 1',
-        durationInDays: 3,
-        expirationDate: null,
-        occurredIn: 'Test',
-      },
-      {
-        id: 2,
-        name: 'Pre-Config 2',
-        durationInDays: null,
-        expirationDate: new Date('2023-07-17'),
-        maxAssignedEmployees: 4,
-        occurredIn: 'Pre-production',
-      },
-      {
-        id: 3,
-        name: 'Pre-Config 3',
-        durationInDays: 7,
-        expirationDate: new Date('2023-12-19'),
-        maxAssignedEmployees: 7,
-        occurredIn: 'Production',
-      },
-      {
-        id: 4,
         name: 'Rule 1',
         durationInDays: null,
         expirationDate: null,
-        maxAssignedEmployees: undefined,
         occurredIn: null,
+        maxAssignedEmployees: undefined,
       },
       {
-        id: 5,
-        name: 'New Rule',
+        id: 2,
         durationInDays: null,
         expirationDate: null,
         maxAssignedEmployees: 3,
+        name: 'New Rule',
         occurredIn: null,
       },
     ]);
@@ -305,8 +351,16 @@ describe('SLAComponent', () => {
     const createCategoryButton = wrapper.find('.add-category');
     const inputCategoryName = wrapper.find('.enter-category');
     // Set the selected subscriber and rule
-    await selectSubscriber.setValue({ id: 7, name: 'Subscriber 7' });
-    await selectRule.setValue({ id: 7, name: 'Rule 7' });
+    await selectSubscriber.setValue({
+      id: 7,
+      name: 'Subscriber 7',
+      description: 'Description 7',
+    });
+    await selectRule.setValue({
+      id: 7,
+      name: 'Rule 7',
+      description: 'Description 7',
+    });
 
     // Set the category name
     await inputCategoryName.setValue('New Category');
@@ -335,42 +389,18 @@ describe('SLAComponent', () => {
     const dataTable = wrapper.getComponent(DataTable);
     expect(dataTable.props('value')).toEqual([
       {
-        id: 4,
-        name: 'savedConfig_4',
-        subscriber: { id: 2, name: 'Customer 2', description: 'Description 2' },
-        rule: {
-          id: 2,
-          name: 'Pre-Config 2',
-          durationInDays: null,
-          expirationDate: new Date('2023-07-17'),
-          maxAssignedEmployees: 4,
-          occurredIn: 'Pre-production',
-        },
-      },
-      {
-        id: 5,
-        name: 'savedConfig_5',
-        subscriber: { id: 3, name: 'Customer 3', description: 'Description 3' },
-        rule: {
-          id: 3,
-          name: 'Pre-Config 3',
-          durationInDays: 7,
-          expirationDate: new Date('2023-12-19'),
-          maxAssignedEmployees: 7,
-          occurredIn: 'Production',
-        },
-      },
-      {
-        id: 6,
-        name: 'Category 1',
-        subscriber: 'Subscriber 1',
-        rule: 'Rule 1',
-      },
-      {
-        id: 7,
+        id: 1,
         name: 'New Category',
-        subscriber: { id: 7, name: 'Subscriber 7' },
-        rule: { id: 7, name: 'Rule 7' },
+        rule: {
+          description: 'Description 7',
+          id: 7,
+          name: 'Rule 7',
+        },
+        subscriber: {
+          description: 'Description 7',
+          id: 7,
+          name: 'Subscriber 7',
+        },
       },
     ]);
   });

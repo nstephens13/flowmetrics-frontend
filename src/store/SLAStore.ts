@@ -34,21 +34,6 @@ const useSLAStore = defineStore('sla', {
         }
       }
     },
-
-    initializeCategories() {
-      for (let i = 1; i < 6; i++) {
-        const amountSubscribers = i % this.subscriber.length;
-        const rulesIndex = i % this.rules.length;
-        const category: SLACategory = {
-          id: null,
-          name: `savedConfig_${i}`,
-          subscriber: this.subscriber[amountSubscribers],
-          rule: this.rules[rulesIndex],
-        };
-
-        this.addSLACategory(category);
-      }
-    },
   },
 });
 

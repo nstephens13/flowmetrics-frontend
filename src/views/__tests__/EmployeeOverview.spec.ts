@@ -50,9 +50,9 @@ describe('Employee Overview should load all the Components', () => {
   });
 
   // Test to check the options in the multiselect component
-  test('Multiselect should contain all options', () => {
+  test('Multiselect should contain no options', () => {
     const multiselects = wrapper.findAllComponents(MultiSelect);
-    expect(4).toEqual(multiselects[0].props('options').length);
+    expect(0).toEqual(multiselects[0].props('options').length);
     expect(0).toEqual(multiselects[1].props('options').length);
   });
 

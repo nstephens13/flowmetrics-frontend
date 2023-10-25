@@ -68,8 +68,4 @@ describe('SLA Store Tests', () => {
     SLAStore.deleteSLACategory(SLACategory1);
     expect(SLAStore.slaCategories).toHaveLength(0);
   });
-  test('can initialize Categories', () => {
-    SLAStore.initializeCategories();
-    expect(SLAStore.slaCategories).toHaveLength(5);
-  });
 });

@@ -1,4 +1,5 @@
 import useSLAStore from '@/store/SLAStore';
+import { SLACategory } from '@/model/SLACategory';
 
 export default function initSLAStore() {
   const slaStore = useSLAStore();
@@ -41,4 +42,18 @@ export default function initSLAStore() {
     maxAssignedEmployees: 7,
     occurredIn: 'Production',
   });
+
+  // Add 5 SLA Categories
+  for (let i = 1; i < 6; i++) {
+    const amountSubscribers = i % slaStore.subscriber.length;
+    const rulesIndex = i % slaStore.rules.length;
+    const category: SLACategory = {
+      id: null,
+      name: `savedConfig_${i}`,
+      subscriber: slaStore.subscriber[amountSubscribers],
+      rule: slaStore.rules[rulesIndex],
+    };
+
+    slaStore.addSLACategory(category);
+  }
 }

@@ -10,10 +10,10 @@
         <div class="subscriber-container">
           <InputText
             v-model="newSubscriber"
-            placeholder="Enter subscriber name"
             class="enter-subscriber"
+            placeholder="Enter subscriber name"
           />
-          <Button class="add-subscriber" @click="addSubscriber" label="+"></Button>
+          <Button class="add-subscriber" label="+" @click="addSubscriber"></Button>
           <div v-if="!isSubscriberNameValid" class="error-message">
             {{ SubscriberErrorMessage }}
           </div>
@@ -22,20 +22,20 @@
       <div>
         <h3>Add SLA Rule</h3>
         <div class="rule-container">
-          <InputText v-model="newRuleName" placeholder="Enter rule name" class="enter-rule" />
+          <InputText v-model="newRuleName" class="enter-rule" placeholder="Enter rule name" />
           <Dropdown
             v-model="newRuleMaxAssignedEmployees"
             :options="maxAssignedEmployeesOptions"
-            placeholder="Select max assigned employees"
             class="select-employees"
+            placeholder="Select max assigned employees"
           />
           <Dropdown
             v-model="newOccurredIn"
             :options="occurredInOptions"
-            placeholder="Occurred in"
             class="select-occurred-in"
+            placeholder="Occurred in"
           />
-          <Button class="add-rule" @click="addRule" label="+"></Button>
+          <Button class="add-rule" label="+" @click="addRule"></Button>
           <div v-if="!isRuleNameValid" class="error-message">{{ ruleErrorMessage }}</div>
         </div>
       </div>
@@ -45,23 +45,23 @@
           <Dropdown
             v-model="selectedSubscriber"
             :options="subscriber"
+            class="select-subscriber"
             optionLabel="name"
             placeholder="Select subscriber"
-            class="select-subscriber"
           />
           <Dropdown
             v-model="selectedRule"
             :options="rules"
+            class="select-rule"
             optionLabel="name"
             placeholder="Select rule"
-            class="select-rule"
           />
           <InputText
             v-model="categoryName"
-            placeholder="Enter category name"
             class="enter-category"
+            placeholder="Enter category name"
           />
-          <Button class="add-category" @click="createCategory" label="+"></Button>
+          <Button class="add-category" label="+" @click="createCategory"></Button>
           <div v-if="!isSLACategoryNameValid" class="error-message">
             {{ categoryErrorMessage }}
           </div>
@@ -81,8 +81,8 @@
           <Column header="Delete">
             <template #body="rowData">
               <Button
-                icon="pi pi-trash"
                 class="p-button-danger trash-size"
+                icon="pi pi-trash"
                 @click="deleteCategory(rowData.data)"
               ></Button>
             </template>
@@ -107,9 +107,6 @@ import GeneratePDF from '@/components/GeneratePDF.vue';
 // Define the 'SLAComponent' component
 export default defineComponent({
   name: 'SLAComponent',
-  mounted() {
-    this.slaStore.initializeCategories();
-  },
   components: { GeneratePDF },
   data() {
     return {
@@ -224,15 +221,18 @@ export default defineComponent({
   height: auto;
   width: auto;
 }
+
 /* Add Subscriber Container */
 .subscriber-container {
   display: flex;
   align-items: center;
   margin-bottom: 40px;
 }
+
 .enter-subscriber {
   margin-right: 10px;
 }
+
 .add-subscriber {
   background-color: mediumseagreen;
   color: white;
@@ -243,21 +243,26 @@ export default defineComponent({
   padding: 0;
   font-size: 12px;
 }
+
 /* Add SLA Rule Container */
 .rule-container {
   display: flex;
   align-items: center;
   margin-bottom: 40px;
 }
+
 .enter-rule {
   margin-right: 10px;
 }
+
 .select-employees {
   margin-right: 10px;
 }
+
 .select-occurred-in {
   margin-right: 10px;
 }
+
 .add-rule {
   background-color: mediumseagreen;
   color: white;
@@ -268,21 +273,26 @@ export default defineComponent({
   padding: 0;
   font-size: 12px;
 }
+
 /* Add new SLA Category Container */
 .category-container {
   display: flex;
   align-items: center;
   margin-bottom: 40px;
 }
+
 .select-subscriber {
   margin-right: 10px;
 }
+
 .select-rule {
   margin-right: 10px;
 }
+
 .enter-category {
   margin-right: 10px;
 }
+
 .add-category {
   background-color: mediumseagreen;
   color: white;
@@ -293,6 +303,7 @@ export default defineComponent({
   padding: 0;
   font-size: 12px;
 }
+
 /* Delete Button */
 .p-button-danger {
   background-color: red;
@@ -301,10 +312,12 @@ export default defineComponent({
   height: 30px;
   width: 30px;
 }
+
 .trash-size {
   color: white;
   font-size: 5px;
 }
+
 .error-message {
   display: block;
   color: red;
