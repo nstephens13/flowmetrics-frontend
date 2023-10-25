@@ -17,7 +17,7 @@
             class="add-subscriber m-1"
             icon="pi pi-plus"
             @click="addSubscriber"
-            style="background-color: #2d6dc1"
+            style="background-color: var(--flowMetricsBlue)"
           ></Button>
           <div v-if="!isSubscriberNameValid" class="error-message m-1 text-red-500">
             {{ SubscriberErrorMessage }}
@@ -44,7 +44,7 @@
             class="add-rule m-1"
             icon="pi pi-plus"
             @click="addRule"
-            style="background-color: #2d6dc1"
+            style="background-color: var(--flowMetricsBlue)"
           ></Button>
           <div v-if="!isRuleNameValid" class="error-message m-1 text-red-500">{{
             ruleErrorMessage
@@ -77,7 +77,7 @@
             class="add-category m-1"
             icon="pi pi-plus"
             @click="createCategory"
-            style="background-color: #2d6dc1"
+            style="background-color: var(--flowMetricsBlue)"
           ></Button>
           <div v-if="!isSLACategoryNameValid" class="error-message m-1 text-red-500">
             {{ categoryErrorMessage }}
