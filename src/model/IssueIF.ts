@@ -27,8 +27,8 @@ export interface IssueIF {
   dueTo: Date | null;
   status: string | null;
   statusChanges: number | null;
-  assignedSLARule: SLARule[] | null;
   lastStatusChange: Date | null;
+  assignedSLARule: SLARule[] | null;
 }
 
 // function to check if issue has an assigned SLA rule

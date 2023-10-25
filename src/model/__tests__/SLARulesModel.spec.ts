@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest';
 import type { IssueIF } from '../IssueIF';
 import type { SLARule } from '@/model/SLARule';
-import { Issue, getSLARules } from '../Issue';
+import { getSLARules, Issue } from '../Issue';
 
 test('getSLARules returns an empty array when assignedSLARule is null', () => {
   const issue = new Issue(
@@ -18,6 +18,7 @@ test('getSLARules returns an empty array when assignedSLARule is null', () => {
     null,
     null,
     'Open',
+    null,
     null,
     null
   );
@@ -63,6 +64,7 @@ describe('assignedSLARules', () => {
       status: 'Open',
       statusChanges: null,
       assignedSLARule: slaRules,
+      lastStatusChange: null,
     };
 
     const assignedSLARules = issue.assignedSLARule;
