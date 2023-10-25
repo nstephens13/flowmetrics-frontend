@@ -29,3 +29,16 @@ export interface IssueIF {
   statusChanges: number | null;
   assignedSLARule: SLARule[] | null;
 }
+
+// function to check if issue has an assigned SLA rule
+export function hasSLARule(issue: IssueIF): boolean {
+  return issue.assignedSLARule !== null;
+}
+
+// print assigned SLA rule names of issue
+export function printSLARuleNames(issue: IssueIF): string {
+  if (issue.assignedSLARule === null) {
+    return '';
+  }
+  return issue.assignedSLARule.map((rule) => rule.name).join(', ');
+}
