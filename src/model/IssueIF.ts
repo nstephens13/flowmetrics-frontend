@@ -27,6 +27,19 @@ export interface IssueIF {
   dueTo: Date | null;
   status: string | null;
   statusChanges: number | null;
-  assignedSLARule: SLARule | null;
+  assignedSLARule: SLARule[] | null;
   lastStatusChange: Date | null;
+}
+
+// function to check if issue has an assigned SLA rule
+export function hasSLARule(issue: IssueIF): boolean {
+  return issue.assignedSLARule !== null;
+}
+
+// print assigned SLA rule names of issue
+export function printSLARuleNames(issue: IssueIF): string {
+  if (issue.assignedSLARule === null) {
+    return '';
+  }
+  return issue.assignedSLARule.map((rule) => rule.name).join(', ');
 }
