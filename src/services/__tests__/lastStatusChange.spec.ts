@@ -1,6 +1,5 @@
 import { describe, expect, test } from 'vitest';
 import extractLastStatusChange from '../lastStatusChangeCalculator';
-import {valueOf} from "jsdom";
 
 describe('functionReturnsRightValues', () => {
   test('typeCheckShouldFail', () => {
