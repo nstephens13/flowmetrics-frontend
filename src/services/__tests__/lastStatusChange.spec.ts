@@ -150,4 +150,20 @@ describe('functionReturnsRightValues', () => {
     };
     expect(extractLastStatusChange(JSON.stringify(compareObject)).valueOf()).toEqual(42);
   });
+
+  test('typeCheckFails', () => {
+    const compareObject = {
+      expand: 'something',
+      id: 'something',
+      self: 'something',
+      key: 'something',
+      renderedFields: 'something',
+      names: 'something',
+      schema: 'something',
+      operations: 'something',
+      editmeta: 'something',
+      changelog: 'something',
+    };
+    expect(extractLastStatusChange(JSON.stringify(compareObject)).valueOf()).toEqual(0);
+  });
 });
