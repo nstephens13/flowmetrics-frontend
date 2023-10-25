@@ -62,7 +62,7 @@
             {{ getTimeLeft(slotProps.data) }}
           </template>
         </Column>
-        <Column header="Laying time (Days)">
+        <Column header="Laying time">
           <template #body="slotProps">
             {{ printLayingTime(slotProps.data) }}
           </template>
@@ -131,7 +131,7 @@ function printAssignedTo(employee: EmployeeIF | null): string {
 /**
  * if time since last status change is null, return 0
  * @param issue an instance of an IssueIF
- * @return laying time in days
+ * @return returns laying time in hours or if more than 24 hours returns in days
  */
 function printLayingTime(issue: IssueIF): string {
   if (issue.lastStatusChange == null) {
@@ -139,7 +139,10 @@ function printLayingTime(issue: IssueIF): string {
   }
   const currentTime: Date = new Date();
   const difference: number = currentTime.valueOf() - issue.lastStatusChange.valueOf();
-  return (difference / 86400000).toFixed(2).toString();
+  if (difference >= 86400000) {
+    return `${(difference / 86400000).toFixed(0).toString()}d`; // returns time in days (86400000 ms = 1 day)
+  }
+  return `${(difference / 3600000).toFixed(0).toString()}h`; // returns the time in hours (3600000 ms = 1 hour)
 }
 </script>
 
