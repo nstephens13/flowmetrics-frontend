@@ -8,7 +8,8 @@ import type { IssueDataIF } from '@/model/IssueDataIF';
 import { getIssueStatusList } from '@/model/ProjectIF';
 import { calculateWorkload, mergeEmployees } from '@/services/workloadCalculator';
 import filterProjectThatHasTheAllowedStatus from '@/services/filter/IssuesStateFilter';
-import { useFilterConfigStore, useProjectsStore } from '@/store/FlowmetricsStore';
+import useProjectsStore from '@/store/ProjectStore';
+import useFilterConfigStore from '@/store/FilterConfigStore';
 
 // Create a reference to the FilterConfigStore and ProjectStore instances
 const filterConfigStore = useFilterConfigStore();
