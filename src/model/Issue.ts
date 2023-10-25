@@ -103,12 +103,18 @@ function countIssuesByStatus(issueList: Issue[], status: string | null): number 
 
 /**
  * Returns SLA-Rules assigned to an Issue
- * @param assignedSLARule - The SLaRules of the issues
  * @returns The Array of SLARules assigned to an Issue, can be null
  */
-function getSLARules(Issue: Issue, assignedSLARule : SLARule[] | null) {
-  return Issue.assignedSLARule ?? [];
+function getSLARules(issue: Issue) {
+  return issue.assignedSLARule ?? [];
 }
 
 // export of data array and remain time for ticket calculation
-export { Issue, getTimeLeft, getFormattedDate, getAssignedToName, countIssuesByStatus,getSLARules };
+export {
+  Issue,
+  getTimeLeft,
+  getFormattedDate,
+  getAssignedToName,
+  countIssuesByStatus,
+  getSLARules,
+};
