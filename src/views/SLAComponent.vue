@@ -14,10 +14,10 @@
             class="enter-subscriber"
           />
           <Button
-            class="add-subscriber min-w-max"
+            class="add-subscriber max-width"
             icon="pi pi-plus"
             @click="addSubscriber"
-            style="background-color: #2d6dc1"
+            style="background-color: #2d6dc1; width: 3rem"
           ></Button>
           <div v-if="!isSubscriberNameValid" class="error-message">
             {{ SubscriberErrorMessage }}
@@ -41,10 +41,10 @@
             class="select-occurred-in"
           />
           <Button
-            class="add-rule min-w-max"
+            class="add-rule max-width"
             icon="pi pi-plus"
             @click="addRule"
-            style="background-color: #2d6dc1"
+            style="background-color: #2d6dc1; width: 3rem"
           ></Button>
           <div v-if="!isRuleNameValid" class="error-message">{{ ruleErrorMessage }}</div>
         </div>
@@ -72,10 +72,10 @@
             class="enter-category"
           />
           <Button
-            class="add-category min-w-max"
+            class="add-category min-width"
             icon="pi pi-plus"
             @click="createCategory"
-            style="background-color: #2d6dc1"
+            style="background-color: #2d6dc1; width: 3rem"
           ></Button>
           <div v-if="!isSLACategoryNameValid" class="error-message">
             {{ categoryErrorMessage }}
@@ -233,58 +233,4 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
-/* View background */
-.background-card {
-  height: auto;
-  width: auto;
-}
-/* Add Subscriber Container */
-.subscriber-container {
-  display: flex;
-  align-items: center;
-  margin-bottom: 40px;
-}
-.enter-subscriber {
-  margin-right: 10px;
-}
-/* Add SLA Rule Container */
-.rule-container {
-  display: flex;
-  align-items: center;
-  margin-bottom: 40px;
-}
-.enter-rule {
-  margin-right: 10px;
-}
-.select-employees {
-  margin-right: 10px;
-}
-.select-occurred-in {
-  margin-right: 10px;
-}
-/* Add new SLA Category Container */
-.category-container {
-  display: flex;
-  align-items: center;
-  margin-bottom: 40px;
-}
-.select-subscriber {
-  margin-right: 10px;
-}
-.select-rule {
-  margin-right: 10px;
-}
-.enter-category {
-  margin-right: 10px;
-}
-/* Error messages */
-.error-message {
-  display: block;
-  color: red;
-  font-size: 16px;
-  margin-top: 4px;
-  font-family: inherit;
-  margin-left: 10px;
-}
-</style>
+<style scoped></style>
