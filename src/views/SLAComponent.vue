@@ -13,7 +13,12 @@
             placeholder="Enter subscriber name"
             class="enter-subscriber"
           />
-          <Button class="add-subscriber" @click="addSubscriber" label="+"></Button>
+          <Button
+            class="add-subscriber max-width"
+            icon="pi pi-plus"
+            @click="addSubscriber"
+            style="background-color: #2d6dc1; width: 3rem"
+          ></Button>
           <div v-if="!isSubscriberNameValid" class="error-message">
             {{ SubscriberErrorMessage }}
           </div>
@@ -35,7 +40,12 @@
             placeholder="Occurred in"
             class="select-occurred-in"
           />
-          <Button class="add-rule" @click="addRule" label="+"></Button>
+          <Button
+            class="add-rule max-width"
+            icon="pi pi-plus"
+            @click="addRule"
+            style="background-color: #2d6dc1; width: 3rem"
+          ></Button>
           <div v-if="!isRuleNameValid" class="error-message">{{ ruleErrorMessage }}</div>
         </div>
       </div>
@@ -61,7 +71,12 @@
             placeholder="Enter category name"
             class="enter-category"
           />
-          <Button class="add-category" @click="createCategory" label="+"></Button>
+          <Button
+            class="add-category min-width"
+            icon="pi pi-plus"
+            @click="createCategory"
+            style="background-color: #2d6dc1; width: 3rem"
+          ></Button>
           <div v-if="!isSLACategoryNameValid" class="error-message">
             {{ categoryErrorMessage }}
           </div>
@@ -218,99 +233,4 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
-/* View background */
-.background-card {
-  height: auto;
-  width: auto;
-}
-/* Add Subscriber Container */
-.subscriber-container {
-  display: flex;
-  align-items: center;
-  margin-bottom: 40px;
-}
-.enter-subscriber {
-  margin-right: 10px;
-}
-.add-subscriber {
-  background-color: mediumseagreen;
-  color: white;
-  border: none;
-  justify-content: center;
-  height: 30px;
-  width: 30px;
-  padding: 0;
-  font-size: 12px;
-}
-/* Add SLA Rule Container */
-.rule-container {
-  display: flex;
-  align-items: center;
-  margin-bottom: 40px;
-}
-.enter-rule {
-  margin-right: 10px;
-}
-.select-employees {
-  margin-right: 10px;
-}
-.select-occurred-in {
-  margin-right: 10px;
-}
-.add-rule {
-  background-color: mediumseagreen;
-  color: white;
-  border: none;
-  justify-content: center;
-  height: 30px;
-  width: 30px;
-  padding: 0;
-  font-size: 12px;
-}
-/* Add new SLA Category Container */
-.category-container {
-  display: flex;
-  align-items: center;
-  margin-bottom: 40px;
-}
-.select-subscriber {
-  margin-right: 10px;
-}
-.select-rule {
-  margin-right: 10px;
-}
-.enter-category {
-  margin-right: 10px;
-}
-.add-category {
-  background-color: mediumseagreen;
-  color: white;
-  border: none;
-  justify-content: center;
-  height: 30px;
-  width: 30px;
-  padding: 0;
-  font-size: 12px;
-}
-/* Delete Button */
-.p-button-danger {
-  background-color: red;
-  color: white;
-  border: none;
-  height: 30px;
-  width: 30px;
-}
-.trash-size {
-  color: white;
-  font-size: 5px;
-}
-.error-message {
-  display: block;
-  color: red;
-  font-size: 16px;
-  margin-top: 4px;
-  font-family: inherit;
-  margin-left: 10px;
-}
-</style>
+<style scoped></style>
