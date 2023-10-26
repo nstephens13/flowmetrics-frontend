@@ -24,6 +24,7 @@ import DataView from 'primevue/dataview';
 import DataViewLayoutOptions from 'primevue/dataviewlayoutoptions';
 import AutoComplete from 'primevue/autocomplete';
 import Chip from 'primevue/chip';
+import Tooltip from 'primevue/tooltip';
 
 import router from './router';
 import App from './App.vue';
@@ -61,3 +62,5 @@ app.component('AutoComplete', AutoComplete);
 app.component('Chip', Chip);
 
 app.mount('#app');
+
+app.directive('tooltip', Tooltip);
