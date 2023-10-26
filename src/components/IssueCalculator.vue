@@ -62,6 +62,11 @@
             {{ getTimeLeft(slotProps.data) }}
           </template>
         </Column>
+        <Column header="Laying time">
+          <template #body="slotProps">
+            {{ printLayingTime(slotProps.data) }}
+          </template>
+        </Column>
         <Column field="assignedTo" header="Assigned to">
           <template #body="slotProps">
             {{ printAssignedTo(slotProps.data.assignedTo) }}
@@ -80,10 +85,12 @@ import type { ProjectIF } from '@/model/ProjectIF';
 import getMockData from '@/assets/__mockdata__/mockDataComposer';
 import { countIssuesByStatus, Issue, getTimeLeft } from '@/model/Issue';
 import type { EmployeeIF } from '@/model/EmployeeIF';
+import type { IssueIF } from '@/model/IssueIF';
 </script>
 
 <script lang="ts">
 // Create a reference for the selectedProject with initial data
+
 const selectedProject: Ref<ProjectIF> = ref({
   id: 0,
   name: 'Project_Name',
@@ -119,6 +126,23 @@ function printAssignedTo(employee: EmployeeIF | null): string {
   const firstName = employee?.firstName ?? '';
   const lastName = employee?.lastName ?? '';
   return `${firstName} ${lastName}`;
+}
+
+/**
+ * if time since last status change is null, return 0
+ * @param issue an instance of an IssueIF
+ * @return returns laying time in hours or if more than 24 hours returns in days
+ */
+function printLayingTime(issue: IssueIF): string {
+  if (issue.lastStatusChange == null) {
+    return '0';
+  }
+  const currentTime: Date = new Date();
+  const difference: number = currentTime.valueOf() - issue.lastStatusChange.valueOf();
+  if (difference >= 86400000) {
+    return `${(difference / 86400000).toFixed(0).toString()}d`; // returns time in days (86400000 ms = 1 day)
+  }
+  return `${(difference / 3600000).toFixed(0).toString()}h`; // returns the time in hours (3600000 ms = 1 hour)
 }
 </script>
 

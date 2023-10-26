@@ -1,9 +1,10 @@
 import { describe, expect, test, afterEach, beforeEach } from 'vitest';
 import { createPinia, setActivePinia } from 'pinia';
 import useProjectsStore from '@/store/ProjectStore';
+import type { ProjectIF } from '@/model/ProjectIF';
 
 // Test Project Data
-const project1 = {
+const project1: ProjectIF = {
   id: 1,
   name: 'Project 1',
   description: 'Project 1 description',
@@ -30,6 +31,7 @@ const project1 = {
       closedAt: new Date('2021-01-02'),
       statusChanges: null,
       assignedSLARule: null,
+      lastStatusChange: null,
     },
     {
       id: 3,
@@ -51,10 +53,11 @@ const project1 = {
       closedAt: new Date('2021-01-02'),
       statusChanges: null,
       assignedSLARule: null,
+      lastStatusChange: null,
     },
   ],
 };
-const project2 = {
+const project2: ProjectIF = {
   id: 2,
   name: 'Project 2',
   description: 'Project 2 description',
@@ -81,6 +84,7 @@ const project2 = {
       closedAt: new Date('2021-01-02'),
       statusChanges: null,
       assignedSLARule: null,
+      lastStatusChange: null,
     },
     {
       id: 3,
@@ -102,6 +106,7 @@ const project2 = {
       closedAt: new Date('2021-01-02'),
       statusChanges: null,
       assignedSLARule: null,
+      lastStatusChange: null,
     },
   ],
 };

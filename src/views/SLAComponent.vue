@@ -10,10 +10,15 @@
         <div class="subscriber-container">
           <InputText
             v-model="newSubscriber"
-            class="enter-subscriber"
             placeholder="Enter subscriber name"
+            class="enter-subscriber"
           />
-          <Button class="add-subscriber" label="+" @click="addSubscriber"></Button>
+          <Button
+            class="add-subscriber max-width"
+            icon="pi pi-plus"
+            @click="addSubscriber"
+            style="background-color: #2d6dc1; width: 3rem"
+          ></Button>
           <div v-if="!isSubscriberNameValid" class="error-message">
             {{ SubscriberErrorMessage }}
           </div>
@@ -22,20 +27,25 @@
       <div>
         <h3>Add SLA Rule</h3>
         <div class="rule-container">
-          <InputText v-model="newRuleName" class="enter-rule" placeholder="Enter rule name" />
+          <InputText v-model="newRuleName" placeholder="Enter rule name" class="enter-rule" />
           <Dropdown
             v-model="newRuleMaxAssignedEmployees"
             :options="maxAssignedEmployeesOptions"
-            class="select-employees"
             placeholder="Select max assigned employees"
+            class="select-employees"
           />
           <Dropdown
             v-model="newOccurredIn"
             :options="occurredInOptions"
-            class="select-occurred-in"
             placeholder="Occurred in"
+            class="select-occurred-in"
           />
-          <Button class="add-rule" label="+" @click="addRule"></Button>
+          <Button
+            class="add-rule max-width"
+            icon="pi pi-plus"
+            @click="addRule"
+            style="background-color: #2d6dc1; width: 3rem"
+          ></Button>
           <div v-if="!isRuleNameValid" class="error-message">{{ ruleErrorMessage }}</div>
         </div>
       </div>
@@ -45,23 +55,28 @@
           <Dropdown
             v-model="selectedSubscriber"
             :options="subscriber"
-            class="select-subscriber"
             optionLabel="name"
             placeholder="Select subscriber"
+            class="select-subscriber"
           />
           <Dropdown
             v-model="selectedRule"
             :options="rules"
-            class="select-rule"
             optionLabel="name"
             placeholder="Select rule"
+            class="select-rule"
           />
           <InputText
             v-model="categoryName"
-            class="enter-category"
             placeholder="Enter category name"
+            class="enter-category"
           />
-          <Button class="add-category" label="+" @click="createCategory"></Button>
+          <Button
+            class="add-category min-width"
+            icon="pi pi-plus"
+            @click="createCategory"
+            style="background-color: #2d6dc1; width: 3rem"
+          ></Button>
           <div v-if="!isSLACategoryNameValid" class="error-message">
             {{ categoryErrorMessage }}
           </div>
@@ -81,8 +96,8 @@
           <Column header="Delete">
             <template #body="rowData">
               <Button
-                class="p-button-danger trash-size"
                 icon="pi pi-trash"
+                class="p-button-danger trash-size"
                 @click="deleteCategory(rowData.data)"
               ></Button>
             </template>
@@ -215,115 +230,4 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
-/* View background */
-.background-card {
-  height: auto;
-  width: auto;
-}
-
-/* Add Subscriber Container */
-.subscriber-container {
-  display: flex;
-  align-items: center;
-  margin-bottom: 40px;
-}
-
-.enter-subscriber {
-  margin-right: 10px;
-}
-
-.add-subscriber {
-  background-color: mediumseagreen;
-  color: white;
-  border: none;
-  justify-content: center;
-  height: 30px;
-  width: 30px;
-  padding: 0;
-  font-size: 12px;
-}
-
-/* Add SLA Rule Container */
-.rule-container {
-  display: flex;
-  align-items: center;
-  margin-bottom: 40px;
-}
-
-.enter-rule {
-  margin-right: 10px;
-}
-
-.select-employees {
-  margin-right: 10px;
-}
-
-.select-occurred-in {
-  margin-right: 10px;
-}
-
-.add-rule {
-  background-color: mediumseagreen;
-  color: white;
-  border: none;
-  justify-content: center;
-  height: 30px;
-  width: 30px;
-  padding: 0;
-  font-size: 12px;
-}
-
-/* Add new SLA Category Container */
-.category-container {
-  display: flex;
-  align-items: center;
-  margin-bottom: 40px;
-}
-
-.select-subscriber {
-  margin-right: 10px;
-}
-
-.select-rule {
-  margin-right: 10px;
-}
-
-.enter-category {
-  margin-right: 10px;
-}
-
-.add-category {
-  background-color: mediumseagreen;
-  color: white;
-  border: none;
-  justify-content: center;
-  height: 30px;
-  width: 30px;
-  padding: 0;
-  font-size: 12px;
-}
-
-/* Delete Button */
-.p-button-danger {
-  background-color: red;
-  color: white;
-  border: none;
-  height: 30px;
-  width: 30px;
-}
-
-.trash-size {
-  color: white;
-  font-size: 5px;
-}
-
-.error-message {
-  display: block;
-  color: red;
-  font-size: 16px;
-  margin-top: 4px;
-  font-family: inherit;
-  margin-left: 10px;
-}
-</style>
+<style scoped></style>
