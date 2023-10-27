@@ -56,7 +56,7 @@ const items = ref([
 
 <style scoped>
 .p-menubar {
-  background-color: #2d6dc1;
+  background-color: var(--flowMetricsBlue);
   color: #ffffff;
   border: 0;
   border-radius: 0;
