@@ -59,7 +59,7 @@ sonarqube-check:
         paths:
             - .sonar/cache
     script:
-        - sonar-scanner -Dsonar.exclusions=build/**  # Exclude the 'build' folder
+        - sonar-scanner
     allow_failure: true
     only:
         - merge_requests
