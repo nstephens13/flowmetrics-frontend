@@ -19,7 +19,7 @@ import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
 import router from '@/router/index';
 import EmployeeOverview from '@/views/EmployeeOverview.vue';
-import SLAComponent from '@/views/SLAComponent.vue';
+import SLAComponent from '../../views/SLAView.vue';
 
 describe('ProjectDescriptionPanel Divider component', () => {
   const wrapper = mount(ProjectOverview, {

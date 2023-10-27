@@ -34,6 +34,7 @@ describe('useProjectsStore', () => {
           closedAt: new Date('2021-01-02'),
           statusChanges: null,
           assignedSLARule: null,
+          lastStatusChange: null,
         },
         {
           id: 3,
@@ -47,6 +48,7 @@ describe('useProjectsStore', () => {
           closedAt: new Date('2021-01-02'),
           statusChanges: null,
           assignedSLARule: null,
+          lastStatusChange: null,
         },
       ],
     };
@@ -77,6 +79,7 @@ describe('useProjectsStore', () => {
           closedAt: new Date('2021-01-02'),
           statusChanges: null,
           assignedSLARule: null,
+          lastStatusChange: null,
         },
         {
           id: 3,
@@ -90,6 +93,7 @@ describe('useProjectsStore', () => {
           closedAt: new Date('2021-01-02'),
           statusChanges: null,
           assignedSLARule: null,
+          lastStatusChange: null,
         },
       ],
     };
@@ -112,6 +116,7 @@ describe('useProjectsStore', () => {
           closedAt: new Date('2021-01-02'),
           statusChanges: null,
           assignedSLARule: null,
+          lastStatusChange: null,
         },
         {
           id: 3,
@@ -125,6 +130,7 @@ describe('useProjectsStore', () => {
           closedAt: new Date('2021-01-02'),
           statusChanges: null,
           assignedSLARule: null,
+          lastStatusChange: null,
         },
       ],
     };

@@ -34,6 +34,7 @@ describe('Issue Calculator should map correctly ', () => {
     assignedTo: testEmployee,
     statusChanges: null,
     assignedSLARule: null,
+    lastStatusChange: null,
   };
   const additionalProject: ProjectIF = {
     id: 4,

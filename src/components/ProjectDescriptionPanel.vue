@@ -27,7 +27,7 @@
       </template>
     </Card>
   </div>
-  <div class="card" style="position: relative">
+  <div class="card">
     <Card>
       <template #title>
         <p>Issues</p>
