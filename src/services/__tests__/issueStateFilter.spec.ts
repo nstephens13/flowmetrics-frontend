@@ -24,6 +24,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
             closedAt: new Date('2021-01-02'),
             statusChanges: null,
             assignedSLARule: null,
+            lastStatusChange: null,
           },
           {
             id: 3,
@@ -37,6 +38,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
             closedAt: new Date('2021-01-02'),
             statusChanges: null,
             assignedSLARule: null,
+            lastStatusChange: null,
           },
         ],
       },
@@ -59,6 +61,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
             closedAt: new Date('2021-01-02'),
             statusChanges: null,
             assignedSLARule: null,
+            lastStatusChange: null,
           },
           {
             id: 3,
@@ -72,6 +75,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
             closedAt: new Date('2021-01-02'),
             statusChanges: null,
             assignedSLARule: null,
+            lastStatusChange: null,
           },
         ],
       },
@@ -106,6 +110,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
             closedAt: new Date('2021-01-02'),
             statusChanges: null,
             assignedSLARule: null,
+            lastStatusChange: null,
           },
           {
             id: 3,
@@ -119,6 +124,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
             closedAt: new Date('2021-01-02'),
             statusChanges: null,
             assignedSLARule: null,
+            lastStatusChange: null,
           },
         ],
       },
@@ -141,6 +147,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
             closedAt: new Date('2021-01-02'),
             statusChanges: null,
             assignedSLARule: null,
+            lastStatusChange: null,
           },
           {
             id: 3,
@@ -154,6 +161,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
             closedAt: new Date('2021-01-02'),
             statusChanges: null,
             assignedSLARule: null,
+            lastStatusChange: null,
           },
         ],
       },

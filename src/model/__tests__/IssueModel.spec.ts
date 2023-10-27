@@ -36,7 +36,8 @@ describe('Issue Class', () => {
       dueTo,
       status,
       statusChanges,
-      assignedSLARule
+      assignedSLARule,
+      null
     );
 
     expect(issue.id).toBe(id);
@@ -73,6 +74,7 @@ describe('getAssignedToName', () => {
       null,
       null,
       null,
+      null,
       null
     );
     const assignedToName = getAssignedToName(issue);
@@ -91,6 +93,7 @@ describe('getAssignedToName', () => {
         lastName: 'Smith',
       },
       new Date(),
+      null,
       null,
       null,
       null,
@@ -120,6 +123,7 @@ describe('getFormattedDate', () => {
       dueTo,
       null,
       null,
+      null,
       null
     );
     const formattedDate = getFormattedDate(issue);
@@ -138,6 +142,7 @@ describe('getFormattedDate', () => {
         lastName: 'Smith',
       },
       new Date(),
+      null,
       null,
       null,
       null,
@@ -168,6 +173,7 @@ describe('getTimeLeft', () => {
       dueTo,
       null,
       null,
+      null,
       null
     );
     const timeLeft = getTimeLeft(issue);
@@ -194,6 +200,7 @@ describe('getTimeLeft', () => {
       dueTo,
       null,
       null,
+      null,
       null
     );
     const timeLeft = getTimeLeft(issue);
@@ -212,6 +219,7 @@ describe('getTimeLeft', () => {
         lastName: 'Smith',
       },
       new Date(),
+      null,
       null,
       null,
       null,
@@ -240,6 +248,7 @@ describe('countIssuesByStatus', () => {
       null,
       'Open',
       null,
+      null,
       null
     ),
     new Issue(
@@ -256,6 +265,7 @@ describe('countIssuesByStatus', () => {
       null,
       null,
       'Closed',
+      null,
       null,
       null
     ),
@@ -274,6 +284,7 @@ describe('countIssuesByStatus', () => {
       null,
       'In Progress',
       null,
+      null,
       null
     ),
     new Issue(
@@ -291,6 +302,7 @@ describe('countIssuesByStatus', () => {
       null,
       'Open',
       null,
+      null,
       null
     ),
     new Issue(
@@ -307,6 +319,7 @@ describe('countIssuesByStatus', () => {
       null,
       null,
       'Closed',
+      null,
       null,
       null
     ),

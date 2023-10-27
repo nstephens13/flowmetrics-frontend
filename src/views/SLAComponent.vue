@@ -14,7 +14,7 @@
             class="enter-subscriber m-1"
           />
           <Button
-            class="add-subscriber m-1"
+            class="add-subscriber m-1 max-width"
             icon="pi pi-plus"
             @click="addSubscriber"
             style="background-color: var(--flowMetricsBlue)"
@@ -41,7 +41,7 @@
             class="select-occurred-in m-1"
           />
           <Button
-            class="add-rule m-1"
+            class="add-rule m-1 max-width"
             icon="pi pi-plus"
             @click="addRule"
             style="background-color: var(--flowMetricsBlue)"
@@ -74,7 +74,7 @@
             class="enter-category m-1"
           />
           <Button
-            class="add-category m-1"
+            class="add-category m-1 min-width"
             icon="pi pi-plus"
             @click="createCategory"
             style="background-color: var(--flowMetricsBlue)"
