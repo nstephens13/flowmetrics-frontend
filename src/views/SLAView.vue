@@ -237,6 +237,6 @@ export default defineComponent({
 
 <style scoped>
 .divider-position {
-    width: 99%;
+  width: 99%;
 }
 </style>
