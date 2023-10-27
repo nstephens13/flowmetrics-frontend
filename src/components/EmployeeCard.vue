@@ -4,7 +4,7 @@
       <Avatar
         :label="employee.firstName.charAt(0) + employee.lastName.charAt(0)"
         size="large"
-        style="background-color: #2d6dc1; color: #ffffff"
+        style="background-color: var(--flowMetricsBlue); color: #ffffff"
         v-tooltip.top="employee.emailAddress"
         type="text"
         placeholder="Top"
