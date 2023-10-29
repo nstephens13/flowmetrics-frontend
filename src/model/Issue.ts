@@ -24,7 +24,9 @@ class Issue implements IssueIF {
 
   statusChanges: number | null;
 
-  assignedSLARule: SLARule | null;
+  assignedSLARule: SLARule[] | null;
+
+  lastStatusChange: Date | null;
 
   constructor(
     id: number,
@@ -37,7 +39,8 @@ class Issue implements IssueIF {
     dueTo: Date | null,
     status: string | null,
     statusChanges: number | null,
-    assignedSLARule: SLARule | null
+    assignedSLARule: SLARule[] | null,
+    lastStatusChange: Date | null
   ) {
     this.id = id;
     this.name = name;
@@ -50,6 +53,7 @@ class Issue implements IssueIF {
     this.status = status;
     this.statusChanges = statusChanges;
     this.assignedSLARule = assignedSLARule;
+    this.lastStatusChange = lastStatusChange;
   }
 }
 
@@ -101,5 +105,20 @@ function countIssuesByStatus(issueList: Issue[], status: string | null): number 
   return (status ? issueList.filter((issue) => issue.status === status) : issueList).length;
 }
 
+/**
+ * Returns SLA-Rules assigned to an Issue
+ * @returns The Array of SLARules assigned to an Issue, can be null
+ */
+function getSLARules(issue: Issue) {
+  return issue.assignedSLARule ?? [];
+}
+
 // export of data array and remain time for ticket calculation
-export { Issue, getTimeLeft, getFormattedDate, getAssignedToName, countIssuesByStatus };
+export {
+  Issue,
+  getTimeLeft,
+  getFormattedDate,
+  getAssignedToName,
+  countIssuesByStatus,
+  getSLARules,
+};

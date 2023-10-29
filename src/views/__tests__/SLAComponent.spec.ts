@@ -9,7 +9,7 @@ import Button from 'primevue/button';
 import Column from 'primevue/column';
 import DataTable from 'primevue/datatable';
 import Divider from 'primevue/divider';
-import SLAComponent from '@/views/SLAComponent.vue';
+import SLAComponent from '../SLAView.vue';
 import router from '@/router';
 
 /* Basic test to ensure, that SLA Component is successfully rendered without any errors */

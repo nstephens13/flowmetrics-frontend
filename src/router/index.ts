@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import ProjectOverview from '@/views/ProjectOverview.vue';
 import IssueCalculator from '@/views/IssueCalculator.vue';
-import SLAComponent from '@/views/SLAComponent.vue';
+import SLAComponent from '@/views/SLAView.vue';
 import EmployeeOverview from '@/views/EmployeeOverview.vue';
 
 const router = createRouter({

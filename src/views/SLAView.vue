@@ -1,5 +1,5 @@
 <template>
-  <Card class="background-card">
+  <Card>
     <template #title>
       SLA Management View
       <Divider></Divider>
@@ -11,58 +11,75 @@
           <InputText
             v-model="newSubscriber"
             placeholder="Enter subscriber name"
-            class="enter-subscriber"
+            class="enter-subscriber m-1"
           />
-          <Button class="add-subscriber" @click="addSubscriber" label="+"></Button>
-          <div v-if="!isSubscriberNameValid" class="error-message">
+          <Button
+            class="add-subscriber m-1"
+            icon="pi pi-plus"
+            @click="addSubscriber"
+            style="background-color: var(--flowMetricsBlue)"
+          ></Button>
+          <div v-if="!isSubscriberNameValid" class="error-message m-1 text-red-500">
             {{ SubscriberErrorMessage }}
           </div>
         </div>
       </div>
       <div>
         <h3>Add SLA Rule</h3>
-        <div class="rule-container">
-          <InputText v-model="newRuleName" placeholder="Enter rule name" class="enter-rule" />
+        <div class="rule-container m-1">
+          <InputText v-model="newRuleName" placeholder="Enter rule name" class="enter-rule m-1" />
           <Dropdown
             v-model="newRuleMaxAssignedEmployees"
             :options="maxAssignedEmployeesOptions"
             placeholder="Select max assigned employees"
-            class="select-employees"
+            class="select-employees m-1"
           />
           <Dropdown
             v-model="newOccurredIn"
             :options="occurredInOptions"
             placeholder="Occurred in"
-            class="select-occurred-in"
+            class="select-occurred-in m-1"
           />
-          <Button class="add-rule" @click="addRule" label="+"></Button>
-          <div v-if="!isRuleNameValid" class="error-message">{{ ruleErrorMessage }}</div>
+          <Button
+            class="add-rule m-1"
+            icon="pi pi-plus"
+            @click="addRule"
+            style="background-color: var(--flowMetricsBlue)"
+          ></Button>
+          <div v-if="!isRuleNameValid" class="error-message m-1 text-red-500">{{
+            ruleErrorMessage
+          }}</div>
         </div>
       </div>
       <div>
         <h3>Add new SLA Category</h3>
-        <div class="category-container">
+        <div class="category-container m-1">
           <Dropdown
             v-model="selectedSubscriber"
             :options="subscriber"
             optionLabel="name"
             placeholder="Select subscriber"
-            class="select-subscriber"
+            class="select-subscriber m-1"
           />
           <Dropdown
             v-model="selectedRule"
             :options="rules"
             optionLabel="name"
             placeholder="Select rule"
-            class="select-rule"
+            class="select-rule m-1"
           />
           <InputText
             v-model="categoryName"
             placeholder="Enter category name"
-            class="enter-category"
+            class="enter-category m-1"
           />
-          <Button class="add-category" @click="createCategory" label="+"></Button>
-          <div v-if="!isSLACategoryNameValid" class="error-message">
+          <Button
+            class="add-category m-1"
+            icon="pi pi-plus"
+            @click="createCategory"
+            style="background-color: var(--flowMetricsBlue)"
+          ></Button>
+          <div v-if="!isSLACategoryNameValid" class="error-message m-1 text-red-500">
             {{ categoryErrorMessage }}
           </div>
         </div>
@@ -82,7 +99,7 @@
             <template #body="rowData">
               <Button
                 icon="pi pi-trash"
-                class="p-button-danger trash-size"
+                class="p-button-danger trash-size m-1"
                 @click="deleteCategory(rowData.data)"
               ></Button>
             </template>
@@ -218,99 +235,4 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
-/* View background */
-.background-card {
-  height: auto;
-  width: auto;
-}
-/* Add Subscriber Container */
-.subscriber-container {
-  display: flex;
-  align-items: center;
-  margin-bottom: 40px;
-}
-.enter-subscriber {
-  margin-right: 10px;
-}
-.add-subscriber {
-  background-color: mediumseagreen;
-  color: white;
-  border: none;
-  justify-content: center;
-  height: 30px;
-  width: 30px;
-  padding: 0;
-  font-size: 12px;
-}
-/* Add SLA Rule Container */
-.rule-container {
-  display: flex;
-  align-items: center;
-  margin-bottom: 40px;
-}
-.enter-rule {
-  margin-right: 10px;
-}
-.select-employees {
-  margin-right: 10px;
-}
-.select-occurred-in {
-  margin-right: 10px;
-}
-.add-rule {
-  background-color: mediumseagreen;
-  color: white;
-  border: none;
-  justify-content: center;
-  height: 30px;
-  width: 30px;
-  padding: 0;
-  font-size: 12px;
-}
-/* Add new SLA Category Container */
-.category-container {
-  display: flex;
-  align-items: center;
-  margin-bottom: 40px;
-}
-.select-subscriber {
-  margin-right: 10px;
-}
-.select-rule {
-  margin-right: 10px;
-}
-.enter-category {
-  margin-right: 10px;
-}
-.add-category {
-  background-color: mediumseagreen;
-  color: white;
-  border: none;
-  justify-content: center;
-  height: 30px;
-  width: 30px;
-  padding: 0;
-  font-size: 12px;
-}
-/* Delete Button */
-.p-button-danger {
-  background-color: red;
-  color: white;
-  border: none;
-  height: 30px;
-  width: 30px;
-}
-.trash-size {
-  color: white;
-  font-size: 5px;
-}
-.error-message {
-  display: block;
-  color: red;
-  font-size: 16px;
-  margin-top: 4px;
-  font-family: inherit;
-  margin-left: 10px;
-}
-</style>
+<style scoped></style>
