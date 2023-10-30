@@ -109,7 +109,13 @@ function loadArraysFromFile(
             name: string;
             description: string;
             assignedTo: null;
-            createdBy: { id: number; firstName: string; lastName: string; assignedIssues: never[] };
+            createdBy: {
+              id: number;
+              firstName: string;
+              lastName: string;
+              status: string;
+              assignedIssues: never[];
+            };
             createdAt: string;
             closedAt: null;
             dueTo: string;
@@ -123,9 +129,10 @@ function loadArraysFromFile(
               id: number;
               firstName: string;
               lastName: string;
+                status: string;
               assignedIssues: never[];
             };
-            createdBy: { id: number; firstName: string; lastName: string; assignedIssues: never[] };
+            createdBy: { id: number; firstName: string; lastName: string; status: string ; assignedIssues: never[] };
             createdAt: string;
             closedAt: string;
             dueTo: string;
@@ -139,9 +146,10 @@ function loadArraysFromFile(
               id: number;
               firstName: string;
               lastName: string;
+                status: string;
               assignedIssues: never[];
             };
-            createdBy: { id: number; firstName: string; lastName: string; assignedIssues: never[] };
+            createdBy: { id: number; firstName: string; lastName: string; status: string; assignedIssues: never[] };
             createdAt: string;
             closedAt: null;
             dueTo: string;
@@ -155,9 +163,10 @@ function loadArraysFromFile(
               id: number;
               firstName: string;
               lastName: string;
+                status: string;
               assignedIssues: never[];
             };
-            createdBy: { id: number; firstName: string; lastName: string; assignedIssues: never[] };
+            createdBy: { id: number; firstName: string; lastName: string; status: string; assignedIssues: never[] };
             createdAt: string;
             closedAt: null;
             dueTo: string;
