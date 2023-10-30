@@ -73,7 +73,7 @@
         "id": 11,
         "firstName": "Abi",
         "lastName": "Johnson",
-        "status": "active",
+        "status": "inactive",
         "assignedIssues": []
     },
     {

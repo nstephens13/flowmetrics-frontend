@@ -17,6 +17,15 @@
         {{ employee.lastName }}
       </label>
     </div>
+    <div class="flex align-items-center justify-content-center">
+      <label
+        id="status"
+        style="white-space: nowrap"
+        :style="{ color: employee.status === 'active' ? 'green' : 'red' }"
+      >
+        {{ employee.status }}
+      </label>
+    </div>
     <div class="flex align-items-center justify-content-center" style="white-space: nowrap">
       <label id="ticketCount"> Total issues: {{ totalIssues }} </label>
     </div>
