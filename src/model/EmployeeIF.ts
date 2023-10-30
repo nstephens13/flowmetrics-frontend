@@ -8,4 +8,5 @@ export interface EmployeeIF {
   id: number;
   firstName: string;
   lastName: string;
+  status: 'active' | 'inactive';
 }
