@@ -6,6 +6,7 @@ import {
   getFormattedDate,
   getTimeLeft,
 } from '../Issue';
+import type { EmployeeIF } from '../EmployeeIF';
 
 describe('Issue Class', () => {
   test('creates an instance of Issue with the provided properties', () => {
@@ -13,10 +14,11 @@ describe('Issue Class', () => {
     const name = 'Test Issue';
     const description = 'This is a test issue';
     const assignedTo = null;
-    const createdBy = {
+    const createdBy: EmployeeIF = {
       id: 34,
       firstName: 'John',
       lastName: 'Doe',
+      status: 'active',
     };
     const createdAt = new Date();
     const closedAt = null;
@@ -63,11 +65,13 @@ describe('getAssignedToName', () => {
         id: 34,
         firstName: 'John',
         lastName: 'Doe',
+        status: 'active',
       },
       {
         id: 4245,
         firstName: 'Jane',
         lastName: 'Smith',
+        status: 'active',
       },
       new Date(),
       null,
@@ -91,6 +95,7 @@ describe('getAssignedToName', () => {
         id: 4245,
         firstName: 'Jane',
         lastName: 'Smith',
+        status: 'active',
       },
       new Date(),
       null,
@@ -117,6 +122,7 @@ describe('getFormattedDate', () => {
         id: 4245,
         firstName: 'Jane',
         lastName: 'Smith',
+        status: 'active',
       },
       new Date(),
       null,
@@ -140,6 +146,7 @@ describe('getFormattedDate', () => {
         id: 4245,
         firstName: 'Jane',
         lastName: 'Smith',
+        status: 'active',
       },
       new Date(),
       null,
@@ -167,6 +174,7 @@ describe('getTimeLeft', () => {
         id: 4245,
         firstName: 'Jane',
         lastName: 'Smith',
+        status: 'active',
       },
       new Date(),
       null,
@@ -194,6 +202,7 @@ describe('getTimeLeft', () => {
         id: 4245,
         firstName: 'Jane',
         lastName: 'Smith',
+        status: 'active',
       },
       new Date(),
       null,
@@ -217,6 +226,7 @@ describe('getTimeLeft', () => {
         id: 4245,
         firstName: 'Jane',
         lastName: 'Smith',
+        status: 'active',
       },
       new Date(),
       null,
@@ -242,6 +252,7 @@ describe('countIssuesByStatus', () => {
         id: 4245,
         firstName: 'Jane',
         lastName: 'Smith',
+        status: 'active',
       },
       new Date(),
       null,
@@ -260,6 +271,7 @@ describe('countIssuesByStatus', () => {
         id: 34,
         firstName: 'John',
         lastName: 'Doe',
+        status: 'active',
       },
       new Date(),
       null,
@@ -278,6 +290,7 @@ describe('countIssuesByStatus', () => {
         id: 4245,
         firstName: 'Jane',
         lastName: 'Smith',
+        status: 'active',
       },
       new Date(),
       null,
@@ -296,6 +309,7 @@ describe('countIssuesByStatus', () => {
         id: 34,
         firstName: 'John',
         lastName: 'Doe',
+        status: 'active',
       },
       new Date(),
       null,
@@ -314,6 +328,7 @@ describe('countIssuesByStatus', () => {
         id: 4245,
         firstName: 'Jane',
         lastName: 'Smith',
+        status: 'active',
       },
       new Date(),
       null,
