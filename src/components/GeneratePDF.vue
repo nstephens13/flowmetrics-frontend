@@ -9,16 +9,24 @@
 <script lang="ts" setup>
 import Button from 'primevue/button';
 import jsPDF from 'jspdf';
+import { ref } from 'vue';
 import autoTable from 'jspdf-autotable';
 import getMockData from '@/assets/__mockdata__/mockDataComposer';
 import type { ProjectIF } from '@/model/ProjectIF';
 import type { IssueIF } from '@/model/IssueIF';
 import { hasSLARule, printSLARuleNames } from '@/model/IssueIF';
 
+const isGenerating = ref(false);
 const project = getMockData(7) as ProjectIF;
 const issues = project.issues as IssueIF[];
 
 const generatePDF = () => {
+  if (isGenerating.value) {
+    return; // Do nothing if a PDF is already being generated
+  }
+  // Disable the button
+  isGenerating.value = true;
+
   // Create a new PDF
   const doc = new jsPDF('landscape', 'mm', 'a4');
 
@@ -48,6 +56,10 @@ const generatePDF = () => {
     body: issueArray,
   });
   doc.save('SLARuleReport.pdf');
+  // Enable the button after a 10-second delay
+  setTimeout(() => {
+    isGenerating.value = false;
+  }, 10000); // 10 seconds (10000 milliseconds)
 };
 </script>
 
