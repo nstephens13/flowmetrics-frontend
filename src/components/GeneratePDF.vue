@@ -23,7 +23,7 @@ const generatePDF = () => {
   const doc = new jsPDF('landscape', 'mm', 'a4');
 
   const headerNames = [
-    { id: 'ID', name: 'Name', description: 'Description', assignedSLARule: 'Assigned SLA Rule' },
+    { id: 'ID', name: 'Name', description: 'Description', assignedSLARule: 'Assigned SLA Rules' },
   ];
 
   const issueArray = issues.map((issue) => [
