@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import type { Ref } from 'vue';
+import EmployeeCard from '@/components/EmployeeCard.vue';
 import type { EmployeeIF } from '@/model/EmployeeIF';
 import type { ProjectIF } from '@/model/ProjectIF';
 import type { IssueDataIF } from '@/model/IssueDataIF';
-import { calculateWorkload, mergeEmployees } from '@/services/workloadCalculator';
-import useFilterConfigStore from '@/store/FilterConfigStore';
-import filterProjectThatHasTheAllowedStatus from '@/services/filter/IssuesStateFilter';
-import EmployeeCard from '@/components/EmployeeCard.vue';
 import { getIssueStatusList } from '@/model/ProjectIF';
+import { calculateWorkload, mergeEmployees } from '@/services/workloadCalculator';
+import filterProjectThatHasTheAllowedStatus from '@/services/filter/IssuesStateFilter';
 import useProjectsStore from '@/store/ProjectStore';
+import useFilterConfigStore from '@/store/FilterConfigStore';
 
 // Create a reference to the FilterConfigStore and ProjectStore instances
 const filterConfigStore = useFilterConfigStore();

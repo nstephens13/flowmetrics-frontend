@@ -553,7 +553,7 @@ function getMockData(dataset: number): ProjectIF {
           dueTo: faker.date.future(),
           status: '',
           statusChanges: 0,
-          assignedSLARule: null,
+          assignedSLARule: [],
           lastStatusChange: faker.date.recent(),
         });
       }

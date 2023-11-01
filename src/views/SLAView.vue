@@ -1,5 +1,5 @@
 <template>
-  <Card class="background-card">
+  <Card>
     <template #title>
       <h4>SLA Management View</h4>
       <Divider class="p-divider p-divider-horizontal divider-position" />
@@ -115,7 +115,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import useSLAStore from '@/store/store';
+import useSLAStore from '@/store/SLAStore';
 import type { SLASubscriber } from '@/model/SLASubscriber';
 import type { SLARule } from '@/model/SLARule';
 import type { SLACategory } from '@/model/SLACategory';
@@ -235,8 +235,4 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
-.divider-position {
-  width: 99%;
-}
-</style>
+<style scoped></style>
