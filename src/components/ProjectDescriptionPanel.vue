@@ -2,8 +2,8 @@
   <div class="card" style="position: relative">
     <Card>
       <template #title>
-        Project Overview
-        <Divider></Divider>
+        <p>Project Overview</p>
+        <Divider class="p-divider p-divider-horizontal divider-position" />
       </template>
       <template #content>
         <Panel>
@@ -30,8 +30,8 @@
   <div class="card">
     <Card>
       <template #title>
-        Issues
-        <Divider></Divider>
+        <p>Issues</p>
+        <Divider class="p-divider p-divider-horizontal divider-position" />
       </template>
       <template #content>
         <div class="card">
@@ -149,5 +149,8 @@ const projects: Ref<ProjectIF[]> = ref([
 .p-card {
   margin: 15px;
   box-shadow: none;
+}
+.divider-position {
+  width: 100%;
 }
 </style>

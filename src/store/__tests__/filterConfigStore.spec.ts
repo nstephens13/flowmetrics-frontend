@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
 import { createPinia, setActivePinia } from 'pinia';
-import useFilterConfigStore from '@/store/FilterConfigStore';
+import useFilterConfigStore from '../filterConfigStore';
 import type { ProjectIF } from '@/model/ProjectIF';
 import type { ProjectFilterConfigIF } from '@/model/FilterConfigIF';
 

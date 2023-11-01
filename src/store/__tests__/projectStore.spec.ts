@@ -1,6 +1,6 @@
 import { describe, expect, test, afterEach, beforeEach } from 'vitest';
 import { createPinia, setActivePinia } from 'pinia';
-import useProjectsStore from '@/store/ProjectStore';
+import useProjectsStore from '../projectStore';
 import type { ProjectIF } from '@/model/ProjectIF';
 
 // Test Project Data

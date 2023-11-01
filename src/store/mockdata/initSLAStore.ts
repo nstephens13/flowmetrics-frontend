@@ -1,4 +1,4 @@
-import useSLAStore from '@/store/SLAStore';
+import useSLAStore from '@/store/slaStore';
 import type { SLACategory } from '@/model/SLACategory';
 
 export default function initSLAStore() {

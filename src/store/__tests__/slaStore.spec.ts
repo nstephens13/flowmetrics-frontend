@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
 import { createPinia, setActivePinia } from 'pinia';
-import useSLAStore from '@/store/SLAStore';
+import useSLAStore from '../slaStore';
 import type { SLASubscriber } from '@/model/SLASubscriber';
 import type { SLARule } from '@/model/SLARule';
 import type { SLACategory } from '@/model/SLACategory';
