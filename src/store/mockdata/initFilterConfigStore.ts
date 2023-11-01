@@ -1,4 +1,4 @@
-import useFilterConfigStore from '@/store/FilterConfigStore';
+import useFilterConfigStore from '@/store/filterConfigStore';
 import type { ProjectIF } from '@/model/ProjectIF';
 import type { ProjectFilterConfigIF } from '@/model/FilterConfigIF';
 

@@ -1,5 +1,5 @@
 import getMockData from '@/assets/__mockdata__/mockDataComposer';
-import useProjectsStore from '@/store/ProjectStore';
+import useProjectsStore from '@/store/projectStore';
 
 export default function initProjectStore() {
   const projectStore = useProjectsStore();

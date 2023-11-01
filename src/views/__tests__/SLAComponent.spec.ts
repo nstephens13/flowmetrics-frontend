@@ -11,7 +11,7 @@ import DataTable from 'primevue/datatable';
 import Divider from 'primevue/divider';
 import SLAComponent from '../SLAView.vue';
 import router from '@/router';
-import useSLAStore from '../../store/SLAStore';
+import useSLAStore from '../../store/slaStore';
 
 describe('SLAComponent Test with Store Data', () => {
   let slaStore: any;
