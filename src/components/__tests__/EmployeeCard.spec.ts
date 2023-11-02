@@ -5,6 +5,7 @@ import PrimeVue from 'primevue/config';
 import Avatar from 'primevue/avatar';
 import Chip from 'primevue/chip';
 import ProgressBar from 'primevue/progressbar';
+import Tooltip from 'primevue/tooltip';
 import router from '@/router/index';
 
 import EmployeeCard from '../EmployeeCard.vue';
@@ -19,6 +20,9 @@ describe('Employee Card should load all the Components', () => {
         Avatar,
         Chip,
         ProgressBar,
+      },
+      directives: {
+        Tooltip,
       },
     },
     propsData: {

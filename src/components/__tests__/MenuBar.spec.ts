@@ -6,6 +6,7 @@ import Menu from 'primevue/menu';
 import PrimeVue from 'primevue/config';
 import Menubar from 'primevue/menubar';
 import { createTestingPinia } from '@pinia/testing';
+import InputText from 'primevue/inputtext';
 import router from '@/router/index';
 import MenuBar from '@/components/MenuBar.vue';
 
@@ -32,6 +33,7 @@ describe('Menubar Button should open sidebar', () => {
         Menu,
         Menubar,
         Sidebar,
+        InputText,
       },
       stubs: {
         teleport: false,

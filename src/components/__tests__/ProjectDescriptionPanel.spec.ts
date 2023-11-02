@@ -9,6 +9,7 @@ import Column from 'primevue/column';
 import Divider from 'primevue/divider';
 import MultiSelect from 'primevue/multiselect';
 import { createTestingPinia } from '@pinia/testing';
+import InputText from 'primevue/inputtext';
 import router from '@/router/index';
 import ProjectDescriptionPanel from '../ProjectDescriptionPanel.vue';
 import getMockData from '../../assets/__mockdata__/mockDataComposer';
@@ -51,6 +52,7 @@ describe('Project Overview should load all the Components', () => {
         Column,
         Divider,
         MultiSelect,
+        InputText,
       },
     },
   });
