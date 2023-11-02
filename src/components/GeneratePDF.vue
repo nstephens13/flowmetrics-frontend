@@ -56,10 +56,10 @@ const generatePDF = () => {
     body: issueArray,
   });
   doc.save('SLARuleReport.pdf');
-  // Enable the button after a 10-second delay
+  // Enable the button after a 1-second delay
   setTimeout(() => {
     isGenerating.value = false;
-  }, 10000); // 10 seconds (10000 milliseconds)
+  }, 1000); // 1 seconds (1000 milliseconds)
 };
 </script>
 
