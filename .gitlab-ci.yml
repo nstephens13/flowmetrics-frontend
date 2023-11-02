@@ -1,52 +1,52 @@
 stages:
   - Lint
   - Test
-  - sonarqube-check
+  - Sonarqube-Check
   - Build
   - Deploy
 
 .frontendJob:
-  image: node:20.2.0-alpine3.18
-  rules:
-    - if: '$SCHEDULED == "true"'
-      when: never
-    - if: "$CI_COMMIT_REF_NAME == 'main'"
-    - if: '$CI_COMMIT_REF_NAME == "development"'
-    - if: '($CI_MERGE_REQUEST_TITLE != null)'
-      when: never
-    - if: '$CI_MERGE_REQUEST_DRAFT == "false"'
-    - exists:
-        - "$CI_MERGE_REQUEST_TARGET_BRANCH_NAME"
-    - changes:
-        - "./*"
-    - changes:
-        - ".gitlab-ci.yml"
+    image: node:20.2.0-alpine3.18
+    rules:
+      - if: '$SCHEDULED == "true"'
+        when: never
+      - if: "$CI_COMMIT_REF_NAME == 'main'"
+      - if: '$CI_COMMIT_REF_NAME == "development"'
+      - if: '($CI_MERGE_REQUEST_TITLE != null)'
+        when: never
+      - if: '$CI_MERGE_REQUEST_DRAFT == "false"'
+      - exists:
+          - "$CI_MERGE_REQUEST_TARGET_BRANCH_NAME"
+      - changes:
+          - "./*"
+      - changes:
+          - ".gitlab-ci.yml"
 
 ######## Frontend Pipeline
 "Frontend-Lint":
-  stage: Lint
-  script:
-    - npm ci
-    - npm run lint:no-fix
-  extends:
-    - .frontendJob
+    stage: Lint
+    script:
+      - npm ci
+      - npm run lint:no-fix
+    extends:
+      - .frontendJob
 
 "Frontend-Test":
-  stage: Test
-  coverage: /All files\s*\|\s*([\d\.]+)/
-  script:
-    - npm ci
-    - npm run test:pipeline
-  artifacts:
-    reports:
-      coverage_report:
-        coverage_format: cobertura
-        path: coverage/cobertura-coverage.xml
-  extends:
-    - .frontendJob
+    stage: Test
+    coverage: /All files\s*\|\s*([\d\.]+)/
+    script:
+      - npm ci
+      - npm run test:pipeline
+    artifacts:
+      reports:
+        coverage_report:
+          coverage_format: cobertura
+          path: coverage/cobertura-coverage.xml
+    extends:
+      - .frontendJob
 
 sonarqube-check:
-    stage: sonarqube-check
+    stage: Sonarqube-Check
     image:
         name: sonarsource/sonar-scanner-cli:5.0
         entrypoint: [""]
@@ -91,19 +91,19 @@ sonarqube-check:
         - development
 
 "Frontend-Deployment":
-  image: kroniak/ssh-client:latest
-  stage: Deploy
-  tags:
-    - docker
-  script:
-    - mkdir -p ~/.ssh
-    - chmod 700 ~/.ssh
-    - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
-    - echo "$SSH_KEY" > ~/.ssh/id_rsa
-    - echo "$SSH_KEY_KAIN" > ~/.ssh/id_rsa_kain
-    - chmod 600 ~/.ssh/id_rsa
-    - chmod 600 ~/.ssh/id_rsa_kain
-    - ssh -i ~/.ssh/id_rsa $VM_USERNAME@$VM_IP -p $SSH_DEPLOYMENT_PORT "podman login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY && podman pull $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG && podman stop flowmetrics && podman run --name flowmetrics -d -p 40100:8080 --rm $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG && exit"
-  only:
-    - main
-    - development
+    image: kroniak/ssh-client:latest
+    stage: Deploy
+    tags:
+      - docker
+    script:
+      - mkdir -p ~/.ssh
+      - chmod 700 ~/.ssh
+      - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+      - echo "$SSH_KEY" > ~/.ssh/id_rsa
+      - echo "$SSH_KEY_KAIN" > ~/.ssh/id_rsa_kain
+      - chmod 600 ~/.ssh/id_rsa
+      - chmod 600 ~/.ssh/id_rsa_kain
+      - ssh -i ~/.ssh/id_rsa $VM_USERNAME@$VM_IP -p $SSH_DEPLOYMENT_PORT "podman login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY && podman pull $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG && podman stop flowmetrics && podman run --name flowmetrics -d -p 40100:8080 --rm $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG && exit"
+    only:
+      - main
+      - development
