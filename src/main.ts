@@ -32,6 +32,9 @@ import 'primevue/resources/themes/lara-light-indigo/theme.css';
 import 'primevue/resources/primevue.min.css';
 import 'primeicons/primeicons.css';
 import 'primeflex/primeflex.css';
+import initSLAStore from '@/store/mockdata/initSLAStore';
+import initProjectStore from '@/store/mockdata/initProjectStore';
+import initFilterConfigStore from '@/store/mockdata/initFilterConfigStore';
 
 const app = createApp(App);
 const pinia = createPinia();
@@ -60,7 +63,11 @@ app.component('DataView', DataView);
 app.component('DataViewLayoutOptions', DataViewLayoutOptions);
 app.component('AutoComplete', AutoComplete);
 app.component('Chip', Chip);
+app.directive('tooltip', Tooltip);
 
 app.mount('#app');
 
-app.directive('tooltip', Tooltip);
+// initialize the stores
+initSLAStore();
+initProjectStore();
+initFilterConfigStore();

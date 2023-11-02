@@ -1,8 +1,8 @@
 <template>
   <Card>
     <template #title>
-      SLA Management View
-      <Divider></Divider>
+      <h4>SLA Management View</h4>
+      <Divider class="p-divider p-divider-horizontal divider-position" />
     </template>
     <template #content>
       <div>
@@ -10,14 +10,14 @@
         <div class="subscriber-container">
           <InputText
             v-model="newSubscriber"
-            placeholder="Enter subscriber name"
             class="enter-subscriber m-1"
+            placeholder="Enter subscriber name"
           />
           <Button
             class="add-subscriber m-1"
             icon="pi pi-plus"
-            @click="addSubscriber"
             style="background-color: var(--flowMetricsBlue)"
+            @click="addSubscriber"
           ></Button>
           <div v-if="!isSubscriberNameValid" class="error-message m-1 text-red-500">
             {{ SubscriberErrorMessage }}
@@ -27,24 +27,24 @@
       <div>
         <h3>Add SLA Rule</h3>
         <div class="rule-container m-1">
-          <InputText v-model="newRuleName" placeholder="Enter rule name" class="enter-rule m-1" />
+          <InputText v-model="newRuleName" class="enter-rule m-1" placeholder="Enter rule name" />
           <Dropdown
             v-model="newRuleMaxAssignedEmployees"
             :options="maxAssignedEmployeesOptions"
-            placeholder="Select max assigned employees"
             class="select-employees m-1"
+            placeholder="Select max assigned employees"
           />
           <Dropdown
             v-model="newOccurredIn"
             :options="occurredInOptions"
-            placeholder="Occurred in"
             class="select-occurred-in m-1"
+            placeholder="Occurred in"
           />
           <Button
             class="add-rule m-1"
             icon="pi pi-plus"
-            @click="addRule"
             style="background-color: var(--flowMetricsBlue)"
+            @click="addRule"
           ></Button>
           <div v-if="!isRuleNameValid" class="error-message m-1 text-red-500">{{
             ruleErrorMessage
@@ -57,27 +57,27 @@
           <Dropdown
             v-model="selectedSubscriber"
             :options="subscriber"
+            class="select-subscriber m-1"
             optionLabel="name"
             placeholder="Select subscriber"
-            class="select-subscriber m-1"
           />
           <Dropdown
             v-model="selectedRule"
             :options="rules"
+            class="select-rule m-1"
             optionLabel="name"
             placeholder="Select rule"
-            class="select-rule m-1"
           />
           <InputText
             v-model="categoryName"
-            placeholder="Enter category name"
             class="enter-category m-1"
+            placeholder="Enter category name"
           />
           <Button
             class="add-category m-1"
             icon="pi pi-plus"
-            @click="createCategory"
             style="background-color: var(--flowMetricsBlue)"
+            @click="createCategory"
           ></Button>
           <div v-if="!isSLACategoryNameValid" class="error-message m-1 text-red-500">
             {{ categoryErrorMessage }}
@@ -98,8 +98,8 @@
           <Column header="Delete">
             <template #body="rowData">
               <Button
-                icon="pi pi-trash"
                 class="p-button-danger trash-size m-1"
+                icon="pi pi-trash"
                 @click="deleteCategory(rowData.data)"
               ></Button>
             </template>
@@ -115,7 +115,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import useSLAStore from '@/store/store';
+import useSLAStore from '@/store/slaStore';
 import type { SLASubscriber } from '@/model/SLASubscriber';
 import type { SLARule } from '@/model/SLARule';
 import type { SLACategory } from '@/model/SLACategory';
@@ -124,9 +124,6 @@ import GeneratePDF from '@/components/GeneratePDF.vue';
 // Define the 'SLAComponent' component
 export default defineComponent({
   name: 'SLAComponent',
-  mounted() {
-    this.slaStore.initializeCategories();
-  },
   components: { GeneratePDF },
   data() {
     return {
