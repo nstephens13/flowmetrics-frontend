@@ -1,10 +1,11 @@
 import { describe, assert, test } from 'vitest';
 import filterProjectThatHasTheAllowedStatus from '@/services/filter/IssuesStateFilter';
 import type { FilterConfigIF } from '@/model/FilterConfigIF';
+import type { ProjectIF } from '@/model/ProjectIF';
 
 describe('filterProjectThatHasTheAllowedStatus', () => {
   test('should filter projects based on the allowed status', () => {
-    const projects = [
+    const projects: ProjectIF[] = [
       {
         id: 1,
         name: 'Project 1',
@@ -22,12 +23,14 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
               firstName: 'Bernd',
               lastName: 'Mustermann',
               emailAddress: 'bern.mustermann@email.com',
+                status: "active",
             },
             createdBy: {
               id: 4,
               firstName: 'Bernd',
               lastName: 'Mustermann',
               emailAddress: 'bern.mustermann@email.com',
+                status: "active",
             },
             dueTo: new Date('2021-01-01'),
             createdAt: new Date('2021-01-01'),
@@ -46,12 +49,14 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
               firstName: 'Gabi',
               lastName: 'Winkler',
               emailAddress: 'gabi.winkler@email.com',
+                status: "active",
             },
             createdBy: {
               id: 4,
               firstName: 'Bernd',
               lastName: 'Mustermann',
               emailAddress: 'bern.mustermann@email.com',
+                status: "active",
             },
             dueTo: new Date('2021-01-01'),
             createdAt: new Date('2021-01-01'),
@@ -79,12 +84,14 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
               firstName: 'Franzi',
               lastName: 'Siemens',
               emailAddress: 'franzi.siemens@email.com',
+                status: "active",
             },
             createdBy: {
               id: 8,
               firstName: 'Helmut',
               lastName: 'Freiherr',
               emailAddress: 'helmut.freiherr@email.com',
+                status: "active",
             },
             dueTo: new Date('2021-01-01'),
             createdAt: new Date('2021-01-01'),
@@ -103,12 +110,14 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
               firstName: 'Gabi',
               lastName: 'Winkler',
               emailAddress: 'gabi.winkler@email.com',
+                status: "active",
             },
             createdBy: {
               id: 4,
               firstName: 'Bernd',
               lastName: 'Mustermann',
               emailAddress: 'bern.mustermann@email.com',
+                status: "active",
             },
             dueTo: new Date('2021-01-01'),
             createdAt: new Date('2021-01-01'),
@@ -148,12 +157,14 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
               firstName: 'Bernd',
               lastName: 'Mustermann',
               emailAddress: 'bern.mustermann@email.com',
+                status: "active",
             },
             createdBy: {
               id: 4,
               firstName: 'Bernd',
               lastName: 'Mustermann',
               emailAddress: 'bern.mustermann@email.com',
+                status: "active",
             },
             dueTo: new Date('2021-01-01'),
             createdAt: new Date('2021-01-01'),
@@ -172,12 +183,14 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
               firstName: 'Gabi',
               lastName: 'Winkler',
               emailAddress: 'gabi.winkler@email.com',
+                status: "active",
             },
             createdBy: {
               id: 4,
               firstName: 'Bernd',
               lastName: 'Mustermann',
               emailAddress: 'bern.mustermann@email.com',
+                status: "active",
             },
             dueTo: new Date('2021-01-01'),
             createdAt: new Date('2021-01-01'),
@@ -200,18 +213,8 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
             status: 'Open',
             name: 'Issue 5',
             description: 'Issue 5 description',
-            assignedTo: {
-              id: 7,
-              firstName: 'Franzi',
-              lastName: 'Siemens',
-              emailAddress: 'franzi.siemens@email.com',
-            },
-            createdBy: {
-              id: 8,
-              firstName: 'Helmut',
-              lastName: 'Freiherr',
-              emailAddress: 'helmut.freiherr@email.com',
-            },
+            assignedTo: { id: 7, firstName: 'Franzi', lastName: 'Siemens' },
+            createdBy: { id: 8, firstName: 'Helmut', lastName: 'Freiherr' },
             dueTo: new Date('2021-01-01'),
             createdAt: new Date('2021-01-01'),
             closedAt: new Date('2021-01-02'),
@@ -224,18 +227,8 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
             status: 'In Progress',
             name: 'Issue 3',
             description: 'Issue 3 description',
-            assignedTo: {
-              id: 6,
-              firstName: 'Gabi',
-              lastName: 'Winkler',
-              emailAddress: 'gabi.winkler@email.com',
-            },
-            createdBy: {
-              id: 4,
-              firstName: 'Bernd',
-              lastName: 'Mustermann',
-              emailAddress: 'bern.mustermann@email.com',
-            },
+            assignedTo: { id: 6, firstName: 'Gabi', lastName: 'Winkler' },
+            createdBy: { id: 4, firstName: 'Bernd', lastName: 'Mustermann' },
             dueTo: new Date('2021-01-01'),
             createdAt: new Date('2021-01-01'),
             closedAt: new Date('2021-01-02'),

@@ -10,4 +10,5 @@ export interface EmployeeIF {
   firstName: string;
   lastName: string;
   emailAddress: string;
+  status: 'active' | 'inactive';
 }
