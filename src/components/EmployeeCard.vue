@@ -5,6 +5,9 @@
         :label="employee.firstName.charAt(0) + employee.lastName.charAt(0)"
         size="large"
         style="background-color: var(--flowMetricsBlue); color: #ffffff"
+        v-tooltip.top="employee.emailAddress"
+        type="text"
+        placeholder="Top"
       />
     </div>
     <div class="flex align-items-center justify-content-center">

@@ -15,6 +15,7 @@ const UnassignedEmployee: EmployeeIF = {
   id: 0,
   firstName: 'Unassigned',
   lastName: 'Employee',
+  emailAddress: '',
 };
 
 /**
