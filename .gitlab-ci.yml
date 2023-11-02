@@ -71,6 +71,7 @@ sonarqube-check:
     stage: Build
     script:
         - npm ci
+        - npm run api
         - npm run build
     extends:
         - .frontendJob
