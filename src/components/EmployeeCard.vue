@@ -21,7 +21,7 @@
       <label
         id="status"
         style="white-space: nowrap; font-weight: bold"
-        :style="{ color: employee.status === 'active' ? 'green' : 'red' }"
+        :style="{ color: employee.status === 'active' ? '#2d6dc1' : '#A9A9A9' }"
       >
         {{ employee.status }}
       </label>
