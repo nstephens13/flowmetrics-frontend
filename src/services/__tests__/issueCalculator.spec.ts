@@ -19,6 +19,7 @@ describe('Issue Calculator should map correctly ', () => {
     id: 12,
     firstName: 'TestFirstName',
     lastName: 'TestLastName',
+    emailAddress: 'test.email@email.com',
   };
 
   // given
