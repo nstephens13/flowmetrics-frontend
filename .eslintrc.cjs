@@ -20,6 +20,7 @@ module.exports = {
   settings: {
     'import/extensions': ['.js', '.jsx', '.ts', '.tsx', '.mjs'],
   },
+  ignorePatterns: ['src/generated-api/*'],
   rules: {
     'prettier/prettier': 'error',
     'import/extensions': [
