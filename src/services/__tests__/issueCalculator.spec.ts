@@ -37,7 +37,7 @@ describe('Issue Calculator should map correctly ', () => {
     lastStatusChange: null,
   };
   const additionalProject: ProjectIF = {
-    id: 4,
+    id: '4',
     name: 'additional',
     description: 'description',
     milestones: [],

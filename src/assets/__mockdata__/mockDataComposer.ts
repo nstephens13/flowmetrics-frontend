@@ -199,7 +199,7 @@ function getMockData(dataset: number): ProjectIF {
       issuesForProject[1].status = planningStatus;
 
       return {
-        id: 1,
+        id: '1',
         name: faker.science.chemicalElement().name,
         description: faker.company.catchPhrase(),
         milestones: milestonesForProject,
@@ -284,7 +284,7 @@ function getMockData(dataset: number): ProjectIF {
       ];
 
       return {
-        id: 2,
+        id: '2',
         name: faker.science.chemicalElement().name,
         description: faker.company.catchPhrase(),
         milestones: milestonesForProject,
@@ -338,7 +338,7 @@ function getMockData(dataset: number): ProjectIF {
       });
 
       return {
-        id: 3,
+        id: '3',
         name: 'Mocking Bird Project',
         description: 'third mock dataset with a big number of random issues',
         milestones: milestonesArrayFromFile,
@@ -395,7 +395,7 @@ function getMockData(dataset: number): ProjectIF {
       });
 
       return {
-        id: 3,
+        id: '3',
         name: 'Mocking Bird Project',
         description: 'third mock dataset with a big number of random issues',
         milestones: milestonesArrayFromFile,
@@ -463,7 +463,7 @@ function getMockData(dataset: number): ProjectIF {
       milestonesForProject = assignIssueToMilestone(3, 1, milestonesForProject, issuesForProject);
 
       return {
-        id: 2,
+        id: '2',
         name: 'Mocking Bird 2',
         description: 'second mock dataset',
         milestones: milestonesForProject,
@@ -528,7 +528,7 @@ function getMockData(dataset: number): ProjectIF {
       }
 
       return {
-        id: 6,
+        id: '6',
         name: faker.science.chemicalElement().name,
         description: 'Sixth mock dataset',
         milestones: milestonesArrayFromFile,
@@ -626,7 +626,7 @@ function getMockData(dataset: number): ProjectIF {
         issues[i].assignedSLARule?.push(slaRuleArray[randomSLARule]);
       }
       return {
-        id: 7,
+        id: '7',
         name: 'Mocking Bird 7',
         description: 'seventh mock dataset',
         milestones: milestonesArrayFromFile,
@@ -638,7 +638,7 @@ function getMockData(dataset: number): ProjectIF {
     // only test cases
     case 53: {
       return {
-        id: 53,
+        id: '53',
         name: faker.science.chemicalElement().name,
         description: faker.company.catchPhrase(),
         issues: [],
@@ -648,7 +648,7 @@ function getMockData(dataset: number): ProjectIF {
     }
     case 54: {
       return {
-        id: 54,
+        id: '54',
         name: faker.science.chemicalElement().name,
         description: faker.company.catchPhrase(),
         milestones: milestonesArrayFromFile,
@@ -734,7 +734,7 @@ function getMockData(dataset: number): ProjectIF {
       [issuesForProject[6].status, issuesForProject[6].closedAt] = [testingStatusList[0], date];
 
       return {
-        id: 55,
+        id: '55',
         name: faker.science.chemicalElement().name,
         description: faker.company.catchPhrase(),
         milestones: milestonesArrayFromFile,
@@ -745,7 +745,7 @@ function getMockData(dataset: number): ProjectIF {
 
     default: {
       return {
-        id: 0,
+        id: '0',
         name: 'Default',
         description: 'An empty project',
         milestones: [],

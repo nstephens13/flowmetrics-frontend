@@ -5,7 +5,7 @@ import type { ProjectIF } from '@/model/ProjectIF';
 
 // Test Project Data
 const project1: ProjectIF = {
-  id: 1,
+  id: '1',
   name: 'Project 1',
   description: 'Project 1 description',
   milestones: [],
@@ -58,7 +58,7 @@ const project1: ProjectIF = {
   ],
 };
 const project2: ProjectIF = {
-  id: 2,
+  id: '2',
   name: 'Project 2',
   description: 'Project 2 description',
   milestones: [],
@@ -148,7 +148,7 @@ describe('useProjectStore', () => {
     store.addProject(project1);
     store.addProject(project2);
     expect(store.projects).toHaveLength(2);
-    store.deleteProject(3);
+    store.deleteProject('3');
     expect(store.projects).toHaveLength(2);
   });
   test('should return all projects from the Project store', () => {

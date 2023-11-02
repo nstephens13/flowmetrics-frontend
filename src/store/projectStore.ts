@@ -17,7 +17,7 @@ const useProjectsStore = defineStore('projects', {
       this.projects.push(project);
     },
 
-    deleteProject(projectId: number) {
+    deleteProject(projectId: string) {
       const index = this.projects.findIndex((project) => project.id === projectId);
       if (index !== -1) {
         this.projects.splice(index, 1);

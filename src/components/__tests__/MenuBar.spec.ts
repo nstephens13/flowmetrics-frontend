@@ -1,10 +1,11 @@
-import { describe, expect, test } from 'vitest';
+import { describe, expect, test, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
 import Button from 'primevue/button';
 import Sidebar from 'primevue/sidebar';
 import Menu from 'primevue/menu';
 import PrimeVue from 'primevue/config';
 import Menubar from 'primevue/menubar';
+import { createTestingPinia } from '@pinia/testing';
 import router from '@/router/index';
 import MenuBar from '@/components/MenuBar.vue';
 
@@ -13,7 +14,19 @@ describe('Menubar Button should open sidebar', () => {
   // Mounting the MenuBar component with necessary configuration
   const wrapper = mount(MenuBar, {
     global: {
-      plugins: [PrimeVue, router],
+      plugins: [
+        PrimeVue,
+        router,
+        createTestingPinia({
+          createSpy: vi.fn,
+          stubActions: false,
+          initialState: {
+            token: {
+              token: '',
+            },
+          },
+        }),
+      ],
       components: {
         Button,
         Menu,

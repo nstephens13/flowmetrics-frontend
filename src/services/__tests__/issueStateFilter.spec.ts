@@ -6,7 +6,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
   test('should filter projects based on the allowed status', () => {
     const projects = [
       {
-        id: 1,
+        id: '1',
         name: 'Project 1',
         description: 'Project 1 description',
         milestones: [],
@@ -43,7 +43,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
         ],
       },
       {
-        id: 2,
+        id: '2',
         name: 'Project 2',
         description: 'Project 2 description',
         milestones: [],
@@ -92,7 +92,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
     const filteredProjects = filterProjectThatHasTheAllowedStatus(filterConfig);
     assert.deepStrictEqual(filteredProjects, [
       {
-        id: 1,
+        id: '1',
         name: 'Project 1',
         description: 'Project 1 description',
         milestones: [],
@@ -129,7 +129,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
         ],
       },
       {
-        id: 2,
+        id: '2',
         name: 'Project 2',
         description: 'Project 2 description',
         milestones: [],

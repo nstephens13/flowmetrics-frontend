@@ -1,4 +1,4 @@
-import { describe, expect, test } from 'vitest';
+import { describe, expect, test, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
 import Divider from 'primevue/divider';
 import PrimeVue from 'primevue/config';
@@ -24,7 +24,29 @@ import SLAComponent from '../../views/SLAView.vue';
 describe('ProjectDescriptionPanel Divider component', () => {
   const wrapper = mount(ProjectOverview, {
     global: {
-      plugins: [PrimeVue, router],
+      plugins: [
+        PrimeVue,
+        router,
+        createTestingPinia({
+          createSpy: vi.fn,
+          stubActions: false,
+          initialState: {
+            sla: {
+              slaCategories: [
+                {
+                  id: 1,
+                  name: 'Category 1',
+                  rule: null,
+                  subscriber: null,
+                },
+              ],
+            },
+            projects: {
+              projects: [],
+            },
+          },
+        }),
+      ],
       components: {
         Dropdown,
         Panel,

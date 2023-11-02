@@ -4,34 +4,34 @@
       <Dropdown
         v-model="selectedProject"
         :options="projects"
+        class="w-full md:w-14rem"
         optionLabel="name"
         placeholder="Select a project"
-        class="w-full md:w-14rem"
       />
     </template>
     <template #default>
       <div class="flex flex-row flex-wrap card-container justify-content-center">
         <div class="flex-wrap flex align-items-center justify-content-center">
           <CircularProgressBar
-            class="flex align-items-center justify-content-center m-2"
-            :value="countIssuesByStatus(selectedProject.issues, 'Open')"
             :max="getIssueCountMax(selectedProject.issues)"
+            :value="countIssuesByStatus(selectedProject.issues, 'Open')"
+            class="flex align-items-center justify-content-center m-2"
             percentage
             rounded
             title="Open issues"
           />
           <CircularProgressBar
-            class="flex align-items-center justify-content-center m-2"
-            :value="countIssuesByStatus(selectedProject.issues, 'Closed')"
             :max="getIssueCountMax(selectedProject.issues)"
+            :value="countIssuesByStatus(selectedProject.issues, 'Closed')"
+            class="flex align-items-center justify-content-center m-2"
             percentage
             rounded
             title="Closed issues"
           />
           <CircularProgressBar
-            class="flex align-items-center justify-content-center m-2"
-            :value="countIssuesByStatus(selectedProject.issues, 'InProgress')"
             :max="getIssueCountMax(selectedProject.issues)"
+            :value="countIssuesByStatus(selectedProject.issues, 'InProgress')"
+            class="flex align-items-center justify-content-center m-2"
             percentage
             rounded
             title="In Progress"
@@ -44,10 +44,10 @@
   <Card>
     <template #content>
       <DataTable
-        paginator
         :rows="10"
         :rowsPerPageOptions="[10, 20, 50, 100]"
         :value="selectedProject.issues"
+        paginator
         showGridlines
       >
         <Column field="id" header="Issue-ID"></Column>
@@ -77,22 +77,21 @@
   </Card>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import { ref } from 'vue';
 import type { Ref } from 'vue';
 import CircularProgressBar from '@/components/IssueCalculator/CircularProgressBar.vue';
-import type { ProjectIF } from '@/model/ProjectIF';
-import getMockData from '@/assets/__mockdata__/mockDataComposer';
+
 import { countIssuesByStatus, Issue, getTimeLeft } from '@/model/Issue';
 import type { EmployeeIF } from '@/model/EmployeeIF';
 import type { IssueIF } from '@/model/IssueIF';
-</script>
+import useProjectsStore from '@/store/projectStore';
+import type { ProjectIF } from '@/model/ProjectIF';
 
-<script lang="ts">
 // Create a reference for the selectedProject with initial data
 
 const selectedProject: Ref<ProjectIF> = ref({
-  id: 0,
+  id: '0',
   name: 'Project_Name',
   description: '',
   milestones: [],
@@ -101,7 +100,9 @@ const selectedProject: Ref<ProjectIF> = ref({
 } as ProjectIF);
 
 // Create a reference for the projects array with mock data
-const projects: Ref<ProjectIF[]> = ref([getMockData(4), getMockData(5)] as ProjectIF[]);
+const projectStore = useProjectsStore();
+
+const projects: Ref<ProjectIF[]> = ref(projectStore.getProjects);
 
 /**
  * Returns the maximum issue count from the given array of issues.

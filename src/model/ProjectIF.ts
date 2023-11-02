@@ -2,6 +2,7 @@ import { nonDisplayedStatusList } from '@/assets/__mockdata__/mockDataComposer';
 import type { IssueIF } from './IssueIF';
 import type { MilestoneIF } from './MilestoneIF';
 import type { SLASubscriber } from '@/model/SLASubscriber';
+import type { Project } from '@/generated-api';
 
 /**
  *
@@ -13,7 +14,7 @@ import type { SLASubscriber } from '@/model/SLASubscriber';
  * but not to a milestone
  */
 export interface ProjectIF {
-  id: number;
+  id: string;
   name: string;
   description: string;
   milestones: MilestoneIF[];
@@ -22,7 +23,7 @@ export interface ProjectIF {
 }
 
 function getIssueStatusList(issues: IssueIF[]): string[] {
-  const statusList: string[] = Array.from(
+  return Array.from(
     new Set(
       issues
         .map((issue) => issue.status)
@@ -30,7 +31,18 @@ function getIssueStatusList(issues: IssueIF[]): string[] {
         .filter((status): status is string => status !== null)
     )
   );
-  return statusList;
 }
 
-export { getIssueStatusList };
+function transformProjectToProjectIF(project: Project): ProjectIF {
+  return {
+    // Map properties from Project to ProjectIF
+    id: project.id ? project.id : '', // Ensure the data type matches and provide a default value if 'id' is missing
+    name: project.name ? project.name : '',
+    description: project.description ? project.description : '',
+    issues: [],
+    milestones: [],
+    slaSubscriber: null,
+  };
+}
+
+export { getIssueStatusList, transformProjectToProjectIF };

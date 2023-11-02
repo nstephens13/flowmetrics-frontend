@@ -5,10 +5,10 @@
         <div>
           <Button
             id="sidebarButton"
-            text
+            aria-label="Submit"
             icon="pi pi-bars"
             style="color: var(--primary-color-text)"
-            aria-label="Submit"
+            text
             @click="visible = !visible"
           >
           </Button>
@@ -18,14 +18,25 @@
         </div>
       </div>
       <Sidebar v-model:visible="visible">
-        <Menu :model="items" id="sidebarMenu"></Menu>
+        <Menu id="sidebarMenu" :model="items"></Menu>
       </Sidebar>
+    </template>
+    <template #end>
+      <div class="p-inputgroup flex-1">
+        <InputText id="tokenInput" v-model="tokenInputValue" placeholder="Jira Token" />
+        <Button label="Enter" severity="secondary" @click="saveToken" />
+      </div>
     </template>
   </Menubar>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import { ref } from 'vue';
+import type { Ref } from 'vue';
+import useTokenStore from '@/store/tokenStore';
+import initProjectStore from '@/store/mockdata/initProjectStore';
+import initFilterConfigStore from '@/store/mockdata/initFilterConfigStore';
+import initSLAStore from '@/store/mockdata/initSLAStore';
 
 const productName = 'FlowMetrics';
 const visible = ref();
@@ -52,6 +63,17 @@ const items = ref([
     to: '/issue-calculator',
   },
 ]);
+
+const tokenStore = useTokenStore();
+const tokenInputValue: Ref<string> = ref('');
+
+function saveToken() {
+  tokenStore.setToken(tokenInputValue.value);
+
+  initProjectStore();
+  initFilterConfigStore();
+  initSLAStore();
+}
 </script>
 
 <style scoped>

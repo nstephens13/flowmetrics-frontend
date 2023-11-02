@@ -1,4 +1,4 @@
-import { describe, expect, test } from 'vitest';
+import { beforeAll, describe, expect, test, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
 import PrimeVue from 'primevue/config';
 import Card from 'primevue/card';
@@ -7,16 +7,41 @@ import Panel from 'primevue/panel';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import Divider from 'primevue/divider';
+import { createTestingPinia } from '@pinia/testing';
 import CircularProgressBar from '../IssueCalculator/CircularProgressBar.vue';
 import router from '../../router';
 import IssueCalculator from '../IssueCalculator.vue';
+import useProjectsStore from '../../store/projectStore';
+import getMockData from '../../assets/__mockdata__/mockDataComposer';
 
 // Describe block for the test suite
 describe('Project Overview should load all the Components', () => {
   // Mounting the IssueCalculator component with necessary configuration
   const wrapper = mount(IssueCalculator, {
     global: {
-      plugins: [PrimeVue, router],
+      plugins: [
+        PrimeVue,
+        router,
+        createTestingPinia({
+          createSpy: vi.fn,
+          stubActions: false,
+          initialState: {
+            sla: {
+              slaCategories: [
+                {
+                  id: 1,
+                  name: 'Category 1',
+                  rule: null,
+                  subscriber: null,
+                },
+              ],
+            },
+            projects: {
+              projects: [],
+            },
+          },
+        }),
+      ],
       components: {
         Dropdown,
         Panel,
@@ -26,6 +51,13 @@ describe('Project Overview should load all the Components', () => {
         Divider,
       },
     },
+  });
+
+  beforeAll(async () => {
+    const projectStore = useProjectsStore();
+
+    projectStore.addProject(getMockData(4));
+    projectStore.addProject(getMockData(5));
   });
 
   // Test to check if the component mounts successfully
@@ -59,7 +91,7 @@ describe('Project Overview should load all the Components', () => {
       .trigger('click')
       .then(() => {
         const dropdownOptions = wrapper.getComponent(Dropdown).props('options');
-        expect(dropdownOptions.length).toEqual(2);
+        expect(2).toEqual(dropdownOptions.length);
       });
   });
 });

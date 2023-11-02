@@ -1,4 +1,4 @@
-import { describe, expect, test } from 'vitest';
+import { beforeAll, describe, expect, test, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
 import PrimeVue from 'primevue/config';
 import Card from 'primevue/card';
@@ -8,15 +8,41 @@ import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import Divider from 'primevue/divider';
 import MultiSelect from 'primevue/multiselect';
+import { createTestingPinia } from '@pinia/testing';
 import router from '@/router/index';
 import ProjectDescriptionPanel from '../ProjectDescriptionPanel.vue';
+import getMockData from '../../assets/__mockdata__/mockDataComposer';
+import useProjectsStore from '../../store/projectStore';
 
 // Describe block for the test suite
 describe('Project Overview should load all the Components', () => {
   // Mounting the ProjectDescriptionPanel component with necessary configuration
+
   const wrapper = mount(ProjectDescriptionPanel, {
     global: {
-      plugins: [PrimeVue, router],
+      plugins: [
+        PrimeVue,
+        router,
+        createTestingPinia({
+          createSpy: vi.fn,
+          stubActions: false,
+          initialState: {
+            sla: {
+              slaCategories: [
+                {
+                  id: 1,
+                  name: 'Category 1',
+                  rule: null,
+                  subscriber: null,
+                },
+              ],
+            },
+            projects: {
+              projects: [],
+            },
+          },
+        }),
+      ],
       components: {
         Dropdown,
         Panel,
@@ -27,6 +53,17 @@ describe('Project Overview should load all the Components', () => {
         MultiSelect,
       },
     },
+  });
+
+  beforeAll(async () => {
+    const projectStore = useProjectsStore();
+
+    projectStore.addProject(getMockData(1));
+    projectStore.addProject(getMockData(2));
+    projectStore.addProject(getMockData(3));
+    projectStore.addProject(getMockData(53));
+    projectStore.addProject(getMockData(54));
+    projectStore.addProject(getMockData(55));
   });
 
   // Test to check if the component mounts successfully

@@ -1,20 +1,13 @@
-import {
-    Configuration,
-    ConfigurationParameters,
-    createConfiguration,
-} from "@/generated-api/configuration";
-import { JwtProvider } from "@/services/jwt.service";
+import { Configuration } from '@/generated-api/runtime';
+import type { ConfigurationParameters } from '@/generated-api/runtime';
+import useTokenStore from '@/store/tokenStore';
 
-export class ConfigurationService {
-    getConfiguration(): Configuration {
-        const provider = new JwtProvider();
-        const conf: ConfigurationParameters = {
-            authMethods: {
-                bearer: {
-                    tokenProvider: provider,
-                },
-            },
-        };
-        return createConfiguration(conf);
-    }
+export default class ConfigurationService {
+  static getConfiguration(): Configuration {
+    const provider = useTokenStore();
+    const confParam: ConfigurationParameters = {
+      accessToken: `Bearer ${provider.token}`,
+    };
+    return new Configuration(confParam);
+  }
 }

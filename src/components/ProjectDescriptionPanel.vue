@@ -11,9 +11,9 @@
             <Dropdown
               v-model="selectedProject"
               :options="projects"
+              class="w-full md:w-14rem"
               optionLabel="name"
               placeholder="Select a project"
-              class="w-full md:w-14rem"
             />
           </template>
           <template #default>
@@ -38,11 +38,11 @@
           <DataTable
             v-model:filters="filters"
             :globalFilterFields="['name']"
-            paginator
             :rows="10"
-            filterDisplay="menu"
             :rowsPerPageOptions="[10, 20, 50, 100]"
             :value="selectedProject.issues"
+            filterDisplay="menu"
+            paginator
             showGridlines
           >
             <Column field="id" header="Issue-ID"></Column>
@@ -64,12 +64,12 @@
             <Column field="closedAt" header="Closed on"></Column>
             <Column field="dueTo" header="Due on"></Column>
             <Column
-              header="Status"
-              filterField="status"
-              :showFilterMatchModes="false"
               :filterMenuStyle="{ width: '7rem' }"
-              style="min-width: 10rem"
               :show-apply-button="false"
+              :showFilterMatchModes="false"
+              filterField="status"
+              header="Status"
+              style="min-width: 10rem"
             >
               <template #body="data">
                 <div class="flex align-items-center gap-2">
@@ -79,12 +79,12 @@
               <template #filter="{ filterModel, filterCallback }">
                 <MultiSelect
                   v-model="filterModel.value"
-                  display="chip"
-                  :options="statuses"
-                  @change="filterCallback()"
-                  placeholder="Select Status"
                   :maxSelectedLabels="3"
+                  :options="statuses"
                   class="w-full md:w-10rem"
+                  display="chip"
+                  placeholder="Select Status"
+                  @change="filterCallback()"
                 />
               </template>
             </Column>
@@ -96,17 +96,17 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import { ref, watch } from 'vue';
 import type { Ref } from 'vue';
 import { FilterMatchMode } from 'primevue/api';
 import type { EmployeeIF } from '@/model/EmployeeIF';
 import { getIssueStatusList, type ProjectIF } from '@/model/ProjectIF';
-import getMockData from '@/assets/__mockdata__/mockDataComposer';
+import useProjectsStore from '@/store/projectStore';
 
 // Create a reference for the selectedProject with initial data
 const selectedProject = ref({
-  id: 0,
+  id: '0',
   name: 'Project_Name',
   description: '',
   milestones: [],
@@ -116,6 +116,8 @@ const selectedProject = ref({
 
 // Create a reference for the statuses array
 const statuses: Ref<string[]> = ref([]);
+
+const projectStore = useProjectsStore();
 
 // Create a reference for the filters object with initial configuration
 const filters = ref({
@@ -135,14 +137,7 @@ watch(selectedProject, () => {
 });
 
 // Create a reference for the projects array with mock data
-const projects: Ref<ProjectIF[]> = ref([
-  getMockData(1),
-  getMockData(2),
-  getMockData(3),
-  getMockData(53),
-  getMockData(54),
-  getMockData(55),
-] as ProjectIF[]);
+const projects: Ref<ProjectIF[]> = ref(projectStore.getProjects);
 </script>
 
 <style scoped>
