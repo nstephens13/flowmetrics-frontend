@@ -2,7 +2,6 @@ import type { ProjectIF } from '@/model/ProjectIF';
 
 import type { IssueIF } from '@/model/IssueIF';
 import type { FilterConfigIF } from '@/model/FilterConfigIF';
-import type { MilestoneIF } from '@/model/MilestoneIF';
 
 /**
  * Filters the issues in a project based on the allowed status whitelist specified in the filter configuration.
@@ -19,26 +18,10 @@ export function filterIssuesInProjectWithAStatusWhitelist(
     (issue: IssueIF) =>
       issue.status && filterConfig.projectFilter.issueStatusIncludeFilter.includes(issue.status)
   );
-  const filteredMilestones: MilestoneIF[] = [];
-  project.milestones.forEach((milestone) => {
-    const newMilestone: MilestoneIF = {
-      id: milestone.id,
-      issues: [],
-      description: milestone.description,
-      name: milestone.name,
-    };
-    filteredMilestones.push(newMilestone);
-    const issues = milestone.issues.filter(
-      (issue: IssueIF) =>
-        issue.status && filterConfig.projectFilter.issueStatusIncludeFilter.includes(issue.status)
-    );
-    newMilestone.issues = issues;
-  });
 
   return {
     ...project,
     issues: filteredIssues,
-    milestones: filteredMilestones,
   };
 }
 

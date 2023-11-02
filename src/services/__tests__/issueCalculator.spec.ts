@@ -20,6 +20,7 @@ describe('Issue Calculator should map correctly ', () => {
     firstName: 'TestFirstName',
     lastName: 'TestLastName',
     emailAddress: 'test.email@email.com',
+    avatarUrl: 'none',
   };
 
   // given
@@ -41,7 +42,6 @@ describe('Issue Calculator should map correctly ', () => {
     id: 4,
     name: 'additional',
     description: 'description',
-    milestones: [],
     slaSubscriber: null,
     issues: [additionalIssue],
   };

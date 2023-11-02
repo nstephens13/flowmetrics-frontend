@@ -2,11 +2,9 @@ import { faker } from '@faker-js/faker';
 import type { ProjectIF } from '@/model/ProjectIF';
 import type { EmployeeIF } from '@/model/EmployeeIF';
 import type { IssueIF } from '@/model/IssueIF';
-import type { MilestoneIF } from '@/model/MilestoneIF';
 import employeeJson from './Employees.json';
 import issueJson2 from './Issues_2.json';
 import issueJson from './Issues.json';
-import milestoneJson from './Milestones.json';
 import type { Issue } from '@/model/Issue';
 import type { SLARule } from '@/model/SLARule';
 
@@ -74,26 +72,6 @@ function assignIssueToEmployee(
   }
 
   return [issuesToReturn, employeesToReturn];
-}
-
-/**
- * Assigns an issue to a milestone.
- * @param issueNumber - The index of the issue.
- * @param milestoneNumber - The index of the milestone.
- * @param milestones - The array of milestones.
- * @param issues - The array of issues.
- * @returns The updated array of milestones.
- */
-function assignIssueToMilestone(
-  issueNumber: number,
-  milestoneNumber: number,
-  milestones: MilestoneIF[],
-  issues: IssueIF[]
-) {
-  const mileStonesToReturn = milestones;
-  mileStonesToReturn[milestoneNumber].issues.push(issues[issueNumber]);
-
-  return mileStonesToReturn;
 }
 
 /**
@@ -192,12 +170,11 @@ function loadArraysFromFile(
           }
       )[]
     | { id: number; name: string; description: string; assignedTo: null }[]
-): [EmployeeIF[], IssueIF[], MilestoneIF[]] {
+): [EmployeeIF[], IssueIF[]] {
   const employeesArray: EmployeeIF[] = structuredClone(employeeJson) as EmployeeIF[];
   // const issuesArray: IssueIF[] = structuredClone(issueJson) as IssueIF[];
   const issuesArray: IssueIF[] = loadIssueDataFromFile(issueFile) as IssueIF[];
-  const milestones: MilestoneIF[] = structuredClone(milestoneJson) as MilestoneIF[];
-  return [employeesArray, issuesArray, milestones];
+  return [employeesArray, issuesArray];
 }
 
 /**
@@ -207,20 +184,12 @@ function loadArraysFromFile(
  * @returns The mock data based on the specified dataset.
  */
 function getMockData(dataset: number): ProjectIF {
-  let [employeesArrayFromFile, issuesArrayFromFile, milestonesArrayFromFile]: [
-    EmployeeIF[],
-    IssueIF[],
-    MilestoneIF[]
-  ] = loadArraysFromFile(issueJson);
-  let [employeesForProject, issuesForProject, milestonesForProject]: [
-    EmployeeIF[],
-    IssueIF[],
-    MilestoneIF[]
-  ] = [[], [], []];
+  let [employeesArrayFromFile, issuesArrayFromFile]: [EmployeeIF[], IssueIF[]] =
+    loadArraysFromFile(issueJson);
+  let [employeesForProject, issuesForProject]: [EmployeeIF[], IssueIF[]] = [[], []];
 
   switch (dataset) {
     case 1: {
-      milestonesForProject = milestonesArrayFromFile;
       [issuesForProject] = assignIssueToEmployee(1, 1, issuesArrayFromFile, employeesArrayFromFile);
       const [planningStatus] = planningStatusList;
       issuesForProject[1].status = planningStatus;
@@ -229,7 +198,6 @@ function getMockData(dataset: number): ProjectIF {
         id: 1,
         name: faker.science.chemicalElement().name,
         description: faker.company.catchPhrase(),
-        milestones: milestonesForProject,
         issues: issuesForProject,
         slaSubscriber: null,
       };
@@ -279,19 +247,6 @@ function getMockData(dataset: number): ProjectIF {
         employeesForProject
       );
 
-      milestonesForProject = assignIssueToMilestone(
-        0,
-        0,
-        milestonesArrayFromFile,
-        issuesForProject
-      );
-
-      milestonesForProject = assignIssueToMilestone(1, 0, milestonesForProject, issuesForProject);
-
-      milestonesForProject = assignIssueToMilestone(2, 1, milestonesForProject, issuesForProject);
-
-      milestonesForProject = assignIssueToMilestone(3, 1, milestonesForProject, issuesForProject);
-
       [
         issuesForProject[0].status,
         issuesForProject[1].status,
@@ -314,7 +269,6 @@ function getMockData(dataset: number): ProjectIF {
         id: 2,
         name: faker.science.chemicalElement().name,
         description: faker.company.catchPhrase(),
-        milestones: milestonesForProject,
         issues: issuesForProject,
         slaSubscriber: null,
       };
@@ -368,15 +322,13 @@ function getMockData(dataset: number): ProjectIF {
         id: 3,
         name: 'Mocking Bird Project',
         description: 'third mock dataset with a big number of random issues',
-        milestones: milestonesArrayFromFile,
         issues: issuesForProject,
         slaSubscriber: null,
       };
     }
 
     case 4: {
-      [employeesArrayFromFile, issuesArrayFromFile, milestonesArrayFromFile] =
-        loadArraysFromFile(issueJson2);
+      [employeesArrayFromFile, issuesArrayFromFile] = loadArraysFromFile(issueJson2);
 
       for (let iterator = 0; iterator < 280; iterator++) {
         let status = 'Open';
@@ -425,15 +377,13 @@ function getMockData(dataset: number): ProjectIF {
         id: 3,
         name: 'Mocking Bird Project',
         description: 'third mock dataset with a big number of random issues',
-        milestones: milestonesArrayFromFile,
         issues: issuesForProject,
         slaSubscriber: null,
       };
     }
 
     case 5: {
-      [employeesArrayFromFile, issuesArrayFromFile, milestonesArrayFromFile] =
-        loadArraysFromFile(issueJson2);
+      [employeesArrayFromFile, issuesArrayFromFile] = loadArraysFromFile(issueJson2);
 
       [issuesForProject, employeesForProject] = assignIssueToEmployee(
         0,
@@ -478,22 +428,10 @@ function getMockData(dataset: number): ProjectIF {
         employeesForProject
       );
 
-      milestonesForProject = assignIssueToMilestone(
-        0,
-        0,
-        milestonesArrayFromFile,
-        issuesForProject
-      );
-
-      milestonesForProject = assignIssueToMilestone(1, 0, milestonesForProject, issuesForProject);
-      milestonesForProject = assignIssueToMilestone(2, 1, milestonesForProject, issuesForProject);
-      milestonesForProject = assignIssueToMilestone(3, 1, milestonesForProject, issuesForProject);
-
       return {
         id: 2,
         name: 'Mocking Bird 2',
         description: 'second mock dataset',
-        milestones: milestonesForProject,
         issues: issuesForProject,
         slaSubscriber: null,
       };
@@ -558,7 +496,6 @@ function getMockData(dataset: number): ProjectIF {
         id: 6,
         name: faker.science.chemicalElement().name,
         description: 'Sixth mock dataset',
-        milestones: milestonesArrayFromFile,
         issues: issuesForProject,
         slaSubscriber: null,
       };
@@ -656,7 +593,6 @@ function getMockData(dataset: number): ProjectIF {
         id: 7,
         name: 'Mocking Bird 7',
         description: 'seventh mock dataset',
-        milestones: milestonesArrayFromFile,
         issues: issuesForProject,
         slaSubscriber: null,
       };
@@ -669,7 +605,6 @@ function getMockData(dataset: number): ProjectIF {
         name: faker.science.chemicalElement().name,
         description: faker.company.catchPhrase(),
         issues: [],
-        milestones: [],
         slaSubscriber: null,
       };
     }
@@ -678,7 +613,6 @@ function getMockData(dataset: number): ProjectIF {
         id: 54,
         name: faker.science.chemicalElement().name,
         description: faker.company.catchPhrase(),
-        milestones: milestonesArrayFromFile,
         issues: [],
         slaSubscriber: null,
       };
@@ -764,7 +698,6 @@ function getMockData(dataset: number): ProjectIF {
         id: 55,
         name: faker.science.chemicalElement().name,
         description: faker.company.catchPhrase(),
-        milestones: milestonesArrayFromFile,
         issues: issuesForProject,
         slaSubscriber: null,
       };
@@ -775,7 +708,6 @@ function getMockData(dataset: number): ProjectIF {
         id: 0,
         name: 'Default',
         description: 'An empty project',
-        milestones: [],
         issues: [],
         slaSubscriber: null,
       };

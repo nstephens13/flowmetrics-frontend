@@ -10,4 +10,6 @@ export interface EmployeeIF {
   firstName: string;
   lastName: string;
   emailAddress: string;
+  // if Jira use the 48x48 px avatar
+  avatarUrl: string;
 }
