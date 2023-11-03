@@ -8,7 +8,6 @@ const project1: ProjectIF = {
   id: 1,
   name: 'Project 1',
   description: 'Project 1 description',
-  milestones: [],
   slaSubscriber: null,
   issues: [
     {
@@ -22,6 +21,7 @@ const project1: ProjectIF = {
         lastName: 'Mustermann',
         emailAddress: 'bern.mustermann@email.com',
         status: 'active',
+        avatarUrl: 'none',
       },
       createdBy: {
         id: 4,
@@ -29,6 +29,7 @@ const project1: ProjectIF = {
         lastName: 'Mustermann',
         emailAddress: 'bern.mustermann@email.com',
         status: 'active',
+        avatarUrl: 'none',
       },
       dueTo: new Date('2021-01-01'),
       createdAt: new Date('2021-01-01'),
@@ -48,6 +49,7 @@ const project1: ProjectIF = {
         lastName: 'Winkler',
         emailAddress: 'gabi.winkler@email.com',
         status: 'active',
+        avatarUrl: 'none',
       },
       createdBy: {
         id: 4,
@@ -55,6 +57,7 @@ const project1: ProjectIF = {
         lastName: 'Mustermann',
         emailAddress: 'bern.mustermann@email.com',
         status: 'active',
+        avatarUrl: 'none',
       },
       dueTo: new Date('2021-01-01'),
       createdAt: new Date('2021-01-01'),
@@ -69,7 +72,6 @@ const project2: ProjectIF = {
   id: 2,
   name: 'Project 2',
   description: 'Project 2 description',
-  milestones: [],
   slaSubscriber: null,
   issues: [
     {
@@ -83,6 +85,7 @@ const project2: ProjectIF = {
         lastName: 'Siemens',
         emailAddress: 'franzi.siemens@email.com',
         status: 'active',
+        avatarUrl: 'none',
       },
       createdBy: {
         id: 8,
@@ -90,6 +93,7 @@ const project2: ProjectIF = {
         lastName: 'Freiherr',
         emailAddress: 'helmut.freiherr@email.com',
         status: 'active',
+        avatarUrl: 'none',
       },
       dueTo: new Date('2021-01-01'),
       createdAt: new Date('2021-01-01'),
@@ -109,6 +113,7 @@ const project2: ProjectIF = {
         lastName: 'Winkler',
         emailAddress: 'gabi.winkle@email.com',
         status: 'active',
+        avatarUrl: 'none',
       },
       createdBy: {
         id: 4,
@@ -116,6 +121,7 @@ const project2: ProjectIF = {
         lastName: 'Mustermann',
         emailAddress: 'bern.mustermann@email.com',
         status: 'active',
+        avatarUrl: 'none',
       },
       dueTo: new Date('2021-01-01'),
       createdAt: new Date('2021-01-01'),

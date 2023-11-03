@@ -10,7 +10,6 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
         id: 1,
         name: 'Project 1',
         description: 'Project 1 description',
-        milestones: [],
         slaSubscriber: null,
         issues: [
           {
@@ -24,6 +23,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
               lastName: 'Mustermann',
               emailAddress: 'bern.mustermann@email.com',
               status: 'active',
+              avatarUrl: 'none',
             },
             createdBy: {
               id: 4,
@@ -31,6 +31,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
               lastName: 'Mustermann',
               emailAddress: 'bern.mustermann@email.com',
               status: 'active',
+              avatarUrl: 'none',
             },
             dueTo: new Date('2021-01-01'),
             createdAt: new Date('2021-01-01'),
@@ -50,6 +51,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
               lastName: 'Winkler',
               emailAddress: 'gabi.winkler@email.com',
               status: 'active',
+              avatarUrl: 'none',
             },
             createdBy: {
               id: 4,
@@ -57,6 +59,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
               lastName: 'Mustermann',
               emailAddress: 'bern.mustermann@email.com',
               status: 'active',
+              avatarUrl: 'none',
             },
             dueTo: new Date('2021-01-01'),
             createdAt: new Date('2021-01-01'),
@@ -71,7 +74,6 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
         id: 2,
         name: 'Project 2',
         description: 'Project 2 description',
-        milestones: [],
         slaSubscriber: null,
         issues: [
           {
@@ -85,6 +87,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
               lastName: 'Siemens',
               emailAddress: 'franzi.siemens@email.com',
               status: 'active',
+              avatarUrl: 'none',
             },
             createdBy: {
               id: 8,
@@ -92,6 +95,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
               lastName: 'Freiherr',
               emailAddress: 'helmut.freiherr@email.com',
               status: 'active',
+              avatarUrl: 'none',
             },
             dueTo: new Date('2021-01-01'),
             createdAt: new Date('2021-01-01'),
@@ -111,6 +115,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
               lastName: 'Winkler',
               emailAddress: 'gabi.winkler@email.com',
               status: 'active',
+              avatarUrl: 'none',
             },
             createdBy: {
               id: 4,
@@ -118,6 +123,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
               lastName: 'Mustermann',
               emailAddress: 'bern.mustermann@email.com',
               status: 'active',
+              avatarUrl: 'none',
             },
             dueTo: new Date('2021-01-01'),
             createdAt: new Date('2021-01-01'),
@@ -144,7 +150,6 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
         id: 1,
         name: 'Project 1',
         description: 'Project 1 description',
-        milestones: [],
         slaSubscriber: null,
         issues: [
           {
@@ -158,6 +163,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
               lastName: 'Mustermann',
               emailAddress: 'bern.mustermann@email.com',
               status: 'active',
+              avatarUrl: 'none',
             },
             createdBy: {
               id: 4,
@@ -165,6 +171,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
               lastName: 'Mustermann',
               emailAddress: 'bern.mustermann@email.com',
               status: 'active',
+              avatarUrl: 'none',
             },
             dueTo: new Date('2021-01-01'),
             createdAt: new Date('2021-01-01'),
@@ -184,6 +191,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
               lastName: 'Winkler',
               emailAddress: 'gabi.winkler@email.com',
               status: 'active',
+              avatarUrl: 'none',
             },
             createdBy: {
               id: 4,
@@ -191,6 +199,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
               lastName: 'Mustermann',
               emailAddress: 'bern.mustermann@email.com',
               status: 'active',
+              avatarUrl: 'none',
             },
             dueTo: new Date('2021-01-01'),
             createdAt: new Date('2021-01-01'),
@@ -205,7 +214,6 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
         id: 2,
         name: 'Project 2',
         description: 'Project 2 description',
-        milestones: [],
         slaSubscriber: null,
         issues: [
           {
@@ -219,6 +227,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
               lastName: 'Siemens',
               emailAddress: 'franzi.siemens@email.com',
               status: 'active',
+              avatarUrl: 'none',
             },
             createdBy: {
               id: 8,
@@ -226,6 +235,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
               lastName: 'Freiherr',
               emailAddress: 'helmut.freiherr@email.com',
               status: 'active',
+              avatarUrl: 'none',
             },
             dueTo: new Date('2021-01-01'),
             createdAt: new Date('2021-01-01'),
@@ -245,6 +255,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
               lastName: 'Winkler',
               emailAddress: 'gabi.winkler@email.com',
               status: 'active',
+              avatarUrl: 'none',
             },
             createdBy: {
               id: 4,
@@ -252,6 +263,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
               lastName: 'Mustermann',
               emailAddress: 'bern.mustermann@email.com',
               status: 'active',
+              avatarUrl: 'none',
             },
             dueTo: new Date('2021-01-01'),
             createdAt: new Date('2021-01-01'),

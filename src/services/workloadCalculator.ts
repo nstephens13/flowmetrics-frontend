@@ -17,6 +17,7 @@ const UnassignedEmployee: EmployeeIF = {
   lastName: 'Employee',
   emailAddress: '',
   status: 'inactive',
+  avatarUrl: 'none',
 };
 
 /**
@@ -110,14 +111,6 @@ export function calculateWorkload(projects: ProjectIF[]): Map<EmployeeIF, IssueD
       const result = extractEmployeeAndUpdateEmployeeMap(issue, issueSet, mapToReturn);
       issueSet = result.issueSet;
       mapToReturn = result.mapToReturn;
-    });
-
-    project.milestones.forEach((milestone) => {
-      milestone.issues.forEach((issue) => {
-        const result = extractEmployeeAndUpdateEmployeeMap(issue, issueSet, mapToReturn);
-        issueSet = result.issueSet;
-        mapToReturn = result.mapToReturn;
-      });
     });
   });
   return mapToReturn;
