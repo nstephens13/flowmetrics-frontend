@@ -1,10 +1,11 @@
 import { describe, assert, test } from 'vitest';
 import filterProjectThatHasTheAllowedStatus from '@/services/filter/IssuesStateFilter';
 import type { FilterConfigIF } from '@/model/FilterConfigIF';
+import type { ProjectIF } from '@/model/ProjectIF';
 
 describe('filterProjectThatHasTheAllowedStatus', () => {
   test('should filter projects based on the allowed status', () => {
-    const projects = [
+    const projects: ProjectIF[] = [
       {
         id: 1,
         name: 'Project 1',
@@ -21,6 +22,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
               firstName: 'Bernd',
               lastName: 'Mustermann',
               emailAddress: 'bern.mustermann@email.com',
+              status: 'active',
               avatarUrl: 'none',
             },
             createdBy: {
@@ -28,6 +30,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
               firstName: 'Bernd',
               lastName: 'Mustermann',
               emailAddress: 'bern.mustermann@email.com',
+              status: 'active',
               avatarUrl: 'none',
             },
             dueTo: new Date('2021-01-01'),
@@ -47,6 +50,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
               firstName: 'Gabi',
               lastName: 'Winkler',
               emailAddress: 'gabi.winkler@email.com',
+              status: 'active',
               avatarUrl: 'none',
             },
             createdBy: {
@@ -54,6 +58,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
               firstName: 'Bernd',
               lastName: 'Mustermann',
               emailAddress: 'bern.mustermann@email.com',
+              status: 'active',
               avatarUrl: 'none',
             },
             dueTo: new Date('2021-01-01'),
@@ -81,6 +86,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
               firstName: 'Franzi',
               lastName: 'Siemens',
               emailAddress: 'franzi.siemens@email.com',
+              status: 'active',
               avatarUrl: 'none',
             },
             createdBy: {
@@ -88,6 +94,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
               firstName: 'Helmut',
               lastName: 'Freiherr',
               emailAddress: 'helmut.freiherr@email.com',
+              status: 'active',
               avatarUrl: 'none',
             },
             dueTo: new Date('2021-01-01'),
@@ -107,6 +114,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
               firstName: 'Gabi',
               lastName: 'Winkler',
               emailAddress: 'gabi.winkler@email.com',
+              status: 'active',
               avatarUrl: 'none',
             },
             createdBy: {
@@ -114,6 +122,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
               firstName: 'Bernd',
               lastName: 'Mustermann',
               emailAddress: 'bern.mustermann@email.com',
+              status: 'active',
               avatarUrl: 'none',
             },
             dueTo: new Date('2021-01-01'),
@@ -153,6 +162,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
               firstName: 'Bernd',
               lastName: 'Mustermann',
               emailAddress: 'bern.mustermann@email.com',
+              status: 'active',
               avatarUrl: 'none',
             },
             createdBy: {
@@ -160,6 +170,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
               firstName: 'Bernd',
               lastName: 'Mustermann',
               emailAddress: 'bern.mustermann@email.com',
+              status: 'active',
               avatarUrl: 'none',
             },
             dueTo: new Date('2021-01-01'),
@@ -179,6 +190,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
               firstName: 'Gabi',
               lastName: 'Winkler',
               emailAddress: 'gabi.winkler@email.com',
+              status: 'active',
               avatarUrl: 'none',
             },
             createdBy: {
@@ -186,6 +198,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
               firstName: 'Bernd',
               lastName: 'Mustermann',
               emailAddress: 'bern.mustermann@email.com',
+              status: 'active',
               avatarUrl: 'none',
             },
             dueTo: new Date('2021-01-01'),
@@ -213,6 +226,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
               firstName: 'Franzi',
               lastName: 'Siemens',
               emailAddress: 'franzi.siemens@email.com',
+              status: 'active',
               avatarUrl: 'none',
             },
             createdBy: {
@@ -220,6 +234,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
               firstName: 'Helmut',
               lastName: 'Freiherr',
               emailAddress: 'helmut.freiherr@email.com',
+              status: 'active',
               avatarUrl: 'none',
             },
             dueTo: new Date('2021-01-01'),
@@ -239,6 +254,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
               firstName: 'Gabi',
               lastName: 'Winkler',
               emailAddress: 'gabi.winkler@email.com',
+              status: 'active',
               avatarUrl: 'none',
             },
             createdBy: {
@@ -246,6 +262,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
               firstName: 'Bernd',
               lastName: 'Mustermann',
               emailAddress: 'bern.mustermann@email.com',
+              status: 'active',
               avatarUrl: 'none',
             },
             dueTo: new Date('2021-01-01'),

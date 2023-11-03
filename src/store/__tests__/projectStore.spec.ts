@@ -20,6 +20,7 @@ const project1: ProjectIF = {
         firstName: 'Bernd',
         lastName: 'Mustermann',
         emailAddress: 'bern.mustermann@email.com',
+        status: 'active',
         avatarUrl: 'none',
       },
       createdBy: {
@@ -27,6 +28,7 @@ const project1: ProjectIF = {
         firstName: 'Bernd',
         lastName: 'Mustermann',
         emailAddress: 'bern.mustermann@email.com',
+        status: 'active',
         avatarUrl: 'none',
       },
       dueTo: new Date('2021-01-01'),
@@ -46,6 +48,7 @@ const project1: ProjectIF = {
         firstName: 'Gabi',
         lastName: 'Winkler',
         emailAddress: 'gabi.winkler@email.com',
+        status: 'active',
         avatarUrl: 'none',
       },
       createdBy: {
@@ -53,6 +56,7 @@ const project1: ProjectIF = {
         firstName: 'Bernd',
         lastName: 'Mustermann',
         emailAddress: 'bern.mustermann@email.com',
+        status: 'active',
         avatarUrl: 'none',
       },
       dueTo: new Date('2021-01-01'),
@@ -80,6 +84,7 @@ const project2: ProjectIF = {
         firstName: 'Franzi',
         lastName: 'Siemens',
         emailAddress: 'franzi.siemens@email.com',
+        status: 'active',
         avatarUrl: 'none',
       },
       createdBy: {
@@ -87,6 +92,7 @@ const project2: ProjectIF = {
         firstName: 'Helmut',
         lastName: 'Freiherr',
         emailAddress: 'helmut.freiherr@email.com',
+        status: 'active',
         avatarUrl: 'none',
       },
       dueTo: new Date('2021-01-01'),
@@ -106,6 +112,7 @@ const project2: ProjectIF = {
         firstName: 'Gabi',
         lastName: 'Winkler',
         emailAddress: 'gabi.winkle@email.com',
+        status: 'active',
         avatarUrl: 'none',
       },
       createdBy: {
@@ -113,6 +120,7 @@ const project2: ProjectIF = {
         firstName: 'Bernd',
         lastName: 'Mustermann',
         emailAddress: 'bern.mustermann@email.com',
+        status: 'active',
         avatarUrl: 'none',
       },
       dueTo: new Date('2021-01-01'),
