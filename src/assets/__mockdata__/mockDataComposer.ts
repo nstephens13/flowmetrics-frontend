@@ -114,6 +114,7 @@ function loadArraysFromFile(
               firstName: string;
               lastName: string;
               emailAddress: string;
+              status: string;
               assignedIssues: never[];
             };
             createdAt: string;
@@ -137,6 +138,7 @@ function loadArraysFromFile(
               firstName: string;
               lastName: string;
               emailAddress: string;
+              status: string;
               assignedIssues: never[];
             };
             createdAt: string;
@@ -153,6 +155,7 @@ function loadArraysFromFile(
               firstName: string;
               lastName: string;
               emailAddress: string;
+              status: string;
               assignedIssues: never[];
             };
             createdBy: {
@@ -176,6 +179,7 @@ function loadArraysFromFile(
               firstName: string;
               lastName: string;
               emailAddress: string;
+              status: string;
               assignedIssues: never[];
             };
             createdBy: {

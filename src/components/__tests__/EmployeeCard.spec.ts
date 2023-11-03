@@ -5,6 +5,7 @@ import PrimeVue from 'primevue/config';
 import Avatar from 'primevue/avatar';
 import Chip from 'primevue/chip';
 import ProgressBar from 'primevue/progressbar';
+import Tooltip from 'primevue/tooltip';
 import router from '@/router/index';
 
 import EmployeeCard from '../EmployeeCard.vue';
@@ -20,6 +21,9 @@ describe('Employee Card should load all the Components', () => {
         Chip,
         ProgressBar,
       },
+      directives: {
+        Tooltip,
+      },
     },
     propsData: {
       // Props data for the EmployeeCard component
@@ -27,6 +31,7 @@ describe('Employee Card should load all the Components', () => {
         id: 19,
         firstName: 'Erika',
         lastName: 'Mustermann',
+        status: 'active',
       },
       issues: {
         planning: 20,
@@ -54,12 +59,15 @@ describe('Employee Card should load all the Components', () => {
   });
 
   // Test to check the employee's first and last name
-  test('checks for Employee Name', () => {
+  test('checks for Employee Name and status', () => {
     const employeeFirstName = wrapper.find('#firstName');
     expect(employeeFirstName.text()).toBe('Erika');
 
     const employeeLastName = wrapper.find('#lastName');
     expect(employeeLastName.text()).toBe('Mustermann');
+
+    const employeeStatus = wrapper.find('#status');
+    expect(employeeStatus.text()).toBe('active');
   });
 
   // Test to check the total number of tickets

@@ -6,6 +6,7 @@ import {
   getFormattedDate,
   getTimeLeft,
 } from '../Issue';
+import type { EmployeeIF } from '../EmployeeIF';
 
 describe('Issue Class', () => {
   test('creates an instance of Issue with the provided properties', () => {
@@ -13,11 +14,12 @@ describe('Issue Class', () => {
     const name = 'Test Issue';
     const description = 'This is a test issue';
     const assignedTo = null;
-    const createdBy = {
+    const createdBy: EmployeeIF = {
       id: 34,
       firstName: 'John',
       lastName: 'Doe',
       emailAddress: 'john.doe@email.com',
+      status: 'active',
     };
     const createdAt = new Date();
     const closedAt = null;
@@ -65,12 +67,14 @@ describe('getAssignedToName', () => {
         firstName: 'John',
         lastName: 'Doe',
         emailAddress: 'john.doe@email.com',
+        status: 'active',
       },
       {
         id: 4245,
         firstName: 'Jane',
         lastName: 'Smith',
         emailAddress: 'jane.smith@email.com',
+        status: 'active',
       },
       new Date(),
       null,
@@ -95,6 +99,7 @@ describe('getAssignedToName', () => {
         firstName: 'Jane',
         lastName: 'Smith',
         emailAddress: 'jane.smith@email.com',
+        status: 'active',
       },
       new Date(),
       null,
@@ -122,6 +127,7 @@ describe('getFormattedDate', () => {
         firstName: 'Jane',
         lastName: 'Smith',
         emailAddress: 'jane.smith@email.com',
+        status: 'active',
       },
       new Date(),
       null,
@@ -146,6 +152,7 @@ describe('getFormattedDate', () => {
         firstName: 'Jane',
         lastName: 'Smith',
         emailAddress: 'jane.smith@email.com',
+        status: 'active',
       },
       new Date(),
       null,
@@ -174,6 +181,7 @@ describe('getTimeLeft', () => {
         firstName: 'Jane',
         lastName: 'Smith',
         emailAddress: 'jane.smith@email.com',
+        status: 'active',
       },
       new Date(),
       null,
@@ -202,6 +210,7 @@ describe('getTimeLeft', () => {
         firstName: 'Jane',
         lastName: 'Smith',
         emailAddress: 'jane.smith@email.com',
+        status: 'active',
       },
       new Date(),
       null,
@@ -226,6 +235,7 @@ describe('getTimeLeft', () => {
         firstName: 'Jane',
         lastName: 'Smith',
         emailAddress: 'jane.smith@email.com',
+        status: 'active',
       },
       new Date(),
       null,
@@ -252,6 +262,7 @@ describe('countIssuesByStatus', () => {
         firstName: 'Jane',
         lastName: 'Smith',
         emailAddress: 'jane.smith@email.com',
+        status: 'active',
       },
       new Date(),
       null,
@@ -271,6 +282,7 @@ describe('countIssuesByStatus', () => {
         firstName: 'John',
         lastName: 'Doe',
         emailAddress: 'john.doe@email.com',
+        status: 'active',
       },
       new Date(),
       null,
@@ -290,6 +302,7 @@ describe('countIssuesByStatus', () => {
         firstName: 'Jane',
         lastName: 'Smith',
         emailAddress: 'jane.smith@email.com',
+        status: 'active',
       },
       new Date(),
       null,
@@ -309,6 +322,7 @@ describe('countIssuesByStatus', () => {
         firstName: 'John',
         lastName: 'Doe',
         emailAddress: 'jane.smith@email.com',
+        status: 'active',
       },
       new Date(),
       null,
@@ -328,6 +342,7 @@ describe('countIssuesByStatus', () => {
         firstName: 'Jane',
         lastName: 'Smith',
         emailAddress: 'jane.smith@email.com',
+        status: 'active',
       },
       new Date(),
       null,

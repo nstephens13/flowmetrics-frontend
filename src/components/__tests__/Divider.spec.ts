@@ -2,7 +2,6 @@ import { describe, expect, test } from 'vitest';
 import { mount } from '@vue/test-utils';
 import Divider from 'primevue/divider';
 import PrimeVue from 'primevue/config';
-import ProjectOverview from 'src/views/ProjectOverview.vue';
 import Card from 'primevue/card';
 import Dropdown from 'primevue/dropdown';
 import Panel from 'primevue/panel';
@@ -14,11 +13,12 @@ import DataView from 'primevue/dataview';
 import Avatar from 'primevue/avatar';
 import ProgressBar from 'primevue/progressbar';
 import Chip from 'primevue/chip';
-import IssueCalculator from 'src/views/IssueCalculator.vue';
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
+import IssueCalculator from '../../views/IssueCalculator.vue';
+import ProjectOverview from '../../views/ProjectOverview.vue';
 import router from '@/router/index';
-import EmployeeOverview from '@/views/EmployeeOverview.vue';
+import EmployeeOverview from '../../views/EmployeeOverview.vue';
 import SLAComponent from '../../views/SLAView.vue';
 
 describe('ProjectDescriptionPanel Divider component', () => {
