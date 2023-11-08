@@ -19,6 +19,9 @@ describe('Issue Calculator should map correctly ', () => {
     id: 12,
     firstName: 'TestFirstName',
     lastName: 'TestLastName',
+    emailAddress: 'test.email@email.com',
+    status: 'inactive',
+    avatarUrl: 'none',
   };
 
   // given
@@ -34,12 +37,12 @@ describe('Issue Calculator should map correctly ', () => {
     assignedTo: testEmployee,
     statusChanges: null,
     assignedSLARule: null,
+    lastStatusChange: null,
   };
   const additionalProject: ProjectIF = {
     id: 4,
     name: 'additional',
     description: 'description',
-    milestones: [],
     slaSubscriber: null,
     issues: [additionalIssue],
   };

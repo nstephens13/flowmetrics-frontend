@@ -1,8 +1,8 @@
 <template>
-  <Card class="background-card">
+  <Card>
     <template #title>
-      SLA Management View
-      <Divider></Divider>
+      <h4>SLA Management View</h4>
+      <Divider class="p-divider p-divider-horizontal divider-position" />
     </template>
     <template #content>
       <div>
@@ -10,59 +10,76 @@
         <div class="subscriber-container">
           <InputText
             v-model="newSubscriber"
+            class="enter-subscriber m-1"
             placeholder="Enter subscriber name"
-            class="enter-subscriber"
           />
-          <Button class="add-subscriber" @click="addSubscriber" label="+"></Button>
-          <div v-if="!isSubscriberNameValid" class="error-message">
+          <Button
+            class="add-subscriber m-1"
+            icon="pi pi-plus"
+            style="background-color: var(--flowMetricsBlue)"
+            @click="addSubscriber"
+          ></Button>
+          <div v-if="!isSubscriberNameValid" class="error-message m-1 text-red-500">
             {{ SubscriberErrorMessage }}
           </div>
         </div>
       </div>
       <div>
         <h3>Add SLA Rule</h3>
-        <div class="rule-container">
-          <InputText v-model="newRuleName" placeholder="Enter rule name" class="enter-rule" />
+        <div class="rule-container m-1">
+          <InputText v-model="newRuleName" class="enter-rule m-1" placeholder="Enter rule name" />
           <Dropdown
             v-model="newRuleMaxAssignedEmployees"
             :options="maxAssignedEmployeesOptions"
+            class="select-employees m-1"
             placeholder="Select max assigned employees"
-            class="select-employees"
           />
           <Dropdown
             v-model="newOccurredIn"
             :options="occurredInOptions"
+            class="select-occurred-in m-1"
             placeholder="Occurred in"
-            class="select-occurred-in"
           />
-          <Button class="add-rule" @click="addRule" label="+"></Button>
-          <div v-if="!isRuleNameValid" class="error-message">{{ ruleErrorMessage }}</div>
+          <Button
+            class="add-rule m-1"
+            icon="pi pi-plus"
+            style="background-color: var(--flowMetricsBlue)"
+            @click="addRule"
+          ></Button>
+          <div v-if="!isRuleNameValid" class="error-message m-1 text-red-500">{{
+            ruleErrorMessage
+          }}</div>
         </div>
       </div>
       <div>
         <h3>Add new SLA Category</h3>
-        <div class="category-container">
+        <div class="category-container m-1">
           <Dropdown
             v-model="selectedSubscriber"
             :options="subscriber"
+            class="select-subscriber m-1"
             optionLabel="name"
             placeholder="Select subscriber"
-            class="select-subscriber"
           />
           <Dropdown
             v-model="selectedRule"
             :options="rules"
+            class="select-rule m-1"
             optionLabel="name"
             placeholder="Select rule"
-            class="select-rule"
           />
           <InputText
             v-model="categoryName"
+            class="enter-category m-1"
             placeholder="Enter category name"
-            class="enter-category"
           />
-          <Button class="add-category" @click="createCategory" label="+"></Button>
-          <div v-if="!isSLACategoryNameValid" class="error-message">
+          <Button
+            class="add-category m-1"
+            icon="pi pi-plus"
+            style="background-color: var(--flowMetricsBlue)"
+            @click="createCategory"
+          ></Button>
+          <div v-if="!isSLACategoryNameValid" class="error-message m-1 text-red-500">
             {{ categoryErrorMessage }}
           </div>
         </div>
@@ -81,8 +98,8 @@
           <Column header="Delete">
             <template #body="rowData">
               <Button
+                class="p-button-danger trash-size m-1"
                 icon="pi pi-trash"
-                class="p-button-danger trash-size"
                 @click="deleteCategory(rowData.data)"
               ></Button>
             </template>
@@ -98,7 +115,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import useSLAStore from '@/store/store';
+import useSLAStore from '@/store/slaStore';
 import type { SLASubscriber } from '@/model/SLASubscriber';
 import type { SLARule } from '@/model/SLARule';
 import type { SLACategory } from '@/model/SLACategory';
@@ -107,9 +124,6 @@ import GeneratePDF from '@/components/GeneratePDF.vue';
 // Define the 'SLAComponent' component
 export default defineComponent({
   name: 'SLAComponent',
-  mounted() {
-    this.slaStore.initializeCategories();
-  },
   components: { GeneratePDF },
   data() {
     return {
@@ -218,99 +232,4 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
-/* View background */
-.background-card {
-  height: auto;
-  width: auto;
-}
-/* Add Subscriber Container */
-.subscriber-container {
-  display: flex;
-  align-items: center;
-  margin-bottom: 40px;
-}
-.enter-subscriber {
-  margin-right: 10px;
-}
-.add-subscriber {
-  background-color: mediumseagreen;
-  color: white;
-  border: none;
-  justify-content: center;
-  height: 30px;
-  width: 30px;
-  padding: 0;
-  font-size: 12px;
-}
-/* Add SLA Rule Container */
-.rule-container {
-  display: flex;
-  align-items: center;
-  margin-bottom: 40px;
-}
-.enter-rule {
-  margin-right: 10px;
-}
-.select-employees {
-  margin-right: 10px;
-}
-.select-occurred-in {
-  margin-right: 10px;
-}
-.add-rule {
-  background-color: mediumseagreen;
-  color: white;
-  border: none;
-  justify-content: center;
-  height: 30px;
-  width: 30px;
-  padding: 0;
-  font-size: 12px;
-}
-/* Add new SLA Category Container */
-.category-container {
-  display: flex;
-  align-items: center;
-  margin-bottom: 40px;
-}
-.select-subscriber {
-  margin-right: 10px;
-}
-.select-rule {
-  margin-right: 10px;
-}
-.enter-category {
-  margin-right: 10px;
-}
-.add-category {
-  background-color: mediumseagreen;
-  color: white;
-  border: none;
-  justify-content: center;
-  height: 30px;
-  width: 30px;
-  padding: 0;
-  font-size: 12px;
-}
-/* Delete Button */
-.p-button-danger {
-  background-color: red;
-  color: white;
-  border: none;
-  height: 30px;
-  width: 30px;
-}
-.trash-size {
-  color: white;
-  font-size: 5px;
-}
-.error-message {
-  display: block;
-  color: red;
-  font-size: 16px;
-  margin-top: 4px;
-  font-family: inherit;
-  margin-left: 10px;
-}
-</style>
+<style scoped></style>

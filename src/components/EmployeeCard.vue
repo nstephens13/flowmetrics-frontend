@@ -4,7 +4,10 @@
       <Avatar
         :label="employee.firstName.charAt(0) + employee.lastName.charAt(0)"
         size="large"
-        style="background-color: #2d6dc1; color: #ffffff"
+        style="background-color: var(--flowMetricsBlue); color: #ffffff"
+        v-tooltip.top="employee.emailAddress"
+        type="text"
+        placeholder="Top"
       />
     </div>
     <div class="flex align-items-center justify-content-center">
@@ -15,6 +18,15 @@
     <div class="flex align-items-center justify-content-center">
       <label class="font-bold text-xl mb-1" id="lastName" style="white-space: nowrap">
         {{ employee.lastName }}
+      </label>
+    </div>
+    <div class="flex align-items-center justify-content-center">
+      <label
+        id="status"
+        style="white-space: nowrap; font-weight: bold"
+        :style="{ color: employee.status === 'active' ? '#2d6dc1' : '#A9A9A9' }"
+      >
+        {{ employee.status }}
       </label>
     </div>
     <div class="flex align-items-center justify-content-center" style="white-space: nowrap">

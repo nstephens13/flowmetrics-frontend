@@ -1,15 +1,15 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { computed, ref } from 'vue';
 import type { Ref } from 'vue';
+import EmployeeCard from '@/components/EmployeeCard.vue';
 import type { EmployeeIF } from '@/model/EmployeeIF';
 import type { ProjectIF } from '@/model/ProjectIF';
 import type { IssueDataIF } from '@/model/IssueDataIF';
-import { calculateWorkload, mergeEmployees } from '@/services/workloadCalculator';
-import useFilterConfigStore from '@/store/FilterConfigStore';
-import filterProjectThatHasTheAllowedStatus from '@/services/filter/IssuesStateFilter';
-import EmployeeCard from '@/components/EmployeeCard.vue';
 import { getIssueStatusList } from '@/model/ProjectIF';
-import useProjectsStore from '@/store/ProjectStore';
+import { calculateWorkload, mergeEmployees } from '@/services/workloadCalculator';
+import filterProjectThatHasTheAllowedStatus from '@/services/filter/IssuesStateFilter';
+import useProjectsStore from '@/store/projectStore';
+import useFilterConfigStore from '@/store/filterConfigStore';
 
 // Create a reference to the FilterConfigStore and ProjectStore instances
 const filterConfigStore = useFilterConfigStore();
@@ -116,10 +116,10 @@ updateEmployeeList();
     <template #title>
       <div class="grid">
         <div class="col-12">
-          <label class="PageTitel">Employee Overview</label>
+          <p>Employee Overview</p>
+          <Divider class="p-divider p-divider-horizontal divider-position" />
         </div>
       </div>
-      <Divider />
     </template>
     <template #content>
       <DataView :value="employeeList" dataKey="employee.id" layout="grid">
@@ -127,20 +127,20 @@ updateEmployeeList();
           <div class="grid gap-3">
             <MultiSelect
               v-model="selectedProjects"
-              :options="allProjects"
-              option-label="name"
-              @change="updateSelectedProjects()"
-              placeholder="Select project"
               :maxSelectedLabels="1"
+              :options="allProjects"
               class="w-full md:w-14rem"
+              option-label="name"
+              placeholder="Select project"
+              @change="updateSelectedProjects()"
             />
             <MultiSelect
               v-model="selectedStatuses"
+              :maxSelectedLabels="1"
               :options="allStatuses"
+              class="w-full md:w-14rem"
               placeholder="Select status"
               @change="updateSelectedStatuses()"
-              :maxSelectedLabels="1"
-              class="w-full md:w-14rem"
             />
           </div>
         </template>
@@ -148,9 +148,9 @@ updateEmployeeList();
           <div class="xl:col-2 lg:col-3 md:col-4 sm:col-6 col-12 p-2">
             <div class="p-4 border-1 surface-border border-round shadow-1 hover:bg-gray-50">
               <EmployeeCard
+                :categoryNames="categoryNames"
                 :employee="slotProps.data.employee"
                 :issues="slotProps.data.issues"
-                :categoryNames="categoryNames"
               />
             </div>
           </div>
@@ -164,5 +164,8 @@ updateEmployeeList();
 .p-card {
   margin: 15px;
   box-shadow: none;
+}
+.divider-position {
+  width: 100%;
 }
 </style>

@@ -50,11 +50,6 @@ function mapIssuesToEmployees(projects: ProjectIF[] | null): Map<EmployeeIF, Iss
     projectToCalculate.issues.forEach((issue) => {
       extractEmployeeAndUpdateEmployeeMap(issue);
     });
-    projectToCalculate.milestones.forEach((milestone) => {
-      milestone.issues.forEach((issue) => {
-        extractEmployeeAndUpdateEmployeeMap(issue);
-      });
-    });
   });
 
   return mapToReturn;
