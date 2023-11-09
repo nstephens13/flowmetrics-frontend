@@ -38,7 +38,6 @@ describe('assignedSLARules', () => {
         name: 'rule number1',
         durationInDays: null,
         expirationDate: null,
-        maxAssignedEmployees: null,
         occurredIn: null,
       },
       {
@@ -46,7 +45,6 @@ describe('assignedSLARules', () => {
         name: 'rule number2',
         durationInDays: null,
         expirationDate: null,
-        maxAssignedEmployees: null,
         occurredIn: null,
       },
     ];
