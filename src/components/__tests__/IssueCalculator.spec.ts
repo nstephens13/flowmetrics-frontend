@@ -63,3 +63,27 @@ describe('Project Overview should load all the Components', () => {
       });
   });
 });
+
+test('DataTable should contain "Resting time for Assignee" column with field ', () => {
+  const wrapper = mount(IssueCalculator, {
+    global: {
+      plugins: [PrimeVue, router],
+      components: {
+        Dropdown,
+        Panel,
+        Card,
+        DataTable,
+        Column,
+        Divider,
+      },
+    },
+  });
+  const dataTable = wrapper.getComponent(DataTable);
+  const columns = dataTable.findAllComponents(Column);
+
+  const columnExists = columns.some(
+    (column) => column.props('field') === 'Resting time (Assignee)'
+  );
+
+  expect(columnExists).toBe(true);
+});
