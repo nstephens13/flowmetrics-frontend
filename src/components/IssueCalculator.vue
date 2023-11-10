@@ -72,6 +72,7 @@
             {{ printAssignedTo(slotProps.data.assignedTo) }}
           </template>
         </Column>
+        <Column field="Resting time (Assignee)" header="Resting Time (Assignee)"></Column>
       </DataTable>
     </template>
   </Card>
