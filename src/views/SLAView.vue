@@ -86,12 +86,27 @@
       </div>
       <div>
         <h3>Add Reaction Time</h3>
-        <InputMask
-          id="basic"
-          v-model="reactionTime"
-          placeholder="99/99/9999"
-          slotChar="mm/dd/yyyy"
-        />
+        <div class="category-container m-1">
+          <Dropdown
+            v-model="selectedRuleForReactionTime"
+            :options="rules"
+            class="select-rule-for-reaction-time m-1"
+            optionLabel="name"
+            placeholder="Select rule"
+          />
+          <InputMask
+            v-model="newReactionTime"
+            class="enter-reaction-time m-1"
+            placeholder="Enter reaction time"
+            mask="99w 99d 99h"
+          />
+          <Button
+            class="add-reaction-time m-1"
+            icon="pi pi-plus"
+            style="background-color: var(--flowMetricsBlue)"
+            @click="addReactionTime"
+          ></Button>
+        </div>
       </div>
       <div>
         <h3>SLA Categories</h3>
@@ -103,6 +118,7 @@
           <Column field="rule.expirationDate" header="Due date" />
           <Column field="rule.occurredIn" header="Occurred in" />
           <Column field="rule.maxAssignedEmployees" header="Max assigned employees" />
+          <Column field="rule.reactionTime" header="Reaction time" />
           <Column header="Delete">
             <template #body="rowData">
               <Button
@@ -144,8 +160,9 @@ export default defineComponent({
       newOccurredIn: ref(null),
       selectedSubscriber: ref(null),
       selectedRule: ref(null),
+      selectedRuleForReactionTime: ref<SLARule | null>(null),
       categoryName: ref(''),
-      reactionTime: ref(''),
+      newReactionTime: ref(''),
       isSLACategoryNameValid: ref(true),
       maxAssignedEmployeesOptions: [1, 2, 3, 4, 5],
       occurredInOptions: ['Test', 'Pre-production', 'Production'],
@@ -181,6 +198,7 @@ export default defineComponent({
         expirationDate: null,
         maxAssignedEmployees: this.newRuleMaxAssignedEmployees,
         occurredIn: this.newOccurredIn,
+        reactionTime: null,
       };
       this.slaStore.addRule(rule);
       this.newRuleName = '';
@@ -210,6 +228,21 @@ export default defineComponent({
     // Delete a category from the store
     deleteCategory(category: SLACategory) {
       this.slaStore.deleteSLACategory(category);
+    },
+    // Add a reaction time to a rule
+    addReactionTime() {
+      const rule: SLARule = {
+        id: this.selectedRuleForReactionTime?.id || null,
+        name: this.selectedRuleForReactionTime?.name || null,
+        durationInDays: this.selectedRuleForReactionTime?.durationInDays || null,
+        expirationDate: this.selectedRuleForReactionTime?.expirationDate || null,
+        maxAssignedEmployees: this.selectedRuleForReactionTime?.maxAssignedEmployees || null,
+        occurredIn: this.selectedRuleForReactionTime?.occurredIn || null,
+        reactionTime: this.newReactionTime,
+      };
+      const reactionTime = this.newReactionTime.trim();
+      this.slaStore.updateRule(rule, reactionTime);
+      this.newReactionTime = '';
     },
   },
   computed: {

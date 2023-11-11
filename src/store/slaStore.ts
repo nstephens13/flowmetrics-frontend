@@ -34,6 +34,12 @@ const useSLAStore = defineStore('sla', {
         }
       }
     },
+    updateRule(rule: SLARule, reactionTime: string) {
+      const index = this.rules.findIndex((r) => r.id === rule?.id);
+      if (index !== -1) {
+        this.rules[index].reactionTime = reactionTime;
+      }
+    },
   },
 });
 

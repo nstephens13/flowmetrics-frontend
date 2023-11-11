@@ -5,4 +5,5 @@ export interface SLARule {
   expirationDate: Date | null;
   maxAssignedEmployees: number | null;
   occurredIn: string | null;
+  reactionTime: string | null;
 }

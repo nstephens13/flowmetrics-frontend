@@ -25,6 +25,7 @@ export default function initSLAStore() {
     expirationDate: null,
     maxAssignedEmployees: 3,
     occurredIn: 'Test',
+    reactionTime: ' 1w 2d 3h',
   });
   slaStore.addRule({
     id: 2,
@@ -33,6 +34,7 @@ export default function initSLAStore() {
     expirationDate: new Date('2023-07-17'),
     maxAssignedEmployees: 4,
     occurredIn: 'Pre-production',
+    reactionTime: null,
   });
   slaStore.addRule({
     id: 3,
@@ -41,6 +43,7 @@ export default function initSLAStore() {
     expirationDate: new Date('2023-12-19'),
     maxAssignedEmployees: 7,
     occurredIn: 'Production',
+    reactionTime: ' 3w 6d 4h',
   });
 
   // Add 5 SLA Categories

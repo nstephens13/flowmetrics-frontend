@@ -148,6 +148,7 @@ describe('SLAComponent', () => {
       expirationDate: null,
       maxAssignedEmployees: undefined,
       occurredIn: null,
+        reactionTime: null,
     });
   });
   // Test to check if a subscriber with less than 3 characters is not added
@@ -183,7 +184,7 @@ describe('SLAComponent', () => {
   // Test to create a category
   test('creates a category', async () => {
     // Mock the options for the subscriber and rule dropdowns
-    wrapper.setData({
+    await wrapper.setData({
       subscriber: [{ name: 'Subscriber 1' }, { name: 'Subscriber 2' }],
       rules: [{ name: 'Rule 1' }, { name: 'Rule 2' }],
     });
@@ -204,9 +205,9 @@ describe('SLAComponent', () => {
       .findAllComponents(Dropdown)
       .find((dropdown) => dropdown.classes('select-rule'));
 
-    selectSubscriberDropDown?.setValue('Subscriber 1');
-    selectRuleDropDown?.setValue('Rule 1');
-    categoryInput?.setValue('Category 1');
+    await selectSubscriberDropDown?.setValue('Subscriber 1');
+    await selectRuleDropDown?.setValue('Rule 1');
+    await categoryInput?.setValue('Category 1');
     addButton?.trigger('click').finally(() => {
       const dataTableElementSize = wrapper.getComponent(DataTable).findAll('tr').length;
       expect(2).toEqual(dataTableElementSize);
@@ -332,6 +333,7 @@ describe('SLAComponent', () => {
         expirationDate: null,
         occurredIn: null,
         maxAssignedEmployees: undefined,
+          reactionTime: null,
       },
       {
         id: 2,
@@ -340,6 +342,7 @@ describe('SLAComponent', () => {
         maxAssignedEmployees: 3,
         name: 'New Rule',
         occurredIn: null,
+          reactionTime: null,
       },
     ]);
   });
