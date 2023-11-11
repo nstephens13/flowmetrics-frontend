@@ -18,6 +18,7 @@ const UnassignedEmployee: EmployeeIF = {
   emailAddress: '',
   status: 'inactive',
   avatarUrl: 'none',
+  key: 'unassigned',
 };
 
 /**
