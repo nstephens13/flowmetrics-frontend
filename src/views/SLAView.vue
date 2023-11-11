@@ -54,6 +54,11 @@
       <div>
         <h3>Add new SLA Category</h3>
         <div class="category-container m-1">
+          <InputText
+            v-model="categoryName"
+            class="enter-category m-1"
+            placeholder="Enter category name"
+          />
           <Dropdown
             v-model="selectedSubscriber"
             :options="subscriber"
@@ -68,11 +73,6 @@
             optionLabel="name"
             placeholder="Select rule"
           />
-          <InputText
-            v-model="categoryName"
-            class="enter-category m-1"
-            placeholder="Enter category name"
-          />
           <Button
             class="add-category m-1"
             icon="pi pi-plus"
@@ -84,7 +84,15 @@
           </div>
         </div>
       </div>
-
+      <div>
+        <h3>Add Reaction Time</h3>
+        <InputMask
+          id="basic"
+          v-model="reactionTime"
+          placeholder="99/99/9999"
+          slotChar="mm/dd/yyyy"
+        />
+      </div>
       <div>
         <h3>SLA Categories</h3>
         <DataTable :value="categories">
@@ -137,6 +145,7 @@ export default defineComponent({
       selectedSubscriber: ref(null),
       selectedRule: ref(null),
       categoryName: ref(''),
+      reactionTime: ref(''),
       isSLACategoryNameValid: ref(true),
       maxAssignedEmployeesOptions: [1, 2, 3, 4, 5],
       occurredInOptions: ['Test', 'Pre-production', 'Production'],
