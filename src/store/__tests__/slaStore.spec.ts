@@ -18,6 +18,7 @@ const SLARule1: SLARule = {
   expirationDate: null,
   maxAssignedEmployees: 5,
   occurredIn: null,
+  reactionTime: null,
 };
 const SLACategory1: SLACategory = {
   id: null,

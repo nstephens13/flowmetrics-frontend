@@ -148,7 +148,7 @@ describe('SLAComponent', () => {
       expirationDate: null,
       maxAssignedEmployees: undefined,
       occurredIn: null,
-        reactionTime: null,
+      reactionTime: null,
     });
   });
   // Test to check if a subscriber with less than 3 characters is not added
@@ -333,7 +333,7 @@ describe('SLAComponent', () => {
         expirationDate: null,
         occurredIn: null,
         maxAssignedEmployees: undefined,
-          reactionTime: null,
+        reactionTime: null,
       },
       {
         id: 2,
@@ -342,7 +342,7 @@ describe('SLAComponent', () => {
         maxAssignedEmployees: 3,
         name: 'New Rule',
         occurredIn: null,
-          reactionTime: null,
+        reactionTime: null,
       },
     ]);
   });
