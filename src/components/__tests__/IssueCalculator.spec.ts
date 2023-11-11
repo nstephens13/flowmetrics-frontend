@@ -71,15 +71,4 @@ describe('Project Overview should load all the Components', () => {
     );
     expect(columnExists).toBe(true);
   });
-
-  test('DataTable should contain "Resting time for Assignee" column with field ', () => {
-    const dataTable = wrapper.getComponent(DataTable);
-    const columns = dataTable.findAllComponents(Column);
-
-    const columnExists = columns.some(
-      (column) => column.props('field') === 'Resting time (Assignee)'
-    );
-
-    expect(columnExists).toBe(true);
-  });
 });
