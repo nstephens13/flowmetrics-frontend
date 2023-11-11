@@ -10,6 +10,7 @@
       "lastName": "Doe",
       "emailAddress": "email@email.com",
       "status": "active",
+        "key": "jdoe",
             "assignedIssues": []
     },
     "createdAt": "2023-06-01T00:00:00.000Z",
@@ -28,6 +29,7 @@
       "lastName": "Smith",
       "emailAddress": "email@email.com",
       "status": "active",
+        "key": "jsmith",
             "assignedIssues": []
     },
     "createdBy": {
@@ -36,6 +38,7 @@
       "lastName": "Doe",
       "emailAddress": "email@email.com",
       "status": "active",
+        "key": "jdoe",
             "assignedIssues": []
     },
     "createdAt": "2023-06-02T00:00:00.000Z",
@@ -54,6 +57,7 @@
       "lastName": "Smith",
       "emailAddress": "email@email.com",
             "status": "active",
+        "key": "jsmith",
       "assignedIssues": []
     },
     "createdBy": {
@@ -62,6 +66,7 @@
       "lastName": "Smith",
       "emailAddress": "email@email.com",
       "status": "active",
+        "key": "jsmith",
             "assignedIssues": []
     },
     "createdAt": "2023-06-03T00:00:00.000Z",
@@ -81,6 +86,7 @@
       "lastName": "Doe",
       "emailAddress": "email@email.com",
             "status": "active",
+        "key": "jdoe",
       "assignedIssues": []
     },
     "createdAt": "2023-06-04T00:00:00.000Z",
@@ -99,6 +105,7 @@
       "lastName": "Johnson",
       "emailAddress": "email@email.com",
             "status": "active",
+        "key": "rjohnson",
       "assignedIssues": []
     },
     "createdBy": {
@@ -107,6 +114,7 @@
       "lastName": "Smith",
       "emailAddress": "email@email.com",
             "status": "active",
+        "key": "jsmith",
       "assignedIssues": []
     },
     "createdAt": "2023-06-05T00:00:00.000Z",
@@ -126,6 +134,7 @@
       "lastName": "Doe",
       "emailAddress": "email@email.com",
             "status": "active",
+        "key": "jdoe",
       "assignedIssues": []
     },
     "createdAt": "2023-06-10T00:00:00.000Z",
@@ -142,6 +151,7 @@
       "id": 4,
       "firstName": "Emily",
       "lastName": "Jones",
+        "key": "ejones",
       "emailAddress": "email@email.com",
       "status": "active",
             "assignedIssues": []
@@ -152,6 +162,7 @@
       "lastName": "Smith",
       "emailAddress": "email@email.com",
       "status": "active",
+        "key": "jsmith",
             "assignedIssues": []
     },
     "createdAt": "2023-06-15T00:00:00.000Z",
@@ -170,6 +181,7 @@
       "lastName": "Johnson",
       "emailAddress": "email@email.com",
       "status": "active",
+        "key": "rjohnson",
             "assignedIssues": []
     },
     "createdBy": {
@@ -178,6 +190,7 @@
       "lastName": "Johnson",
       "emailAddress": "email@email.com",
             "status": "active",
+        "key": "rjohnson",
       "assignedIssues": []
     },
     "createdAt": "2023-06-20T00:00:00.000Z",
@@ -196,6 +209,7 @@
       "lastName": "Doe",
       "emailAddress": "email@email.com",
       "status": "active",
+        "key": "jdoe",
             "assignedIssues": []
     },
     "createdBy": {
@@ -204,6 +218,7 @@
       "lastName": "Jones",
       "emailAddress": "email@email.com",
             "status": "active",
+        "key": "ejones",
       "assignedIssues": []
     },
     "createdAt": "2023-06-25T00:00:00.000Z",
@@ -222,6 +237,7 @@
       "lastName": "Smith",
       "emailAddress": "email@email.com",
             "status": "active",
+        "key": "jsmith",
       "assignedIssues": []
     },
     "createdBy": {
@@ -230,6 +246,7 @@
       "lastName": "Doe",
       "emailAddress": "email@email.com",
             "status": "active",
+        "key": "jdoe",
       "assignedIssues": []
     },
     "createdAt": "2023-06-30T00:00:00.000Z",
