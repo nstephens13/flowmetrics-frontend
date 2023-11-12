@@ -79,7 +79,7 @@ sonarqube-check:
     image: docker:24.0.2-dind
     stage: Build
     tags:
-        - image
+        - docker
     variables:
         IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
     script:

@@ -29,12 +29,6 @@
         <div class="rule-container m-1">
           <InputText v-model="newRuleName" class="enter-rule m-1" placeholder="Enter rule name" />
           <Dropdown
-            v-model="newRuleMaxAssignedEmployees"
-            :options="maxAssignedEmployeesOptions"
-            class="select-employees m-1"
-            placeholder="Select max assigned employees"
-          />
-          <Dropdown
             v-model="newOccurredIn"
             :options="occurredInOptions"
             class="select-occurred-in m-1"
@@ -94,7 +88,6 @@
           <Column field="rule.durationInDays" header="Duration (Days)" />
           <Column field="rule.expirationDate" header="Due date" />
           <Column field="rule.occurredIn" header="Occurred in" />
-          <Column field="rule.maxAssignedEmployees" header="Max assigned employees" />
           <Column header="Delete">
             <template #body="rowData">
               <Button
@@ -131,14 +124,12 @@ export default defineComponent({
       newSubscriber: ref(''),
       isSubscriberNameValid: ref(true),
       newRuleName: ref(''),
-      newRuleMaxAssignedEmployees: ref(),
       isRuleNameValid: ref(true),
       newOccurredIn: ref(null),
       selectedSubscriber: ref(null),
       selectedRule: ref(null),
       categoryName: ref(''),
       isSLACategoryNameValid: ref(true),
-      maxAssignedEmployeesOptions: [1, 2, 3, 4, 5],
       occurredInOptions: ['Test', 'Pre-production', 'Production'],
     };
   },
@@ -170,12 +161,10 @@ export default defineComponent({
         name: this.newRuleName.trim(),
         durationInDays: null,
         expirationDate: null,
-        maxAssignedEmployees: this.newRuleMaxAssignedEmployees,
         occurredIn: this.newOccurredIn,
       };
       this.slaStore.addRule(rule);
       this.newRuleName = '';
-      this.newRuleMaxAssignedEmployees = null;
       this.newOccurredIn = null;
     },
     // Create a new category in the store

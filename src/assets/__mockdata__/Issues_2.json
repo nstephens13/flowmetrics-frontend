@@ -56,7 +56,7 @@
       "firstName": "Jane",
       "lastName": "Smith",
       "emailAddress": "email@email.com",
-            "status": "active",
+      "status": "active",
         "key": "jsmith",
       "assignedIssues": []
     },
@@ -85,7 +85,7 @@
       "firstName": "John",
       "lastName": "Doe",
       "emailAddress": "email@email.com",
-            "status": "active",
+      "status": "active",
         "key": "jdoe",
       "assignedIssues": []
     },
@@ -104,7 +104,7 @@
       "firstName": "Robert",
       "lastName": "Johnson",
       "emailAddress": "email@email.com",
-            "status": "active",
+      "status": "active",
         "key": "rjohnson",
       "assignedIssues": []
     },
@@ -113,7 +113,7 @@
       "firstName": "Jane",
       "lastName": "Smith",
       "emailAddress": "email@email.com",
-            "status": "active",
+      "status": "active",
         "key": "jsmith",
       "assignedIssues": []
     },
@@ -133,7 +133,7 @@
       "firstName": "John",
       "lastName": "Doe",
       "emailAddress": "email@email.com",
-            "status": "active",
+      "status": "active",
         "key": "jdoe",
       "assignedIssues": []
     },
@@ -154,7 +154,7 @@
         "key": "ejones",
       "emailAddress": "email@email.com",
       "status": "active",
-            "assignedIssues": []
+      "assignedIssues": []
     },
     "createdBy": {
       "id": 2,
@@ -189,7 +189,7 @@
       "firstName": "Robert",
       "lastName": "Johnson",
       "emailAddress": "email@email.com",
-            "status": "active",
+      "status": "active",
         "key": "rjohnson",
       "assignedIssues": []
     },
@@ -217,7 +217,7 @@
       "firstName": "Emily",
       "lastName": "Jones",
       "emailAddress": "email@email.com",
-            "status": "active",
+      "status": "active",
         "key": "ejones",
       "assignedIssues": []
     },
@@ -236,7 +236,7 @@
       "firstName": "Jane",
       "lastName": "Smith",
       "emailAddress": "email@email.com",
-            "status": "active",
+      "status": "active",
         "key": "jsmith",
       "assignedIssues": []
     },
@@ -245,7 +245,7 @@
       "firstName": "John",
       "lastName": "Doe",
       "emailAddress": "email@email.com",
-            "status": "active",
+      "status": "active",
         "key": "jdoe",
       "assignedIssues": []
     },
