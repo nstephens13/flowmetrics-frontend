@@ -75,6 +75,15 @@
                 <div class="flex align-items-center gap-2">
                   <span>{{ data.data.status }}</span>
                 </div>
+                <div style="margin: 10px">
+                  <Button
+                    label="Status history"
+                    style="font-size: 13px; padding: 2px 2px; color: var(--flowMetricsBlue)"
+                    size="small"
+                    severity="info"
+                    text
+                  />
+                </div>
               </template>
               <template #filter="{ filterModel, filterCallback }">
                 <MultiSelect
