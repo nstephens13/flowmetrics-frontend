@@ -7,8 +7,8 @@ describe('EmployeeIF', () => {
       firstName: 'John',
       lastName: 'Doe',
       emailAddress: 'john.doe@email.com',
-      avatarUrl: 'none',
       status: 'active',
+      avatarUrl: 'none',
     };
     expect(employee).toHaveProperty('emailAddress');
     expect(typeof employee.emailAddress).toBe('string');
