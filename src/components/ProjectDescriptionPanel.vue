@@ -88,7 +88,6 @@
                 />
               </template>
             </Column>
-            <Column field="statusChanges" header="Status changes"></Column>
           </DataTable>
         </div>
       </template>
