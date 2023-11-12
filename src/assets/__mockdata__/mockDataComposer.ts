@@ -567,7 +567,6 @@ function getMockData(dataset: number): ProjectIF {
         name: 'SLA Rule 1',
         durationInDays: 3,
         expirationDate: new Date('2023-08-17T00:00:00.000Z'),
-        maxAssignedEmployees: 3,
         occurredIn: null,
       };
       const slaRule2: SLARule = {
@@ -575,7 +574,6 @@ function getMockData(dataset: number): ProjectIF {
         name: 'SLA Rule 2',
         durationInDays: 5,
         expirationDate: new Date('2023-08-20T00:00:00.000Z'),
-        maxAssignedEmployees: 3,
         occurredIn: null,
       };
       const slaRule3: SLARule = {
@@ -583,7 +581,6 @@ function getMockData(dataset: number): ProjectIF {
         name: 'SLA Rule 3',
         durationInDays: 2,
         expirationDate: new Date('2023-08-16T00:00:00.000Z'),
-        maxAssignedEmployees: 1,
         occurredIn: null,
       };
 
