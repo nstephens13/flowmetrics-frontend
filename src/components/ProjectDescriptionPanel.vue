@@ -76,7 +76,9 @@
                   <span>{{ data.data.status }}</span>
                 </div>
                 <div style="margin: 10px">
+                  <ConfirmPopup id="history" aria-label="popup"> </ConfirmPopup>
                   <Button
+                    @click="openPopup($event)"
                     label="Status history"
                     style="font-size: 13px; padding: 2px 2px; color: var(--flowMetricsBlue)"
                     size="small"
@@ -108,9 +110,27 @@
 import { ref, watch } from 'vue';
 import type { Ref } from 'vue';
 import { FilterMatchMode } from 'primevue/api';
+import { useConfirm } from 'primevue/useconfirm';
 import type { EmployeeIF } from '@/model/EmployeeIF';
 import { getIssueStatusList, type ProjectIF } from '@/model/ProjectIF';
 import getMockData from '@/assets/__mockdata__/mockDataComposer';
+
+const history = useConfirm();
+const isVisible = ref(false);
+const openPopup = (event) => {
+  history.require({
+    target: event.currentTarget,
+    header: 'Issue History',
+    rejectLabel: 'close',
+    position: 'topleft',
+    onShow: () => {
+      isVisible.value = true;
+    },
+    onHide: () => {
+      isVisible.value = false;
+    },
+  });
+};
 
 // Create a reference for the selectedProject with initial data
 const selectedProject = ref({

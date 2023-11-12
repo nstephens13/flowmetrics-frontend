@@ -25,6 +25,8 @@ import DataViewLayoutOptions from 'primevue/dataviewlayoutoptions';
 import AutoComplete from 'primevue/autocomplete';
 import Chip from 'primevue/chip';
 import Tooltip from 'primevue/tooltip';
+import ConfirmPopup from 'primevue/confirmpopup';
+import ConfirmationService from 'primevue/confirmationservice';
 
 import router from './router';
 import App from './App.vue';
@@ -38,9 +40,11 @@ import initFilterConfigStore from '@/store/mockdata/initFilterConfigStore';
 
 const app = createApp(App);
 const pinia = createPinia();
+
 app.use(pinia);
 app.use(PrimeVue);
 app.use(router);
+app.use(ConfirmationService);
 
 app.component('Calendar', Calendar);
 app.component('Card', Card);
@@ -63,6 +67,7 @@ app.component('DataView', DataView);
 app.component('DataViewLayoutOptions', DataViewLayoutOptions);
 app.component('AutoComplete', AutoComplete);
 app.component('Chip', Chip);
+app.component('ConfirmPopup', ConfirmPopup);
 app.directive('tooltip', Tooltip);
 
 app.mount('#app');
