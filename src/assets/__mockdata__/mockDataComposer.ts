@@ -41,7 +41,9 @@ function loadIssueDataFromFile(issues: any): Issue[] {
       createdAt: issue.createdAt ? new Date(issue.createdAt) : null,
       dueTo: issue.dueTo ? new Date(issue.dueTo) : null,
       status: issue.status as string,
-      statusChanges: null,
+      analyseStatusChanges: null,
+      umsetzungStatusChanges: null,
+      testStatusChanges: null,
       assignedSLARule: issue.assignedSLARule ? issue.assignedSLARule : null,
       lastStatusChange: faker.date.recent(),
     });
@@ -296,7 +298,9 @@ function getMockData(dataset: number): ProjectIF {
           closedAt = faker.date.recent();
         }
 
-        const statusChanges = getRandomInt(10);
+        const analyseStatusChanges = getRandomInt(10);
+        const umsetzungStatusChanges = getRandomInt(10);
+        const testStatusChanges = getRandomInt(10);
 
         issuesForProject.push({
           id: iterator + 1,
@@ -308,7 +312,9 @@ function getMockData(dataset: number): ProjectIF {
           createdAt: faker.date.past(),
           createdBy: employeesArrayFromFile[getRandomInt(employeesForProject.length)],
           dueTo: faker.date.future(),
-          statusChanges,
+          analyseStatusChanges,
+          umsetzungStatusChanges,
+          testStatusChanges,
           assignedSLARule: null,
           lastStatusChange: faker.date.recent(),
         });
@@ -351,7 +357,9 @@ function getMockData(dataset: number): ProjectIF {
           closedAt = faker.date.recent();
         }
 
-        const statusChanges = getRandomInt(10);
+        const analyseStatusChanges = getRandomInt(10);
+        const umsetzungStatusChanges = getRandomInt(10);
+        const testStatusChanges = getRandomInt(10);
 
         issuesForProject.push({
           id: iterator + 1,
@@ -363,7 +371,9 @@ function getMockData(dataset: number): ProjectIF {
           createdAt: faker.date.past(),
           createdBy: employeesArrayFromFile[getRandomInt(employeesForProject.length)],
           dueTo: faker.date.future(),
-          statusChanges,
+          analyseStatusChanges,
+          umsetzungStatusChanges,
+          testStatusChanges,
           assignedSLARule: null,
           lastStatusChange: faker.date.between({
             from: new Date().valueOf() - 259200000,
@@ -459,7 +469,9 @@ function getMockData(dataset: number): ProjectIF {
           createdBy: employeesArrayFromFile[getRandomInt(employeesForProject.length)],
           dueTo: faker.date.future(),
           status: '',
-          statusChanges: null,
+          analyseStatusChanges: null,
+          umsetzungStatusChanges: null,
+          testStatusChanges: null,
           assignedSLARule: null,
           lastStatusChange: faker.date.recent(),
         });
@@ -525,7 +537,9 @@ function getMockData(dataset: number): ProjectIF {
           createdBy: employeesArrayFromFile[getRandomInt(employeesForProject.length)],
           dueTo: faker.date.future(),
           status: '',
-          statusChanges: 0,
+          analyseStatusChanges: 0,
+          umsetzungStatusChanges: 0,
+          testStatusChanges: 0,
           assignedSLARule: [],
           lastStatusChange: faker.date.recent(),
         });

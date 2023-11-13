@@ -22,7 +22,11 @@ class Issue implements IssueIF {
 
   status: string | null;
 
-  statusChanges: number | null;
+  analyseStatusChanges: number | null;
+
+  umsetzungStatusChanges: number | null;
+
+  testStatusChanges: number | null;
 
   assignedSLARule: SLARule[] | null;
 
@@ -38,7 +42,9 @@ class Issue implements IssueIF {
     closedAt: Date | null,
     dueTo: Date | null,
     status: string | null,
-    statusChanges: number | null,
+    analyseStatusChanges: number | null,
+    umsetzungStatusChanges: number | null,
+    testStatusChanges: number | null,
     assignedSLARule: SLARule[] | null,
     lastStatusChange: Date | null
   ) {
@@ -51,7 +57,9 @@ class Issue implements IssueIF {
     this.closedAt = closedAt;
     this.dueTo = dueTo;
     this.status = status;
-    this.statusChanges = statusChanges;
+    this.analyseStatusChanges = analyseStatusChanges;
+    this.umsetzungStatusChanges = umsetzungStatusChanges;
+    this.testStatusChanges = testStatusChanges;
     this.assignedSLARule = assignedSLARule;
     this.lastStatusChange = lastStatusChange;
   }
