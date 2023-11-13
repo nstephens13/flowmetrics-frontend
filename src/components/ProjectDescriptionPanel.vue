@@ -75,19 +75,6 @@
                 <div class="flex align-items-center gap-2">
                   <span>{{ data.data.status }}</span>
                 </div>
-                <div style="margin: 10px">
-                  <Button
-                    @click="toggle"
-                    label="Status history"
-                    style="font-size: 13px; padding: 2px 2px; color: var(--flowMetricsBlue)"
-                    size="small"
-                    severity="info"
-                    text
-                  />
-                  <OverlayPanel ref="op">
-                    <h5>Issue history</h5>
-                  </OverlayPanel>
-                </div>
               </template>
               <template #filter="{ filterModel, filterCallback }">
                 <MultiSelect
@@ -99,6 +86,15 @@
                   :maxSelectedLabels="3"
                   class="w-full md:w-10rem"
                 />
+              </template>
+            </Column>
+            <Column field="statusChanges" header="Status changes">
+              <template #body="data">
+                <div>
+                  Analyse: {{ data.data.statusChanges }}<br />
+                  Umsetzung: {{ data.data.statusChanges }}<br />
+                  Test: {{ data.data.statusChanges }}<br />
+                </div>
               </template>
             </Column>
           </DataTable>
@@ -155,13 +151,6 @@ const projects: Ref<ProjectIF[]> = ref([
   getMockData(54),
   getMockData(55),
 ] as ProjectIF[]);
-
-const toggle = () => {
-  // Access the OverlayPanel using $refs and toggle its visibility
-  if (this.$refs.op) {
-    this.$refs.op.toggle();
-  }
-};
 </script>
 
 <style scoped>
