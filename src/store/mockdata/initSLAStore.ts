@@ -23,7 +23,6 @@ export default function initSLAStore() {
     name: 'Pre-Config 1',
     durationInDays: 3,
     expirationDate: null,
-    maxAssignedEmployees: 3,
     occurredIn: 'Test',
     reactionTime: ' 1w 2d 3h',
   });
@@ -32,7 +31,6 @@ export default function initSLAStore() {
     name: 'Pre-Config 2',
     durationInDays: null,
     expirationDate: new Date('2023-07-17'),
-    maxAssignedEmployees: 4,
     occurredIn: 'Pre-production',
     reactionTime: null,
   });
@@ -41,7 +39,6 @@ export default function initSLAStore() {
     name: 'Pre-Config 3',
     durationInDays: 7,
     expirationDate: new Date('2023-12-19'),
-    maxAssignedEmployees: 7,
     occurredIn: 'Production',
     reactionTime: ' 3w 6d 4h',
   });

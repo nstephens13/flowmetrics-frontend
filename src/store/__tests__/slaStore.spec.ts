@@ -16,7 +16,6 @@ const SLARule1: SLARule = {
   name: 'SLA Rule 1',
   durationInDays: 3,
   expirationDate: null,
-  maxAssignedEmployees: 5,
   occurredIn: null,
   reactionTime: null,
 };
@@ -54,7 +53,6 @@ describe('SLA Store Tests', () => {
     expect(SLAStore.rules[0].name).toBe('SLA Rule 1');
     expect(SLAStore.rules[0].durationInDays).toBe(3);
     expect(SLAStore.rules[0].expirationDate).toBe(null);
-    expect(SLAStore.rules[0].maxAssignedEmployees).toBe(5);
     expect(SLAStore.rules[0].occurredIn).toBe(null);
   });
   test('can add a Category', () => {

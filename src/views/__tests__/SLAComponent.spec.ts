@@ -308,18 +308,11 @@ describe('SLAComponent', () => {
   test('should add a new rule when addRule is called', async () => {
     const addRuleButton = wrapper.find('.add-rule');
     const inputRuleName = wrapper.find('.enter-rule'); // Update this line
-    const selectEmployeesDropdown = wrapper.getComponent(Dropdown);
 
     await inputRuleName.setValue('New Rule');
-    await selectEmployeesDropdown.vm.$emit('update:modelValue', 3);
     await addRuleButton.trigger('click');
 
-    const selectEmployeesCount = wrapper
-      .findAllComponents(Dropdown)
-      .find((dropdown) => dropdown.classes('select-employees'));
-
     expect(inputRuleName.text()).toBe('');
-    expect(selectEmployeesCount?.props('modelValue')).toBe(null);
 
     const selectRuleDropDown = wrapper
       .findAllComponents(Dropdown)
@@ -332,14 +325,12 @@ describe('SLAComponent', () => {
         durationInDays: null,
         expirationDate: null,
         occurredIn: null,
-        maxAssignedEmployees: undefined,
         reactionTime: null,
       },
       {
         id: 2,
         durationInDays: null,
         expirationDate: null,
-        maxAssignedEmployees: 3,
         name: 'New Rule',
         occurredIn: null,
         reactionTime: null,
@@ -349,8 +340,8 @@ describe('SLAComponent', () => {
   // Test to add a new category using createCategory method with valid inputs
   test('should add a new category when createCategory is called with valid inputs', async () => {
     const dropdowns = wrapper.findAllComponents(Dropdown);
-    const selectSubscriber = dropdowns[2];
-    const selectRule = dropdowns[3];
+    const selectSubscriber = dropdowns[1];
+    const selectRule = dropdowns[2];
     const createCategoryButton = wrapper.find('.add-category');
     const inputCategoryName = wrapper.find('.enter-category');
     // Set the selected subscriber and rule
@@ -379,7 +370,7 @@ describe('SLAComponent', () => {
 
     const selectRuleDropDown = wrapper
       .findAllComponents(Dropdown)
-      .find((dropdown) => dropdown.classes('select-subscriber'));
+      .find((dropdown) => dropdown.classes('select-rule'));
 
     const inputCategory = wrapper
       .findAllComponents(InputText)

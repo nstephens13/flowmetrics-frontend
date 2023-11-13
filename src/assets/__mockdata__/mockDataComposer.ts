@@ -94,6 +94,7 @@ function loadArraysFromFile(
               emailAddress: string;
               status: string;
               assignedIssues: never[];
+              key: string;
             };
             createdAt: string;
             closedAt: null;
@@ -110,6 +111,7 @@ function loadArraysFromFile(
               lastName: string;
               emailAddress: string;
               assignedIssues: never[];
+              key: string;
             };
             createdBy: {
               id: number;
@@ -118,6 +120,7 @@ function loadArraysFromFile(
               emailAddress: string;
               status: string;
               assignedIssues: never[];
+              key: string;
             };
             createdAt: string;
             closedAt: string;
@@ -135,6 +138,7 @@ function loadArraysFromFile(
               emailAddress: string;
               status: string;
               assignedIssues: never[];
+              key: string;
             };
             createdBy: {
               id: number;
@@ -159,6 +163,7 @@ function loadArraysFromFile(
               emailAddress: string;
               status: string;
               assignedIssues: never[];
+              key: string;
             };
             createdBy: {
               id: number;
@@ -567,7 +572,6 @@ function getMockData(dataset: number): ProjectIF {
         name: 'SLA Rule 1',
         durationInDays: 3,
         expirationDate: new Date('2023-08-17T00:00:00.000Z'),
-        maxAssignedEmployees: 3,
         occurredIn: null,
         reactionTime: null,
       };
@@ -576,7 +580,6 @@ function getMockData(dataset: number): ProjectIF {
         name: 'SLA Rule 2',
         durationInDays: 5,
         expirationDate: new Date('2023-08-20T00:00:00.000Z'),
-        maxAssignedEmployees: 3,
         occurredIn: null,
         reactionTime: null,
       };
@@ -585,7 +588,6 @@ function getMockData(dataset: number): ProjectIF {
         name: 'SLA Rule 3',
         durationInDays: 2,
         expirationDate: new Date('2023-08-16T00:00:00.000Z'),
-        maxAssignedEmployees: 1,
         occurredIn: null,
         reactionTime: null,
       };

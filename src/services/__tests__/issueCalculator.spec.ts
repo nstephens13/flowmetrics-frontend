@@ -22,6 +22,7 @@ describe('Issue Calculator should map correctly ', () => {
     emailAddress: 'test.email@email.com',
     status: 'inactive',
     avatarUrl: 'none',
+    key: 'test',
   };
 
   // given
