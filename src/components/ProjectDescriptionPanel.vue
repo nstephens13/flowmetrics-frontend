@@ -88,7 +88,7 @@
                 />
               </template>
             </Column>
-            <Column  header="Status changes">
+            <Column header="Status changes" style="width: 150px">
               <template #body="data">
                 <div>
                   Analyse: {{ data.data.analyseStatusChanges }}<br />
