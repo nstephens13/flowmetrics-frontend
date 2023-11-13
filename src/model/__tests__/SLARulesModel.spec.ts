@@ -16,6 +16,7 @@ test('getSLARules returns an empty array when assignedSLARule is null', () => {
       emailAddress: 'anna.john@email.com',
       status: 'active',
       avatarUrl: 'none',
+      key: 'ajohn',
     },
     new Date(),
     null,
@@ -38,7 +39,6 @@ describe('assignedSLARules', () => {
         name: 'rule number1',
         durationInDays: null,
         expirationDate: null,
-        maxAssignedEmployees: null,
         occurredIn: null,
       },
       {
@@ -46,7 +46,6 @@ describe('assignedSLARules', () => {
         name: 'rule number2',
         durationInDays: null,
         expirationDate: null,
-        maxAssignedEmployees: null,
         occurredIn: null,
       },
     ];
@@ -63,6 +62,7 @@ describe('assignedSLARules', () => {
         emailAddress: 'mary.gard@email.com',
         status: 'active',
         avatarUrl: 'none',
+        key: 'mgard',
       },
       createdAt: new Date(),
       closedAt: null,

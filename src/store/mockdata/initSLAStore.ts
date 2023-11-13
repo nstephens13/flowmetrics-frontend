@@ -23,7 +23,6 @@ export default function initSLAStore() {
     name: 'Pre-Config 1',
     durationInDays: 3,
     expirationDate: null,
-    maxAssignedEmployees: 3,
     occurredIn: 'Test',
   });
   slaStore.addRule({
@@ -31,7 +30,6 @@ export default function initSLAStore() {
     name: 'Pre-Config 2',
     durationInDays: null,
     expirationDate: new Date('2023-07-17'),
-    maxAssignedEmployees: 4,
     occurredIn: 'Pre-production',
   });
   slaStore.addRule({
@@ -39,7 +37,6 @@ export default function initSLAStore() {
     name: 'Pre-Config 3',
     durationInDays: 7,
     expirationDate: new Date('2023-12-19'),
-    maxAssignedEmployees: 7,
     occurredIn: 'Production',
   });
 
