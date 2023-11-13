@@ -225,7 +225,6 @@ export default defineComponent({
         name: this.selectedRuleForReactionTime?.name || null,
         durationInDays: this.selectedRuleForReactionTime?.durationInDays || null,
         expirationDate: this.selectedRuleForReactionTime?.expirationDate || null,
-        maxAssignedEmployees: this.selectedRuleForReactionTime?.maxAssignedEmployees || null,
         occurredIn: this.selectedRuleForReactionTime?.occurredIn || null,
         reactionTime: this.newReactionTime,
       };
