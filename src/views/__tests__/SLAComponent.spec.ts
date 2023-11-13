@@ -2,6 +2,7 @@ import { describe, expect, test, vi } from 'vitest';
 import { createTestingPinia } from '@pinia/testing';
 import { mount, VueWrapper } from '@vue/test-utils';
 import InputText from 'primevue/inputtext';
+import InputMask from 'primevue/inputmask';
 import PrimeVue from 'primevue/config';
 import Dropdown from 'primevue/dropdown';
 import Card from 'primevue/card';
@@ -42,6 +43,7 @@ describe('SLAComponent Test with Store Data', () => {
         ],
         components: {
           InputText,
+          InputMask,
           Dropdown,
           Card,
           Button,
@@ -93,6 +95,7 @@ describe('SLAComponent', () => {
       plugins: [PrimeVue, router, pinia],
       components: {
         InputText,
+        InputMask,
         Dropdown,
         Card,
         Button,

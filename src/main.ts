@@ -64,8 +64,8 @@ app.component('DataView', DataView);
 app.component('DataViewLayoutOptions', DataViewLayoutOptions);
 app.component('AutoComplete', AutoComplete);
 app.component('Chip', Chip);
-app.directive('tooltip', Tooltip);
 app.component('InputMask', InputMask);
+app.directive('tooltip', Tooltip);
 
 app.mount('#app');
 
