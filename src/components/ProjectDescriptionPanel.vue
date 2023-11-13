@@ -88,12 +88,12 @@
                 />
               </template>
             </Column>
-            <Column field="analyseStatusChanges" header="Status changes">
+            <Column  header="Status changes">
               <template #body="data">
                 <div>
                   Analyse: {{ data.data.analyseStatusChanges }}<br />
-                  Umsetzung: {{ data.data.statusChanges }}<br />
-                  Test: {{ data.data.statusChanges }}<br />
+                  Umsetzung: {{ data.data.umsetzungStatusChanges }}<br />
+                  Test: {{ data.data.testStatusChanges }}<br />
                 </div>
               </template>
             </Column>
