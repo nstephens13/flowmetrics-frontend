@@ -155,6 +155,13 @@ const projects: Ref<ProjectIF[]> = ref([
   getMockData(54),
   getMockData(55),
 ] as ProjectIF[]);
+
+const toggle = () => {
+  // Access the OverlayPanel using $refs and toggle its visibility
+  if (this.$refs.op) {
+    this.$refs.op.toggle();
+  }
+};
 </script>
 
 <style scoped>
