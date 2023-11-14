@@ -100,6 +100,9 @@
             style="background-color: var(--flowMetricsBlue)"
             @click="addReactionTime"
           ></Button>
+          <div v-if="!isReactionTimeValid" class="error-message m-1 text-red-500">
+            {{ reactionTimeErrorMessage }}
+          </div>
         </div>
       </div>
       <div>
@@ -156,6 +159,7 @@ export default defineComponent({
       categoryName: ref(''),
       newReactionTime: ref(''),
       isSLACategoryNameValid: ref(true),
+      isReactionTimeValid: ref(true),
       occurredInOptions: ['Test', 'Pre-production', 'Production'],
     };
   },
@@ -220,6 +224,13 @@ export default defineComponent({
     },
     // Add a reaction time to a rule
     addReactionTime() {
+      if (this.newReactionTime.trim().length < 9) {
+        this.isReactionTimeValid = false;
+        return;
+      }
+      if (this.selectedRuleForReactionTime === null) {
+        return;
+      }
       const rule: SLARule = {
         id: this.selectedRuleForReactionTime?.id || null,
         name: this.selectedRuleForReactionTime?.name || null,
@@ -231,6 +242,8 @@ export default defineComponent({
       const reactionTime = this.newReactionTime.trim();
       this.slaStore.updateRule(rule, reactionTime);
       this.newReactionTime = '';
+      this.selectedRuleForReactionTime = null;
+      this.isReactionTimeValid = true;
     },
   },
   computed: {
@@ -257,6 +270,10 @@ export default defineComponent({
     // Error message for invalid category name
     categoryErrorMessage(): any {
       return !this.isSLACategoryNameValid ? 'Category name must be at least 3 characters.' : '';
+    },
+    // Error message for invalid reaction time
+    reactionTimeErrorMessage(): any {
+      return !this.isReactionTimeValid ? 'Reaction time is invalid.' : '';
     },
   },
 });
