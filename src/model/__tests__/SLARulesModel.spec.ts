@@ -24,6 +24,8 @@ test('getSLARules returns an empty array when assignedSLARule is null', () => {
     'Open',
     null,
     null,
+    null,
+    null,
     null
   );
 
@@ -68,7 +70,9 @@ describe('assignedSLARules', () => {
       closedAt: null,
       dueTo: null,
       status: 'Open',
-      statusChanges: null,
+      analyseStatusChanges: null,
+      umsetzungStatusChanges: null,
+      testStatusChanges: null,
       assignedSLARule: slaRules,
       lastStatusChange: null,
     };
