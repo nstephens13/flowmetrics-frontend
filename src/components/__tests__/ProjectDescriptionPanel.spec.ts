@@ -82,7 +82,7 @@ describe('Project Overview should load all the Components', () => {
         wrapper.trigger('click', mockingBirdProject).then(() => {
           const statusChangesColumnCells = wrapper.findAll('.p-datatable-tbody tr td:last-child');
           const statusChangesColumnData = (statusChangesColumnCells.at(0) as any)?.text();
-          const expectedData = /\b\d+\b/g;
+          const expectedData = /\b\d+\b/g; // is a regular expression that matches one or more digits (\d+) surrounded by word boundaries (\b). The g flag indicates a global search, so it will find all matches in the string.
           const extractedNumbers = statusChangesColumnData.match(expectedData);
           expect(extractedNumbers).toHaveLength(3);
           extractedNumbers.forEach((number: string) => {
