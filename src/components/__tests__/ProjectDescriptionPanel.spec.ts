@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { mount } from '@vue/test-utils';
+import { mount, VueWrapper } from '@vue/test-utils';
 import PrimeVue from 'primevue/config';
 import Card from 'primevue/card';
 import Dropdown from 'primevue/dropdown';
@@ -14,7 +14,7 @@ import ProjectDescriptionPanel from '../ProjectDescriptionPanel.vue';
 // Describe block for the test suite
 describe('Project Overview should load all the Components', () => {
   // Mounting the ProjectDescriptionPanel component with necessary configuration
-  const wrapper = mount(ProjectDescriptionPanel, {
+  const wrapper: VueWrapper<typeof ProjectDescriptionPanel> = mount(ProjectDescriptionPanel, {
     global: {
       plugins: [PrimeVue, router],
       components: {
@@ -67,6 +67,30 @@ describe('Project Overview should load all the Components', () => {
           const multiSelect = wrapper.getComponent(MultiSelect);
           expect(3).toEqual(multiSelect.props('options').length);
         });
+      });
+  });
+
+  test('Status changes are shown in Mocking Bird Project', async () => {
+    const dropdownOptions = wrapper.getComponent(Dropdown).props('options');
+    const mockingBirdProject = dropdownOptions[2];
+    wrapper.getComponent(Dropdown).vm.$emit('select', dropdownOptions[2]);
+
+    wrapper
+      .getComponent(Dropdown)
+      .setValue(mockingBirdProject)
+      .then(() => {
+        wrapper.trigger('click', mockingBirdProject).then(() => {
+          const statusChangesColumnCells = wrapper.findAll('.p-datatable-tbody tr td:last-child');
+          const statusChangesColumnData = statusChangesColumnCells.at(0).text();
+          const expectedData = /\b\d+\b/g;
+          const extractedNumbers = statusChangesColumnData.match(expectedData);
+          expect(extractedNumbers).toHaveLength(3);
+          extractedNumbers.forEach((number) => {
+            expect(Number.isInteger(Number(number))).toBe(true);
+          });
+        });
+        expect(6).toEqual(dropdownOptions.length);
+        expect('Mocking Bird Project').toEqual(mockingBirdProject.name);
       });
   });
 });
