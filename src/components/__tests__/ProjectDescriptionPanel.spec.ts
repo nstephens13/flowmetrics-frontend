@@ -73,7 +73,7 @@ describe('Project Overview should load all the Components', () => {
   test('Status changes are shown in Mocking Bird Project', async () => {
     const dropdownOptions = wrapper.getComponent(Dropdown).props('options');
     const mockingBirdProject = dropdownOptions[2];
-    wrapper.getComponent(Dropdown).vm.$emit('select', dropdownOptions[2]);
+    wrapper.getComponent(Dropdown).vm.$emit('change', dropdownOptions[2]);
 
     wrapper
       .getComponent(Dropdown)
@@ -81,11 +81,11 @@ describe('Project Overview should load all the Components', () => {
       .then(() => {
         wrapper.trigger('click', mockingBirdProject).then(() => {
           const statusChangesColumnCells = wrapper.findAll('.p-datatable-tbody tr td:last-child');
-          const statusChangesColumnData = statusChangesColumnCells.at(0).text();
+          const statusChangesColumnData = (statusChangesColumnCells.at(0) as any)?.text();
           const expectedData = /\b\d+\b/g;
           const extractedNumbers = statusChangesColumnData.match(expectedData);
           expect(extractedNumbers).toHaveLength(3);
-          extractedNumbers.forEach((number) => {
+          extractedNumbers.forEach((number: string) => {
             expect(Number.isInteger(Number(number))).toBe(true);
           });
         });
