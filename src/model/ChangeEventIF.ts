@@ -9,12 +9,10 @@ export enum ChangeEventEnum {
 
 /**
  *
- * @prop {number} id employee id
- * @prop {string} firstName first name of the employee
- * @prop {string} lastName family name of the employee
- * @prop {string} emailAddress email address of the employee
- * @prop {string} avatarUrl a link to the avatar url on jira
- * @prop {string} status the current status of the employee if is he still working or quit
+ * @prop {number} id change event id
+ * @prop {ChangeEventEnum} changeDescription the category of the event
+ * @prop {Date} timestamp
+ * @prop {EmployeeIF} assigned the Employee if its a assigned-Event
  */
 export interface ChangeEventIF {
   id: string;
