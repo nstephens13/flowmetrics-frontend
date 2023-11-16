@@ -41,6 +41,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
             statusChanges: null,
             assignedSLARule: null,
             lastStatusChange: null,
+            changelog: null,
           },
           {
             id: 3,
@@ -71,6 +72,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
             statusChanges: null,
             assignedSLARule: null,
             lastStatusChange: null,
+            changelog: null,
           },
         ],
       },
@@ -109,6 +111,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
             statusChanges: null,
             assignedSLARule: null,
             lastStatusChange: null,
+            changelog: null,
           },
           {
             id: 3,
@@ -139,6 +142,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
             statusChanges: null,
             assignedSLARule: null,
             lastStatusChange: null,
+            changelog: null,
           },
         ],
       },
@@ -189,6 +193,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
             statusChanges: null,
             assignedSLARule: null,
             lastStatusChange: null,
+            changelog: null,
           },
           {
             id: 3,
@@ -219,6 +224,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
             statusChanges: null,
             assignedSLARule: null,
             lastStatusChange: null,
+            changelog: null,
           },
         ],
       },
@@ -257,6 +263,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
             statusChanges: null,
             assignedSLARule: null,
             lastStatusChange: null,
+            changelog: null,
           },
           {
             id: 3,
@@ -287,6 +294,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
             statusChanges: null,
             assignedSLARule: null,
             lastStatusChange: null,
+            changelog: null,
           },
         ],
       },

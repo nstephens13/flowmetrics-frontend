@@ -39,6 +39,7 @@ const project1: ProjectIF = {
       statusChanges: null,
       assignedSLARule: null,
       lastStatusChange: null,
+      changelog: null,
     },
     {
       id: 3,
@@ -69,6 +70,7 @@ const project1: ProjectIF = {
       statusChanges: null,
       assignedSLARule: null,
       lastStatusChange: null,
+      changelog: null,
     },
   ],
 };
@@ -107,6 +109,7 @@ const project2: ProjectIF = {
       statusChanges: null,
       assignedSLARule: null,
       lastStatusChange: null,
+      changelog: null,
     },
     {
       id: 3,
@@ -137,6 +140,7 @@ const project2: ProjectIF = {
       statusChanges: null,
       assignedSLARule: null,
       lastStatusChange: null,
+      changelog: null,
     },
   ],
 };
