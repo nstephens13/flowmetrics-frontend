@@ -1,5 +1,6 @@
 import type { EmployeeIF } from './EmployeeIF';
 import type { SLARule } from '@/model/SLARule';
+import type { ChangeEventIF } from '@/model/ChangeEventIF';
 
 /**
  *
@@ -29,6 +30,7 @@ export interface IssueIF {
   statusChanges: number | null;
   lastStatusChange: Date | null;
   assignedSLARule: SLARule[] | null;
+  changelog: ChangeEventIF[] | null;
 }
 
 // function to check if issue has an assigned SLA rule
