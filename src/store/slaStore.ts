@@ -21,12 +21,12 @@ const useSLAStore = defineStore('sla', {
       ruleToAdd.id = this.rules.length + 1;
       this.rules.push(ruleToAdd);
     },
-    addSLACategory(category: SlaCategory) {
+    addSlaCategory(category: SlaCategory) {
       const categoryToAdd = category;
       categoryToAdd.id = this.slaCategories.length + 1;
       this.slaCategories.push(categoryToAdd);
     },
-    deleteSLACategory(category: SlaCategory) {
+    deleteSlaCategory(category: SlaCategory) {
       if (category.id != null && category.id >= 1) {
         const index = this.slaCategories.findIndex((c) => c.id === category?.id);
         if (index !== -1) {

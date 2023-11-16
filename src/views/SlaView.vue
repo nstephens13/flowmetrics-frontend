@@ -73,7 +73,7 @@
             style="background-color: var(--flowMetricsBlue)"
             @click="createCategory"
           ></Button>
-          <div v-if="!isSLACategoryNameValid" class="error-message m-1 text-red-500">
+          <div v-if="!isSlaCategoryNameValid" class="error-message m-1 text-red-500">
             {{ categoryErrorMessage }}
           </div>
         </div>
@@ -129,7 +129,7 @@ export default defineComponent({
       selectedSubscriber: ref(null),
       selectedRule: ref(null),
       categoryName: ref(''),
-      isSLACategoryNameValid: ref(true),
+      isSlaCategoryNameValid: ref(true),
       occurredInOptions: ['Test', 'Pre-production', 'Production'],
     };
   },
@@ -170,10 +170,10 @@ export default defineComponent({
     // Create a new category in the store
     createCategory() {
       if (this.categoryName.trim().length < 3) {
-        this.isSLACategoryNameValid = false;
+        this.isSlaCategoryNameValid = false;
         return;
       }
-      this.isSLACategoryNameValid = true;
+      this.isSlaCategoryNameValid = true;
       if (this.selectedSubscriber && this.selectedRule) {
         const category: SlaCategory = {
           id: null,
@@ -181,7 +181,7 @@ export default defineComponent({
           subscriber: this.selectedSubscriber,
           rule: this.selectedRule,
         };
-        this.slaStore.addSLACategory(category);
+        this.slaStore.addSlaCategory(category);
         this.selectedSubscriber = null;
         this.selectedRule = null;
         this.categoryName = '';
@@ -189,7 +189,7 @@ export default defineComponent({
     },
     // Delete a category from the store
     deleteCategory(category: SlaCategory) {
-      this.slaStore.deleteSLACategory(category);
+      this.slaStore.deleteSlaCategory(category);
     },
   },
   computed: {
@@ -215,7 +215,7 @@ export default defineComponent({
     },
     // Error message for invalid category name
     categoryErrorMessage(): any {
-      return !this.isSLACategoryNameValid ? 'Category name must be at least 3 characters.' : '';
+      return !this.isSlaCategoryNameValid ? 'Category name must be at least 3 characters.' : '';
     },
   },
 });

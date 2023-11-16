@@ -18,7 +18,7 @@ const slaRule1: SlaRule = {
   expirationDate: null,
   occurredIn: null,
 };
-const SLACategory1: SlaCategory = {
+const slaCategory1: SlaCategory = {
   id: null,
   name: 'New Category',
   rule: slaRule1,
@@ -55,7 +55,7 @@ describe('SLA Store Tests', () => {
     expect(SLAStore.rules[0].occurredIn).toBe(null);
   });
   test('can add a Category', () => {
-    SLAStore.addSLACategory(SLACategory1);
+    SLAStore.addSlaCategory(slaCategory1);
     expect(SLAStore.slaCategories).toHaveLength(1);
     expect(SLAStore.slaCategories[0].id).toBe(1);
     expect(SLAStore.slaCategories[0].name).toBe('New Category');
@@ -63,7 +63,7 @@ describe('SLA Store Tests', () => {
     expect(SLAStore.slaCategories[0].subscriber).toStrictEqual(SLASubscriber1);
   });
   test('can delete a Category', () => {
-    SLAStore.deleteSLACategory(SLACategory1);
+    SLAStore.deleteSlaCategory(slaCategory1);
     expect(SLAStore.slaCategories).toHaveLength(0);
   });
 });

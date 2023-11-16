@@ -1,7 +1,7 @@
 import useSLAStore from '@/store/slaStore';
 import type { SlaCategory } from '@/model/SlaCategory';
 
-export default function initSLAStore() {
+export default function initSlaStore() {
   const slaStore = useSLAStore();
   slaStore.addSubscriber({
     id: 1,
@@ -51,6 +51,6 @@ export default function initSLAStore() {
       rule: slaStore.rules[rulesIndex],
     };
 
-    slaStore.addSLACategory(category);
+    slaStore.addSlaCategory(category);
   }
 }

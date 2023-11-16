@@ -32,7 +32,7 @@ import 'primevue/resources/themes/lara-light-indigo/theme.css';
 import 'primevue/resources/primevue.min.css';
 import 'primeicons/primeicons.css';
 import 'primeflex/primeflex.css';
-import initSLAStore from '@/store/mockdata/initSLAStore';
+import initSlaStore from '@/store/mockdata/initSlaStore';
 import initProjectStore from '@/store/mockdata/initProjectStore';
 import initFilterConfigStore from '@/store/mockdata/initFilterConfigStore';
 
@@ -68,6 +68,6 @@ app.directive('tooltip', Tooltip);
 app.mount('#app');
 
 // initialize the stores
-initSLAStore();
+initSlaStore();
 initProjectStore();
 initFilterConfigStore();

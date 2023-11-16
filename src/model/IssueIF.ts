@@ -12,7 +12,7 @@ import type { SlaRule } from '@/model/SlaRule';
  * @prop {Date| null} closedAt the Date when the issue was closed
  * @prop {Date| null} dueTo Due date for the Issue
  * @prop {Status} status the Status of issue-progress
- * @prop {SLARule} assignedSlaRule the assigned SLA rule of the issue
+ * @prop {SlaRule} assignedSlaRule the assigned SLA rule of the issue
  */
 
 // Enum to set status of Issue

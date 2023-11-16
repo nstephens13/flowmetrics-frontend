@@ -9,7 +9,7 @@ import Button from 'primevue/button';
 import Column from 'primevue/column';
 import DataTable from 'primevue/datatable';
 import Divider from 'primevue/divider';
-import SLAComponent from '../SLAView.vue';
+import SLAComponent from '../SlaView.vue';
 import router from '@/router';
 import useSLAStore from '../../store/slaStore';
 
@@ -66,7 +66,7 @@ describe('SLAComponent Test with Store Data', () => {
     await deleteButton.trigger('click');
 
     expect(slaStore.slaCategories).toHaveLength(0);
-    expect(slaStore.deleteSLACategory).toHaveBeenCalledTimes(1);
+    expect(slaStore.deleteSlaCategory).toHaveBeenCalledTimes(1);
   });
 
   // Test to check if all strings in the filter dropdown are rendered
