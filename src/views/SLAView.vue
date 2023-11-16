@@ -273,7 +273,7 @@ export default defineComponent({
     },
     // Error message for invalid reaction time
     reactionTimeErrorMessage(): any {
-      return !this.isReactionTimeValid ? 'Reaction time is invalid.' : '';
+      return !this.isReactionTimeValid ? 'Reaction time Category must be in format 01w 22d 00h' : '';
     },
   },
 });
