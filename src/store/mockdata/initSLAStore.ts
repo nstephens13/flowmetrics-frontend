@@ -1,5 +1,5 @@
 import useSLAStore from '@/store/slaStore';
-import type { SLACategory } from '@/model/SLACategory';
+import type { SlaCategory } from '@/model/SlaCategory';
 
 export default function initSLAStore() {
   const slaStore = useSLAStore();
@@ -44,7 +44,7 @@ export default function initSLAStore() {
   for (let i = 1; i < 6; i++) {
     const amountSubscribers = i % slaStore.subscriber.length;
     const rulesIndex = i % slaStore.rules.length;
-    const category: SLACategory = {
+    const category: SlaCategory = {
       id: null,
       name: `savedConfig_${i}`,
       subscriber: slaStore.subscriber[amountSubscribers],

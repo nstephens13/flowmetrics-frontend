@@ -1,27 +1,27 @@
 import { describe, expect, test } from 'vitest';
 import { createPinia, setActivePinia } from 'pinia';
 import useSLAStore from '../slaStore';
-import type { SLASubscriber } from '@/model/SLASubscriber';
-import type { SLARule } from '@/model/SLARule';
-import type { SLACategory } from '@/model/SLACategory';
+import type { SlaSubscriber } from '../../model/SlaSubscriber';
+import type { SlaRule } from '../../model/SlaRule';
+import type { SlaCategory } from '../../model/SlaCategory';
 
 // Test SLA Data
-const SLASubscriber1: SLASubscriber = {
+const SLASubscriber1: SlaSubscriber = {
   id: null,
   name: 'Subscriber 1',
   description: 'Subscriber 1 description',
 };
-const SLARule1: SLARule = {
+const slaRule1: SlaRule = {
   id: null,
   name: 'SLA Rule 1',
   durationInDays: 3,
   expirationDate: null,
   occurredIn: null,
 };
-const SLACategory1: SLACategory = {
+const SLACategory1: SlaCategory = {
   id: null,
   name: 'New Category',
-  rule: SLARule1,
+  rule: slaRule1,
   subscriber: SLASubscriber1,
 };
 
@@ -46,7 +46,7 @@ describe('SLA Store Tests', () => {
     expect(SLAStore.subscriber[0].description).toBe('Subscriber 1 description');
   });
   test('can add a Rule', () => {
-    SLAStore.addRule(SLARule1);
+    SLAStore.addRule(slaRule1);
     expect(SLAStore.rules).toHaveLength(1);
     expect(SLAStore.rules[0].id).toBe(1);
     expect(SLAStore.rules[0].name).toBe('SLA Rule 1');
@@ -59,7 +59,7 @@ describe('SLA Store Tests', () => {
     expect(SLAStore.slaCategories).toHaveLength(1);
     expect(SLAStore.slaCategories[0].id).toBe(1);
     expect(SLAStore.slaCategories[0].name).toBe('New Category');
-    expect(SLAStore.slaCategories[0].rule).toStrictEqual(SLARule1);
+    expect(SLAStore.slaCategories[0].rule).toStrictEqual(slaRule1);
     expect(SLAStore.slaCategories[0].subscriber).toStrictEqual(SLASubscriber1);
   });
   test('can delete a Category', () => {

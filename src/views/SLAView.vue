@@ -109,9 +109,9 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 import useSLAStore from '@/store/slaStore';
-import type { SLASubscriber } from '@/model/SLASubscriber';
-import type { SLARule } from '@/model/SLARule';
-import type { SLACategory } from '@/model/SLACategory';
+import type { SlaSubscriber } from '@/model/SlaSubscriber';
+import type { SlaRule } from '@/model/SlaRule';
+import type { SlaCategory } from '@/model/SlaCategory';
 import GeneratePDF from '@/components/GeneratePDF.vue';
 
 // Define the 'SLAComponent' component
@@ -141,7 +141,7 @@ export default defineComponent({
         return;
       }
       this.isSubscriberNameValid = true;
-      const subscriber: SLASubscriber = {
+      const subscriber: SlaSubscriber = {
         id: null,
         name: this.newSubscriber.trim(),
         description: null,
@@ -156,7 +156,7 @@ export default defineComponent({
         return;
       }
       this.isRuleNameValid = true;
-      const rule: SLARule = {
+      const rule: SlaRule = {
         id: null,
         name: this.newRuleName.trim(),
         durationInDays: null,
@@ -175,7 +175,7 @@ export default defineComponent({
       }
       this.isSLACategoryNameValid = true;
       if (this.selectedSubscriber && this.selectedRule) {
-        const category: SLACategory = {
+        const category: SlaCategory = {
           id: null,
           name: this.categoryName.trim() || null,
           subscriber: this.selectedSubscriber,
@@ -188,13 +188,13 @@ export default defineComponent({
       }
     },
     // Delete a category from the store
-    deleteCategory(category: SLACategory) {
+    deleteCategory(category: SlaCategory) {
       this.slaStore.deleteSLACategory(category);
     },
   },
   computed: {
     // Retrieve the subscribers from the store
-    subscriber(): SLASubscriber[] {
+    subscriber(): SlaSubscriber[] {
       return this.slaStore.subscriber;
     },
     // Retrieve the rules from the store
@@ -202,7 +202,7 @@ export default defineComponent({
       return this.slaStore.rules;
     },
     // Retrieve the SLA categories from the store
-    categories(): SLACategory[] {
+    categories(): SlaCategory[] {
       return this.slaStore.slaCategories;
     },
     // Error message for invalid subscriber name
