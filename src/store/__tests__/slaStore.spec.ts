@@ -6,7 +6,7 @@ import type { SlaRule } from '../../model/SlaRule';
 import type { SlaCategory } from '../../model/SlaCategory';
 
 // Test SLA Data
-const SLASubscriber1: SlaSubscriber = {
+const slaSubscriber1: SlaSubscriber = {
   id: null,
   name: 'Subscriber 1',
   description: 'Subscriber 1 description',
@@ -22,7 +22,7 @@ const slaCategory1: SlaCategory = {
   id: null,
   name: 'New Category',
   rule: slaRule1,
-  subscriber: SLASubscriber1,
+  subscriber: slaSubscriber1,
 };
 
 describe('SLA Store Tests', () => {
@@ -39,7 +39,7 @@ describe('SLA Store Tests', () => {
     expect(SLAStore.slaCategories).toHaveLength(0);
   });
   test('can add a Subscriber', () => {
-    SLAStore.addSubscriber(SLASubscriber1);
+    SLAStore.addSubscriber(slaSubscriber1);
     expect(SLAStore.subscriber).toHaveLength(1);
     expect(SLAStore.subscriber[0].id).toBe(1);
     expect(SLAStore.subscriber[0].name).toBe('Subscriber 1');
@@ -60,7 +60,7 @@ describe('SLA Store Tests', () => {
     expect(SLAStore.slaCategories[0].id).toBe(1);
     expect(SLAStore.slaCategories[0].name).toBe('New Category');
     expect(SLAStore.slaCategories[0].rule).toStrictEqual(slaRule1);
-    expect(SLAStore.slaCategories[0].subscriber).toStrictEqual(SLASubscriber1);
+    expect(SLAStore.slaCategories[0].subscriber).toStrictEqual(slaSubscriber1);
   });
   test('can delete a Category', () => {
     SLAStore.deleteSlaCategory(slaCategory1);
