@@ -69,6 +69,15 @@ function updateEmployeeList() {
     secondCategory: 'Development',
     thirdCategory: 'Testing',
   };
+
+  // Move the unassigned employee to the front of the list
+  const unassignedIndex = employeeList.value.findIndex(
+    (employee) => employee.employee.status === 'inactive'
+  );
+  if (unassignedIndex !== -1) {
+    const unassignedEmployee = employeeList.value.splice(unassignedIndex, 1)[0];
+    employeeList.value = [unassignedEmployee, ...employeeList.value];
+  }
 }
 
 // Function to update the selected projects and trigger employee list update
