@@ -72,7 +72,7 @@ function updateEmployeeList() {
 
   // Move the unassigned employee to the front of the list
   const unassignedIndex = employeeList.value.findIndex(
-    (employee) => employee.employee.status === 'inactive'
+    (employee) => employee.employee.firstName === 'Unassigned'
   );
   if (unassignedIndex !== -1) {
     const unassignedEmployee = employeeList.value.splice(unassignedIndex, 1)[0];
