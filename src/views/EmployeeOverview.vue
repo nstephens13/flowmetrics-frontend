@@ -154,7 +154,14 @@ updateEmployeeList();
           </div>
         </template>
         <template #grid="slotProps">
-          <div class="xl:col-2 lg:col-3 md:col-4 sm:col-6 col-12 p-2">
+          <div
+            class="xl:col-2 lg:col-3 md:col-4 sm:col-6 col-12 p-2"
+            :style="
+              slotProps.data.employee.firstName === 'Unassigned'
+                ? 'color: rgba(169, 169, 169, 0.8)'
+                : ''
+            "
+          >
             <div class="p-4 border-1 surface-border border-round shadow-1 hover:bg-gray-50">
               <EmployeeCard
                 :categoryNames="categoryNames"
