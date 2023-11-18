@@ -6,13 +6,14 @@
     </template>
     <template #content>
       <div>
-        <h3>Add SLA Subscriber</h3>
-        <div class="subscriber-container">
-          <InputText
-            v-model="newSubscriber"
-            class="enter-subscriber m-1"
-            placeholder="Enter subscriber name"
-          />
+        <div class="m-2 mb-4">
+          <h3>Add SLA Subscriber</h3>
+        </div>
+        <div class="flex subscriber-container">
+          <div class="p-float-label">
+            <InputText id="subscriberName" v-model="newSubscriber" class="enter-subscriber m-1" />
+            <label for="subscriberName">Subscriber name</label>
+          </div>
           <Button
             class="add-subscriber m-1"
             icon="pi pi-plus"
@@ -25,9 +26,14 @@
         </div>
       </div>
       <div>
-        <h3>Add SLA Rule</h3>
-        <div class="rule-container m-1">
-          <InputText v-model="newRuleName" class="enter-rule m-1" placeholder="Enter rule name" />
+        <div class="m-2 mb-4">
+          <h3>Add SLA Rule</h3>
+        </div>
+        <div class="flex rule-container m-1">
+          <div class="p-float-label">
+            <InputText id="ruleName" v-model="newRuleName" class="enter-rule m-1" />
+            <label for="ruleName">Rule name</label>
+          </div>
           <Dropdown
             v-model="newOccurredIn"
             :options="occurredInOptions"
@@ -46,13 +52,14 @@
         </div>
       </div>
       <div>
-        <h3>Add new SLA Category</h3>
-        <div class="category-container m-1">
-          <InputText
-            v-model="categoryName"
-            class="enter-category m-1"
-            placeholder="Enter category name"
-          />
+        <div class="m-2 mb-4">
+          <h3>Add new SLA Category</h3>
+        </div>
+        <div class="flex category-container m-1">
+          <div class="p-float-label">
+            <InputText id="categoryName" v-model="categoryName" class="enter-category m-1" />
+            <label for="categoryName">Category name</label>
+          </div>
           <Dropdown
             v-model="selectedSubscriber"
             :options="subscriber"
@@ -79,8 +86,11 @@
         </div>
       </div>
       <div>
-        <h3>Add Reaction Time</h3>
-        <div class="category-container m-1">
+        <div class="m-2 mb-4">
+          <h3>Add Reaction Time</h3>
+        </div>
+        <h3></h3>
+        <div class="flex category-container m-1">
           <Dropdown
             v-model="selectedRuleForReactionTime"
             :options="rules"
@@ -88,12 +98,15 @@
             optionLabel="name"
             placeholder="Select rule"
           />
-          <InputMask
-            v-model="newReactionTime"
-            class="enter-reaction-time m-1"
-            placeholder="Enter reaction time"
-            mask="99w 99d 99h"
-          />
+          <div class="p-float-label">
+            <InputMask
+              id="reactionTime"
+              v-model="newReactionTime"
+              class="enter-reaction-time m-1"
+              mask="99w 99d 99h"
+            />
+            <label for="reactionTime">Reaction time</label>
+          </div>
           <Button
             class="add-reaction-time m-1"
             icon="pi pi-plus"
@@ -228,7 +241,7 @@ export default defineComponent({
         this.isReactionTimeValid = false;
         return;
       }
-      if (this.selectedRuleForReactionTime === null) {
+      if (this.selectedRuleForReactionTime === null || this.newReactionTime === '00w 00d 00h') {
         return;
       }
       const rule: SLARule = {
@@ -260,23 +273,27 @@ export default defineComponent({
       return this.slaStore.slaCategories;
     },
     // Error message for invalid subscriber name
-    SubscriberErrorMessage(): any {
+    SubscriberErrorMessage(): string {
       return !this.isSubscriberNameValid ? 'Subscriber name must be at least 3 characters.' : '';
     },
     // Error message for invalid rule name
-    ruleErrorMessage(): any {
+    ruleErrorMessage(): string {
       return !this.isRuleNameValid ? 'Rule name must be at least 3 characters.' : '';
     },
     // Error message for invalid category name
-    categoryErrorMessage(): any {
+    categoryErrorMessage(): string {
       return !this.isSLACategoryNameValid ? 'Category name must be at least 3 characters.' : '';
     },
     // Error message for invalid reaction time
-    reactionTimeErrorMessage(): any {
-      return !this.isReactionTimeValid ? 'Reaction time Category must be in format 01w 22d 00h' : '';
+    reactionTimeErrorMessage(): string {
+      return !this.isReactionTimeValid ? 'Reaction time must be in format 01w 23d 00h' : '';
     },
   },
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+.error-message {
+  font-size: 16px;
+}
+</style>
