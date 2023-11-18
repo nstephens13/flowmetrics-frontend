@@ -20,9 +20,9 @@
             style="background-color: var(--flowMetricsBlue)"
             @click="addSubscriber"
           ></Button>
-          <div v-if="!isSubscriberNameValid" class="error-message m-1 text-red-500">
-            {{ SubscriberErrorMessage }}
-          </div>
+        </div>
+        <div v-if="!isSubscriberNameValid" class="error-message m-1 text-red-500 ml-3">
+          {{ SubscriberErrorMessage }}
         </div>
       </div>
       <div>
@@ -46,10 +46,10 @@
             style="background-color: var(--flowMetricsBlue)"
             @click="addRule"
           ></Button>
-          <div v-if="!isRuleNameValid" class="error-message m-1 text-red-500">{{
-            ruleErrorMessage
-          }}</div>
         </div>
+        <div v-if="!isRuleNameValid" class="error-message m-1 text-red-500 ml-3">{{
+          ruleErrorMessage
+        }}</div>
       </div>
       <div>
         <div class="m-2 mb-4">
@@ -80,9 +80,9 @@
             style="background-color: var(--flowMetricsBlue)"
             @click="createCategory"
           ></Button>
-          <div v-if="!isSLACategoryNameValid" class="error-message m-1 text-red-500">
-            {{ categoryErrorMessage }}
-          </div>
+        </div>
+        <div v-if="!isSLACategoryNameValid" class="error-message m-1 text-red-500 ml-3">
+          {{ categoryErrorMessage }}
         </div>
       </div>
       <div>
@@ -113,12 +113,12 @@
             style="background-color: var(--flowMetricsBlue)"
             @click="addReactionTime"
           ></Button>
-          <div v-if="!isReactionTimeValid" class="error-message m-1 text-red-500">
-            {{ reactionTimeErrorMessage }}
-          </div>
+        </div>
+        <div v-if="!isReactionTimeValid" class="error-message m-1 text-red-500 ml-3">
+          {{ reactionTimeErrorMessage }}
         </div>
       </div>
-      <div>
+      <div class="mt-4">
         <h3>SLA Categories</h3>
         <DataTable :value="categories">
           <Column field="name" header="Category" />
