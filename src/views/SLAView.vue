@@ -40,6 +40,24 @@
             class="select-occurred-in m-1"
             placeholder="Occurred in"
           />
+          <Dropdown
+            v-model="newCustomerProject"
+            :options="customerProjectOptions"
+            class="select-customer-in m-1"
+            placeholder="Customer Project"
+          />
+          <Dropdown
+            v-model="newPriority"
+            :options="priorityOptions"
+            class="select-priority-in m-1"
+            placeholder="Priority"
+          />
+          <Dropdown
+            v-model="newIssueType"
+            :options="issueTypeOptions"
+            class="select-issueType-in m-1"
+            placeholder="Issue Type"
+          />
           <Button
             class="add-rule m-1"
             icon="pi pi-plus"
@@ -95,6 +113,9 @@
           <Column field="rule.expirationDate" header="Due date" />
           <Column field="rule.occurredIn" header="Occurred in" />
           <Column field="rule.maxAssignedEmployees" header="Max assigned employees" />
+          <Column field="rule.customerProject" header="Customer Project" />
+          <Column field="rule.priority" header="Priority" />
+          <Column field="rule.issueType" header="Issue Type" />
           <Column header="Delete">
             <template #body="rowData">
               <Button
@@ -140,6 +161,11 @@ export default defineComponent({
       isSLACategoryNameValid: ref(true),
       maxAssignedEmployeesOptions: [1, 2, 3, 4, 5],
       occurredInOptions: ['Test', 'Pre-production', 'Production'],
+      newCustomerProject: [],
+      isCustomerProjectNameValid: ref(true),
+      newPriority: ['schwerwiegend', 'behindernd', 'leicht umgehbar', 'Kosmetik', ''],
+      newIssueType: [],
+      isIssueTypeNameValid: ref(true),
     };
   },
   methods: {
@@ -172,11 +198,17 @@ export default defineComponent({
         expirationDate: null,
         maxAssignedEmployees: this.newRuleMaxAssignedEmployees,
         occurredIn: this.newOccurredIn,
+        customerProject: this.newCustomerProject,
+        priority: this.newPriority,
+        issueType: this.newIssueType,
       };
       this.slaStore.addRule(rule);
       this.newRuleName = '';
       this.newRuleMaxAssignedEmployees = null;
       this.newOccurredIn = null;
+      this.newCustomerProject = null;
+      this.newPriority = null;
+      this.issueType = null;
     },
     // Create a new category in the store
     createCategory() {
