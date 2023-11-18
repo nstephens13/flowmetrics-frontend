@@ -5,4 +5,7 @@ export interface SLARule {
   expirationDate: Date | null;
   maxAssignedEmployees: number | null;
   occurredIn: string | null;
+  customerProject: string[] | null;
+  priority: string | null;
+  issueType: string[] | null;
 }
