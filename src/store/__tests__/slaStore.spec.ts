@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
 import { createPinia, setActivePinia } from 'pinia';
-import useSLAStore from '../slaStore';
+import useSlaStore from '../slaStore';
 import type { SlaSubscriber } from '../../model/SlaSubscriber';
 import type { SlaRule } from '../../model/SlaRule';
 import type { SlaCategory } from '../../model/SlaCategory';
@@ -27,7 +27,7 @@ const slaCategory1: SlaCategory = {
 
 describe('SLA Store Tests', () => {
   setActivePinia(createPinia());
-  const SLAStore = useSLAStore();
+  const SLAStore = useSlaStore();
 
   test('has 0 Subscribers in the Beginning', () => {
     expect(SLAStore.subscriber).toHaveLength(0);

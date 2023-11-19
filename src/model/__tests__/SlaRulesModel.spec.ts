@@ -73,7 +73,7 @@ describe('assignedSlaRules', () => {
       lastStatusChange: null,
     };
 
-    const assignedSLARules = issue.assignedSlaRule;
-    expect(assignedSLARules).toEqual(slaRules);
+    const assignedSlaRules = issue.assignedSlaRule;
+    expect(assignedSlaRules).toEqual(slaRules);
   });
 });
