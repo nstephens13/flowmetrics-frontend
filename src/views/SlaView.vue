@@ -51,34 +51,36 @@
           ruleErrorMessage
         }}</div>
       </div>
-      <div class="m-2 mb-4">
-        <h3>Add new SLA Category</h3>
-      </div>
-      <div class="flex category-container m-1">
-        <div class="p-float-label">
-          <InputText id="categoryName" v-model="categoryName" class="enter-category m-1" />
-          <label for="categoryName">Category name</label>
+      <div>
+        <div class="m-2 mb-4">
+          <h3>Add new SLA Category</h3>
         </div>
-        <Dropdown
-          v-model="selectedSubscriber"
-          :options="subscriber"
-          class="select-subscriber m-1"
-          optionLabel="name"
-          placeholder="Select subscriber"
-        />
-        <Dropdown
-          v-model="selectedRule"
-          :options="rules"
-          class="select-rule m-1"
-          optionLabel="name"
-          placeholder="Select rule"
-        />
-        <Button
-          class="add-category m-1"
-          icon="pi pi-plus"
-          style="background-color: var(--flowMetricsBlue)"
-          @click="createCategory"
-        ></Button>
+        <div class="flex category-container m-1">
+          <div class="p-float-label">
+            <InputText id="categoryName" v-model="categoryName" class="enter-category m-1" />
+            <label for="categoryName">Category name</label>
+          </div>
+          <Dropdown
+            v-model="selectedSubscriber"
+            :options="subscriber"
+            class="select-subscriber m-1"
+            optionLabel="name"
+            placeholder="Select subscriber"
+          />
+          <Dropdown
+            v-model="selectedRule"
+            :options="rules"
+            class="select-rule m-1"
+            optionLabel="name"
+            placeholder="Select rule"
+          />
+          <Button
+            class="add-category m-1"
+            icon="pi pi-plus"
+            style="background-color: var(--flowMetricsBlue)"
+            @click="createCategory"
+          ></Button>
+        </div>
         <div v-if="!isSlaCategoryNameValid" class="error-message m-1 text-red-500 ml-3">
           {{ categoryErrorMessage }}
         </div>
