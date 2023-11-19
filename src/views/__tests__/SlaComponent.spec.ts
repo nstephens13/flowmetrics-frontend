@@ -9,16 +9,16 @@ import Button from 'primevue/button';
 import Column from 'primevue/column';
 import DataTable from 'primevue/datatable';
 import Divider from 'primevue/divider';
-import SLAComponent from '../SLAView.vue';
+import SlaComponent from '../SlaView.vue';
 import router from '@/router';
-import useSLAStore from '../../store/slaStore';
+import useSlaStore from '../../store/slaStore';
 
-describe('SLAComponent Test with Store Data', () => {
+describe('SlaComponent Test with Store Data', () => {
   let slaStore: any;
   let wrapper: VueWrapper<any>;
 
   beforeEach(() => {
-    wrapper = mount(SLAComponent, {
+    wrapper = mount(SlaComponent, {
       global: {
         plugins: [
           PrimeVue,
@@ -52,7 +52,7 @@ describe('SLAComponent Test with Store Data', () => {
       },
     });
 
-    slaStore = useSLAStore();
+    slaStore = useSlaStore();
   });
 
   afterEach(() => {
@@ -66,7 +66,7 @@ describe('SLAComponent Test with Store Data', () => {
     await deleteButton.trigger('click');
 
     expect(slaStore.slaCategories).toHaveLength(0);
-    expect(slaStore.deleteSLACategory).toHaveBeenCalledTimes(1);
+    expect(slaStore.deleteSlaCategory).toHaveBeenCalledTimes(1);
   });
 
   // Test to check if all strings in the filter dropdown are rendered
@@ -79,8 +79,8 @@ describe('SLAComponent Test with Store Data', () => {
   });
 });
 
-/* Basic test to ensure, that SLA Component is successfully rendered without any errors */
-describe('SLAComponent', () => {
+/* Basic test to ensure, that SlaComponent is successfully rendered without any errors */
+describe('SlaComponent', () => {
   const pinia = createTestingPinia({
     initialState: {
       rules: [],
@@ -88,7 +88,7 @@ describe('SLAComponent', () => {
     },
     stubActions: false,
   });
-  const wrapper = mount(SLAComponent, {
+  const wrapper = mount(SlaComponent, {
     global: {
       plugins: [PrimeVue, router, pinia],
       components: {
