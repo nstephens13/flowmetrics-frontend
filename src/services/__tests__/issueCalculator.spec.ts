@@ -123,7 +123,7 @@ describe('calculateRestingTime', () => {
     status: 'Open',
     statusChanges: null,
     lastStatusChange: null,
-    assignedSLARule: null,
+    assignedSlaRule: null,
     changelog: [
       {
         id: '1',
@@ -146,7 +146,7 @@ describe('calculateRestingTime', () => {
     status: 'Open',
     statusChanges: null,
     lastStatusChange: null,
-    assignedSLARule: null,
+    assignedSlaRule: null,
     changelog: [
       {
         id: '1',
@@ -169,7 +169,7 @@ describe('calculateRestingTime', () => {
     assignedTo: testEmployee,
     statusChanges: 1,
     lastStatusChange: new Date(),
-    assignedSLARule: null,
+    assignedSlaRule: null,
     changelog: [
       {
         id: '1',
