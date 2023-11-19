@@ -11,10 +11,10 @@ import Column from 'primevue/column';
 import DataTable from 'primevue/datatable';
 import Divider from 'primevue/divider';
 import router from '@/router';
-import useSLAStore from '../../store/slaStore';
 import SLAView from '../SlaView.vue';
+import useSlaStore from '../../store/slaStore';
 
-describe('SLAComponent Test with Store Data', () => {
+describe('SlaComponent Test with Store Data', () => {
   let slaStore: any;
   let wrapper: VueWrapper<any>;
 
@@ -71,7 +71,7 @@ describe('SLAComponent Test with Store Data', () => {
       },
     });
 
-    slaStore = useSLAStore();
+    slaStore = useSlaStore();
   });
 
   afterEach(() => {
@@ -85,7 +85,7 @@ describe('SLAComponent Test with Store Data', () => {
     await deleteButton.trigger('click');
 
     expect(slaStore.slaCategories).toHaveLength(0);
-    expect(slaStore.deleteSLACategory).toHaveBeenCalledTimes(1);
+    expect(slaStore.deleteSlaCategory).toHaveBeenCalledTimes(1);
   });
 
   // Test to check if all strings in the filter dropdown are rendered
@@ -126,7 +126,7 @@ describe('SLAComponent Test with Store Data', () => {
       expect(errorMessage.exists()).toBe(true);
       expect(errorMessage.text()).toBe('Category name must be at least 3 characters.');
     });
-    expect(slaStore.addSLACategory).toHaveBeenCalledTimes(0);
+    expect(slaStore.addSlaCategory).toHaveBeenCalledTimes(0);
   });
 
   // Test to check if a rule with less than 3 characters is not added
@@ -162,8 +162,8 @@ describe('SLAComponent Test with Store Data', () => {
   });
 });
 
-/* Basic test to ensure, that SLA Component is successfully rendered without any errors */
-describe('SLAComponent', () => {
+/* Basic test to ensure, that SlaComponent is successfully rendered without any errors */
+describe('SlaComponent', () => {
   const pinia = createTestingPinia({
     initialState: {
       rules: [],

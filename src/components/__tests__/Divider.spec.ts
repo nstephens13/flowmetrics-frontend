@@ -20,7 +20,7 @@ import IssueCalculator from '../../views/IssueCalculator.vue';
 import ProjectOverview from '../../views/ProjectOverview.vue';
 import router from '@/router/index';
 import EmployeeOverview from '../../views/EmployeeOverview.vue';
-import SLAComponent from '../../views/SlaView.vue';
+import SlaComponent from '../../views/SlaView.vue';
 
 describe('ProjectDescriptionPanel Divider component', () => {
   const wrapper = mount(ProjectOverview, {
@@ -112,7 +112,7 @@ describe('Issue Calculator view', () => {
 
 describe('SLA Rules view', () => {
   const pinia = createTestingPinia({ stubActions: false });
-  const wrapper = mount(SLAComponent, {
+  const wrapper = mount(SlaComponent, {
     global: {
       plugins: [PrimeVue, router, pinia],
       components: {

@@ -51,37 +51,35 @@
           ruleErrorMessage
         }}</div>
       </div>
-      <div>
-        <div class="m-2 mb-4">
-          <h3>Add new SLA Category</h3>
+      <div class="m-2 mb-4">
+        <h3>Add new SLA Category</h3>
+      </div>
+      <div class="flex category-container m-1">
+        <div class="p-float-label">
+          <InputText id="categoryName" v-model="categoryName" class="enter-category m-1" />
+          <label for="categoryName">Category name</label>
         </div>
-        <div class="flex category-container m-1">
-          <div class="p-float-label">
-            <InputText id="categoryName" v-model="categoryName" class="enter-category m-1" />
-            <label for="categoryName">Category name</label>
-          </div>
-          <Dropdown
-            v-model="selectedSubscriber"
-            :options="subscriber"
-            class="select-subscriber m-1"
-            optionLabel="name"
-            placeholder="Select subscriber"
-          />
-          <Dropdown
-            v-model="selectedRule"
-            :options="rules"
-            class="select-rule m-1"
-            optionLabel="name"
-            placeholder="Select rule"
-          />
-          <Button
-            class="add-category m-1"
-            icon="pi pi-plus"
-            style="background-color: var(--flowMetricsBlue)"
-            @click="createCategory"
-          ></Button>
-        </div>
-        <div v-if="!isSLACategoryNameValid" class="error-message m-1 text-red-500 ml-3">
+        <Dropdown
+          v-model="selectedSubscriber"
+          :options="subscriber"
+          class="select-subscriber m-1"
+          optionLabel="name"
+          placeholder="Select subscriber"
+        />
+        <Dropdown
+          v-model="selectedRule"
+          :options="rules"
+          class="select-rule m-1"
+          optionLabel="name"
+          placeholder="Select rule"
+        />
+        <Button
+          class="add-category m-1"
+          icon="pi pi-plus"
+          style="background-color: var(--flowMetricsBlue)"
+          @click="createCategory"
+        ></Button>
+        <div v-if="!isSlaCategoryNameValid" class="error-message m-1 text-red-500 ml-3">
           {{ categoryErrorMessage }}
         </div>
       </div>
@@ -148,10 +146,10 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import useSLAStore from '@/store/slaStore';
-import type { SLASubscriber } from '@/model/SLASubscriber';
-import type { SLARule } from '@/model/SLARule';
-import type { SLACategory } from '@/model/SLACategory';
+import useSlaStore from '@/store/slaStore';
+import type { SlaSubscriber } from '@/model/SlaSubscriber';
+import type { SlaRule } from '@/model/SlaRule';
+import type { SlaCategory } from '@/model/SlaCategory';
 import GeneratePDF from '@/components/GeneratePDF.vue';
 
 // Define the 'SLAComponent' component
@@ -160,7 +158,7 @@ export default defineComponent({
   components: { GeneratePDF },
   data() {
     return {
-      slaStore: useSLAStore(),
+      slaStore: useSlaStore(),
       newSubscriber: ref(''),
       isSubscriberNameValid: ref(true),
       newRuleName: ref(''),
@@ -168,10 +166,10 @@ export default defineComponent({
       newOccurredIn: ref(null),
       selectedSubscriber: ref(null),
       selectedRule: ref(null),
-      selectedRuleForReactionTime: ref<SLARule | null>(null),
+      selectedRuleForReactionTime: ref<SlaRule | null>(null),
       categoryName: ref(''),
       newReactionTime: ref(''),
-      isSLACategoryNameValid: ref(true),
+      isSlaCategoryNameValid: ref(true),
       isReactionTimeValid: ref(true),
       occurredInOptions: ['Test', 'Pre-production', 'Production'],
     };
@@ -184,7 +182,7 @@ export default defineComponent({
         return;
       }
       this.isSubscriberNameValid = true;
-      const subscriber: SLASubscriber = {
+      const subscriber: SlaSubscriber = {
         id: null,
         name: this.newSubscriber.trim(),
         description: null,
@@ -199,7 +197,7 @@ export default defineComponent({
         return;
       }
       this.isRuleNameValid = true;
-      const rule: SLARule = {
+      const rule: SlaRule = {
         id: null,
         name: this.newRuleName.trim(),
         durationInDays: null,
@@ -214,26 +212,26 @@ export default defineComponent({
     // Create a new category in the store
     createCategory() {
       if (this.categoryName.trim().length < 3) {
-        this.isSLACategoryNameValid = false;
+        this.isSlaCategoryNameValid = false;
         return;
       }
-      this.isSLACategoryNameValid = true;
+      this.isSlaCategoryNameValid = true;
       if (this.selectedSubscriber && this.selectedRule) {
-        const category: SLACategory = {
+        const category: SlaCategory = {
           id: null,
           name: this.categoryName.trim() || null,
           subscriber: this.selectedSubscriber,
           rule: this.selectedRule,
         };
-        this.slaStore.addSLACategory(category);
+        this.slaStore.addSlaCategory(category);
         this.selectedSubscriber = null;
         this.selectedRule = null;
         this.categoryName = '';
       }
     },
     // Delete a category from the store
-    deleteCategory(category: SLACategory) {
-      this.slaStore.deleteSLACategory(category);
+    deleteCategory(category: SlaCategory) {
+      this.slaStore.deleteSlaCategory(category);
     },
     // Add a reaction time to a rule
     addReactionTime() {
@@ -244,7 +242,7 @@ export default defineComponent({
       if (this.selectedRuleForReactionTime === null || this.newReactionTime === '00w 00d 00h') {
         return;
       }
-      const rule: SLARule = {
+      const rule: SlaRule = {
         id: this.selectedRuleForReactionTime?.id || null,
         name: this.selectedRuleForReactionTime?.name || null,
         durationInDays: this.selectedRuleForReactionTime?.durationInDays || null,
@@ -261,7 +259,7 @@ export default defineComponent({
   },
   computed: {
     // Retrieve the subscribers from the store
-    subscriber(): SLASubscriber[] {
+    subscriber(): SlaSubscriber[] {
       return this.slaStore.subscriber;
     },
     // Retrieve the rules from the store
@@ -269,7 +267,7 @@ export default defineComponent({
       return this.slaStore.rules;
     },
     // Retrieve the SLA categories from the store
-    categories(): SLACategory[] {
+    categories(): SlaCategory[] {
       return this.slaStore.slaCategories;
     },
     // Error message for invalid subscriber name
@@ -282,7 +280,7 @@ export default defineComponent({
     },
     // Error message for invalid category name
     categoryErrorMessage(): string {
-      return !this.isSLACategoryNameValid ? 'Category name must be at least 3 characters.' : '';
+      return !this.isSlaCategoryNameValid ? 'Category name must be at least 3 characters.' : '';
     },
     // Error message for invalid reaction time
     reactionTimeErrorMessage(): string {

@@ -1,4 +1,4 @@
-export interface SLARule {
+export interface SlaRule {
   id: number | null;
   name: string | null;
   durationInDays: number | null;
