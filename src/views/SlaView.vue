@@ -156,7 +156,7 @@ import GeneratePDF from '@/components/GeneratePDF.vue';
 
 // Define the 'SLAComponent' component
 export default defineComponent({
-  name: 'SLAComponent',
+  name: 'SlaView',
   components: { GeneratePDF },
   data() {
     return {

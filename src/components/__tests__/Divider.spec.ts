@@ -20,7 +20,7 @@ import IssueCalculator from '../../views/IssueCalculator.vue';
 import ProjectOverview from '../../views/ProjectOverview.vue';
 import router from '@/router/index';
 import EmployeeOverview from '../../views/EmployeeOverview.vue';
-import SLAComponent from '../../views/SLAView.vue';
+import SLAComponent from '../../views/SlaView.vue';
 
 describe('ProjectDescriptionPanel Divider component', () => {
   const wrapper = mount(ProjectOverview, {
