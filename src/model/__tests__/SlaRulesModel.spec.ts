@@ -24,6 +24,7 @@ test('getSlaRules returns an empty array when assignedSlaRule is null', () => {
     'Open',
     null,
     null,
+    null,
     null
   );
 
@@ -71,6 +72,7 @@ describe('assignedSlaRules', () => {
       statusChanges: null,
       assignedSlaRule: slaRules,
       lastStatusChange: null,
+      changelog: null,
     };
 
     const assignedSlaRules = issue.assignedSlaRule;
