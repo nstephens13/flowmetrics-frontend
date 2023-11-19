@@ -1,5 +1,5 @@
 import type { EmployeeIF } from './EmployeeIF';
-import type { SLARule } from '@/model/SLARule';
+import type { SlaRule } from '@/model/SlaRule';
 import type { ChangeEventIF } from '@/model/ChangeEventIF';
 
 /**
@@ -13,7 +13,7 @@ import type { ChangeEventIF } from '@/model/ChangeEventIF';
  * @prop {Date| null} closedAt the Date when the issue was closed
  * @prop {Date| null} dueTo Due date for the Issue
  * @prop {Status} status the Status of issue-progress
- * @prop {SLARule} assignedSLARule the assigned SLA rule of the issue
+ * @prop {SlaRule} assignedSlaRule the assigned SLA rule of the issue
  */
 
 // Enum to set status of Issue
@@ -29,19 +29,19 @@ export interface IssueIF {
   status: string | null;
   statusChanges: number | null;
   lastStatusChange: Date | null;
-  assignedSLARule: SLARule[] | null;
+  assignedSlaRule: SlaRule[] | null;
   changelog: ChangeEventIF[] | null;
 }
 
 // function to check if issue has an assigned SLA rule
-export function hasSLARule(issue: IssueIF): boolean {
-  return issue.assignedSLARule !== null;
+export function hasSlaRule(issue: IssueIF): boolean {
+  return issue.assignedSlaRule !== null;
 }
 
 // print assigned SLA rule names of issue
-export function printSLARuleNames(issue: IssueIF): string {
-  if (issue.assignedSLARule === null) {
+export function printSlaRuleNames(issue: IssueIF): string {
+  if (issue.assignedSlaRule === null) {
     return '';
   }
-  return issue.assignedSLARule.map((rule) => rule.name).join(', ');
+  return issue.assignedSlaRule.map((rule) => rule.name).join(', ');
 }

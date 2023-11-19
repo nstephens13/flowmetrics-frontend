@@ -28,7 +28,7 @@ describe('Issue Class', () => {
     const dueTo = new Date();
     const status = 'Open';
     const statusChanges = null;
-    const assignedSLARule = null;
+    const assignedSlaRule = null;
 
     const issue = new Issue(
       id,
@@ -41,7 +41,7 @@ describe('Issue Class', () => {
       dueTo,
       status,
       statusChanges,
-      assignedSLARule,
+      assignedSlaRule,
       null,
       null
     );
