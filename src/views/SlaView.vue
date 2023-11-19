@@ -108,7 +108,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import useSLAStore from '@/store/slaStore';
+import useSlaStore from '@/store/slaStore';
 import type { SlaSubscriber } from '@/model/SlaSubscriber';
 import type { SlaRule } from '@/model/SlaRule';
 import type { SlaCategory } from '@/model/SlaCategory';
@@ -120,7 +120,7 @@ export default defineComponent({
   components: { GeneratePDF },
   data() {
     return {
-      slaStore: useSLAStore(),
+      slaStore: useSlaStore(),
       newSubscriber: ref(''),
       isSubscriberNameValid: ref(true),
       newRuleName: ref(''),

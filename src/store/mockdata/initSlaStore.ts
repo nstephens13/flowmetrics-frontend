@@ -1,8 +1,8 @@
-import useSLAStore from '@/store/slaStore';
+import useSlaStore from '@/store/slaStore';
 import type { SlaCategory } from '@/model/SlaCategory';
 
 export default function initSlaStore() {
-  const slaStore = useSLAStore();
+  const slaStore = useSlaStore();
   slaStore.addSubscriber({
     id: 1,
     name: 'Customer 1',

@@ -3,7 +3,7 @@ import type { SlaSubscriber } from '@/model/SlaSubscriber';
 import type { SlaRule } from '@/model/SlaRule';
 import type { SlaCategory } from '@/model/SlaCategory';
 
-const useSLAStore = defineStore('sla', {
+const useSlaStore = defineStore('sla', {
   state: () => ({
     subscriber: [] as SlaSubscriber[],
     rules: [] as SlaRule[],
@@ -37,4 +37,4 @@ const useSLAStore = defineStore('sla', {
   },
 });
 
-export default useSLAStore;
+export default useSlaStore;
