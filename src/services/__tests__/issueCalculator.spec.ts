@@ -36,7 +36,9 @@ describe('Issue Calculator should map correctly ', () => {
     status: '',
     dueTo: null,
     assignedTo: testEmployee,
-    statusChanges: null,
+    analyseStatusChanges: null,
+    umsetzungStatusChanges: null,
+    testStatusChanges: null,
     assignedSLARule: null,
     lastStatusChange: null,
   };
