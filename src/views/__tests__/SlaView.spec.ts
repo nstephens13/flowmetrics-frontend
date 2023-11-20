@@ -14,7 +14,7 @@ import router from '@/router';
 import SLAView from '../SlaView.vue';
 import useSlaStore from '../../store/slaStore';
 
-describe('SlaComponent Test with Store Data', () => {
+describe('SlaView Test with Store Data', () => {
   let slaStore: any;
   let wrapper: VueWrapper<any>;
 

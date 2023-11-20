@@ -24,7 +24,7 @@ export default function initSlaStore() {
     durationInDays: 3,
     expirationDate: null,
     occurredIn: 'Test',
-    reactionTime: ' 1w 2d 3h',
+    reactionTime: ' 01w 02d 03h',
   });
   slaStore.addRule({
     id: 2,
@@ -40,7 +40,7 @@ export default function initSlaStore() {
     durationInDays: 7,
     expirationDate: new Date('2023-12-19'),
     occurredIn: 'Production',
-    reactionTime: ' 3w 6d 4h',
+    reactionTime: ' 03w 06d 04h',
   });
 
   // Add 5 SLA Categories

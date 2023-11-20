@@ -114,7 +114,7 @@
             @click="addReactionTime"
           ></Button>
         </div>
-        <div v-if="!isReactionTimeValid" class="error-message m-1 text-red-500 ml-3">
+        <div v-if="!isReactionTimeValid" class="error-message-reaction-time m-1 text-red-500 ml-3">
           {{ reactionTimeErrorMessage }}
         </div>
       </div>
@@ -253,7 +253,7 @@ export default defineComponent({
         reactionTime: this.newReactionTime,
       };
       const reactionTime = this.newReactionTime.trim();
-      this.slaStore.updateRule(rule, reactionTime);
+      this.slaStore.addReactionTime(rule, reactionTime);
       this.newReactionTime = '';
       this.selectedRuleForReactionTime = null;
       this.isReactionTimeValid = true;
