@@ -1,6 +1,7 @@
 import type { EmployeeIF } from './EmployeeIF';
 import type { IssueIF } from './IssueIF';
 import type { SlaRule } from '@/model/SlaRule';
+import type { ChangeEventIF } from '@/model/ChangeEventIF';
 
 // Issue Class implements IssueIF
 class Issue implements IssueIF {
@@ -28,6 +29,8 @@ class Issue implements IssueIF {
 
   lastStatusChange: Date | null;
 
+  changelog: ChangeEventIF[] | null;
+
   constructor(
     id: number,
     name: string,
@@ -40,7 +43,8 @@ class Issue implements IssueIF {
     status: string | null,
     statusChanges: number | null,
     assignedSlaRule: SlaRule[] | null,
-    lastStatusChange: Date | null
+    lastStatusChange: Date | null,
+    changelog: ChangeEventIF[] | null
   ) {
     this.id = id;
     this.name = name;
@@ -54,6 +58,7 @@ class Issue implements IssueIF {
     this.statusChanges = statusChanges;
     this.assignedSlaRule = assignedSlaRule;
     this.lastStatusChange = lastStatusChange;
+    this.changelog = changelog;
   }
 }
 

@@ -42,6 +42,7 @@ describe('Issue Class', () => {
       status,
       statusChanges,
       assignedSlaRule,
+      null,
       null
     );
 
@@ -88,6 +89,7 @@ describe('getAssignedToName', () => {
       null,
       null,
       null,
+      null,
       null
     );
     const assignedToName = getAssignedToName(issue);
@@ -110,6 +112,7 @@ describe('getAssignedToName', () => {
         key: 'jsmith',
       },
       new Date(),
+      null,
       null,
       null,
       null,
@@ -145,6 +148,7 @@ describe('getFormattedDate', () => {
       null,
       null,
       null,
+      null,
       null
     );
     const formattedDate = getFormattedDate(issue);
@@ -167,6 +171,7 @@ describe('getFormattedDate', () => {
         key: 'jsmith',
       },
       new Date(),
+      null,
       null,
       null,
       null,
@@ -203,6 +208,7 @@ describe('getTimeLeft', () => {
       null,
       null,
       null,
+      null,
       null
     );
     const timeLeft = getTimeLeft(issue);
@@ -234,6 +240,7 @@ describe('getTimeLeft', () => {
       null,
       null,
       null,
+      null,
       null
     );
     const timeLeft = getTimeLeft(issue);
@@ -256,6 +263,7 @@ describe('getTimeLeft', () => {
         key: 'jsmith',
       },
       new Date(),
+      null,
       null,
       null,
       null,
@@ -290,6 +298,7 @@ describe('countIssuesByStatus', () => {
       'Open',
       null,
       null,
+      null,
       null
     ),
     new Issue(
@@ -310,6 +319,7 @@ describe('countIssuesByStatus', () => {
       null,
       null,
       'Closed',
+      null,
       null,
       null,
       null
@@ -334,6 +344,7 @@ describe('countIssuesByStatus', () => {
       'In Progress',
       null,
       null,
+      null,
       null
     ),
     new Issue(
@@ -356,6 +367,7 @@ describe('countIssuesByStatus', () => {
       'Open',
       null,
       null,
+      null,
       null
     ),
     new Issue(
@@ -376,6 +388,7 @@ describe('countIssuesByStatus', () => {
       null,
       null,
       'Closed',
+      null,
       null,
       null,
       null

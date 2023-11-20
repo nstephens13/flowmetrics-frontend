@@ -2,6 +2,8 @@ import type { ProjectIF } from '../model/ProjectIF';
 import type { EmployeeIF } from '../model/EmployeeIF';
 import type { IssueIF } from '../model/IssueIF';
 import getMockData from '../assets/__mockdata__/mockDataComposer';
+import type { ChangeEventIF } from '@/model/ChangeEventIF';
+import { ChangeEventEnum } from '@/model/ChangeEventIF';
 
 /**
  * @brief: The Function map the issues to the Employees.
@@ -16,7 +18,7 @@ import getMockData from '../assets/__mockdata__/mockDataComposer';
  * @returns {Map} key:EmployeeIF,
  * value: IssueIF[]
  */
-function mapIssuesToEmployees(projects: ProjectIF[] | null): Map<EmployeeIF, IssueIF[]> {
+export function mapIssuesToEmployees(projects: ProjectIF[] | null): Map<EmployeeIF, IssueIF[]> {
   const mapToReturn: Map<EmployeeIF, IssueIF[]> = new Map([]);
   const issueSet: Set<IssueIF> = new Set<IssueIF>();
   let projectsToCalculate: ProjectIF[];
@@ -54,5 +56,26 @@ function mapIssuesToEmployees(projects: ProjectIF[] | null): Map<EmployeeIF, Iss
 
   return mapToReturn;
 }
+export function calculateRestingTime(issue: IssueIF): [EmployeeIF | null, number] {
+  if (!issue.assignedTo || !issue.changelog) {
+    return [null, 0];
+  }
 
-export default mapIssuesToEmployees;
+  const assignedEvent = issue.changelog.find(
+    (event: ChangeEventIF) => event.changeDescription === ChangeEventEnum.assigned
+  );
+
+  // Check if assignedEvent exists and the assigned employee is the same as in IssueIF
+  if (assignedEvent && assignedEvent.assigned === issue.assignedTo) {
+    const assignedTimestamp = assignedEvent.timestamp;
+    const currentDate = new Date();
+
+    const restingTimeInSeconds = Math.floor(
+      (currentDate.getTime() - assignedTimestamp.getTime()) / 1000
+    );
+
+    return [issue.assignedTo, restingTimeInSeconds];
+  }
+
+  return [issue.assignedTo, 0];
+}

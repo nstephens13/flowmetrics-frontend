@@ -44,6 +44,7 @@ function loadIssueDataFromFile(issues: any): Issue[] {
       statusChanges: null,
       assignedSlaRule: issue.assignedSlaRule ? issue.assignedSlaRule : null,
       lastStatusChange: faker.date.recent(),
+      changelog: null,
     });
   });
   return issueData;
@@ -311,6 +312,7 @@ function getMockData(dataset: number): ProjectIF {
           statusChanges,
           assignedSlaRule: null,
           lastStatusChange: faker.date.recent(),
+          changelog: null,
         });
       }
 
@@ -369,6 +371,7 @@ function getMockData(dataset: number): ProjectIF {
             from: new Date().valueOf() - 259200000,
             to: new Date().valueOf(),
           }), // 259200000 is 3 days in ms
+          changelog: null,
         });
       }
 
@@ -462,6 +465,7 @@ function getMockData(dataset: number): ProjectIF {
           statusChanges: null,
           assignedSlaRule: null,
           lastStatusChange: faker.date.recent(),
+          changelog: null,
         });
       }
 
@@ -528,6 +532,7 @@ function getMockData(dataset: number): ProjectIF {
           statusChanges: 0,
           assignedSlaRule: [],
           lastStatusChange: faker.date.recent(),
+          changelog: null,
         });
       }
 
