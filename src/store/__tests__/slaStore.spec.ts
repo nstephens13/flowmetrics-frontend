@@ -17,6 +17,7 @@ const slaRule1: SlaRule = {
   durationInDays: 3,
   expirationDate: null,
   occurredIn: null,
+  reactionTime: null,
 };
 const slaCategory1: SlaCategory = {
   id: null,
@@ -65,5 +66,11 @@ describe('SLA Store Tests', () => {
   test('can delete a Category', () => {
     slaStore.deleteSlaCategory(slaCategory1);
     expect(slaStore.slaCategories).toHaveLength(0);
+  });
+  test('can add a Reaction Time', () => {
+    slaStore.addRule(slaRule1);
+    expect(slaStore.rules[0].reactionTime).toBe(null);
+    slaStore.addReactionTime(slaRule1, '01w 02d 03h');
+    expect(slaStore.rules[0].reactionTime).toBe('01w 02d 03h');
   });
 });

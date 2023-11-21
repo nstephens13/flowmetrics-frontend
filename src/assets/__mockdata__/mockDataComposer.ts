@@ -578,6 +578,7 @@ function getMockData(dataset: number): ProjectIF {
         durationInDays: 3,
         expirationDate: new Date('2023-08-17T00:00:00.000Z'),
         occurredIn: null,
+        reactionTime: null,
       };
       const slaRule2: SlaRule = {
         id: 2,
@@ -585,6 +586,7 @@ function getMockData(dataset: number): ProjectIF {
         durationInDays: 5,
         expirationDate: new Date('2023-08-20T00:00:00.000Z'),
         occurredIn: null,
+        reactionTime: null,
       };
       const slaRule3: SlaRule = {
         id: 3,
@@ -592,6 +594,7 @@ function getMockData(dataset: number): ProjectIF {
         durationInDays: 2,
         expirationDate: new Date('2023-08-16T00:00:00.000Z'),
         occurredIn: null,
+        reactionTime: null,
       };
 
       const slaRuleArray: SlaRule[] = [slaRule1, slaRule2, slaRule3];
