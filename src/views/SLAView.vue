@@ -162,9 +162,24 @@ export default defineComponent({
       maxAssignedEmployeesOptions: [1, 2, 3, 4, 5],
       occurredInOptions: ['Test', 'Pre-production', 'Production'],
       newCustomerProject: [],
+      customerProjectOptions: ['Customer1', 'ExternalCustomer', 'Customer 2', 'Customer 3', ''],
       isCustomerProjectNameValid: ref(true),
-      newPriority: ['schwerwiegend', 'behindernd', 'leicht umgehbar', 'Kosmetik', ''],
+      newPriority: ref(''),
+      priorityOptions: ['schwerwiegend', 'behindernd', 'leicht umgehbar', 'Kosmetik', ''],
       newIssueType: [],
+      issueTypeOptions: [
+        'bug',
+        'incident',
+        'coverage',
+        'enhancement',
+        'task',
+        'feature',
+        'support',
+        'documentation',
+        'review',
+        'refactor',
+        '',
+      ],
       isIssueTypeNameValid: ref(true),
     };
   },
@@ -206,9 +221,9 @@ export default defineComponent({
       this.newRuleName = '';
       this.newRuleMaxAssignedEmployees = null;
       this.newOccurredIn = null;
-      this.newCustomerProject = null;
-      this.newPriority = null;
-      this.issueType = null;
+      this.newCustomerProject = [];
+      this.newPriority = '';
+      this.newIssueType = [];
     },
     // Create a new category in the store
     createCategory() {
