@@ -287,7 +287,7 @@ export default defineComponent({
     },
     // Error message for invalid reaction time
     reactionTimeErrorMessage(): string {
-      return !this.isReactionTimeValid ? 'Reaction time must be in format 23d' : '';
+      return !this.isReactionTimeValid ? 'Reaction time must be in format 99.99days' : '';
     },
   },
 });
