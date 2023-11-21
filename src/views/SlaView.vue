@@ -6,28 +6,34 @@
     </template>
     <template #content>
       <div>
-        <h3>Add SLA Subscriber</h3>
-        <div class="subscriber-container">
-          <InputText
-            v-model="newSubscriber"
-            class="enter-subscriber m-1"
-            placeholder="Enter subscriber name"
-          />
+        <div class="m-2 mb-4">
+          <h3>Add SLA Subscriber</h3>
+        </div>
+        <div class="flex subscriber-container">
+          <div class="p-float-label">
+            <InputText id="subscriberName" v-model="newSubscriber" class="enter-subscriber m-1" />
+            <label for="subscriberName">Subscriber name</label>
+          </div>
           <Button
             class="add-subscriber m-1"
             icon="pi pi-plus"
             style="background-color: var(--flowMetricsBlue)"
             @click="addSubscriber"
           ></Button>
-          <div v-if="!isSubscriberNameValid" class="error-message m-1 text-red-500">
-            {{ SubscriberErrorMessage }}
-          </div>
+        </div>
+        <div v-if="!isSubscriberNameValid" class="error-message m-1 text-red-500 ml-3">
+          {{ SubscriberErrorMessage }}
         </div>
       </div>
       <div>
-        <h3>Add SLA Rule</h3>
-        <div class="rule-container m-1">
-          <InputText v-model="newRuleName" class="enter-rule m-1" placeholder="Enter rule name" />
+        <div class="m-2 mb-4">
+          <h3>Add SLA Rule</h3>
+        </div>
+        <div class="flex rule-container m-1">
+          <div class="p-float-label">
+            <InputText id="ruleName" v-model="newRuleName" class="enter-rule m-1" />
+            <label for="ruleName">Rule name</label>
+          </div>
           <Dropdown
             v-model="newOccurredIn"
             :options="occurredInOptions"
@@ -44,10 +50,19 @@
             >{{ ruleErrorMessage }}
           </div>
         </div>
+        <div v-if="!isRuleNameValid" class="error-message m-1 text-red-500 ml-3">{{
+          ruleErrorMessage
+        }}</div>
       </div>
       <div>
-        <h3>Add new SLA Category</h3>
-        <div class="category-container m-1">
+        <div class="m-2 mb-4">
+          <h3>Add new SLA Category</h3>
+        </div>
+        <div class="flex category-container m-1">
+          <div class="p-float-label">
+            <InputText id="categoryName" v-model="categoryName" class="enter-category m-1" />
+            <label for="categoryName">Category name</label>
+          </div>
           <Dropdown
             v-model="selectedSubscriber"
             :options="subscriber"
@@ -62,24 +77,51 @@
             optionLabel="name"
             placeholder="Select rule"
           />
-          <InputText
-            v-model="categoryName"
-            class="enter-category m-1"
-            placeholder="Enter category name"
-          />
           <Button
             class="add-category m-1"
             icon="pi pi-plus"
             style="background-color: var(--flowMetricsBlue)"
             @click="createCategory"
           ></Button>
-          <div v-if="!isSlaCategoryNameValid" class="error-message m-1 text-red-500">
-            {{ categoryErrorMessage }}
-          </div>
+        </div>
+        <div v-if="!isSlaCategoryNameValid" class="error-message m-1 text-red-500 ml-3">
+          {{ categoryErrorMessage }}
         </div>
       </div>
-
       <div>
+        <div class="m-2 mb-4">
+          <h3>Add Reaction Time</h3>
+        </div>
+        <h3></h3>
+        <div class="flex category-container m-1">
+          <Dropdown
+            v-model="selectedRuleForReactionTime"
+            :options="rules"
+            class="select-rule-for-reaction-time m-1"
+            optionLabel="name"
+            placeholder="Select rule"
+          />
+          <div class="p-float-label">
+            <InputMask
+              id="reactionTime"
+              v-model="newReactionTime"
+              class="enter-reaction-time m-1"
+              mask="99w 99d 99h"
+            />
+            <label for="reactionTime">Reaction time</label>
+          </div>
+          <Button
+            class="add-reaction-time m-1"
+            icon="pi pi-plus"
+            style="background-color: var(--flowMetricsBlue)"
+            @click="addReactionTime"
+          ></Button>
+        </div>
+        <div v-if="!isReactionTimeValid" class="error-message-reaction-time m-1 text-red-500 ml-3">
+          {{ reactionTimeErrorMessage }}
+        </div>
+      </div>
+      <div class="mt-4">
         <h3>SLA Categories</h3>
         <DataTable :value="categories">
           <Column field="name" header="Category" />
@@ -88,6 +130,7 @@
           <Column field="rule.durationInDays" header="Duration (Days)" />
           <Column field="rule.expirationDate" header="Due date" />
           <Column field="rule.occurredIn" header="Occurred in" />
+          <Column field="rule.reactionTime" header="Reaction time" />
           <Column header="Delete">
             <template #body="rowData">
               <Button
@@ -116,7 +159,7 @@ import GeneratePDF from '@/components/GeneratePDF.vue';
 
 // Define the 'SLAComponent' component
 export default defineComponent({
-  name: 'SlaComponent',
+  name: 'SlaView',
   components: { GeneratePDF },
   data() {
     return {
@@ -128,8 +171,11 @@ export default defineComponent({
       newOccurredIn: ref(null),
       selectedSubscriber: ref(null),
       selectedRule: ref(null),
+      selectedRuleForReactionTime: ref<SlaRule | null>(null),
       categoryName: ref(''),
+      newReactionTime: ref(''),
       isSlaCategoryNameValid: ref(true),
+      isReactionTimeValid: ref(true),
       occurredInOptions: ['Test', 'Pre-production', 'Production'],
     };
   },
@@ -191,6 +237,28 @@ export default defineComponent({
     deleteCategory(category: SlaCategory) {
       this.slaStore.deleteSlaCategory(category);
     },
+    // Add a reaction time to a rule
+    addReactionTime() {
+      if (this.newReactionTime.trim().length < 9) {
+        this.isReactionTimeValid = false;
+        return;
+      }
+      if (this.selectedRuleForReactionTime === null || this.newReactionTime === '00w 00d 00h') {
+        return;
+      }
+      const rule: SlaRule = {
+        id: this.selectedRuleForReactionTime?.id || null,
+        name: this.selectedRuleForReactionTime?.name || null,
+        reactionTimeInDays: this.selectedRuleForReactionTime?.reactionTimeInDays || null,
+        expirationDate: this.selectedRuleForReactionTime?.expirationDate || null,
+        occurredIn: this.selectedRuleForReactionTime?.occurredIn || null,
+      };
+      const reactionTime = this.newReactionTime.trim();
+      this.slaStore.addReactionTime(rule, reactionTime);
+      this.newReactionTime = '';
+      this.selectedRuleForReactionTime = null;
+      this.isReactionTimeValid = true;
+    },
   },
   computed: {
     // Retrieve the subscribers from the store
@@ -206,19 +274,27 @@ export default defineComponent({
       return this.slaStore.slaCategories;
     },
     // Error message for invalid subscriber name
-    SubscriberErrorMessage(): any {
+    SubscriberErrorMessage(): string {
       return !this.isSubscriberNameValid ? 'Subscriber name must be at least 3 characters.' : '';
     },
     // Error message for invalid rule name
-    ruleErrorMessage(): any {
+    ruleErrorMessage(): string {
       return !this.isRuleNameValid ? 'Rule name must be at least 3 characters.' : '';
     },
     // Error message for invalid category name
-    categoryErrorMessage(): any {
+    categoryErrorMessage(): string {
       return !this.isSlaCategoryNameValid ? 'Category name must be at least 3 characters.' : '';
+    },
+    // Error message for invalid reaction time
+    reactionTimeErrorMessage(): string {
+      return !this.isReactionTimeValid ? 'Reaction time must be in format 01w 23d 00h' : '';
     },
   },
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+.error-message {
+  font-size: 16px;
+}
+</style>

@@ -15,6 +15,7 @@ import ProgressBar from 'primevue/progressbar';
 import Chip from 'primevue/chip';
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
+import InputMask from 'primevue/inputmask';
 import IssueCalculator from '../../views/IssueCalculator.vue';
 import ProjectOverview from '../../views/ProjectOverview.vue';
 import router from '@/router/index';
@@ -122,6 +123,7 @@ describe('SLA Rules view', () => {
         Column,
         DataTable,
         Divider,
+        InputMask,
       },
     },
   });

@@ -66,4 +66,10 @@ describe('SLA Store Tests', () => {
     slaStore.deleteSlaCategory(slaCategory1);
     expect(slaStore.slaCategories).toHaveLength(0);
   });
+  test('can add a Reaction Time', () => {
+    slaStore.addRule(slaRule1);
+    expect(slaStore.rules[0].reactionTimeInDays).toBe(3);
+    slaStore.addReactionTime(slaRule1, '7');
+    expect(slaStore.rules[0].reactionTimeInDays).toBe(7);
+  });
 });
