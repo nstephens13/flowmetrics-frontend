@@ -41,7 +41,6 @@ describe('assignedSlaRules', () => {
         reactionTimeInDays: null,
         expirationDate: null,
         occurredIn: null,
-        reactionTime: null,
       },
       {
         id: 200,
@@ -49,7 +48,6 @@ describe('assignedSlaRules', () => {
         reactionTimeInDays: null,
         expirationDate: null,
         occurredIn: null,
-        reactionTime: null,
       },
     ];
 
