@@ -106,9 +106,9 @@
               id="reactionTime"
               v-model="newReactionTime"
               class="enter-reaction-time m-1"
-              mask="99w 99d 99h"
+              mask="99d"
             />
-            <label for="reactionTime">Reaction time</label>
+            <label for="reactionTime">Reaction time (days)</label>
           </div>
           <Button
             class="add-reaction-time m-1"
@@ -127,7 +127,7 @@
           <Column field="name" header="Category" />
           <Column field="subscriber.name" header="Subscriber" />
           <Column field="rule.name" header="Rule" />
-          <Column field="rule.durationInDays" header="Duration (Days)" />
+          <Column field="rule.reactionTimeInDays" header="Reaction Time (Days)" />
           <Column field="rule.expirationDate" header="Due date" />
           <Column field="rule.occurredIn" header="Occurred in" />
           <Column field="rule.reactionTime" header="Reaction time" />
@@ -239,11 +239,11 @@ export default defineComponent({
     },
     // Add a reaction time to a rule
     addReactionTime() {
-      if (this.newReactionTime.trim().length < 9) {
+      if (this.newReactionTime.trim().length < 2) {
         this.isReactionTimeValid = false;
         return;
       }
-      if (this.selectedRuleForReactionTime === null || this.newReactionTime === '00w 00d 00h') {
+      if (this.selectedRuleForReactionTime === null || this.newReactionTime === '00_days ') {
         return;
       }
       const rule: SlaRule = {
@@ -287,7 +287,7 @@ export default defineComponent({
     },
     // Error message for invalid reaction time
     reactionTimeErrorMessage(): string {
-      return !this.isReactionTimeValid ? 'Reaction time must be in format 01w 23d 00h' : '';
+      return !this.isReactionTimeValid ? 'Reaction time must be in format 23d' : '';
     },
   },
 });
