@@ -569,6 +569,9 @@ function getMockData(dataset: number): ProjectIF {
         expirationDate: new Date('2023-08-17T00:00:00.000Z'),
         maxAssignedEmployees: 3,
         occurredIn: null,
+        customerProject: ['Customer 1'],
+        priority: 'Kosmetik',
+        issueType: ['documentation', 'coverage'],
       };
       const slaRule2: SLARule = {
         id: 2,
@@ -577,6 +580,9 @@ function getMockData(dataset: number): ProjectIF {
         expirationDate: new Date('2023-08-20T00:00:00.000Z'),
         maxAssignedEmployees: 3,
         occurredIn: null,
+        customerProject: ['Internal'],
+        priority: 'leicht umgehbar',
+        issueType: ['support'],
       };
       const slaRule3: SLARule = {
         id: 3,
@@ -585,6 +591,9 @@ function getMockData(dataset: number): ProjectIF {
         expirationDate: new Date('2023-08-16T00:00:00.000Z'),
         maxAssignedEmployees: 1,
         occurredIn: null,
+        customerProject: ['Customer 3'],
+        priority: 'behindernd',
+        issueType: ['bug', 'test'],
       };
 
       const slaRuleArray: SLARule[] = [slaRule1, slaRule2, slaRule3];
