@@ -40,6 +40,9 @@ describe('assignedSLARules', () => {
         expirationDate: null,
         maxAssignedEmployees: null,
         occurredIn: null,
+        customerProject: [],
+        priority: null,
+        issueType: [],
       },
       {
         id: 200,
@@ -48,6 +51,9 @@ describe('assignedSLARules', () => {
         expirationDate: null,
         maxAssignedEmployees: null,
         occurredIn: null,
+        customerProject: [],
+        priority: null,
+        issueType: [],
       },
     ];
 

@@ -58,6 +58,9 @@ describe('SLA Store Tests', () => {
     expect(SLAStore.rules[0].expirationDate).toBe(null);
     expect(SLAStore.rules[0].maxAssignedEmployees).toBe(5);
     expect(SLAStore.rules[0].occurredIn).toBe(null);
+    expect(SLAStore.rules[0].customerProject).toBeNull();
+    expect(SLAStore.rules[0].priority).toBeNull();
+    expect(SLAStore.rules[0].issueType).toBeNull();
   });
   test('can add a Category', () => {
     SLAStore.addSLACategory(SLACategory1);

@@ -25,6 +25,9 @@ export default function initSLAStore() {
     expirationDate: null,
     maxAssignedEmployees: 3,
     occurredIn: 'Test',
+    customerProject: ['Customer 4'],
+    priority: 'behindernd',
+    issueType: ['bug', 'test'],
   });
   slaStore.addRule({
     id: 2,
@@ -33,6 +36,9 @@ export default function initSLAStore() {
     expirationDate: new Date('2023-07-17'),
     maxAssignedEmployees: 4,
     occurredIn: 'Pre-production',
+    customerProject: ['Customer 5'],
+    priority: null,
+    issueType: ['bug'],
   });
   slaStore.addRule({
     id: 3,
@@ -41,6 +47,9 @@ export default function initSLAStore() {
     expirationDate: new Date('2023-12-19'),
     maxAssignedEmployees: 7,
     occurredIn: 'Production',
+    customerProject: [],
+    priority: 'Kosmetik',
+    issueType: ['documentation'],
   });
 
   // Add 5 SLA Categories
