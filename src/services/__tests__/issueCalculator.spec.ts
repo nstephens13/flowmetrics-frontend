@@ -1,7 +1,11 @@
 import { expect, test, describe } from 'vitest';
 import getMockData from '../../assets/__mockdata__/mockDataComposer';
 import type { ProjectIF } from '../../model/ProjectIF';
-import { calculateRestingTime, mapIssuesToEmployees } from '../issueCalculator';
+import {
+  calculateRemainingReactionTime,
+  calculateRestingTime,
+  mapIssuesToEmployees,
+} from '../issueCalculator';
 import { ChangeEventEnum } from '../../model/ChangeEventIF';
 import type { IssueIF } from '../../model/IssueIF';
 import type { EmployeeIF } from '../../model/EmployeeIF';
@@ -237,4 +241,167 @@ describe('calculateRestingTime', () => {
     expect(assignedEmployee).toEqual(testEmployee1);
     expect(restingTimeInSeconds).toBe(0);
   });
+});
+describe('calculateRemainingReactionTime', () => {
+  const createdAt: Date = new Date();
+  const testSlaRule = {
+    id: 1,
+    name: 'TestRule',
+    reactionTimeInDays: 2,
+    expirationDate: null,
+    occurredIn: 'TestLocation',
+  };
+
+  const testIssueWithSlaRule: IssueIF = {
+    id: 1,
+    name: 'TestIssue',
+    description: 'Test description',
+    createdBy: null,
+    createdAt,
+    closedAt: null,
+    status: 'Open',
+    dueTo: null,
+    assignedTo: null,
+    statusChanges: 1,
+    lastStatusChange: new Date(),
+    assignedSlaRule: [testSlaRule],
+    changelog: [
+      {
+        id: '1',
+        changeDescription: ChangeEventEnum.assigned,
+        timestamp: new Date(),
+        assigned: null,
+      },
+    ],
+  };
+
+  const testIssueWithoutSlaRule: IssueIF = {
+    id: 2,
+    name: 'TestIssue2',
+    description: 'Test description',
+    createdBy: null,
+    createdAt,
+    closedAt: null,
+    status: 'Open',
+    dueTo: null,
+    assignedTo: null,
+    statusChanges: 1,
+    lastStatusChange: new Date(),
+    assignedSlaRule: null,
+    changelog: [
+      {
+        id: '1',
+        changeDescription: ChangeEventEnum.assigned,
+        timestamp: new Date(),
+        assigned: null,
+      },
+    ],
+  };
+  test('should return the correct remaining reaction time with SLA rule', () => {
+    // Calculate the expected remaining reaction time based on the specific expiration date
+    const currentDate = new Date();
+    const expirationDate = new Date(currentDate);
+
+    // Add two days to the expiration date
+    expirationDate.setDate(expirationDate.getDate() + 2);
+
+    const expectedRemainingTimeInSeconds = Math.floor(
+      (expirationDate.getTime() - currentDate.getTime()) / 1000
+    );
+
+    const [hasRemainingTime, remainingReactionTimeInSeconds] =
+      calculateRemainingReactionTime(testIssueWithSlaRule);
+
+    // Then ensure that the issue has remaining time
+    expect(hasRemainingTime).toBe(true);
+
+    // Optionally, you can also check if the result is close to the expected value within a tolerance
+    expect(Math.abs(remainingReactionTimeInSeconds - expectedRemainingTimeInSeconds)).toBeLessThan(
+      2
+    ); // Adjust the tolerance as needed
+  });
+
+  test('should return 0 remaining reaction time without SLA rule', () => {
+    // when
+    const [hasRemainingTime, remainingReactionTimeInSeconds] =
+      calculateRemainingReactionTime(testIssueWithoutSlaRule);
+
+    // then
+    expect(remainingReactionTimeInSeconds).toBe(0);
+    expect(hasRemainingTime).toBe(false);
+  });
+});
+test('should pick SLA rule with minimum days', () => {
+  const currentDate = new Date();
+  // SLA rules with different reaction times
+  const slaRule1 = {
+    id: 1,
+    name: 'TestRule1',
+    reactionTimeInDays: 3,
+    expirationDate: null,
+    occurredIn: 'TestLocation1',
+  };
+
+  const slaRule2 = {
+    id: 2,
+    name: 'TestRule2',
+    reactionTimeInDays: 1,
+    expirationDate: null,
+    occurredIn: 'TestLocation2',
+  };
+
+  const slaRule3 = {
+    id: 3,
+    name: 'TestRule3',
+    reactionTimeInDays: 5,
+    expirationDate: null,
+    occurredIn: 'TestLocation3',
+  };
+
+  const testIssueWithMultipleSlaRules: IssueIF = {
+    id: 1,
+    name: 'TestIssue',
+    description: 'Test description',
+    createdBy: null,
+    createdAt: currentDate,
+    closedAt: null,
+    status: 'Open',
+    dueTo: null,
+    assignedTo: null,
+    statusChanges: 1,
+    lastStatusChange: new Date(),
+    assignedSlaRule: [slaRule1, slaRule2, slaRule3],
+    changelog: [
+      {
+        id: '1',
+        changeDescription: ChangeEventEnum.assigned,
+        timestamp: new Date(),
+        assigned: null,
+      },
+    ],
+  };
+
+  const expirationDate = new Date(currentDate);
+
+  // Add two days to the expiration date
+  expirationDate.setDate(expirationDate.getDate() + 1);
+
+  const wrongExpirationDate = new Date(currentDate);
+
+  // Add two days to the expiration date
+  wrongExpirationDate.setDate(expirationDate.getDate() + 3);
+
+  const expectedRemainingTimeInSeconds = Math.floor(
+    (expirationDate.getTime() - currentDate.getTime()) / 1000
+  );
+
+  const [hasRemainingTime, remainingReactionTimeInSeconds] = calculateRemainingReactionTime(
+    testIssueWithMultipleSlaRules
+  );
+
+  // Ensure that the issue has remaining time
+  expect(hasRemainingTime).toBe(true);
+
+  // Optionally, you can also check if the result is close to the expected value within a tolerance
+  expect(Math.abs(expectedRemainingTimeInSeconds - remainingReactionTimeInSeconds)).toBeLessThan(2);
 });

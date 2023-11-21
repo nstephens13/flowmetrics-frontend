@@ -40,9 +40,9 @@
             style="background-color: var(--flowMetricsBlue)"
             @click="addRule"
           ></Button>
-          <div v-if="!isRuleNameValid" class="error-message m-1 text-red-500">{{
-            ruleErrorMessage
-          }}</div>
+          <div v-if="!isRuleNameValid" class="error-message m-1 text-red-500"
+            >{{ ruleErrorMessage }}
+          </div>
         </div>
       </div>
       <div>
@@ -159,7 +159,7 @@ export default defineComponent({
       const rule: SlaRule = {
         id: null,
         name: this.newRuleName.trim(),
-        durationInDays: null,
+        reactionTimeInDays: null,
         expirationDate: null,
         occurredIn: this.newOccurredIn,
       };

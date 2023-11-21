@@ -144,7 +144,7 @@ describe('SlaComponent', () => {
     expect(selectRuleDropDown?.props('options')).toContainEqual({
       id: 1,
       name: 'Rule 1',
-      durationInDays: null,
+      reactionTimeInDays: null,
       expirationDate: null,
       maxAssignedEmployees: undefined,
       occurredIn: null,
@@ -321,13 +321,13 @@ describe('SlaComponent', () => {
       {
         id: 1,
         name: 'Rule 1',
-        durationInDays: null,
+        reactionTimeInDays: null,
         expirationDate: null,
         occurredIn: null,
       },
       {
         id: 2,
-        durationInDays: null,
+        reactionTimeInDays: null,
         expirationDate: null,
         name: 'New Rule',
         occurredIn: null,

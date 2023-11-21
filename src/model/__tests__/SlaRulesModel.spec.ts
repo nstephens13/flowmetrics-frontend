@@ -38,14 +38,14 @@ describe('assignedSlaRules', () => {
       {
         id: 100,
         name: 'rule number1',
-        durationInDays: null,
+        reactionTimeInDays: null,
         expirationDate: null,
         occurredIn: null,
       },
       {
         id: 200,
         name: 'rule number2',
-        durationInDays: null,
+        reactionTimeInDays: null,
         expirationDate: null,
         occurredIn: null,
       },

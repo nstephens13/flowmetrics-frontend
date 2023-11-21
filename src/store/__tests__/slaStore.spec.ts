@@ -14,7 +14,7 @@ const slaSubscriber1: SlaSubscriber = {
 const slaRule1: SlaRule = {
   id: null,
   name: 'SLA Rule 1',
-  durationInDays: 3,
+  reactionTimeInDays: 3,
   expirationDate: null,
   occurredIn: null,
 };
@@ -50,7 +50,7 @@ describe('SLA Store Tests', () => {
     expect(slaStore.rules).toHaveLength(1);
     expect(slaStore.rules[0].id).toBe(1);
     expect(slaStore.rules[0].name).toBe('SLA Rule 1');
-    expect(slaStore.rules[0].durationInDays).toBe(3);
+    expect(slaStore.rules[0].reactionTimeInDays).toBe(3);
     expect(slaStore.rules[0].expirationDate).toBe(null);
     expect(slaStore.rules[0].occurredIn).toBe(null);
   });
