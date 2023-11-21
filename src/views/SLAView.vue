@@ -40,11 +40,14 @@
             class="select-occurred-in m-1"
             placeholder="Occurred in"
           />
-          <Dropdown
-            v-model="newCustomerProject"
-            :options="customerProjectOptions"
+          <MultiSelect
+            v-model="selectedCustomerProject"
+            :options="preparedCustomerProject"
             class="select-customer-in m-1"
-            placeholder="Customer Project"
+            placeholder="Select Customer Project"
+            optionLabel="label"
+            optionValue="value"
+            multiple
           />
           <Dropdown
             v-model="newPriority"
@@ -52,11 +55,14 @@
             class="select-priority-in m-1"
             placeholder="Priority"
           />
-          <Dropdown
-            v-model="newIssueType"
-            :options="issueTypeOptions"
+          <MultiSelect
+            v-model="selectedIssueTypes"
+            :options="preparedIssueTypeOptions"
             class="select-issueType-in m-1"
-            placeholder="Issue Type"
+            placeholder="Select Issue Types"
+            optionLabel="label"
+            optionValue="value"
+            multiple
           />
           <Button
             class="add-rule m-1"
@@ -113,9 +119,21 @@
           <Column field="rule.expirationDate" header="Due date" />
           <Column field="rule.occurredIn" header="Occurred in" />
           <Column field="rule.maxAssignedEmployees" header="Max assigned employees" />
-          <Column field="rule.customerProject" header="Customer Project" />
+          <Column field="rule.customerProject" header="Customer Project">
+            <template #body="slotProps">
+              <span>
+                {{ slotProps.data.rule.customerProject.join(', ') }}
+              </span>
+            </template>
+          </Column>
           <Column field="rule.priority" header="Priority" />
-          <Column field="rule.issueType" header="Issue Type" />
+          <Column field="rule.issueType" header="Issue Type">
+            <template #body="slotProps">
+              <span>
+                {{ slotProps.data.rule.issueType.join(', ') }}
+              </span>
+            </template>
+          </Column>
           <Column header="Delete">
             <template #body="rowData">
               <Button
@@ -162,8 +180,8 @@ export default defineComponent({
       maxAssignedEmployeesOptions: [1, 2, 3, 4, 5],
       occurredInOptions: ['Test', 'Pre-production', 'Production'],
       newCustomerProject: [],
-      customerProjectOptions: ['Customer1', 'ExternalCustomer', 'Customer 2', 'Customer 3', ''],
-      isCustomerProjectNameValid: ref(true),
+      customerProjectOptions: ['Customer1', 'Customer 2', 'Customer 3', 'Internal', ''],
+      selectedCustomerProject: [],
       newPriority: ref(''),
       priorityOptions: ['schwerwiegend', 'behindernd', 'leicht umgehbar', 'Kosmetik', ''],
       newIssueType: [],
@@ -180,7 +198,7 @@ export default defineComponent({
         'refactor',
         '',
       ],
-      isIssueTypeNameValid: ref(true),
+      selectedIssueTypes: [],
     };
   },
   methods: {
@@ -274,6 +292,14 @@ export default defineComponent({
     // Error message for invalid category name
     categoryErrorMessage(): any {
       return !this.isSLACategoryNameValid ? 'Category name must be at least 3 characters.' : '';
+    },
+    // Mapping for multiple choice of customerProjects
+    preparedCustomerProject() {
+      return this.customerProjectOptions.map((option) => ({ label: option, value: option }));
+    },
+    // Mapping for multiple choice of issueTypes
+    preparedIssueTypeOptions() {
+      return this.issueTypeOptions.map((option) => ({ label: option, value: option }));
     },
   },
 });
