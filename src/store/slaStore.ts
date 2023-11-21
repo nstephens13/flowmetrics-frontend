@@ -35,7 +35,7 @@ const useSlaStore = defineStore('sla', {
       }
     },
     addReactionTime(rule: SlaRule, reactionTime: string) {
-      const reactionTimeInDays: number = parseInt(reactionTime, 10);
+      const reactionTimeInDays: number = parseFloat(reactionTime);
       const index = this.rules.findIndex((r) => r.id === rule?.id);
       if (index !== -1) {
         this.rules[index].reactionTimeInDays = reactionTimeInDays;

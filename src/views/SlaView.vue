@@ -106,7 +106,7 @@
               id="reactionTime"
               v-model="newReactionTime"
               class="enter-reaction-time m-1"
-              mask="99d"
+              mask="99.99d"
             />
             <label for="reactionTime">Reaction time (days)</label>
           </div>
