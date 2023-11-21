@@ -39,8 +39,9 @@ const project1: ProjectIF = {
       analyseStatusChanges: null,
       umsetzungStatusChanges: null,
       testStatusChanges: null,
-      assignedSLARule: null,
+      assignedSlaRule: null,
       lastStatusChange: null,
+      changelog: null,
     },
     {
       id: 3,
@@ -71,8 +72,9 @@ const project1: ProjectIF = {
       analyseStatusChanges: null,
       umsetzungStatusChanges: null,
       testStatusChanges: null,
-      assignedSLARule: null,
+      assignedSlaRule: null,
       lastStatusChange: null,
+      changelog: null,
     },
   ],
 };
@@ -111,8 +113,9 @@ const project2: ProjectIF = {
       analyseStatusChanges: null,
       umsetzungStatusChanges: null,
       testStatusChanges: null,
-      assignedSLARule: null,
+      assignedSlaRule: null,
       lastStatusChange: null,
+      changelog: null,
     },
     {
       id: 3,
@@ -143,8 +146,9 @@ const project2: ProjectIF = {
       analyseStatusChanges: null,
       umsetzungStatusChanges: null,
       testStatusChanges: null,
-      assignedSLARule: null,
+      assignedSlaRule: null,
       lastStatusChange: null,
+      changelog: null,
     },
   ],
 };
