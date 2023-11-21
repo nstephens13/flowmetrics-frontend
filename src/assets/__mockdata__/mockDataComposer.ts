@@ -6,7 +6,7 @@ import employeeJson from './Employees.json';
 import issueJson2 from './Issues_2.json';
 import issueJson from './Issues.json';
 import type { Issue } from '@/model/Issue';
-import type { SLARule } from '@/model/SLARule';
+import type { SlaRule } from '@/model/SlaRule';
 
 // Define lists of different category with statuses
 export const planningStatusList: string[] = ['Planned', 'Design', 'Open'];
@@ -42,8 +42,9 @@ function loadIssueDataFromFile(issues: any): Issue[] {
       dueTo: issue.dueTo ? new Date(issue.dueTo) : null,
       status: issue.status as string,
       statusChanges: null,
-      assignedSLARule: issue.assignedSLARule ? issue.assignedSLARule : null,
+      assignedSlaRule: issue.assignedSlaRule ? issue.assignedSlaRule : null,
       lastStatusChange: faker.date.recent(),
+      changelog: null,
     });
   });
   return issueData;
@@ -309,8 +310,9 @@ function getMockData(dataset: number): ProjectIF {
           createdBy: employeesArrayFromFile[getRandomInt(employeesForProject.length)],
           dueTo: faker.date.future(),
           statusChanges,
-          assignedSLARule: null,
+          assignedSlaRule: null,
           lastStatusChange: faker.date.recent(),
+          changelog: null,
         });
       }
 
@@ -364,11 +366,12 @@ function getMockData(dataset: number): ProjectIF {
           createdBy: employeesArrayFromFile[getRandomInt(employeesForProject.length)],
           dueTo: faker.date.future(),
           statusChanges,
-          assignedSLARule: null,
+          assignedSlaRule: null,
           lastStatusChange: faker.date.between({
             from: new Date().valueOf() - 259200000,
             to: new Date().valueOf(),
           }), // 259200000 is 3 days in ms
+          changelog: null,
         });
       }
 
@@ -460,8 +463,9 @@ function getMockData(dataset: number): ProjectIF {
           dueTo: faker.date.future(),
           status: '',
           statusChanges: null,
-          assignedSLARule: null,
+          assignedSlaRule: null,
           lastStatusChange: faker.date.recent(),
+          changelog: null,
         });
       }
 
@@ -526,8 +530,9 @@ function getMockData(dataset: number): ProjectIF {
           dueTo: faker.date.future(),
           status: '',
           statusChanges: 0,
-          assignedSLARule: [],
+          assignedSlaRule: [],
           lastStatusChange: faker.date.recent(),
+          changelog: null,
         });
       }
 
@@ -567,21 +572,21 @@ function getMockData(dataset: number): ProjectIF {
         );
       }
 
-      const slaRule1: SLARule = {
+      const slaRule1: SlaRule = {
         id: 1,
         name: 'SLA Rule 1',
         durationInDays: 3,
         expirationDate: new Date('2023-08-17T00:00:00.000Z'),
         occurredIn: null,
       };
-      const slaRule2: SLARule = {
+      const slaRule2: SlaRule = {
         id: 2,
         name: 'SLA Rule 2',
         durationInDays: 5,
         expirationDate: new Date('2023-08-20T00:00:00.000Z'),
         occurredIn: null,
       };
-      const slaRule3: SLARule = {
+      const slaRule3: SlaRule = {
         id: 3,
         name: 'SLA Rule 3',
         durationInDays: 2,
@@ -589,11 +594,11 @@ function getMockData(dataset: number): ProjectIF {
         occurredIn: null,
       };
 
-      const slaRuleArray: SLARule[] = [slaRule1, slaRule2, slaRule3];
+      const slaRuleArray: SlaRule[] = [slaRule1, slaRule2, slaRule3];
 
       for (let i = 0; i < numberOfIssues; i++) {
-        const randomSLARule = getRandomInt(3); // 0: SLA Rule 1, 1: SLA Rule 2, 2: SLA Rule 3
-        issues[i].assignedSLARule?.push(slaRuleArray[randomSLARule]);
+        const randomSlaRule = getRandomInt(3); // 0: SLA Rule 1, 1: SLA Rule 2, 2: SLA Rule 3
+        issues[i].assignedSlaRule?.push(slaRuleArray[randomSlaRule]);
       }
       return {
         id: 7,

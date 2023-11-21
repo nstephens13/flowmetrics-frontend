@@ -37,8 +37,9 @@ const project1: ProjectIF = {
       createdAt: new Date('2021-01-01'),
       closedAt: new Date('2021-01-02'),
       statusChanges: null,
-      assignedSLARule: null,
+      assignedSlaRule: null,
       lastStatusChange: null,
+      changelog: null,
     },
     {
       id: 3,
@@ -67,8 +68,9 @@ const project1: ProjectIF = {
       createdAt: new Date('2021-01-01'),
       closedAt: new Date('2021-01-02'),
       statusChanges: null,
-      assignedSLARule: null,
+      assignedSlaRule: null,
       lastStatusChange: null,
+      changelog: null,
     },
   ],
 };
@@ -105,8 +107,9 @@ const project2: ProjectIF = {
       createdAt: new Date('2021-01-01'),
       closedAt: new Date('2021-01-02'),
       statusChanges: null,
-      assignedSLARule: null,
+      assignedSlaRule: null,
       lastStatusChange: null,
+      changelog: null,
     },
     {
       id: 3,
@@ -135,8 +138,9 @@ const project2: ProjectIF = {
       createdAt: new Date('2021-01-01'),
       closedAt: new Date('2021-01-02'),
       statusChanges: null,
-      assignedSLARule: null,
+      assignedSlaRule: null,
       lastStatusChange: null,
+      changelog: null,
     },
   ],
 };

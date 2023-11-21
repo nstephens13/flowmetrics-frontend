@@ -1,8 +1,8 @@
-import useSLAStore from '@/store/slaStore';
-import type { SLACategory } from '@/model/SLACategory';
+import useSlaStore from '@/store/slaStore';
+import type { SlaCategory } from '@/model/SlaCategory';
 
-export default function initSLAStore() {
-  const slaStore = useSLAStore();
+export default function initSlaStore() {
+  const slaStore = useSlaStore();
   slaStore.addSubscriber({
     id: 1,
     name: 'Customer 1',
@@ -44,13 +44,13 @@ export default function initSLAStore() {
   for (let i = 1; i < 6; i++) {
     const amountSubscribers = i % slaStore.subscriber.length;
     const rulesIndex = i % slaStore.rules.length;
-    const category: SLACategory = {
+    const category: SlaCategory = {
       id: null,
       name: `savedConfig_${i}`,
       subscriber: slaStore.subscriber[amountSubscribers],
       rule: slaStore.rules[rulesIndex],
     };
 
-    slaStore.addSLACategory(category);
+    slaStore.addSlaCategory(category);
   }
 }
