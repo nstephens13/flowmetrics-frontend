@@ -575,26 +575,23 @@ function getMockData(dataset: number): ProjectIF {
       const slaRule1: SlaRule = {
         id: 1,
         name: 'SLA Rule 1',
-        durationInDays: 3,
+        reactionTimeInDays: 3,
         expirationDate: new Date('2023-08-17T00:00:00.000Z'),
         occurredIn: null,
-        reactionTime: null,
       };
       const slaRule2: SlaRule = {
         id: 2,
         name: 'SLA Rule 2',
-        durationInDays: 5,
+        reactionTimeInDays: 5,
         expirationDate: new Date('2023-08-20T00:00:00.000Z'),
         occurredIn: null,
-        reactionTime: null,
       };
       const slaRule3: SlaRule = {
         id: 3,
         name: 'SLA Rule 3',
-        durationInDays: 2,
+        reactionTimeInDays: 2,
         expirationDate: new Date('2023-08-16T00:00:00.000Z'),
         occurredIn: null,
-        reactionTime: null,
       };
 
       const slaRuleArray: SlaRule[] = [slaRule1, slaRule2, slaRule3];
@@ -676,8 +673,32 @@ function getMockData(dataset: number): ProjectIF {
         employeesForProject
       );
 
+      const slaRule1: SlaRule = {
+        id: 1,
+        name: 'SLA Rule 1',
+        reactionTimeInDays: 1,
+        expirationDate: new Date('2023-08-17T00:00:00.000Z'),
+        occurredIn: null,
+      };
+      const slaRule2: SlaRule = {
+        id: 2,
+        name: 'SLA Rule 2',
+        reactionTimeInDays: 5,
+        expirationDate: new Date('2023-08-20T00:00:00.000Z'),
+        occurredIn: null,
+      };
+      const slaRule3: SlaRule = {
+        id: 3,
+        name: 'SLA Rule 3',
+        reactionTimeInDays: 20,
+        expirationDate: new Date('2023-08-16T00:00:00.000Z'),
+        occurredIn: null,
+      };
+
       const date = new Date(2018, 0o5, 0o5, 17, 23, 42, 11);
       issuesForProject[0].status = 'In Progress';
+      issuesForProject[0].createdAt = new Date();
+      issuesForProject[0].assignedSlaRule = [slaRule1];
       issuesForProject[2].status = 'Closed';
       issuesForProject[2].closedAt = date; // Set the specific closedAt date
       issuesForProject[3].status = 'Closed';
@@ -685,8 +706,12 @@ function getMockData(dataset: number): ProjectIF {
       issuesForProject[4].status = 'Closed';
       issuesForProject[4].closedAt = date; // Set the specific closedAt date
       issuesForProject[5].status = 'In Progress';
+      issuesForProject[5].createdAt = new Date();
+      issuesForProject[5].assignedSlaRule = [slaRule2, slaRule3];
       issuesForProject[6].status = 'Closed';
+      issuesForProject[6].createdAt = date;
       issuesForProject[6].closedAt = date; // Set the specific closedAt date
+      issuesForProject[6].assignedSlaRule = [slaRule2, slaRule3];
 
       [issuesForProject[0].status, issuesForProject[0].status] = ['In Progress', devStatusList[0]];
       [issuesForProject[1].status] = [planningStatusList[0]];

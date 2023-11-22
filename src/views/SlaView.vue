@@ -124,7 +124,7 @@
           <Column field="name" header="Category" />
           <Column field="subscriber.name" header="Subscriber" />
           <Column field="rule.name" header="Rule" />
-          <Column field="rule.durationInDays" header="Duration (Days)" />
+          <Column field="rule.reactionTimeInDays" header="Reaction Time (Days)" />
           <Column field="rule.expirationDate" header="Due date" />
           <Column field="rule.occurredIn" header="Occurred in" />
           <Column field="rule.reactionTime" header="Reaction time" />
@@ -177,6 +177,21 @@ export default defineComponent({
     };
   },
   methods: {
+    parseReactionTime(input: string): number | null {
+      const parts = input.match(/(\d+)w (\d+)d (\d+)h/);
+      if (!parts) {
+        return null;
+      }
+
+      const weeks = parseInt(parts[1], 10);
+      const days = parseInt(parts[2], 10);
+      const hours = parseInt(parts[3], 10);
+
+      // Convert to days (you may adjust this conversion based on your specific logic)
+      const totalDays = weeks * 7 + days + hours / 24;
+      return totalDays;
+    },
+
     // Add a new subscriber to the store
     addSubscriber() {
       if (this.newSubscriber.trim().length < 3) {
@@ -202,10 +217,9 @@ export default defineComponent({
       const rule: SlaRule = {
         id: null,
         name: this.newRuleName.trim(),
-        durationInDays: null,
+        reactionTimeInDays: null,
         expirationDate: null,
         occurredIn: this.newOccurredIn,
-        reactionTime: null,
       };
       this.slaStore.addRule(rule);
       this.newRuleName = '';
@@ -244,19 +258,20 @@ export default defineComponent({
       if (this.selectedRuleForReactionTime === null || this.newReactionTime === '00w 00d 00h') {
         return;
       }
+      const reactionTimeInDays = this.parseReactionTime(this.newReactionTime.trim());
       const rule: SlaRule = {
         id: this.selectedRuleForReactionTime?.id || null,
         name: this.selectedRuleForReactionTime?.name || null,
-        durationInDays: this.selectedRuleForReactionTime?.durationInDays || null,
+        reactionTimeInDays: reactionTimeInDays || null,
         expirationDate: this.selectedRuleForReactionTime?.expirationDate || null,
         occurredIn: this.selectedRuleForReactionTime?.occurredIn || null,
-        reactionTime: this.newReactionTime,
       };
-      const reactionTime = this.newReactionTime.trim();
-      this.slaStore.addReactionTime(rule, reactionTime);
-      this.newReactionTime = '';
-      this.selectedRuleForReactionTime = null;
-      this.isReactionTimeValid = true;
+      if (reactionTimeInDays) {
+        this.slaStore.addReactionTime(rule, reactionTimeInDays);
+        this.newReactionTime = '';
+        this.selectedRuleForReactionTime = null;
+        this.isReactionTimeValid = true;
+      }
     },
   },
   computed: {
