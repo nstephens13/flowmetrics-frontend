@@ -187,7 +187,6 @@ describe('calculateRestingTime', () => {
         assigned: testEmployee,
       },
     ],
-
     analyseStatusChanges: null,
     umsetzungStatusChanges: null,
     testStatusChanges: null,
@@ -271,7 +270,6 @@ describe('calculateRemainingReactionTime', () => {
     status: 'Open',
     dueTo: null,
     assignedTo: null,
-    statusChanges: 1,
     lastStatusChange: new Date(),
     assignedSlaRule: [testSlaRule],
     changelog: [
@@ -282,6 +280,9 @@ describe('calculateRemainingReactionTime', () => {
         assigned: null,
       },
     ],
+    analyseStatusChanges: null,
+    umsetzungStatusChanges: null,
+    testStatusChanges: null,
   };
 
   const testIssueWithoutSlaRule: IssueIF = {
@@ -294,7 +295,6 @@ describe('calculateRemainingReactionTime', () => {
     status: 'Open',
     dueTo: null,
     assignedTo: null,
-    statusChanges: 1,
     lastStatusChange: new Date(),
     assignedSlaRule: null,
     changelog: [
@@ -305,6 +305,9 @@ describe('calculateRemainingReactionTime', () => {
         assigned: null,
       },
     ],
+    analyseStatusChanges: null,
+    umsetzungStatusChanges: null,
+    testStatusChanges: null,
   };
   test('should return the correct remaining reaction time with SLA rule', () => {
     // Calculate the expected remaining reaction time based on the specific expiration date
@@ -377,7 +380,6 @@ test('should pick SLA rule with minimum days', () => {
     status: 'Open',
     dueTo: null,
     assignedTo: null,
-    statusChanges: 1,
     lastStatusChange: new Date(),
     assignedSlaRule: [slaRule1, slaRule2, slaRule3],
     changelog: [
@@ -388,6 +390,9 @@ test('should pick SLA rule with minimum days', () => {
         assigned: null,
       },
     ],
+    analyseStatusChanges: null,
+    umsetzungStatusChanges: null,
+    testStatusChanges: null,
   };
 
   const expirationDate = new Date(currentDate);
