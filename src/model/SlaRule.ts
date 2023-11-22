@@ -4,4 +4,5 @@ export interface SlaRule {
   durationInDays: number | null;
   expirationDate: Date | null;
   occurredIn: string | null;
+  reactionTime: string | null;
 }

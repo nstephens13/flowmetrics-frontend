@@ -2,6 +2,7 @@ import { describe, expect, test, vi } from 'vitest';
 import { createTestingPinia } from '@pinia/testing';
 import { mount, VueWrapper } from '@vue/test-utils';
 import InputText from 'primevue/inputtext';
+import InputMask from 'primevue/inputmask';
 import PrimeVue from 'primevue/config';
 import Dropdown from 'primevue/dropdown';
 import Card from 'primevue/card';
@@ -9,16 +10,16 @@ import Button from 'primevue/button';
 import Column from 'primevue/column';
 import DataTable from 'primevue/datatable';
 import Divider from 'primevue/divider';
-import SlaComponent from '../SlaView.vue';
 import router from '@/router';
+import SLAView from '../SlaView.vue';
 import useSlaStore from '../../store/slaStore';
 
-describe('SlaComponent Test with Store Data', () => {
+describe('SlaView Test with Store Data', () => {
   let slaStore: any;
   let wrapper: VueWrapper<any>;
 
   beforeEach(() => {
-    wrapper = mount(SlaComponent, {
+    wrapper = mount(SLAView, {
       global: {
         plugins: [
           PrimeVue,
@@ -36,12 +37,30 @@ describe('SlaComponent Test with Store Data', () => {
                     subscriber: null,
                   },
                 ],
+                rules: [
+                  {
+                    id: 1,
+                    name: 'Rule 1',
+                    durationInDays: null,
+                    expirationDate: null,
+                    occurredIn: null,
+                    reactionTime: null,
+                  },
+                ],
+                subscriber: [
+                  {
+                    id: 1,
+                    name: 'John',
+                    description: null,
+                  },
+                ],
               },
             },
           }),
         ],
         components: {
           InputText,
+          InputMask,
           Dropdown,
           Card,
           Button,
@@ -77,6 +96,70 @@ describe('SlaComponent Test with Store Data', () => {
     await deleteButton.trigger('click');
     expect(spyButton).toHaveBeenCalledOnce();
   });
+
+  test('does not create a category with less than 3 characters', async () => {
+    const selectSubscriberDropDown = wrapper
+      .findAllComponents(Dropdown)
+      .find((dropdown) => dropdown.classes('select-subscriber'));
+
+    const selectRuleDropDown = wrapper
+      .findAllComponents(Dropdown)
+      .find((dropdown) => dropdown.classes('select-rule'));
+
+    const categoryInput = wrapper
+      .findAllComponents(InputText)
+      .find((input) => input.classes('enter-category'));
+
+    const addButton = wrapper
+      .findAllComponents(Button)
+      .find((button) => button.classes('add-category'));
+
+    await selectSubscriberDropDown?.setValue(selectSubscriberDropDown?.props().options[0]);
+    await selectRuleDropDown?.setValue(selectRuleDropDown?.props().options[0]);
+    await categoryInput?.setValue('Ca');
+
+    await addButton?.trigger('click').then(async () => {
+      const addedCategory = wrapper.find('.category-container .category');
+      expect(addedCategory.exists()).toBe(false);
+
+      const errorMessage = wrapper.find('.error-message');
+      expect(errorMessage.exists()).toBe(true);
+      expect(errorMessage.text()).toBe('Category name must be at least 3 characters.');
+    });
+    expect(slaStore.addSlaCategory).toHaveBeenCalledTimes(0);
+  });
+
+  // Test to check if a rule with less than 3 characters is not added
+  test('does not add a rule with less than 3 characters', async () => {
+    const ruleInput = wrapper.find('.enter-rule');
+    const addButton = wrapper.find('.add-rule');
+
+    await ruleInput.setValue('Ru');
+    await addButton.trigger('click');
+
+    const addedRule = wrapper.find('.rule-container .rule');
+    expect(addedRule.exists()).toBe(false);
+
+    const errorMessage = wrapper.find('.error-message');
+    expect(errorMessage.exists()).toBe(true);
+    expect(errorMessage.text()).toBe('Rule name must be at least 3 characters.');
+  });
+
+  // Test to check if a subscriber with less than 3 characters is not added
+  test('does not add a subscriber with less than 3 characters', async () => {
+    const subscriberInput = wrapper.find('.enter-subscriber');
+    const addButton = wrapper.find('.add-subscriber');
+
+    await subscriberInput.setValue('Jo');
+    await addButton.trigger('click');
+
+    const addedSubscriber = wrapper.find('.subscriber-container .subscriber');
+    expect(addedSubscriber.exists()).toBe(false);
+
+    const errorMessage = wrapper.find('.error-message');
+    expect(errorMessage.exists()).toBe(true);
+    expect(errorMessage.text()).toBe('Subscriber name must be at least 3 characters.');
+  });
 });
 
 /* Basic test to ensure, that SlaComponent is successfully rendered without any errors */
@@ -88,11 +171,12 @@ describe('SlaComponent', () => {
     },
     stubActions: false,
   });
-  const wrapper = mount(SlaComponent, {
+  const wrapper = mount(SLAView, {
     global: {
       plugins: [PrimeVue, router, pinia],
       components: {
         InputText,
+        InputMask,
         Dropdown,
         Card,
         Button,
@@ -148,42 +232,14 @@ describe('SlaComponent', () => {
       expirationDate: null,
       maxAssignedEmployees: undefined,
       occurredIn: null,
+      reactionTime: null,
     });
   });
-  // Test to check if a subscriber with less than 3 characters is not added
-  test('does not add a subscriber with less than 3 characters', async () => {
-    const subscriberInput = wrapper.find('.enter-subscriber');
-    const addButton = wrapper.find('.add-subscriber');
 
-    await subscriberInput.setValue('Jo');
-    await addButton.trigger('click');
-
-    const addedSubscriber = wrapper.find('.subscriber-container .subscriber');
-    expect(addedSubscriber.exists()).toBe(false);
-
-    const errorMessage = wrapper.find('.subscriber-container .error-message');
-    expect(errorMessage.exists()).toBe(true);
-    expect(errorMessage.text()).toBe('Subscriber name must be at least 3 characters.');
-  });
-  // Test to check if a rule with less than 3 characters is not added
-  test('does not add a rule with less than 3 characters', async () => {
-    const ruleInput = wrapper.find('.enter-rule');
-    const addButton = wrapper.find('.add-rule');
-
-    await ruleInput.setValue('Ru');
-    await addButton.trigger('click');
-
-    const addedRule = wrapper.find('.rule-container .rule');
-    expect(addedRule.exists()).toBe(false);
-
-    const errorMessage = wrapper.find('.rule-container .error-message');
-    expect(errorMessage.exists()).toBe(true);
-    expect(errorMessage.text()).toBe('Rule name must be at least 3 characters.');
-  });
   // Test to create a category
   test('creates a category', async () => {
     // Mock the options for the subscriber and rule dropdowns
-    wrapper.setData({
+    await wrapper.setData({
       subscriber: [{ name: 'Subscriber 1' }, { name: 'Subscriber 2' }],
       rules: [{ name: 'Rule 1' }, { name: 'Rule 2' }],
     });
@@ -204,9 +260,9 @@ describe('SlaComponent', () => {
       .findAllComponents(Dropdown)
       .find((dropdown) => dropdown.classes('select-rule'));
 
-    selectSubscriberDropDown?.setValue('Subscriber 1');
-    selectRuleDropDown?.setValue('Rule 1');
-    categoryInput?.setValue('Category 1');
+    await selectSubscriberDropDown?.setValue('Subscriber 1');
+    await selectRuleDropDown?.setValue('Rule 1');
+    await categoryInput?.setValue('Category 1');
     addButton?.trigger('click').finally(() => {
       const dataTableElementSize = wrapper.getComponent(DataTable).findAll('tr').length;
       expect(2).toEqual(dataTableElementSize);
@@ -216,40 +272,10 @@ describe('SlaComponent', () => {
       );
     });
   });
-  // Test to check if a category with less than 3 characters is not created
-  test('does not create a category with less than 3 characters', async () => {
-    const selectSubscriberDropDown = wrapper
-      .findAllComponents(Dropdown)
-      .find((dropdown) => dropdown.classes('select-subscriber'));
-
-    const selectRuleDropDown = wrapper
-      .findAllComponents(Dropdown)
-      .find((dropdown) => dropdown.classes('select-rule'));
-
-    const categoryInput = wrapper
-      .findAllComponents(InputText)
-      .find((input) => input.classes('enter-category'));
-
-    const addButton = wrapper
-      .findAllComponents(Button)
-      .find((button) => button.classes('add-category'));
-
-    await selectSubscriberDropDown?.setValue('Subscriber 1');
-    await selectRuleDropDown?.setValue('Rule 1');
-    await categoryInput?.setValue('Ca');
-    await addButton?.trigger('click');
-
-    const addedCategory = wrapper.find('.category-container .category');
-    expect(addedCategory.exists()).toBe(false);
-
-    const errorMessage = wrapper.find('.category-container .error-message');
-    expect(errorMessage.exists()).toBe(true);
-    expect(errorMessage.text()).toBe('Category name must be at least 3 characters.');
-  });
   // Test to delete a category
   test('deletes a category', async () => {
     // Mock the categories data
-    wrapper.setData({
+    await wrapper.setData({
       categories: [
         {
           name: 'Category 1',
@@ -324,6 +350,7 @@ describe('SlaComponent', () => {
         durationInDays: null,
         expirationDate: null,
         occurredIn: null,
+        reactionTime: null,
       },
       {
         id: 2,
@@ -331,6 +358,7 @@ describe('SlaComponent', () => {
         expirationDate: null,
         name: 'New Rule',
         occurredIn: null,
+        reactionTime: null,
       },
     ]);
   });

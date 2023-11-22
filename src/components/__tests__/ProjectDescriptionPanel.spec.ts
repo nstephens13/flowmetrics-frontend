@@ -31,7 +31,6 @@ describe('Project Overview should load all the Components', () => {
 
   // Test to check if the component mounts successfully
   test('it mounts', () => {
-    expect(wrapper.exists()).toBe(true);
     expect(wrapper.getComponent(Dropdown).isVisible()).toBe(true);
     expect(wrapper.getComponent(Card).isVisible()).toBe(true);
     expect(wrapper.getComponent(Panel).isVisible()).toBe(true);
