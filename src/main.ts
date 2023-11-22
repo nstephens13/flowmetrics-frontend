@@ -25,6 +25,7 @@ import DataViewLayoutOptions from 'primevue/dataviewlayoutoptions';
 import AutoComplete from 'primevue/autocomplete';
 import Chip from 'primevue/chip';
 import Tooltip from 'primevue/tooltip';
+import InputMask from 'primevue/inputmask';
 import OverlayPanel from 'primevue/overlaypanel';
 
 import router from './router';
@@ -33,7 +34,7 @@ import 'primevue/resources/themes/lara-light-indigo/theme.css';
 import 'primevue/resources/primevue.min.css';
 import 'primeicons/primeicons.css';
 import 'primeflex/primeflex.css';
-import initSLAStore from '@/store/mockdata/initSLAStore';
+import initSlaStore from '@/store/mockdata/initSlaStore';
 import initProjectStore from '@/store/mockdata/initProjectStore';
 import initFilterConfigStore from '@/store/mockdata/initFilterConfigStore';
 
@@ -65,12 +66,13 @@ app.component('DataView', DataView);
 app.component('DataViewLayoutOptions', DataViewLayoutOptions);
 app.component('AutoComplete', AutoComplete);
 app.component('Chip', Chip);
+app.component('InputMask', InputMask);
 app.component('OverlayPanel', OverlayPanel);
 app.directive('tooltip', Tooltip);
 
 app.mount('#app');
 
 // initialize the stores
-initSLAStore();
+initSlaStore();
 initProjectStore();
 initFilterConfigStore();

@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { mount, VueWrapper } from '@vue/test-utils';
+import { mount } from '@vue/test-utils';
 import PrimeVue from 'primevue/config';
 import Card from 'primevue/card';
 import Dropdown from 'primevue/dropdown';
@@ -14,7 +14,7 @@ import ProjectDescriptionPanel from '../ProjectDescriptionPanel.vue';
 // Describe block for the test suite
 describe('Project Overview should load all the Components', () => {
   // Mounting the ProjectDescriptionPanel component with necessary configuration
-  const wrapper: VueWrapper<typeof ProjectDescriptionPanel> = mount(ProjectDescriptionPanel, {
+  const wrapper = mount(ProjectDescriptionPanel, {
     global: {
       plugins: [PrimeVue, router],
       components: {
@@ -31,7 +31,6 @@ describe('Project Overview should load all the Components', () => {
 
   // Test to check if the component mounts successfully
   test('it mounts', () => {
-    expect(wrapper.exists()).toBe(true);
     expect(wrapper.getComponent(Dropdown).isVisible()).toBe(true);
     expect(wrapper.getComponent(Card).isVisible()).toBe(true);
     expect(wrapper.getComponent(Panel).isVisible()).toBe(true);

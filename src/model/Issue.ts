@@ -1,6 +1,7 @@
 import type { EmployeeIF } from './EmployeeIF';
 import type { IssueIF } from './IssueIF';
-import type { SLARule } from '@/model/SLARule';
+import type { SlaRule } from '@/model/SlaRule';
+import type { ChangeEventIF } from '@/model/ChangeEventIF';
 
 // Issue Class implements IssueIF
 class Issue implements IssueIF {
@@ -28,9 +29,11 @@ class Issue implements IssueIF {
 
   testStatusChanges: number | null;
 
-  assignedSLARule: SLARule[] | null;
+  assignedSlaRule: SlaRule[] | null;
 
   lastStatusChange: Date | null;
+
+  changelog: ChangeEventIF[] | null;
 
   constructor(
     id: number,
@@ -42,11 +45,13 @@ class Issue implements IssueIF {
     closedAt: Date | null,
     dueTo: Date | null,
     status: string | null,
+    statusChanges: number | null,
+    assignedSlaRule: SlaRule[] | null,
+    lastStatusChange: Date | null,
+    changelog: ChangeEventIF[] | null,
     analyseStatusChanges: number | null,
     umsetzungStatusChanges: number | null,
-    testStatusChanges: number | null,
-    assignedSLARule: SLARule[] | null,
-    lastStatusChange: Date | null
+    testStatusChanges: number | null
   ) {
     this.id = id;
     this.name = name;
@@ -57,11 +62,12 @@ class Issue implements IssueIF {
     this.closedAt = closedAt;
     this.dueTo = dueTo;
     this.status = status;
+    this.assignedSlaRule = assignedSlaRule;
     this.analyseStatusChanges = analyseStatusChanges;
     this.umsetzungStatusChanges = umsetzungStatusChanges;
     this.testStatusChanges = testStatusChanges;
-    this.assignedSLARule = assignedSLARule;
     this.lastStatusChange = lastStatusChange;
+    this.changelog = changelog;
   }
 }
 
@@ -117,8 +123,8 @@ function countIssuesByStatus(issueList: Issue[], status: string | null): number 
  * Returns SLA-Rules assigned to an Issue
  * @returns The Array of SLARules assigned to an Issue, can be null
  */
-function getSLARules(issue: Issue) {
-  return issue.assignedSLARule ?? [];
+function getSlaRules(issue: Issue) {
+  return issue.assignedSlaRule ?? [];
 }
 
 // export of data array and remain time for ticket calculation
@@ -128,5 +134,5 @@ export {
   getFormattedDate,
   getAssignedToName,
   countIssuesByStatus,
-  getSLARules,
+  getSlaRules,
 };

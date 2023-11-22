@@ -14,7 +14,7 @@ import autoTable from 'jspdf-autotable';
 import getMockData from '@/assets/__mockdata__/mockDataComposer';
 import type { ProjectIF } from '@/model/ProjectIF';
 import type { IssueIF } from '@/model/IssueIF';
-import { hasSLARule, printSLARuleNames } from '@/model/IssueIF';
+import { hasSlaRule, printSlaRuleNames } from '@/model/IssueIF';
 
 const isGenerating = ref(false);
 const project = getMockData(7) as ProjectIF;
@@ -31,14 +31,14 @@ const generatePDF = () => {
   const doc = new jsPDF('landscape', 'mm', 'a4');
 
   const headerNames = [
-    { id: 'ID', name: 'Name', description: 'Description', assignedSLARule: 'Assigned SLA Rules' },
+    { id: 'ID', name: 'Name', description: 'Description', assignedSlaRule: 'Assigned SLA Rules' },
   ];
 
   const issueArray = issues.map((issue) => [
     issue.id,
     issue.name,
     issue.description,
-    hasSLARule(issue) ? printSLARuleNames(issue) : 'No SLA Rules assigned',
+    hasSlaRule(issue) ? printSlaRuleNames(issue) : 'No SLA Rules assigned',
   ]);
 
   const current = new Date();
