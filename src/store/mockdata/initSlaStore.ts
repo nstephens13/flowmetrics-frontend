@@ -1,5 +1,5 @@
 import useSlaStore from '@/store/slaStore';
-import type { SlaCategory } from '@/model/SlaCategory';
+import type { SlaCategory } from '@/model/Sla/SlaCategory';
 
 export default function initSlaStore() {
   const slaStore = useSlaStore();

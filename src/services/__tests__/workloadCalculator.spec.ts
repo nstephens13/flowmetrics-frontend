@@ -3,7 +3,7 @@ import getMockData from '@/assets/__mockdata__/mockDataComposer';
 import { calculateWorkload } from '@/services/workloadCalculator';
 import type { EmployeeIF } from '../../model/EmployeeIF';
 import type { ProjectIF } from '../../model/ProjectIF';
-import type { IssueIF } from '../../model/IssueIF';
+import type { IssueIF } from '../../model/Issue/IssueIF';
 
 import employeeJson from '../../assets/__mockdata__/Employees.json';
 

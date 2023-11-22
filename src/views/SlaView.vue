@@ -149,9 +149,9 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 import useSlaStore from '@/store/slaStore';
-import type { SlaSubscriber } from '@/model/SlaSubscriber';
-import type { SlaRule } from '@/model/SlaRule';
-import type { SlaCategory } from '@/model/SlaCategory';
+import type { SlaSubscriber } from '@/model/Sla/SlaSubscriber';
+import type { SlaRule } from '@/model/Sla/SlaRule';
+import type { SlaCategory } from '@/model/Sla/SlaCategory';
 import GeneratePDF from '@/components/GeneratePDF.vue';
 
 // Define the 'SLAComponent' component

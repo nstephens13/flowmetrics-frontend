@@ -1,6 +1,6 @@
 import type { ProjectIF } from '../model/ProjectIF';
 import type { EmployeeIF } from '../model/EmployeeIF';
-import type { IssueIF } from '../model/IssueIF';
+import type { IssueIF } from '../model/Issue/IssueIF';
 import getMockData from '../assets/__mockdata__/mockDataComposer';
 import type { ChangeEventIF } from '@/model/ChangeEventIF';
 import { ChangeEventEnum } from '@/model/ChangeEventIF';

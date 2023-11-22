@@ -1,9 +1,9 @@
 import { describe, expect, test } from 'vitest';
 import { createPinia, setActivePinia } from 'pinia';
 import useSlaStore from '../slaStore';
-import type { SlaSubscriber } from '../../model/SlaSubscriber';
-import type { SlaRule } from '../../model/SlaRule';
-import type { SlaCategory } from '../../model/SlaCategory';
+import type { SlaSubscriber } from '../../model/Sla/SlaSubscriber';
+import type { SlaRule } from '../../model/Sla/SlaRule';
+import type { SlaCategory } from '../../model/Sla/SlaCategory';
 
 // Test SLA Data
 const slaSubscriber1: SlaSubscriber = {

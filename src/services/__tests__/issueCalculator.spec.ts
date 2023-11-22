@@ -7,7 +7,7 @@ import {
   mapIssuesToEmployees,
 } from '../issueCalculator';
 import { ChangeEventEnum } from '../../model/ChangeEventIF';
-import type { IssueIF } from '../../model/IssueIF';
+import type { IssueIF } from '../../model/Issue/IssueIF';
 import type { EmployeeIF } from '../../model/EmployeeIF';
 
 describe('Issue Calculator should map correctly ', () => {
@@ -42,9 +42,7 @@ describe('Issue Calculator should map correctly ', () => {
     dueTo: null,
     assignedTo: testEmployee,
     assignedSlaRule: null,
-    analyseStatusChanges: null,
-    umsetzungStatusChanges: null,
-    testStatusChanges: null,
+    statusChanges: null,
     lastStatusChange: null,
     changelog: null,
   };
@@ -137,9 +135,7 @@ describe('calculateRestingTime', () => {
         assigned: testEmployee1,
       },
     ],
-    analyseStatusChanges: null,
-    umsetzungStatusChanges: null,
-    testStatusChanges: null,
+    statusChanges: null,
   };
 
   const testIssueWithDifferentEmployee: IssueIF = {
@@ -162,9 +158,7 @@ describe('calculateRestingTime', () => {
         assigned: testEmployee2, // Different employee in assigned event
       },
     ],
-    analyseStatusChanges: null,
-    umsetzungStatusChanges: null,
-    testStatusChanges: null,
+    statusChanges: null,
   };
 
   const testIssue: IssueIF = {
@@ -187,9 +181,7 @@ describe('calculateRestingTime', () => {
         assigned: testEmployee,
       },
     ],
-    analyseStatusChanges: null,
-    umsetzungStatusChanges: null,
-    testStatusChanges: null,
+    statusChanges: null,
   };
 
   test('should return the correct resting time', () => {
@@ -280,9 +272,7 @@ describe('calculateRemainingReactionTime', () => {
         assigned: null,
       },
     ],
-    analyseStatusChanges: null,
-    umsetzungStatusChanges: null,
-    testStatusChanges: null,
+    statusChanges: null,
   };
 
   const testIssueWithoutSlaRule: IssueIF = {
@@ -305,9 +295,7 @@ describe('calculateRemainingReactionTime', () => {
         assigned: null,
       },
     ],
-    analyseStatusChanges: null,
-    umsetzungStatusChanges: null,
-    testStatusChanges: null,
+    statusChanges: null,
   };
   test('should return the correct remaining reaction time with SLA rule', () => {
     // Calculate the expected remaining reaction time based on the specific expiration date
@@ -390,9 +378,7 @@ test('should pick SLA rule with minimum days', () => {
         assigned: null,
       },
     ],
-    analyseStatusChanges: null,
-    umsetzungStatusChanges: null,
-    testStatusChanges: null,
+    statusChanges: null,
   };
 
   const expirationDate = new Date(currentDate);

@@ -95,10 +95,8 @@
             </Column>
             <Column header="Status changes" style="width: 150px">
               <template #body="data">
-                <div>
-                  Analyse: {{ data.data.analyseStatusChanges }}<br />
-                  Umsetzung: {{ data.data.umsetzungStatusChanges }}<br />
-                  Test: {{ data.data.testStatusChanges }}<br />
+                <div v-for="statusChange in data.data.statusChanges" :key="statusChange.name">
+                  {{ statusChange.name }} : {{ statusChange.value }}
                 </div>
               </template>
             </Column>
@@ -117,7 +115,7 @@ import type { EmployeeIF } from '@/model/EmployeeIF';
 import { getIssueStatusList, type ProjectIF } from '@/model/ProjectIF';
 import getMockData from '@/assets/__mockdata__/mockDataComposer';
 import { calculateRemainingReactionTime } from '@/services/issueCalculator';
-import type { IssueIF } from '@/model/IssueIF';
+import type { IssueIF } from '@/model/Issue/IssueIF';
 
 // Create a reference for the selectedProject with initial data
 const selectedProject = ref({

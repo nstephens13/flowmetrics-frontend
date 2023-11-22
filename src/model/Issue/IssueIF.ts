@@ -1,6 +1,7 @@
-import type { EmployeeIF } from './EmployeeIF';
-import type { SlaRule } from '@/model/SlaRule';
+import type { EmployeeIF } from '../EmployeeIF';
+import type { SlaRule } from '@/model/Sla/SlaRule';
 import type { ChangeEventIF } from '@/model/ChangeEventIF';
+import type { StatusChangesIF } from '@/model/Issue/StatusChangesIF';
 
 /**
  *
@@ -13,7 +14,10 @@ import type { ChangeEventIF } from '@/model/ChangeEventIF';
  * @prop {Date| null} closedAt the Date when the issue was closed
  * @prop {Date| null} dueTo Due date for the Issue
  * @prop {Status} status the Status of issue-progress
+ * @prop {Date} lastStatusChange the last status change of the issue
+ * @prop {StatusChangesIF[]} statusChanges the status changes of the issue
  * @prop {SlaRule} assignedSlaRule the assigned SLA rule of the issue
+ * @prop {ChangeEventIF[]} changelog the changelog of the issue
  */
 
 // Enum to set status of Issue
@@ -27,9 +31,7 @@ export interface IssueIF {
   closedAt: Date | null;
   dueTo: Date | null;
   status: string | null;
-  analyseStatusChanges: number | null;
-  umsetzungStatusChanges: number | null;
-  testStatusChanges: number | null;
+  statusChanges: StatusChangesIF[];
   lastStatusChange: Date | null;
   assignedSlaRule: SlaRule[] | null;
   changelog: ChangeEventIF[] | null;

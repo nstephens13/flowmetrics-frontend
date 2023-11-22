@@ -83,7 +83,7 @@ describe('Project Overview should load all the Components', () => {
           const statusChangesColumnData = (statusChangesColumnCells.at(0) as any)?.text();
           const expectedData = /\b\d+\b/g; // is a regular expression that matches one or more digits (\d+) surrounded by word boundaries (\b). The g flag indicates a global search, so it will find all matches in the string.
           const extractedNumbers = statusChangesColumnData.match(expectedData);
-          expect(extractedNumbers).toHaveLength(3);
+          expect(extractedNumbers).toHaveLength(1);
           extractedNumbers.forEach((number: string) => {
             expect(Number.isInteger(Number(number))).toBe(true);
           });
