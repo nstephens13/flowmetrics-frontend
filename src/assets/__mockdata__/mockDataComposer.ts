@@ -42,7 +42,7 @@ function loadIssueDataFromFile(issues: any): Issue[] {
       dueTo: issue.dueTo ? new Date(issue.dueTo) : null,
       status: issue.status as string,
       assignedSlaRule: issue.assignedSlaRule ? issue.assignedSlaRule : null,
-      statusChanges: issue.statusChanges ? issue.statusChanges : null,
+      statusChanges: issue.statusChanges ? issue.statusChanges : [],
       lastStatusChange: faker.date.recent(),
       changelog: null,
     });
@@ -497,7 +497,7 @@ function getMockData(dataset: number): ProjectIF {
           dueTo: faker.date.future(),
           status: '',
           assignedSlaRule: null,
-          statusChanges: null,
+          statusChanges: [],
           lastStatusChange: faker.date.recent(),
           changelog: null,
         });
@@ -564,7 +564,7 @@ function getMockData(dataset: number): ProjectIF {
           dueTo: faker.date.future(),
           status: '',
           assignedSlaRule: [],
-          statusChanges: null,
+          statusChanges: [],
           lastStatusChange: faker.date.recent(),
           changelog: null,
         });

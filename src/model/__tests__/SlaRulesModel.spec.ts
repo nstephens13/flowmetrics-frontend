@@ -22,7 +22,7 @@ test('getSlaRules returns an empty array when assignedSlaRule is null', () => {
     null,
     null,
     'Open',
-    null,
+    [],
     null,
     null,
     null
@@ -70,7 +70,7 @@ describe('assignedSlaRules', () => {
       dueTo: null,
       status: 'Open',
       assignedSlaRule: slaRules,
-      statusChanges: null,
+      statusChanges: [],
       lastStatusChange: null,
       changelog: null,
     };
