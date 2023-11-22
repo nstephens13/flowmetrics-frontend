@@ -46,9 +46,6 @@
             style="background-color: var(--flowMetricsBlue)"
             @click="addRule"
           ></Button>
-          <div v-if="!isRuleNameValid" class="error-message m-1 text-red-500"
-            >{{ ruleErrorMessage }}
-          </div>
         </div>
         <div v-if="!isRuleNameValid" class="error-message m-1 text-red-500 ml-3">{{
           ruleErrorMessage
@@ -106,9 +103,9 @@
               id="reactionTime"
               v-model="newReactionTime"
               class="enter-reaction-time m-1"
-              mask="99.99d"
+              mask="99w 99d 99h"
             />
-            <label for="reactionTime">Reaction time (days)</label>
+            <label for="reactionTime">Reaction time</label>
           </div>
           <Button
             class="add-reaction-time m-1"
@@ -180,6 +177,21 @@ export default defineComponent({
     };
   },
   methods: {
+    parseReactionTime(input: string): number | null {
+      const parts = input.match(/(\d+)w (\d+)d (\d+)h/);
+      if (!parts) {
+        return null;
+      }
+
+      const weeks = parseInt(parts[1], 10);
+      const days = parseInt(parts[2], 10);
+      const hours = parseInt(parts[3], 10);
+
+      // Convert to days (you may adjust this conversion based on your specific logic)
+      const totalDays = weeks * 7 + days + hours / 24;
+      return totalDays;
+    },
+
     // Add a new subscriber to the store
     addSubscriber() {
       if (this.newSubscriber.trim().length < 3) {
@@ -239,25 +251,27 @@ export default defineComponent({
     },
     // Add a reaction time to a rule
     addReactionTime() {
-      if (this.newReactionTime.trim().length < 2) {
+      if (this.newReactionTime.trim().length < 9) {
         this.isReactionTimeValid = false;
         return;
       }
-      if (this.selectedRuleForReactionTime === null || this.newReactionTime === '00_days ') {
+      if (this.selectedRuleForReactionTime === null || this.newReactionTime === '00w 00d 00h') {
         return;
       }
+      const reactionTimeInDays = this.parseReactionTime(this.newReactionTime.trim());
       const rule: SlaRule = {
         id: this.selectedRuleForReactionTime?.id || null,
         name: this.selectedRuleForReactionTime?.name || null,
-        reactionTimeInDays: this.selectedRuleForReactionTime?.reactionTimeInDays || null,
+        reactionTimeInDays: reactionTimeInDays || null,
         expirationDate: this.selectedRuleForReactionTime?.expirationDate || null,
         occurredIn: this.selectedRuleForReactionTime?.occurredIn || null,
       };
-      const reactionTime = this.newReactionTime.trim();
-      this.slaStore.addReactionTime(rule, reactionTime);
-      this.newReactionTime = '';
-      this.selectedRuleForReactionTime = null;
-      this.isReactionTimeValid = true;
+      if (reactionTimeInDays) {
+        this.slaStore.addReactionTime(rule, reactionTimeInDays);
+        this.newReactionTime = '';
+        this.selectedRuleForReactionTime = null;
+        this.isReactionTimeValid = true;
+      }
     },
   },
   computed: {
@@ -287,7 +301,7 @@ export default defineComponent({
     },
     // Error message for invalid reaction time
     reactionTimeErrorMessage(): string {
-      return !this.isReactionTimeValid ? 'Reaction time must be in format 99.99days' : '';
+      return !this.isReactionTimeValid ? 'Reaction time must be in format 01w 23d 00h' : '';
     },
   },
 });
