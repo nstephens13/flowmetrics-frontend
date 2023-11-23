@@ -1,9 +1,9 @@
 import { describe, expect, test } from 'vitest';
 import { createPinia, setActivePinia } from 'pinia';
 import useSlaStore from '../slaStore';
-import type { SlaSubscriber } from '../../model/SlaSubscriber';
-import type { SlaRule } from '../../model/SlaRule';
-import type { SlaCategory } from '../../model/SlaCategory';
+import type { SlaSubscriber } from '../../model/Sla/SlaSubscriber';
+import type { SlaRule } from '../../model/Sla/SlaRule';
+import type { SlaCategory } from '../../model/Sla/SlaCategory';
 
 // Test SLA Data
 const slaSubscriber1: SlaSubscriber = {
@@ -14,10 +14,9 @@ const slaSubscriber1: SlaSubscriber = {
 const slaRule1: SlaRule = {
   id: null,
   name: 'SLA Rule 1',
-  durationInDays: 3,
+  reactionTimeInDays: 3,
   expirationDate: null,
   occurredIn: null,
-  reactionTime: null,
 };
 const slaCategory1: SlaCategory = {
   id: null,
@@ -51,7 +50,7 @@ describe('SLA Store Tests', () => {
     expect(slaStore.rules).toHaveLength(1);
     expect(slaStore.rules[0].id).toBe(1);
     expect(slaStore.rules[0].name).toBe('SLA Rule 1');
-    expect(slaStore.rules[0].durationInDays).toBe(3);
+    expect(slaStore.rules[0].reactionTimeInDays).toBe(3);
     expect(slaStore.rules[0].expirationDate).toBe(null);
     expect(slaStore.rules[0].occurredIn).toBe(null);
   });
@@ -69,8 +68,8 @@ describe('SLA Store Tests', () => {
   });
   test('can add a Reaction Time', () => {
     slaStore.addRule(slaRule1);
-    expect(slaStore.rules[0].reactionTime).toBe(null);
-    slaStore.addReactionTime(slaRule1, '01w 02d 03h');
-    expect(slaStore.rules[0].reactionTime).toBe('01w 02d 03h');
+    expect(slaStore.rules[0].reactionTimeInDays).toBe(3);
+    slaStore.addReactionTime(slaRule1, 7);
+    expect(slaStore.rules[0].reactionTimeInDays).toBe(7);
   });
 });

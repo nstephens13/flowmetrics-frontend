@@ -1,6 +1,6 @@
 import type { ProjectIF } from '../model/ProjectIF';
 import type { EmployeeIF } from '../model/EmployeeIF';
-import type { IssueIF } from '../model/IssueIF';
+import type { IssueIF } from '../model/Issue/IssueIF';
 import getMockData from '../assets/__mockdata__/mockDataComposer';
 import type { ChangeEventIF } from '@/model/ChangeEventIF';
 import { ChangeEventEnum } from '@/model/ChangeEventIF';
@@ -48,6 +48,7 @@ export function mapIssuesToEmployees(projects: ProjectIF[] | null): Map<Employee
     }
     issueSet.add(issue);
   }
+
   projectsToCalculate.forEach((projectToCalculate) => {
     projectToCalculate.issues.forEach((issue) => {
       extractEmployeeAndUpdateEmployeeMap(issue);
@@ -56,6 +57,7 @@ export function mapIssuesToEmployees(projects: ProjectIF[] | null): Map<Employee
 
   return mapToReturn;
 }
+
 export function calculateRestingTime(issue: IssueIF): [EmployeeIF | null, number] {
   if (!issue.assignedTo || !issue.changelog) {
     return [null, 0];
@@ -78,4 +80,45 @@ export function calculateRestingTime(issue: IssueIF): [EmployeeIF | null, number
   }
 
   return [issue.assignedTo, 0];
+}
+
+/**
+ * Calculate the remaining reaction time for an issue.
+ *
+ * @param issue - The issue for which to calculate the remaining reaction time.
+ * @returns [boolean, number] - A tuple containing a boolean indicating whether the issue has an SLA rule,
+ * and the remaining reaction time in seconds.
+ */
+export function calculateRemainingReactionTime(issue: IssueIF): [boolean, number] {
+  if (!issue.createdAt || !issue.assignedSlaRule) {
+    return [false, 0];
+  }
+
+  // Find the shortest reaction time in the SLA rules
+  const shortestReactionTime = issue.assignedSlaRule.reduce((minTime: number | null, rule) => {
+    if (
+      rule.reactionTimeInDays !== null &&
+      (minTime === null || rule.reactionTimeInDays < minTime)
+    ) {
+      return rule.reactionTimeInDays;
+    }
+    return minTime;
+  }, null);
+
+  // If no reaction time is found, return 0
+  if (shortestReactionTime === null) {
+    return [false, 0];
+  }
+
+  // Calculate the expiration date based on the shortest reaction time
+  const expirationDate = new Date(issue.createdAt);
+  expirationDate.setDate(expirationDate.getDate() + shortestReactionTime);
+
+  // Calculate the remaining time in seconds
+  const currentDate = new Date();
+  const remainingTimeInSeconds = Math.floor(
+    (expirationDate.getTime() - currentDate.getTime()) / 1000
+  );
+
+  return [true, remainingTimeInSeconds];
 }

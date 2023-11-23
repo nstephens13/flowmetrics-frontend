@@ -26,6 +26,7 @@ import AutoComplete from 'primevue/autocomplete';
 import Chip from 'primevue/chip';
 import Tooltip from 'primevue/tooltip';
 import InputMask from 'primevue/inputmask';
+import OverlayPanel from 'primevue/overlaypanel';
 
 import router from './router';
 import App from './App.vue';
@@ -39,6 +40,7 @@ import initFilterConfigStore from '@/store/mockdata/initFilterConfigStore';
 
 const app = createApp(App);
 const pinia = createPinia();
+
 app.use(pinia);
 app.use(PrimeVue);
 app.use(router);
@@ -65,6 +67,7 @@ app.component('DataViewLayoutOptions', DataViewLayoutOptions);
 app.component('AutoComplete', AutoComplete);
 app.component('Chip', Chip);
 app.component('InputMask', InputMask);
+app.component('OverlayPanel', OverlayPanel);
 app.directive('tooltip', Tooltip);
 
 app.mount('#app');

@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest';
-import type { IssueIF } from '../IssueIF';
-import type { SlaRule } from '../SlaRule';
-import { getSlaRules, Issue } from '../Issue';
+import type { IssueIF } from '../Issue/IssueIF';
+import type { SlaRule } from '../Sla/SlaRule';
+import { getSlaRules, Issue } from '../Issue/Issue';
 
 test('getSlaRules returns an empty array when assignedSlaRule is null', () => {
   const issue = new Issue(
@@ -22,7 +22,7 @@ test('getSlaRules returns an empty array when assignedSlaRule is null', () => {
     null,
     null,
     'Open',
-    null,
+    [],
     null,
     null,
     null
@@ -38,18 +38,16 @@ describe('assignedSlaRules', () => {
       {
         id: 100,
         name: 'rule number1',
-        durationInDays: null,
+        reactionTimeInDays: null,
         expirationDate: null,
         occurredIn: null,
-        reactionTime: null,
       },
       {
         id: 200,
         name: 'rule number2',
-        durationInDays: null,
+        reactionTimeInDays: null,
         expirationDate: null,
         occurredIn: null,
-        reactionTime: null,
       },
     ];
 
@@ -71,8 +69,8 @@ describe('assignedSlaRules', () => {
       closedAt: null,
       dueTo: null,
       status: 'Open',
-      statusChanges: null,
       assignedSlaRule: slaRules,
+      statusChanges: [],
       lastStatusChange: null,
       changelog: null,
     };

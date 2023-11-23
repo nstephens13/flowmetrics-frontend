@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
-import type { SlaSubscriber } from '@/model/SlaSubscriber';
-import type { SlaRule } from '@/model/SlaRule';
-import type { SlaCategory } from '@/model/SlaCategory';
+import type { SlaSubscriber } from '@/model/Sla/SlaSubscriber';
+import type { SlaRule } from '@/model/Sla/SlaRule';
+import type { SlaCategory } from '@/model/Sla/SlaCategory';
 
 const useSlaStore = defineStore('sla', {
   state: () => ({
@@ -34,10 +34,10 @@ const useSlaStore = defineStore('sla', {
         }
       }
     },
-    addReactionTime(rule: SlaRule, reactionTime: string) {
+    addReactionTime(rule: SlaRule, reactionTimeInDays: number) {
       const index = this.rules.findIndex((r) => r.id === rule?.id);
       if (index !== -1) {
-        this.rules[index].reactionTime = reactionTime;
+        this.rules[index].reactionTimeInDays = reactionTimeInDays;
       }
     },
   },

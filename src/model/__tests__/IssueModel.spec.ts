@@ -5,8 +5,9 @@ import {
   getAssignedToName,
   getFormattedDate,
   getTimeLeft,
-} from '../Issue';
+} from '../Issue/Issue';
 import type { EmployeeIF } from '../EmployeeIF';
+import type { StatusChangesIF } from '../Issue/StatusChangesIF';
 
 describe('Issue Class', () => {
   test('creates an instance of Issue with the provided properties', () => {
@@ -27,8 +28,8 @@ describe('Issue Class', () => {
     const closedAt = null;
     const dueTo = new Date();
     const status = 'Open';
-    const statusChanges = null;
     const assignedSlaRule = null;
+    const statusChanges: StatusChangesIF[] = [];
 
     const issue = new Issue(
       id,
@@ -55,6 +56,7 @@ describe('Issue Class', () => {
     expect(issue.closedAt).toBe(closedAt);
     expect(issue.dueTo).toBe(dueTo);
     expect(issue.status).toBe(status);
+    expect(issue.assignedSlaRule).toBe(assignedSlaRule);
     expect(issue.statusChanges).toBe(statusChanges);
   });
 });
@@ -87,7 +89,7 @@ describe('getAssignedToName', () => {
       null,
       null,
       null,
-      null,
+      [],
       null,
       null,
       null
@@ -115,7 +117,7 @@ describe('getAssignedToName', () => {
       null,
       null,
       null,
-      null,
+      [],
       null,
       null,
       null
@@ -146,7 +148,7 @@ describe('getFormattedDate', () => {
       null,
       dueTo,
       null,
-      null,
+      [],
       null,
       null,
       null
@@ -174,7 +176,7 @@ describe('getFormattedDate', () => {
       null,
       null,
       null,
-      null,
+      [],
       null,
       null,
       null
@@ -206,7 +208,7 @@ describe('getTimeLeft', () => {
       null,
       dueTo,
       null,
-      null,
+      [],
       null,
       null,
       null
@@ -238,7 +240,7 @@ describe('getTimeLeft', () => {
       null,
       dueTo,
       null,
-      null,
+      [],
       null,
       null,
       null
@@ -266,7 +268,7 @@ describe('getTimeLeft', () => {
       null,
       null,
       null,
-      null,
+      [],
       null,
       null,
       null
@@ -296,7 +298,7 @@ describe('countIssuesByStatus', () => {
       null,
       null,
       'Open',
-      null,
+      [],
       null,
       null,
       null
@@ -319,7 +321,7 @@ describe('countIssuesByStatus', () => {
       null,
       null,
       'Closed',
-      null,
+      [],
       null,
       null,
       null
@@ -342,7 +344,7 @@ describe('countIssuesByStatus', () => {
       null,
       null,
       'In Progress',
-      null,
+      [],
       null,
       null,
       null
@@ -365,7 +367,7 @@ describe('countIssuesByStatus', () => {
       null,
       null,
       'Open',
-      null,
+      [],
       null,
       null,
       null
@@ -388,7 +390,7 @@ describe('countIssuesByStatus', () => {
       null,
       null,
       'Closed',
-      null,
+      [],
       null,
       null,
       null
