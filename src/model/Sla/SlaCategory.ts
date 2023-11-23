@@ -1,5 +1,5 @@
-import type { SlaSubscriber } from '@/model/SlaSubscriber';
-import type { SlaRule } from '@/model/SlaRule';
+import type { SlaSubscriber } from '@/model/Sla/SlaSubscriber';
+import type { SlaRule } from '@/model/Sla/SlaRule';
 
 export interface SlaCategory {
   id: number | null;

@@ -1,6 +1,6 @@
 import type { ProjectIF } from '@/model/ProjectIF';
 
-import type { IssueIF } from '@/model/IssueIF';
+import type { IssueIF } from '@/model/Issue/IssueIF';
 import type { FilterConfigIF } from '@/model/FilterConfigIF';
 
 /**

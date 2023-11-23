@@ -88,10 +88,16 @@
                 />
               </template>
             </Column>
-            <Column field="statusChanges" header="Status changes"></Column>
             <Column header="Remaining Reaction Time">
               <template #body="slotProps">
                 {{ calculateRemainingTime(slotProps.data) }}
+              </template>
+            </Column>
+            <Column header="Status changes" style="width: 150px">
+              <template #body="data">
+                <div v-for="statusChange in data.data.statusChanges" :key="statusChange.name">
+                  {{ statusChange.name }} : {{ statusChange.value }}
+                </div>
               </template>
             </Column>
           </DataTable>
@@ -109,7 +115,7 @@ import type { EmployeeIF } from '@/model/EmployeeIF';
 import { getIssueStatusList, type ProjectIF } from '@/model/ProjectIF';
 import getMockData from '@/assets/__mockdata__/mockDataComposer';
 import { calculateRemainingReactionTime } from '@/services/issueCalculator';
-import type { IssueIF } from '@/model/IssueIF';
+import type { IssueIF } from '@/model/Issue/IssueIF';
 
 // Create a reference for the selectedProject with initial data
 const selectedProject = ref({

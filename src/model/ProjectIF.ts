@@ -1,6 +1,6 @@
 import { nonDisplayedStatusList } from '@/assets/__mockdata__/mockDataComposer';
-import type { IssueIF } from './IssueIF';
-import type { SlaSubscriber } from '@/model/SlaSubscriber';
+import type { IssueIF } from './Issue/IssueIF';
+import type { SlaSubscriber } from '@/model/Sla/SlaSubscriber';
 
 /**
  *

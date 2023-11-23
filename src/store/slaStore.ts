@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
-import type { SlaSubscriber } from '@/model/SlaSubscriber';
-import type { SlaRule } from '@/model/SlaRule';
-import type { SlaCategory } from '@/model/SlaCategory';
+import type { SlaSubscriber } from '@/model/Sla/SlaSubscriber';
+import type { SlaRule } from '@/model/Sla/SlaRule';
+import type { SlaCategory } from '@/model/Sla/SlaCategory';
 
 const useSlaStore = defineStore('sla', {
   state: () => ({

@@ -13,8 +13,8 @@ import { ref } from 'vue';
 import autoTable from 'jspdf-autotable';
 import getMockData from '@/assets/__mockdata__/mockDataComposer';
 import type { ProjectIF } from '@/model/ProjectIF';
-import type { IssueIF } from '@/model/IssueIF';
-import { hasSlaRule, printSlaRuleNames } from '@/model/IssueIF';
+import type { IssueIF } from '@/model/Issue/IssueIF';
+import { hasSlaRule, printSlaRuleNames } from '@/model/Issue/IssueIF';
 
 const isGenerating = ref(false);
 const project = getMockData(7) as ProjectIF;

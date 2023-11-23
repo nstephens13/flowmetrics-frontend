@@ -84,9 +84,9 @@ import type { Ref } from 'vue';
 import CircularProgressBar from '@/components/IssueCalculator/CircularProgressBar.vue';
 import type { ProjectIF } from '@/model/ProjectIF';
 import getMockData from '@/assets/__mockdata__/mockDataComposer';
-import { countIssuesByStatus, Issue, getTimeLeft } from '@/model/Issue';
+import { countIssuesByStatus, Issue, getTimeLeft } from '@/model/Issue/Issue';
 import type { EmployeeIF } from '@/model/EmployeeIF';
-import type { IssueIF } from '@/model/IssueIF';
+import type { IssueIF } from '@/model/Issue/IssueIF';
 </script>
 
 <script lang="ts">

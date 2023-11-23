@@ -4,7 +4,7 @@ import type { Ref } from 'vue';
 import EmployeeCard from '@/components/EmployeeCard.vue';
 import type { EmployeeIF } from '@/model/EmployeeIF';
 import type { ProjectIF } from '@/model/ProjectIF';
-import type { IssueDataIF } from '@/model/IssueDataIF';
+import type { IssueDataIF } from '@/model/Issue/IssueDataIF';
 import { getIssueStatusList } from '@/model/ProjectIF';
 import { calculateWorkload, mergeEmployees } from '@/services/workloadCalculator';
 import filterProjectThatHasTheAllowedStatus from '@/services/filter/IssuesStateFilter';
