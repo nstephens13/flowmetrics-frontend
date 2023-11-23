@@ -6,7 +6,7 @@ import employeeJson from './Employees.json';
 import issueJson2 from './Issues_2.json';
 import issueJson from './Issues.json';
 import type { Issue } from '@/model/Issue';
-import type { SLARule } from '@/model/SLARule';
+import type { SlaRule } from '@/model/SlaRule';
 
 // Define lists of different category with statuses
 export const planningStatusList: string[] = ['Planned', 'Design', 'Open'];
@@ -42,7 +42,7 @@ function loadIssueDataFromFile(issues: any): Issue[] {
       dueTo: issue.dueTo ? new Date(issue.dueTo) : null,
       status: issue.status as string,
       statusChanges: null,
-      assignedSLARule: issue.assignedSLARule ? issue.assignedSLARule : null,
+      assignedSlaRule: issue.assignedSlaRule ? issue.assignedSlaRule : null,
       lastStatusChange: faker.date.recent(),
     });
   });
@@ -94,6 +94,7 @@ function loadArraysFromFile(
               emailAddress: string;
               status: string;
               assignedIssues: never[];
+              key: string;
             };
             createdAt: string;
             closedAt: null;
@@ -110,6 +111,7 @@ function loadArraysFromFile(
               lastName: string;
               emailAddress: string;
               assignedIssues: never[];
+              key: string;
             };
             createdBy: {
               id: number;
@@ -118,6 +120,7 @@ function loadArraysFromFile(
               emailAddress: string;
               status: string;
               assignedIssues: never[];
+              key: string;
             };
             createdAt: string;
             closedAt: string;
@@ -135,6 +138,7 @@ function loadArraysFromFile(
               emailAddress: string;
               status: string;
               assignedIssues: never[];
+              key: string;
             };
             createdBy: {
               id: number;
@@ -159,6 +163,7 @@ function loadArraysFromFile(
               emailAddress: string;
               status: string;
               assignedIssues: never[];
+              key: string;
             };
             createdBy: {
               id: number;
@@ -304,7 +309,7 @@ function getMockData(dataset: number): ProjectIF {
           createdBy: employeesArrayFromFile[getRandomInt(employeesForProject.length)],
           dueTo: faker.date.future(),
           statusChanges,
-          assignedSLARule: null,
+          assignedSlaRule: null,
           lastStatusChange: faker.date.recent(),
         });
       }
@@ -359,7 +364,7 @@ function getMockData(dataset: number): ProjectIF {
           createdBy: employeesArrayFromFile[getRandomInt(employeesForProject.length)],
           dueTo: faker.date.future(),
           statusChanges,
-          assignedSLARule: null,
+          assignedSlaRule: null,
           lastStatusChange: faker.date.between({
             from: new Date().valueOf() - 259200000,
             to: new Date().valueOf(),
@@ -455,7 +460,7 @@ function getMockData(dataset: number): ProjectIF {
           dueTo: faker.date.future(),
           status: '',
           statusChanges: null,
-          assignedSLARule: null,
+          assignedSlaRule: null,
           lastStatusChange: faker.date.recent(),
         });
       }
@@ -521,7 +526,7 @@ function getMockData(dataset: number): ProjectIF {
           dueTo: faker.date.future(),
           status: '',
           statusChanges: 0,
-          assignedSLARule: [],
+          assignedSlaRule: [],
           lastStatusChange: faker.date.recent(),
         });
       }
@@ -562,45 +567,39 @@ function getMockData(dataset: number): ProjectIF {
         );
       }
 
-      const slaRule1: SLARule = {
+      const slaRule1: SlaRule = {
         id: 1,
         name: 'SLA Rule 1',
-        durationInDays: 3,
+        reactionTimeInDays: 3,
         expirationDate: new Date('2023-08-17T00:00:00.000Z'),
-        maxAssignedEmployees: 3,
         occurredIn: null,
-        customerProject: ['Customer 1'],
         priority: 'Kosmetik',
         issueType: ['documentation', 'coverage'],
       };
-      const slaRule2: SLARule = {
+      const slaRule2: SlaRule = {
         id: 2,
         name: 'SLA Rule 2',
-        durationInDays: 5,
+        reactionTimeInDays: 5,
         expirationDate: new Date('2023-08-20T00:00:00.000Z'),
-        maxAssignedEmployees: 3,
         occurredIn: null,
-        customerProject: ['Internal'],
         priority: 'leicht umgehbar',
         issueType: ['support'],
       };
-      const slaRule3: SLARule = {
+      const slaRule3: SlaRule = {
         id: 3,
         name: 'SLA Rule 3',
-        durationInDays: 2,
+        reactionTimeInDays: 2,
         expirationDate: new Date('2023-08-16T00:00:00.000Z'),
-        maxAssignedEmployees: 1,
         occurredIn: null,
-        customerProject: ['Customer 3'],
         priority: 'behindernd',
         issueType: ['bug', 'test'],
       };
 
-      const slaRuleArray: SLARule[] = [slaRule1, slaRule2, slaRule3];
+      const slaRuleArray: SlaRule[] = [slaRule1, slaRule2, slaRule3];
 
       for (let i = 0; i < numberOfIssues; i++) {
-        const randomSLARule = getRandomInt(3); // 0: SLA Rule 1, 1: SLA Rule 2, 2: SLA Rule 3
-        issues[i].assignedSLARule?.push(slaRuleArray[randomSLARule]);
+        const randomSlaRule = getRandomInt(3); // 0: SLA Rule 1, 1: SLA Rule 2, 2: SLA Rule 3
+        issues[i].assignedSlaRule?.push(slaRuleArray[randomSlaRule]);
       }
       return {
         id: 7,
@@ -675,8 +674,38 @@ function getMockData(dataset: number): ProjectIF {
         employeesForProject
       );
 
+      const slaRule1: SlaRule = {
+        id: 1,
+        name: 'SLA Rule 1',
+        reactionTimeInDays: 1,
+        expirationDate: new Date('2023-08-17T00:00:00.000Z'),
+        occurredIn: null,
+        priority: 'behindernd',
+        issueType: ['bug', 'test'],
+      };
+      const slaRule2: SlaRule = {
+        id: 2,
+        name: 'SLA Rule 2',
+        reactionTimeInDays: 5,
+        expirationDate: new Date('2023-08-20T00:00:00.000Z'),
+        occurredIn: null,
+        priority: 'behindernd',
+        issueType: ['bug', 'test'],
+      };
+      const slaRule3: SlaRule = {
+        id: 3,
+        name: 'SLA Rule 3',
+        reactionTimeInDays: 20,
+        expirationDate: new Date('2023-08-16T00:00:00.000Z'),
+        occurredIn: null,
+        priority: 'behindernd',
+        issueType: ['bug', 'test'],
+      };
+
       const date = new Date(2018, 0o5, 0o5, 17, 23, 42, 11);
       issuesForProject[0].status = 'In Progress';
+      issuesForProject[0].createdAt = new Date();
+      issuesForProject[0].assignedSlaRule = [slaRule1];
       issuesForProject[2].status = 'Closed';
       issuesForProject[2].closedAt = date; // Set the specific closedAt date
       issuesForProject[3].status = 'Closed';
@@ -684,8 +713,12 @@ function getMockData(dataset: number): ProjectIF {
       issuesForProject[4].status = 'Closed';
       issuesForProject[4].closedAt = date; // Set the specific closedAt date
       issuesForProject[5].status = 'In Progress';
+      issuesForProject[5].createdAt = new Date();
+      issuesForProject[5].assignedSlaRule = [slaRule2, slaRule3];
       issuesForProject[6].status = 'Closed';
+      issuesForProject[6].createdAt = date;
       issuesForProject[6].closedAt = date; // Set the specific closedAt date
+      issuesForProject[6].assignedSlaRule = [slaRule2, slaRule3];
 
       [issuesForProject[0].status, issuesForProject[0].status] = ['In Progress', devStatusList[0]];
       [issuesForProject[1].status] = [planningStatusList[0]];
