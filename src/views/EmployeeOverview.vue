@@ -74,6 +74,7 @@ function updateEmployeeList() {
   const unassignedIndex = employeeList.value.findIndex(
     (employee) => employee.employee.firstName === 'Unassigned'
   );
+  // Returns -1 if no element is found
   if (unassignedIndex !== -1) {
     const unassignedEmployee = employeeList.value.splice(unassignedIndex, 1)[0];
     employeeList.value = [unassignedEmployee, ...employeeList.value];
@@ -161,6 +162,7 @@ updateEmployeeList();
                 ? 'color: rgba(169, 169, 169, 0.8)'
                 : ''
             "
+            data-test="unassigned-employee"
           >
             <div class="p-4 border-1 surface-border border-round shadow-1 hover:bg-gray-50">
               <EmployeeCard
