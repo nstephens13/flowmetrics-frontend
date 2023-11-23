@@ -38,7 +38,7 @@
             v-model="selectedIssueTypes"
             :options="preparedIssueTypeOptions"
             class="select-issueType-in m-1"
-            placeholder="Select Issue Types"
+            placeholder="Select issue types"
             optionLabel="label"
             optionValue="value"
             multiple
@@ -132,14 +132,14 @@
         <DataTable :value="slaCategories">
           <Column field="name" header="Category" />
           <Column field="rule.name" header="Rule" />
-          <Column header="Customer Project">
+          <Column header="Customer project">
             <template #body="slotProps">
               {{ slotProps.data.customerProject?.name }}
             </template>
           </Column>
-          <Column field="rule.reactionTimeInDays" header="Reaction Time (Days)" />
+          <Column field="rule.reactionTimeInDays" header="Reaction time (Days)" />
           <Column field="rule.occurredIn" header="Occurred in" />
-          <Column field="rule.issueType" header="Issue Type">
+          <Column field="rule.issueType" header="Issue type">
             <template #body="slotProps">
               <span>
                 {{ slotProps.data.rule?.issueType?.join(', ') }}
