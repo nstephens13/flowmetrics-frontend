@@ -1,8 +1,8 @@
-import useSLAStore from '@/store/slaStore';
-import type { SLACategory } from '@/model/SLACategory';
+import useSlaStore from '@/store/slaStore';
+import type { SlaCategory } from '@/model/SlaCategory';
 
-export default function initSLAStore() {
-  const slaStore = useSLAStore();
+export default function initSlaStore() {
+  const slaStore = useSlaStore();
   slaStore.addSubscriber({
     id: 1,
     name: 'Customer 1',
@@ -21,48 +21,42 @@ export default function initSLAStore() {
   slaStore.addRule({
     id: 1,
     name: 'Pre-Config 1',
-    durationInDays: 3,
+    reactionTimeInDays: 3,
     expirationDate: null,
-    maxAssignedEmployees: 3,
     occurredIn: 'Test',
-    customerProject: ['Customer 4'],
     priority: 'behindernd',
     issueType: ['bug', 'test'],
   });
   slaStore.addRule({
     id: 2,
     name: 'Pre-Config 2',
-    durationInDays: null,
+    reactionTimeInDays: null,
     expirationDate: new Date('2023-07-17'),
-    maxAssignedEmployees: 4,
     occurredIn: 'Pre-production',
-    customerProject: ['Customer 5'],
     priority: null,
     issueType: ['bug'],
   });
   slaStore.addRule({
     id: 3,
     name: 'Pre-Config 3',
-    durationInDays: 7,
+    reactionTimeInDays: 7,
     expirationDate: new Date('2023-12-19'),
-    maxAssignedEmployees: 7,
     occurredIn: 'Production',
-    customerProject: [],
     priority: 'Kosmetik',
     issueType: ['documentation'],
   });
 
   // Add 5 SLA Categories
   for (let i = 1; i < 6; i++) {
-    const amountSubscribers = i % slaStore.subscriber.length;
+    const amountSubscribers = i % slaStore.customer.length;
     const rulesIndex = i % slaStore.rules.length;
-    const category: SLACategory = {
+    const category: SlaCategory = {
       id: null,
       name: `savedConfig_${i}`,
-      subscriber: slaStore.subscriber[amountSubscribers],
+      customerProject: slaStore.customer[amountSubscribers],
       rule: slaStore.rules[rulesIndex],
     };
 
-    slaStore.addSLACategory(category);
+    slaStore.addSlaCategory(category);
   }
 }
