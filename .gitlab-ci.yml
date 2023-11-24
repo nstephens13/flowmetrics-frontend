@@ -82,10 +82,6 @@ sonarqube-check:
         - image
     variables:
         IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
-        DOCKER_DNS_SERVER: 8.8.8.8
-    before_script:
-        - echo "Setting up Docker DNS"
-        - echo "nameserver $DOCKER_DNS_SERVER" | tee /etc/resolv.conf
     script:
         - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
         - docker build -t $IMAGE_TAG .
