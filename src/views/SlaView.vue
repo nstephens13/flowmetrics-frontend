@@ -331,5 +331,3 @@ const reactionTimeErrorMessage = computed(() =>
   !isReactionTimeValid.value ? 'Reaction time must be in format 01w 23d 00h' : ''
 );
 </script>
-
-<style scoped></style>
