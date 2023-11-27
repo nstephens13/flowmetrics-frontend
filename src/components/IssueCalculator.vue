@@ -62,9 +62,9 @@
             {{ getTimeLeft(slotProps.data) }}
           </template>
         </Column>
-        <Column header="Laying time">
+        <Column header="Resting time">
           <template #body="slotProps">
-            {{ printLayingTime(slotProps.data) }}
+            {{ printRestingTime(slotProps.data) }}
           </template>
         </Column>
         <Column field="assignedTo" header="Assigned to">
@@ -72,6 +72,7 @@
             {{ printAssignedTo(slotProps.data.assignedTo) }}
           </template>
         </Column>
+        <Column field="Resting time (Assignee)" header="Resting Time (Assignee)"></Column>
       </DataTable>
     </template>
   </Card>
@@ -83,9 +84,9 @@ import type { Ref } from 'vue';
 import CircularProgressBar from '@/components/IssueCalculator/CircularProgressBar.vue';
 import type { ProjectIF } from '@/model/ProjectIF';
 import getMockData from '@/assets/__mockdata__/mockDataComposer';
-import { countIssuesByStatus, Issue, getTimeLeft } from '@/model/Issue';
+import { countIssuesByStatus, Issue, getTimeLeft } from '@/model/Issue/Issue';
 import type { EmployeeIF } from '@/model/EmployeeIF';
-import type { IssueIF } from '@/model/IssueIF';
+import type { IssueIF } from '@/model/Issue/IssueIF';
 </script>
 
 <script lang="ts">
@@ -131,9 +132,9 @@ function printAssignedTo(employee: EmployeeIF | null): string {
 /**
  * if time since last status change is null, return 0
  * @param issue an instance of an IssueIF
- * @return returns laying time in hours or if more than 24 hours returns in days
+ * @return returns resting time in hours or if more than 24 hours returns in days
  */
-function printLayingTime(issue: IssueIF): string {
+function printRestingTime(issue: IssueIF): string {
   if (issue.lastStatusChange == null) {
     return '0';
   }

@@ -1,9 +1,9 @@
 import { describe, expect, test } from 'vitest';
 import { createPinia, setActivePinia } from 'pinia';
 import useSlaStore from '../slaStore';
-import type { SlaRule } from '../../model/SlaRule';
-import type { SlaCategory } from '../../model/SlaCategory';
-import type { SlaCustomerProject } from '../../model/SlaCustomerProject';
+import type { SlaCustomerProject } from '../../model/Sla/SlaCustomerProject';
+import type { SlaRule } from '../../model/Sla/SlaRule';
+import type { SlaCategory } from '../../model/Sla/SlaCategory';
 
 // Test SLA Data
 const slaSubscriber1: SlaCustomerProject = {
@@ -17,8 +17,8 @@ const slaRule1: SlaRule = {
   reactionTimeInDays: 3,
   expirationDate: null,
   occurredIn: null,
-  priority: null,
-  issueType: null,
+  priority: 'behindernd',
+  issueType: ['bug', 'test'],
 };
 const slaCategory1: SlaCategory = {
   id: null,
@@ -54,8 +54,8 @@ describe('SLA Store Tests', () => {
     expect(slaStore.rules[0].name).toBe('SLA Rule 1');
     expect(slaStore.rules[0].expirationDate).toBe(null);
     expect(slaStore.rules[0].occurredIn).toBe(null);
-    expect(slaStore.rules[0].priority).toBeNull();
-    expect(slaStore.rules[0].issueType).toBeNull();
+    expect(slaStore.rules[0].priority).toEqual('behindernd');
+    expect(slaStore.rules[0].issueType).toEqual(['bug', 'test']);
   });
   test('can add a Category', () => {
     slaStore.addSlaCategory(slaCategory1);

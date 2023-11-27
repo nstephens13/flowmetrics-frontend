@@ -5,8 +5,9 @@ import {
   getAssignedToName,
   getFormattedDate,
   getTimeLeft,
-} from '../Issue';
+} from '../Issue/Issue';
 import type { EmployeeIF } from '../EmployeeIF';
+import type { StatusChangesIF } from '../Issue/StatusChangesIF';
 
 describe('Issue Class', () => {
   test('creates an instance of Issue with the provided properties', () => {
@@ -21,13 +22,14 @@ describe('Issue Class', () => {
       emailAddress: 'john.doe@email.com',
       status: 'active',
       avatarUrl: 'none',
+      key: 'jdoe',
     };
     const createdAt = new Date();
     const closedAt = null;
     const dueTo = new Date();
     const status = 'Open';
-    const statusChanges = null;
-    const assignedSLARule = null;
+    const assignedSlaRule = null;
+    const statusChanges: StatusChangesIF[] = [];
 
     const issue = new Issue(
       id,
@@ -40,7 +42,8 @@ describe('Issue Class', () => {
       dueTo,
       status,
       statusChanges,
-      assignedSLARule,
+      assignedSlaRule,
+      null,
       null
     );
 
@@ -53,6 +56,7 @@ describe('Issue Class', () => {
     expect(issue.closedAt).toBe(closedAt);
     expect(issue.dueTo).toBe(dueTo);
     expect(issue.status).toBe(status);
+    expect(issue.assignedSlaRule).toBe(assignedSlaRule);
     expect(issue.statusChanges).toBe(statusChanges);
   });
 });
@@ -70,6 +74,7 @@ describe('getAssignedToName', () => {
         emailAddress: 'john.doe@email.com',
         status: 'active',
         avatarUrl: 'none',
+        key: 'jdoe',
       },
       {
         id: 4245,
@@ -78,11 +83,13 @@ describe('getAssignedToName', () => {
         emailAddress: 'jane.smith@email.com',
         status: 'active',
         avatarUrl: 'none',
+        key: 'jsmith',
       },
       new Date(),
       null,
       null,
       null,
+      [],
       null,
       null,
       null
@@ -104,11 +111,13 @@ describe('getAssignedToName', () => {
         emailAddress: 'jane.smith@email.com',
         status: 'active',
         avatarUrl: 'none',
+        key: 'jsmith',
       },
       new Date(),
       null,
       null,
       null,
+      [],
       null,
       null,
       null
@@ -133,11 +142,13 @@ describe('getFormattedDate', () => {
         emailAddress: 'jane.smith@email.com',
         status: 'active',
         avatarUrl: 'none',
+        key: 'jsmith',
       },
       new Date(),
       null,
       dueTo,
       null,
+      [],
       null,
       null,
       null
@@ -159,11 +170,13 @@ describe('getFormattedDate', () => {
         emailAddress: 'jane.smith@email.com',
         status: 'active',
         avatarUrl: 'none',
+        key: 'jsmith',
       },
       new Date(),
       null,
       null,
       null,
+      [],
       null,
       null,
       null
@@ -189,11 +202,13 @@ describe('getTimeLeft', () => {
         emailAddress: 'jane.smith@email.com',
         status: 'active',
         avatarUrl: 'none',
+        key: 'jsmith',
       },
       new Date(),
       null,
       dueTo,
       null,
+      [],
       null,
       null,
       null
@@ -219,11 +234,13 @@ describe('getTimeLeft', () => {
         emailAddress: 'jane.smith@email.com',
         status: 'active',
         avatarUrl: 'none',
+        key: 'jsmith',
       },
       new Date(),
       null,
       dueTo,
       null,
+      [],
       null,
       null,
       null
@@ -245,11 +262,13 @@ describe('getTimeLeft', () => {
         emailAddress: 'jane.smith@email.com',
         status: 'active',
         avatarUrl: 'none',
+        key: 'jsmith',
       },
       new Date(),
       null,
       null,
       null,
+      [],
       null,
       null,
       null
@@ -273,11 +292,13 @@ describe('countIssuesByStatus', () => {
         emailAddress: 'jane.smith@email.com',
         status: 'active',
         avatarUrl: 'none',
+        key: 'jsmith',
       },
       new Date(),
       null,
       null,
       'Open',
+      [],
       null,
       null,
       null
@@ -294,11 +315,13 @@ describe('countIssuesByStatus', () => {
         emailAddress: 'john.doe@email.com',
         status: 'active',
         avatarUrl: 'none',
+        key: 'jdoe',
       },
       new Date(),
       null,
       null,
       'Closed',
+      [],
       null,
       null,
       null
@@ -315,11 +338,13 @@ describe('countIssuesByStatus', () => {
         emailAddress: 'jane.smith@email.com',
         status: 'active',
         avatarUrl: 'none',
+        key: 'jsmith',
       },
       new Date(),
       null,
       null,
       'In Progress',
+      [],
       null,
       null,
       null
@@ -336,11 +361,13 @@ describe('countIssuesByStatus', () => {
         emailAddress: 'jane.smith@email.com',
         status: 'active',
         avatarUrl: 'none',
+        key: 'jdoe',
       },
       new Date(),
       null,
       null,
       'Open',
+      [],
       null,
       null,
       null
@@ -357,11 +384,13 @@ describe('countIssuesByStatus', () => {
         emailAddress: 'jane.smith@email.com',
         status: 'active',
         avatarUrl: 'none',
+        key: 'jsmith',
       },
       new Date(),
       null,
       null,
       'Closed',
+      [],
       null,
       null,
       null

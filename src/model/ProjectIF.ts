@@ -1,6 +1,6 @@
 import { nonDisplayedStatusList } from '@/assets/__mockdata__/mockDataComposer';
-import type { IssueIF } from './IssueIF';
-import type { SlaCustomerProject } from '@/model/SlaCustomerProject';
+import type { IssueIF } from './Issue/IssueIF';
+import type { SlaCustomerProject } from '@/model/Sla/SlaCustomerProject';
 
 /**
  *
