@@ -24,6 +24,8 @@ export default function initSlaStore() {
     reactionTimeInDays: 3,
     expirationDate: null,
     occurredIn: 'Test',
+    priority: 'behindernd',
+    issueType: ['bug', 'test'],
   });
   slaStore.addRule({
     id: 2,
@@ -31,6 +33,8 @@ export default function initSlaStore() {
     reactionTimeInDays: null,
     expirationDate: new Date('2023-07-17'),
     occurredIn: 'Pre-production',
+    priority: null,
+    issueType: ['bug'],
   });
   slaStore.addRule({
     id: 3,
@@ -38,16 +42,18 @@ export default function initSlaStore() {
     reactionTimeInDays: 7,
     expirationDate: new Date('2023-12-19'),
     occurredIn: 'Production',
+    priority: 'Kosmetik',
+    issueType: ['documentation'],
   });
 
   // Add 5 SLA Categories
   for (let i = 1; i < 6; i++) {
-    const amountSubscribers = i % slaStore.subscriber.length;
+    const amountSubscribers = i % slaStore.customer.length;
     const rulesIndex = i % slaStore.rules.length;
     const category: SlaCategory = {
       id: null,
       name: `savedConfig_${i}`,
-      subscriber: slaStore.subscriber[amountSubscribers],
+      customerProject: slaStore.customer[amountSubscribers],
       rule: slaStore.rules[rulesIndex],
     };
 

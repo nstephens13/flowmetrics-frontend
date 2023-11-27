@@ -4,4 +4,6 @@ export interface SlaRule {
   reactionTimeInDays: number | null;
   expirationDate: Date | null;
   occurredIn: string | null;
+  priority: string | null;
+  issueType: string[] | null;
 }

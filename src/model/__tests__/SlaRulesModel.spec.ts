@@ -41,6 +41,8 @@ describe('assignedSlaRules', () => {
         reactionTimeInDays: null,
         expirationDate: null,
         occurredIn: null,
+        priority: null,
+        issueType: [],
       },
       {
         id: 200,
@@ -48,6 +50,8 @@ describe('assignedSlaRules', () => {
         reactionTimeInDays: null,
         expirationDate: null,
         occurredIn: null,
+        priority: null,
+        issueType: [],
       },
     ];
 
