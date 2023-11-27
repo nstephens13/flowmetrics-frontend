@@ -1,12 +1,12 @@
 import { faker } from '@faker-js/faker';
 import type { ProjectIF } from '@/model/ProjectIF';
 import type { EmployeeIF } from '@/model/EmployeeIF';
-import type { IssueIF } from '@/model/IssueIF';
+import type { IssueIF } from '@/model/Issue/IssueIF';
 import employeeJson from './Employees.json';
 import issueJson2 from './Issues_2.json';
 import issueJson from './Issues.json';
-import type { Issue } from '@/model/Issue';
-import type { SlaRule } from '@/model/SlaRule';
+import type { Issue } from '@/model/Issue/Issue';
+import type { SlaRule } from '@/model/Sla/SlaRule';
 
 // Define lists of different category with statuses
 export const planningStatusList: string[] = ['Planned', 'Design', 'Open'];
@@ -41,9 +41,10 @@ function loadIssueDataFromFile(issues: any): Issue[] {
       createdAt: issue.createdAt ? new Date(issue.createdAt) : null,
       dueTo: issue.dueTo ? new Date(issue.dueTo) : null,
       status: issue.status as string,
-      statusChanges: null,
       assignedSlaRule: issue.assignedSlaRule ? issue.assignedSlaRule : null,
+      statusChanges: issue.statusChanges ? issue.statusChanges : [],
       lastStatusChange: faker.date.recent(),
+      changelog: null,
     });
   });
   return issueData;
@@ -296,7 +297,24 @@ function getMockData(dataset: number): ProjectIF {
           closedAt = faker.date.recent();
         }
 
-        const statusChanges = getRandomInt(10);
+        const analyseStatusChanges = getRandomInt(10);
+        const umsetzungStatusChanges = getRandomInt(10);
+        const testStatusChanges = getRandomInt(10);
+
+        const statusChanges = [
+          {
+            name: 'analysis',
+            value: analyseStatusChanges,
+          },
+          {
+            name: 'in progress',
+            value: umsetzungStatusChanges,
+          },
+          {
+            name: 'closed',
+            value: testStatusChanges,
+          },
+        ];
 
         issuesForProject.push({
           id: iterator + 1,
@@ -308,9 +326,10 @@ function getMockData(dataset: number): ProjectIF {
           createdAt: faker.date.past(),
           createdBy: employeesArrayFromFile[getRandomInt(employeesForProject.length)],
           dueTo: faker.date.future(),
-          statusChanges,
           assignedSlaRule: null,
+          statusChanges,
           lastStatusChange: faker.date.recent(),
+          changelog: null,
         });
       }
 
@@ -351,7 +370,24 @@ function getMockData(dataset: number): ProjectIF {
           closedAt = faker.date.recent();
         }
 
-        const statusChanges = getRandomInt(10);
+        const analyseStatusChanges = getRandomInt(10);
+        const umsetzungStatusChanges = getRandomInt(10);
+        const testStatusChanges = getRandomInt(10);
+
+        const statusChanges = [
+          {
+            name: 'analysis',
+            value: analyseStatusChanges,
+          },
+          {
+            name: 'in progress',
+            value: umsetzungStatusChanges,
+          },
+          {
+            name: 'closed',
+            value: testStatusChanges,
+          },
+        ];
 
         issuesForProject.push({
           id: iterator + 1,
@@ -363,12 +399,13 @@ function getMockData(dataset: number): ProjectIF {
           createdAt: faker.date.past(),
           createdBy: employeesArrayFromFile[getRandomInt(employeesForProject.length)],
           dueTo: faker.date.future(),
-          statusChanges,
           assignedSlaRule: null,
+          statusChanges,
           lastStatusChange: faker.date.between({
             from: new Date().valueOf() - 259200000,
             to: new Date().valueOf(),
           }), // 259200000 is 3 days in ms
+          changelog: null,
         });
       }
 
@@ -459,9 +496,10 @@ function getMockData(dataset: number): ProjectIF {
           createdBy: employeesArrayFromFile[getRandomInt(employeesForProject.length)],
           dueTo: faker.date.future(),
           status: '',
-          statusChanges: null,
           assignedSlaRule: null,
+          statusChanges: [],
           lastStatusChange: faker.date.recent(),
+          changelog: null,
         });
       }
 
@@ -525,9 +563,10 @@ function getMockData(dataset: number): ProjectIF {
           createdBy: employeesArrayFromFile[getRandomInt(employeesForProject.length)],
           dueTo: faker.date.future(),
           status: '',
-          statusChanges: 0,
           assignedSlaRule: [],
+          statusChanges: [],
           lastStatusChange: faker.date.recent(),
+          changelog: null,
         });
       }
 

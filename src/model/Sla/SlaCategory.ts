@@ -1,5 +1,5 @@
-import type { SlaCustomerProject } from '@/model/SlaCustomerProject';
-import type { SlaRule } from '@/model/SlaRule';
+import type { SlaCustomerProject } from '@/model/Sla/SlaCustomerProject';
+import type { SlaRule } from '@/model/Sla/SlaRule';
 
 export interface SlaCategory {
   id: number | null;

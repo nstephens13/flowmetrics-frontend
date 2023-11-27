@@ -167,9 +167,9 @@
 <script lang="ts" setup>
 import type { ComputedRef, Ref } from 'vue';
 import { computed, ref } from 'vue';
-import type { SlaCustomerProject } from '@/model/SlaCustomerProject';
-import type { SlaRule } from '@/model/SlaRule';
-import type { SlaCategory } from '@/model/SlaCategory';
+import type { SlaCustomerProject } from '@/model/Sla/SlaCustomerProject';
+import type { SlaRule } from '@/model/Sla/SlaRule';
+import type { SlaCategory } from '@/model/Sla/SlaCategory';
 import GeneratePDF from '@/components/GeneratePDF.vue';
 import useSlaStore from '@/store/slaStore';
 
@@ -332,5 +332,3 @@ const reactionTimeErrorMessage = computed(() =>
   !isReactionTimeValid.value ? 'Reaction time must be in format 01w 23d 00h' : ''
 );
 </script>
-
-<style scoped></style>
