@@ -114,7 +114,6 @@
               class="enter-reaction-time m-1"
               mask="99w 99d 99h"
             />
-            <label for="reactionTime">Reaction time</label>
           </div>
           <Button
             class="add-reaction-time m-1"
