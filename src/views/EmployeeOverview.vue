@@ -1,126 +1,3 @@
-<script lang="ts" setup>
-import { computed, ref } from 'vue';
-import type { Ref } from 'vue';
-import EmployeeCard from '@/components/EmployeeCard.vue';
-import type { EmployeeIF } from '@/model/EmployeeIF';
-import type { ProjectIF } from '@/model/ProjectIF';
-import type { IssueDataIF } from '@/model/Issue/IssueDataIF';
-import { getIssueStatusList } from '@/model/ProjectIF';
-import { calculateWorkload, mergeEmployees } from '@/services/workloadCalculator';
-import filterProjectThatHasTheAllowedStatus from '@/services/filter/IssuesStateFilter';
-import useProjectsStore from '@/store/projectStore';
-import useFilterConfigStore from '@/store/filterConfigStore';
-
-// Create a reference to the FilterConfigStore and ProjectStore instances
-const filterConfigStore = useFilterConfigStore();
-const projectStore = useProjectsStore();
-
-// Create a computed reference to the filterConfig from the FilterConfigStore
-const filterConfig = computed(() => filterConfigStore.getFilterConfig);
-
-// Create a reference to the calculated workload based on the project whitelist in the filterConfig
-const workload: Ref<Map<EmployeeIF, IssueDataIF>> = ref(
-  calculateWorkload(filterConfig.value.projectFilter.projectsWhiteList)
-);
-
-// Create a reference to all the issue statuses from the projects in the filterConfig
-const allStatuses: Ref<string[]> = ref(
-  getIssueStatusList(
-    filterConfig.value.projectFilter.projectsWhiteList.flatMap((project) => project.issues)
-  )
-);
-
-// Create a reference to all the projects from the ProjectStore
-const allProjects: Ref<ProjectIF[]> = ref(projectStore.getProjects);
-
-// Create a reference to the employee list based on the workload data
-const employeeList = ref(
-  Array.from(workload.value, ([employee, issues]) => ({ employee, issues }))
-);
-
-// Create a reference to the category names with initial empty values
-const categoryNames = ref<{
-  firstCategory: string;
-  secondCategory: string;
-  thirdCategory: string;
-}>({
-  firstCategory: '',
-  secondCategory: '',
-  thirdCategory: '',
-});
-
-// Create references for selectedStatuses and selectedProjects
-const selectedStatuses: Ref<string[]> = ref([]);
-const selectedProjects: Ref<ProjectIF[]> = ref([]);
-
-// Function to update the employee list and category names
-function updateEmployeeList() {
-  // Calculate the workload based on the filtered projects in the filterConfig
-  const workloadMap: Map<EmployeeIF, IssueDataIF> = calculateWorkload(
-    filterProjectThatHasTheAllowedStatus(filterConfig.value)
-  );
-
-  // Update the employee list by merging the workload data
-  employeeList.value = mergeEmployees(workloadMap);
-
-  // Set the category names to predefined values
-  categoryNames.value = {
-    firstCategory: 'Planning',
-    secondCategory: 'Development',
-    thirdCategory: 'Testing',
-  };
-
-  // Move the unassigned employee to the front of the list
-  const unassignedIndex = employeeList.value.findIndex(
-    (employee) => employee.employee.firstName === 'Unassigned'
-  );
-  // Returns -1 if no element is found
-  if (unassignedIndex !== -1) {
-    const unassignedEmployee = employeeList.value.splice(unassignedIndex, 1)[0];
-    employeeList.value = [unassignedEmployee, ...employeeList.value];
-  }
-}
-
-// Function to update the selected projects and trigger employee list update
-function updateSelectedProjects() {
-  // Clear the selected statuses
-  selectedStatuses.value = [];
-
-  // Update the filterConfig with the selected projects
-  const updatedFilterConfig = filterConfig.value;
-  updatedFilterConfig.projectFilter.projectsWhiteList = selectedProjects.value;
-  updatedFilterConfig.projectFilter.issueStatusIncludeFilter = [];
-  filterConfigStore.setFilterConfig(updatedFilterConfig);
-
-  // Update the employee list and allStatuses
-  updateEmployeeList();
-  allStatuses.value = getIssueStatusList(
-    filterConfig.value.projectFilter.projectsWhiteList.flatMap((project) => project.issues)
-  );
-}
-
-// Function to update the selected statuses and trigger employee list update
-function updateSelectedStatuses() {
-  // Update the filterConfig with the selected statuses
-  const updatedFilterConfig = filterConfig.value;
-  updatedFilterConfig.projectFilter.issueStatusIncludeFilter = selectedStatuses.value;
-  filterConfigStore.setFilterConfig(updatedFilterConfig);
-
-  // Update the employee list and allStatuses
-  updateEmployeeList();
-  allStatuses.value = getIssueStatusList(
-    selectedProjects.value.flatMap((project) => project.issues)
-  );
-}
-
-// Initialize the selectedProjects and selectedStatuses references
-selectedProjects.value = filterConfig.value.projectFilter.projectsWhiteList;
-selectedStatuses.value = filterConfig.value.projectFilter.issueStatusIncludeFilter;
-
-// Initial update of the employee list
-updateEmployeeList();
-</script>
-
 <template>
   <Card>
     <template #title>
@@ -136,21 +13,19 @@ updateEmployeeList();
         <template #header>
           <div class="grid gap-3">
             <MultiSelect
-              v-model="selectedProjects"
+              v-model="filterConfigStore.filter.projectFilter.projectsWhiteList"
               :maxSelectedLabels="1"
               :options="allProjects"
               class="w-full md:w-14rem"
               option-label="name"
               placeholder="Select project"
-              @change="updateSelectedProjects()"
             />
             <MultiSelect
-              v-model="selectedStatuses"
+              v-model="filterConfigStore.filter.projectFilter.issueStatusIncludeFilter"
               :maxSelectedLabels="1"
               :options="allStatuses"
               class="w-full md:w-14rem"
               placeholder="Select status"
-              @change="updateSelectedStatuses()"
             />
           </div>
         </template>
@@ -177,6 +52,72 @@ updateEmployeeList();
     </template>
   </Card>
 </template>
+
+<script lang="ts" setup>
+import { computed, ref } from 'vue';
+import type { ComputedRef } from 'vue';
+import EmployeeCard from '@/components/EmployeeCard.vue';
+import type { EmployeeIF } from '@/model/EmployeeIF';
+import type { ProjectIF } from '@/model/ProjectIF';
+import type { IssueDataIF } from '@/model/Issue/IssueDataIF';
+import { getIssueStatusList } from '@/model/ProjectIF';
+import { calculateWorkload, mergeEmployees } from '@/services/workloadCalculator';
+import filterProjectThatHasTheAllowedStatus from '@/services/filter/IssuesStateFilter';
+import useProjectsStore from '@/store/projectStore';
+import useFilterConfigStore from '@/store/filterConfigStore';
+
+// Create a reference to the FilterConfigStore and ProjectStore instances
+const filterConfigStore = useFilterConfigStore();
+const projectStore = useProjectsStore();
+
+// Create a reference to all the issue statuses from the projects in the filterConfig
+const allStatuses: ComputedRef<string[]> = computed(() =>
+  getIssueStatusList(
+    filterConfigStore.filter.projectFilter.projectsWhiteList.flatMap((project) => project.issues)
+  )
+);
+
+// Create a reference to all the projects from the ProjectStore
+const allProjects: ComputedRef<ProjectIF[]> = computed(() => projectStore.getProjects);
+
+function moveUnassignedEmployeeToFront(
+  employeeListParam: { employee: EmployeeIF; issues: IssueDataIF }[]
+): { employee: EmployeeIF; issues: IssueDataIF }[] {
+  // Move the unassigned employee to the front of the list
+  const unassignedIndex = employeeListParam.findIndex(
+    (employee) => employee.employee.firstName === 'Unassigned'
+  );
+
+  let newEmployeeList = employeeListParam;
+
+  // Returns -1 if no element is found
+  if (unassignedIndex !== -1) {
+    const unassignedEmployee = employeeListParam.splice(unassignedIndex, 1)[0];
+    newEmployeeList = [unassignedEmployee, ...employeeListParam];
+  }
+  return newEmployeeList;
+}
+
+// Create a reference to the employee list based on the workload data
+const employeeList = computed(() =>
+  moveUnassignedEmployeeToFront(
+    mergeEmployees(
+      calculateWorkload(filterProjectThatHasTheAllowedStatus(filterConfigStore.getFilterConfig))
+    )
+  )
+);
+
+// Create a reference to the category names with initial empty values
+const categoryNames = ref<{
+  firstCategory: string;
+  secondCategory: string;
+  thirdCategory: string;
+}>({
+  firstCategory: 'Planning',
+  secondCategory: 'Development',
+  thirdCategory: 'Testing',
+});
+</script>
 
 <style scoped>
 .p-card {

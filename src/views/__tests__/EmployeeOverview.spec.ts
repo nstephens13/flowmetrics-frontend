@@ -9,7 +9,7 @@ import MultiSelect from 'primevue/multiselect';
 import ProgressBar from 'primevue/progressbar';
 import Chip from 'primevue/chip';
 import { createTestingPinia } from '@pinia/testing';
-import { nextTick } from 'vue';
+import Tooltip from 'primevue/tooltip';
 import router from '@/router/index';
 import EmployeeOverview from '@/views/EmployeeOverview.vue';
 import EmployeeCard from '../../components/EmployeeCard.vue';
@@ -75,77 +75,87 @@ describe('Employee Overview should load all the Components', () => {
         createTestingPinia({
           stubActions: false,
           initialState: {
-            projects: [
-              {
-                id: 0,
-                name: 'Test-Unassigned-Employee',
-                description: '',
-                issue: [
-                  {
-                    id: 14898,
-                    name: 'Issue 1',
-                    description: 'This is the first issue',
-                    assignedTo: null,
-                    createdBy: {
-                      id: 1,
-                      firstName: 'John',
-                      lastName: 'Doe',
-                      emailAddress: 'email@email.com',
-                      status: 'active',
-                      key: 'jdoe',
-                      assignedIssues: [],
+            projects: {
+              projects: [
+                {
+                  id: 0,
+                  name: 'Test-Unassigned-Employee',
+                  description: '',
+                  issues: [
+                    {
+                      id: 14898,
+                      name: 'Issue 1',
+                      description: 'This is the first issue',
+                      assignedTo: null,
+                      createdBy: {
+                        id: 1,
+                        firstName: 'John',
+                        lastName: 'Doe',
+                        emailAddress: 'email@email.com',
+                        status: 'active',
+                        key: 'jdoe',
+                        assignedIssues: [],
+                      },
+                      createdAt: '2023-06-01T00:00:00.000Z',
+                      closedAt: null,
+                      dueTo: '2023-06-30T00:00:00.000Z',
+                      status: 'Open',
+                      userStatus: 'Open',
                     },
-                    createdAt: '2023-06-01T00:00:00.000Z',
-                    closedAt: null,
-                    dueTo: '2023-06-30T00:00:00.000Z',
-                    status: 'Open',
-                    userStatus: 'Open',
-                  },
-                  {
-                    id: 14898,
-                    name: 'Issue 2',
-                    description: 'This is the second issue',
-                    assignedTo: null,
-                    createdBy: {
-                      id: 2,
-                      firstName: 'John',
-                      lastName: 'Doe',
-                      emailAddress: 'email@email.com',
-                      status: 'active',
-                      key: 'jdoe',
-                      assignedIssues: [],
+                    {
+                      id: 14898,
+                      name: 'Issue 2',
+                      description: 'This is the second issue',
+                      assignedTo: null,
+                      createdBy: {
+                        id: 2,
+                        firstName: 'John',
+                        lastName: 'Doe',
+                        emailAddress: 'email@email.com',
+                        status: 'active',
+                        key: 'jdoe',
+                        assignedIssues: [],
+                      },
+                      createdAt: '2023-06-01T00:00:00.000Z',
+                      closedAt: null,
+                      dueTo: '2023-06-30T00:00:00.000Z',
+                      status: 'Open',
+                      userStatus: 'Open',
                     },
-                    createdAt: '2023-06-01T00:00:00.000Z',
-                    closedAt: null,
-                    dueTo: '2023-06-30T00:00:00.000Z',
-                    status: 'Open',
-                    userStatus: 'Open',
-                  },
-                  {
-                    id: 14898,
-                    name: 'Issue 3',
-                    description: 'This is the third issue',
-                    assignedTo: null,
-                    createdBy: {
-                      id: 3,
-                      firstName: 'John',
-                      lastName: 'Doe',
-                      emailAddress: 'email@email.com',
-                      status: 'active',
-                      key: 'jdoe',
-                      assignedIssues: [],
+                    {
+                      id: 14898,
+                      name: 'Issue 3',
+                      description: 'This is the third issue',
+                      assignedTo: null,
+                      createdBy: {
+                        id: 3,
+                        firstName: 'John',
+                        lastName: 'Doe',
+                        emailAddress: 'email@email.com',
+                        status: 'active',
+                        key: 'jdoe',
+                        assignedIssues: [],
+                      },
+                      createdAt: '2023-06-01T00:00:00.000Z',
+                      closedAt: null,
+                      dueTo: '2023-06-30T00:00:00.000Z',
+                      status: 'Open',
+                      userStatus: 'Open',
                     },
-                    createdAt: '2023-06-01T00:00:00.000Z',
-                    closedAt: null,
-                    dueTo: '2023-06-30T00:00:00.000Z',
-                    status: 'Open',
-                    userStatus: 'Open',
-                  },
-                ],
-                slaSubscriber: null,
+                  ],
+                  slaSubscriber: null,
+                },
+              ],
+            },
+            filterConfig: {
+              filter: {
+                id: 1,
+                projectFilter: {
+                  projectsWhiteList: [],
+                  issueStatusIncludeFilter: 'Open',
+                },
               },
-            ],
-            filter: {},
+            },
           },
         }),
       ],
@@ -159,6 +169,9 @@ describe('Employee Overview should load all the Components', () => {
         Chip,
         EmployeeCard,
       },
+      directives: {
+        Tooltip,
+      },
     },
   });
 
@@ -166,16 +179,29 @@ describe('Employee Overview should load all the Components', () => {
   test('Unassigned employee is displayed at the first index', async () => {
     // Simulate selecting a project and a status
     const projectMultiSelect = wrapper.findComponent(MultiSelect);
-    await projectMultiSelect.setValue([projectMultiSelect.props('options')[0]]).then(async () => {
+    const optionZero = projectMultiSelect.props('options')[0];
+    await projectMultiSelect.setValue([optionZero]).then(async () => {
       const statusMultiSelect = wrapper.findAllComponents(MultiSelect)[1];
-      await statusMultiSelect.setValue([statusMultiSelect.props('options')[0]]).then(() => {
+      const optionOne = statusMultiSelect.props('options')[0];
+      await statusMultiSelect.setValue([optionOne]).then(async () => {
         const dataView = wrapper.findComponent(DataView);
-        const modelValue = dataView.props('modelValue');
-        console.log();
-
-        // Check if the unassigned employee is present
-        // expect(unassignedEmployee.exists()).toBe(true);
-        // expect(unassignedEmployee.text()).toContain('Unassigned');
+        const modelValue = dataView.props('value');
+        expect(modelValue[0]).toEqual({
+          employee: {
+            avatarUrl: 'none',
+            emailAddress: '',
+            firstName: 'Unassigned',
+            id: 0,
+            key: 'unassigned',
+            lastName: 'Employee',
+            status: 'inactive',
+          },
+          issues: {
+            development: 0,
+            planning: 3,
+            testing: 0,
+          },
+        });
       });
     });
   });
