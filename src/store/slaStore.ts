@@ -1,20 +1,20 @@
 import { defineStore } from 'pinia';
-import type { SlaSubscriber } from '@/model/Sla/SlaSubscriber';
 import type { SlaRule } from '@/model/Sla/SlaRule';
 import type { SlaCategory } from '@/model/Sla/SlaCategory';
+import type { SlaCustomerProject } from '@/model/Sla/SlaCustomerProject';
 
 const useSlaStore = defineStore('sla', {
   state: () => ({
-    subscriber: [] as SlaSubscriber[],
+    customer: [] as SlaCustomerProject[],
     rules: [] as SlaRule[],
     slaCategories: [] as SlaCategory[],
   }),
 
   actions: {
-    addSubscriber(subscriber: SlaSubscriber) {
+    addSubscriber(subscriber: SlaCustomerProject) {
       const subscriberToAdd = subscriber;
-      subscriberToAdd.id = this.subscriber.length + 1;
-      this.subscriber.push(subscriberToAdd);
+      subscriberToAdd.id = this.customer.length + 1;
+      this.customer.push(subscriberToAdd);
     },
     addRule(rule: SlaRule) {
       const ruleToAdd = rule;

@@ -110,7 +110,7 @@ describe('Issue Calculator view', () => {
   });
 });
 
-describe('SLA Rules view', () => {
+describe('Sla Rules view', () => {
   const pinia = createTestingPinia({ stubActions: false });
   const wrapper = mount(SlaComponent, {
     global: {

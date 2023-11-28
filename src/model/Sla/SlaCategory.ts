@@ -1,9 +1,9 @@
-import type { SlaSubscriber } from '@/model/Sla/SlaSubscriber';
+import type { SlaCustomerProject } from '@/model/Sla/SlaCustomerProject';
 import type { SlaRule } from '@/model/Sla/SlaRule';
 
 export interface SlaCategory {
   id: number | null;
   name: string | null;
-  subscriber: SlaSubscriber | null;
+  customerProject: SlaCustomerProject;
   rule: SlaRule | null;
 }

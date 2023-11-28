@@ -1,4 +1,4 @@
-import { describe, expect, test, vi } from 'vitest';
+import { beforeEach, describe, expect, test, vi } from 'vitest';
 import { createTestingPinia } from '@pinia/testing';
 import { mount, VueWrapper } from '@vue/test-utils';
 import InputText from 'primevue/inputtext';
@@ -10,6 +10,7 @@ import Button from 'primevue/button';
 import Column from 'primevue/column';
 import DataTable from 'primevue/datatable';
 import Divider from 'primevue/divider';
+import MultiSelect from 'primevue/multiselect';
 import router from '@/router';
 import SLAView from '../SlaView.vue';
 import useSlaStore from '../../store/slaStore';
@@ -34,7 +35,7 @@ describe('SlaView Test with Store Data', () => {
                     id: 1,
                     name: 'Category 1',
                     rule: null,
-                    subscriber: null,
+                    customerProject: null,
                   },
                 ],
                 rules: [
@@ -67,6 +68,7 @@ describe('SlaView Test with Store Data', () => {
           Column,
           DataTable,
           Divider,
+          MultiSelect,
         },
       },
     });
@@ -95,38 +97,6 @@ describe('SlaView Test with Store Data', () => {
     // Get all the options in the dropdown
     await deleteButton.trigger('click');
     expect(spyButton).toHaveBeenCalledOnce();
-  });
-
-  test('does not create a category with less than 3 characters', async () => {
-    const selectSubscriberDropDown = wrapper
-      .findAllComponents(Dropdown)
-      .find((dropdown) => dropdown.classes('select-subscriber'));
-
-    const selectRuleDropDown = wrapper
-      .findAllComponents(Dropdown)
-      .find((dropdown) => dropdown.classes('select-rule'));
-
-    const categoryInput = wrapper
-      .findAllComponents(InputText)
-      .find((input) => input.classes('enter-category'));
-
-    const addButton = wrapper
-      .findAllComponents(Button)
-      .find((button) => button.classes('add-category'));
-
-    await selectSubscriberDropDown?.setValue(selectSubscriberDropDown?.props().options[0]);
-    await selectRuleDropDown?.setValue(selectRuleDropDown?.props().options[0]);
-    await categoryInput?.setValue('Ca');
-
-    await addButton?.trigger('click').then(async () => {
-      const addedCategory = wrapper.find('.category-container .category');
-      expect(addedCategory.exists()).toBe(false);
-
-      const errorMessage = wrapper.find('.error-message');
-      expect(errorMessage.exists()).toBe(true);
-      expect(errorMessage.text()).toBe('Category name must be at least 3 characters.');
-    });
-    expect(slaStore.addSlaCategory).toHaveBeenCalledTimes(0);
   });
 
   // Test to check if a rule with less than 3 characters is not added
@@ -164,27 +134,42 @@ describe('SlaView Test with Store Data', () => {
 
 /* Basic test to ensure, that SlaComponent is successfully rendered without any errors */
 describe('SlaComponent', () => {
-  const pinia = createTestingPinia({
-    initialState: {
-      rules: [],
-      subscriber: [],
-    },
-    stubActions: false,
-  });
-  const wrapper = mount(SLAView, {
-    global: {
-      plugins: [PrimeVue, router, pinia],
-      components: {
-        InputText,
-        InputMask,
-        Dropdown,
-        Card,
-        Button,
-        Column,
-        DataTable,
-        Divider,
+  let slaStore: any;
+  let wrapper: VueWrapper<any>;
+
+  beforeEach(() => {
+    wrapper = mount(SLAView, {
+      global: {
+        plugins: [
+          PrimeVue,
+          router,
+          createTestingPinia({
+            createSpy: vi.fn,
+            stubActions: false,
+            initialState: {
+              sla: {
+                slaCategories: [],
+                rules: [],
+                subscriber: [],
+              },
+            },
+          }),
+        ],
+        components: {
+          InputText,
+          InputMask,
+          Dropdown,
+          Card,
+          Button,
+          Column,
+          DataTable,
+          Divider,
+          MultiSelect,
+        },
       },
-    },
+    });
+
+    slaStore = useSlaStore();
   });
 
   // Test to check if the component is rendered
@@ -203,11 +188,11 @@ describe('SlaComponent', () => {
     await subscriberInput.setValue('John');
     await addButton.trigger('click');
 
-    const selectSubscriberDropDown = wrapper
-      .findAllComponents(Dropdown)
-      .find((dropdown) => dropdown.classes('select-subscriber'));
+    const customerProjectMultiSelect = wrapper
+      .findAllComponents(MultiSelect)
+      .find((dropdown) => dropdown.classes('select-customer-in'));
 
-    expect(selectSubscriberDropDown?.props('options')).toContainEqual({
+    expect(customerProjectMultiSelect?.props('options')).toContainEqual({
       description: null,
       id: 1,
       name: 'John',
@@ -228,19 +213,36 @@ describe('SlaComponent', () => {
     expect(selectRuleDropDown?.props('options')).toContainEqual({
       id: 1,
       name: 'Rule 1',
-      reactionTimeInDays: null,
+      reactionTimeInDays: 0,
       expirationDate: null,
-      maxAssignedEmployees: undefined,
       occurredIn: null,
+      priority: '',
+      issueType: [],
     });
   });
 
   // Test to create a category
   test('creates a category', async () => {
     // Mock the options for the subscriber and rule dropdowns
-    await wrapper.setData({
-      subscriber: [{ name: 'Subscriber 1' }, { name: 'Subscriber 2' }],
-      rules: [{ name: 'Rule 1' }, { name: 'Rule 2' }],
+    slaStore.addSubscriber({ id: 1, name: 'Subscriber 1', description: 'Description 1' });
+    slaStore.addSubscriber({ id: 2, name: 'Subscriber 2', description: 'Description 2' });
+    slaStore.addRule({
+      id: 1,
+      name: 'Rule 1',
+      reactionTimeInDays: 0,
+      expirationDate: null,
+      occurredIn: null,
+      priority: '',
+      issueType: [],
+    });
+    slaStore.addRule({
+      id: 2,
+      name: 'Rule 2',
+      reactionTimeInDays: 0,
+      expirationDate: null,
+      occurredIn: null,
+      priority: '',
+      issueType: [],
     });
 
     const categoryInput = wrapper
@@ -252,17 +254,21 @@ describe('SlaComponent', () => {
       .find((button) => button.classes('add-category'));
 
     const selectSubscriberDropDown = wrapper
-      .findAllComponents(Dropdown)
-      .find((dropdown) => dropdown.classes('select-subscriber'));
+      .findAllComponents(MultiSelect)
+      .find((dropdown) => dropdown.classes('select-customer-in'));
 
     const selectRuleDropDown = wrapper
       .findAllComponents(Dropdown)
       .find((dropdown) => dropdown.classes('select-rule'));
 
-    await selectSubscriberDropDown?.setValue('Subscriber 1');
-    await selectRuleDropDown?.setValue('Rule 1');
+    const multiSelectOption = selectSubscriberDropDown?.props('options');
+    await selectSubscriberDropDown?.setValue([multiSelectOption[0]]);
+    const selectRuleOption = selectRuleDropDown?.props('options');
+    await selectRuleDropDown?.setValue(selectRuleOption[0]);
     await categoryInput?.setValue('Category 1');
-    addButton?.trigger('click').finally(() => {
+
+    addButton?.trigger('click').then(async () => {
+      await wrapper.vm.$nextTick();
       const dataTableElementSize = wrapper.getComponent(DataTable).findAll('tr').length;
       expect(2).toEqual(dataTableElementSize);
       const datatableElements = wrapper.getComponent(DataTable).findAll('tr');
@@ -270,27 +276,6 @@ describe('SlaComponent', () => {
         datatableElements[datatableElements.length - 1].findAll('td')[0].text()
       );
     });
-  });
-  // Test to delete a category
-  test('deletes a category', async () => {
-    // Mock the categories data
-    await wrapper.setData({
-      categories: [
-        {
-          name: 'Category 1',
-          id: 1,
-        },
-        {
-          name: 'Category 2',
-          id: 2,
-        },
-      ],
-    });
-
-    const deleteButton = wrapper.findAll('.p-button-danger')[0];
-    await deleteButton.trigger('click');
-    const deletedCategory = wrapper.find('.category-container .category');
-    expect(deletedCategory.exists()).toBe(false);
   });
   // Test to check if the component mounts successfully
   test('it mounts', () => {
@@ -302,32 +287,6 @@ describe('SlaComponent', () => {
     expect(wrapper.getComponent(DataTable).isVisible()).toBe(true);
   });
 
-  // Test to add a new subscriber using addSubscriber method
-  test('should add a new subscriber when addSubscriber is called', async () => {
-    const addSubscriberButton = wrapper.find('.add-subscriber');
-    const inputSubscriber = wrapper.find('.enter-subscriber');
-
-    await inputSubscriber.setValue('New Subscriber');
-    await addSubscriberButton.trigger('click');
-
-    const selectSubscriberDropDown = wrapper
-      .findAllComponents(Dropdown)
-      .find((dropdown) => dropdown.classes('select-subscriber'));
-
-    expect(inputSubscriber.text()).toBe('');
-    expect(selectSubscriberDropDown?.props('options')).toEqual([
-      {
-        id: 1,
-        name: 'John',
-        description: null,
-      },
-      {
-        id: 2,
-        name: 'New Subscriber',
-        description: null,
-      },
-    ]);
-  });
   // Test to add a new rule using addRule method
   test('should add a new rule when addRule is called', async () => {
     const addRuleButton = wrapper.find('.add-rule');
@@ -345,20 +304,98 @@ describe('SlaComponent', () => {
     expect(selectRuleDropDown?.props('options')).toEqual([
       {
         id: 1,
-        name: 'Rule 1',
-        reactionTimeInDays: null,
-        expirationDate: null,
-        occurredIn: null,
-      },
-      {
-        id: 2,
-        reactionTimeInDays: null,
-        expirationDate: null,
         name: 'New Rule',
+        reactionTimeInDays: 0,
+        expirationDate: null,
         occurredIn: null,
+        priority: '',
+        issueType: [],
       },
     ]);
   });
+
+  test('does not create a category with less than 3 characters', async () => {
+    const selectSubscriberDropDown = wrapper
+      .findAllComponents(MultiSelect)
+      .find((dropdown) => dropdown.classes('select-customer-in'));
+
+    const selectRuleDropDown = wrapper
+      .findAllComponents(Dropdown)
+      .find((dropdown) => dropdown.classes('select-rule'));
+
+    const categoryInput = wrapper
+      .findAllComponents(InputText)
+      .find((input) => input.classes('enter-category'));
+
+    const addButton = wrapper
+      .findAllComponents(Button)
+      .find((button) => button.classes('add-category'));
+
+    await selectSubscriberDropDown?.setValue(selectSubscriberDropDown?.props('options')[0]);
+    await selectRuleDropDown?.setValue(selectRuleDropDown?.props('options')[0]);
+    await categoryInput?.setValue('Ca');
+
+    await addButton?.trigger('click').then(async () => {
+      const addedCategory = wrapper.find('.category-container .category');
+      expect(addedCategory.exists()).toBe(false);
+
+      const errorMessage = wrapper.find('.error-message');
+      expect(errorMessage.exists()).toBe(true);
+      expect(errorMessage.text()).toBe('Category name must be at least 3 characters.');
+    });
+    expect(slaStore.addSlaCategory).toHaveBeenCalledTimes(0);
+  });
+});
+
+describe('SlaView Test with Store Data', () => {
+  let wrapper: VueWrapper<any>;
+
+  beforeEach(() => {
+    wrapper = mount(SLAView, {
+      global: {
+        plugins: [
+          PrimeVue,
+          router,
+          createTestingPinia({
+            createSpy: vi.fn,
+            stubActions: false,
+            initialState: {
+              sla: {
+                slaCategories: [
+                  {
+                    id: 1,
+                    name: 'New Category',
+                    rule: {
+                      description: 'Description 7',
+                      id: 7,
+                      name: 'Rule 7',
+                    },
+                    subscriber: { description: 'Description 7', id: 7, name: 'Subscriber 7' },
+                  },
+                ],
+              },
+            },
+          }),
+        ],
+        components: {
+          InputText,
+          InputMask,
+          Dropdown,
+          Card,
+          Button,
+          Column,
+          DataTable,
+          Divider,
+          MultiSelect,
+        },
+      },
+    });
+  });
+
+  afterEach(() => {
+    wrapper.unmount();
+  });
+
   // Test to add a new category using createCategory method with valid inputs
   test('should add a new category when createCategory is called with valid inputs', async () => {
     const dropdowns = wrapper.findAllComponents(Dropdown);
@@ -387,8 +424,8 @@ describe('SlaComponent', () => {
     // Assert the changes in the component's data and store
 
     const selectSubscriberDropDown = wrapper
-      .findAllComponents(Dropdown)
-      .find((dropdown) => dropdown.classes('select-subscriber'));
+      .findAllComponents(MultiSelect)
+      .find((dropdown) => dropdown.classes('select-customer-in'));
 
     const selectRuleDropDown = wrapper
       .findAllComponents(Dropdown)
@@ -398,7 +435,7 @@ describe('SlaComponent', () => {
       .findAllComponents(InputText)
       .find((dropdown) => dropdown.classes('enter-category'));
 
-    expect(selectSubscriberDropDown?.props('modelValue')).toBe(null);
+    expect(selectSubscriberDropDown?.props('modelValue')).toStrictEqual([]);
     expect(selectRuleDropDown?.props('modelValue')).toBe(null);
     expect(inputCategory?.text()).toBe('');
 
@@ -419,5 +456,135 @@ describe('SlaComponent', () => {
         },
       },
     ]);
+  });
+});
+
+describe('SlaView Test with Store Data', () => {
+  let wrapper: VueWrapper<any>;
+
+  beforeEach(() => {
+    wrapper = mount(SLAView, {
+      global: {
+        plugins: [
+          PrimeVue,
+          router,
+          createTestingPinia({
+            createSpy: vi.fn,
+            stubActions: false,
+            initialState: {
+              sla: {
+                customer: [
+                  {
+                    id: 1,
+                    name: 'John',
+                    description: null,
+                  },
+                ],
+              },
+            },
+          }),
+        ],
+        components: {
+          InputText,
+          InputMask,
+          Dropdown,
+          Card,
+          Button,
+          Column,
+          DataTable,
+          Divider,
+          MultiSelect,
+        },
+      },
+    });
+  });
+
+  afterEach(() => {
+    wrapper.unmount();
+  });
+
+  // Test to add a new subscriber using addSubscriber method
+  test('should add a new subscriber when addSubscriber is called', async () => {
+    const addSubscriberButton = wrapper.find('.add-subscriber');
+    const inputSubscriber = wrapper.find('.enter-subscriber');
+
+    await inputSubscriber.setValue('New Subscriber');
+    await addSubscriberButton.trigger('click');
+
+    const selectSubscriberDropDown = wrapper
+      .findAllComponents(MultiSelect)
+      .find((dropdown) => dropdown.classes('select-customer-in'));
+
+    expect(inputSubscriber.text()).toBe('');
+    expect(selectSubscriberDropDown?.props('options')).toEqual([
+      {
+        id: 1,
+        name: 'John',
+        description: null,
+      },
+      {
+        id: 2,
+        name: 'New Subscriber',
+        description: null,
+      },
+    ]);
+  });
+});
+
+describe('SlaView Test with Store Data', () => {
+  let wrapper: VueWrapper<any>;
+
+  beforeEach(() => {
+    wrapper = mount(SLAView, {
+      global: {
+        plugins: [
+          PrimeVue,
+          router,
+          createTestingPinia({
+            createSpy: vi.fn,
+            stubActions: false,
+            initialState: {
+              sla: {
+                slaCategories: [
+                  {
+                    id: 1,
+                    name: 'Category 1',
+                    rule: null,
+                    customerProject: {
+                      id: 1,
+                      name: 'Subscriber 1',
+                      description: 'Subscriber 1 description',
+                    },
+                  },
+                ],
+              },
+            },
+          }),
+        ],
+        components: {
+          InputText,
+          InputMask,
+          Dropdown,
+          Card,
+          Button,
+          Column,
+          DataTable,
+          Divider,
+          MultiSelect,
+        },
+      },
+    });
+  });
+
+  afterEach(() => {
+    wrapper.unmount();
+  });
+
+  // Test to delete a category
+  test('deletes a category', async () => {
+    const deleteButton = wrapper.findAll('.p-button-danger')[0];
+    await deleteButton.trigger('click');
+    const deletedCategory = wrapper.find('.category-container .category');
+    expect(deletedCategory.exists()).toBe(false);
   });
 });

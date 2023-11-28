@@ -250,6 +250,8 @@ describe('calculateRemainingReactionTime', () => {
     reactionTimeInDays: 2,
     expirationDate: null,
     occurredIn: 'TestLocation',
+    priority: 'behindernd',
+    issueType: ['bug', 'test'],
   };
 
   const testIssueWithSlaRule: IssueIF = {
@@ -340,6 +342,8 @@ test('should pick SLA rule with minimum days', () => {
     reactionTimeInDays: 3,
     expirationDate: null,
     occurredIn: 'TestLocation1',
+    priority: 'behindernd',
+    issueType: ['bug', 'test'],
   };
 
   const slaRule2 = {
@@ -348,6 +352,8 @@ test('should pick SLA rule with minimum days', () => {
     reactionTimeInDays: 1,
     expirationDate: null,
     occurredIn: 'TestLocation2',
+    priority: 'behindernd',
+    issueType: ['bug', 'test'],
   };
 
   const slaRule3 = {
@@ -356,6 +362,8 @@ test('should pick SLA rule with minimum days', () => {
     reactionTimeInDays: 5,
     expirationDate: null,
     occurredIn: 'TestLocation3',
+    priority: 'behindernd',
+    issueType: ['bug', 'test'],
   };
 
   const testIssueWithMultipleSlaRules: IssueIF = {

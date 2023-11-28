@@ -14,7 +14,7 @@ import autoTable from 'jspdf-autotable';
 import getMockData from '@/assets/__mockdata__/mockDataComposer';
 import type { ProjectIF } from '@/model/ProjectIF';
 import type { IssueIF } from '@/model/Issue/IssueIF';
-import { hasSlaRule, printSlaRuleNames } from '@/model/Issue/IssueIF';
+import { printSlaRuleNames, hasSlaRule } from '@/model/Issue/IssueIF';
 
 const isGenerating = ref(false);
 const project = getMockData(7) as ProjectIF;
@@ -38,7 +38,7 @@ const generatePDF = () => {
     issue.id,
     issue.name,
     issue.description,
-    hasSlaRule(issue) ? printSlaRuleNames(issue) : 'No SLA Rules assigned',
+    hasSlaRule(issue) ? printSlaRuleNames(issue) : 'No Sla Rules assigned',
   ]);
 
   const current = new Date();
@@ -46,7 +46,7 @@ const generatePDF = () => {
   // Document title
   doc.setFont('Helvetica', '', 'bold');
   doc.setFontSize(14);
-  doc.text('SLA Rule Report', 10, 10);
+  doc.text('Sla Rule Report', 10, 10);
   doc.text(date, 265, 10);
   // doc.line(10, 20, 287, 20);
   // Document content
@@ -55,7 +55,7 @@ const generatePDF = () => {
     head: headerNames,
     body: issueArray,
   });
-  doc.save('SLARuleReport.pdf');
+  doc.save('SlaRuleReport.pdf');
   // Enable the button after a 1-second delay
   setTimeout(() => {
     isGenerating.value = false;

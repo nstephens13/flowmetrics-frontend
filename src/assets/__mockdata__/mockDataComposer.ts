@@ -612,6 +612,8 @@ function getMockData(dataset: number): ProjectIF {
         reactionTimeInDays: 3,
         expirationDate: new Date('2023-08-17T00:00:00.000Z'),
         occurredIn: null,
+        priority: 'Kosmetik',
+        issueType: ['documentation', 'coverage'],
       };
       const slaRule2: SlaRule = {
         id: 2,
@@ -619,6 +621,8 @@ function getMockData(dataset: number): ProjectIF {
         reactionTimeInDays: 5,
         expirationDate: new Date('2023-08-20T00:00:00.000Z'),
         occurredIn: null,
+        priority: 'leicht umgehbar',
+        issueType: ['support'],
       };
       const slaRule3: SlaRule = {
         id: 3,
@@ -626,6 +630,8 @@ function getMockData(dataset: number): ProjectIF {
         reactionTimeInDays: 2,
         expirationDate: new Date('2023-08-16T00:00:00.000Z'),
         occurredIn: null,
+        priority: 'behindernd',
+        issueType: ['bug', 'test'],
       };
 
       const slaRuleArray: SlaRule[] = [slaRule1, slaRule2, slaRule3];
@@ -713,6 +719,8 @@ function getMockData(dataset: number): ProjectIF {
         reactionTimeInDays: 1,
         expirationDate: new Date('2023-08-17T00:00:00.000Z'),
         occurredIn: null,
+        priority: 'behindernd',
+        issueType: ['bug', 'test'],
       };
       const slaRule2: SlaRule = {
         id: 2,
@@ -720,6 +728,8 @@ function getMockData(dataset: number): ProjectIF {
         reactionTimeInDays: 5,
         expirationDate: new Date('2023-08-20T00:00:00.000Z'),
         occurredIn: null,
+        priority: 'behindernd',
+        issueType: ['bug', 'test'],
       };
       const slaRule3: SlaRule = {
         id: 3,
@@ -727,6 +737,8 @@ function getMockData(dataset: number): ProjectIF {
         reactionTimeInDays: 20,
         expirationDate: new Date('2023-08-16T00:00:00.000Z'),
         occurredIn: null,
+        priority: 'behindernd',
+        issueType: ['bug', 'test'],
       };
 
       const date = new Date(2018, 0o5, 0o5, 17, 23, 42, 11);

@@ -6,39 +6,48 @@
     </template>
     <template #content>
       <div>
-        <div class="m-2 mb-4">
-          <h3>Add SLA Subscriber</h3>
-        </div>
-        <div class="flex subscriber-container">
-          <div class="p-float-label">
-            <InputText id="subscriberName" v-model="newSubscriber" class="enter-subscriber m-1" />
-            <label for="subscriberName">Subscriber name</label>
-          </div>
+        <h3>Add SLA Customer</h3>
+        <div class="subscriber-container">
+          <InputText
+            v-model="newCustomer"
+            class="enter-subscriber m-1"
+            placeholder="Enter customer project"
+          />
           <Button
             class="add-subscriber m-1"
             icon="pi pi-plus"
             style="background-color: var(--flowMetricsBlue)"
             @click="addSubscriber"
           ></Button>
-        </div>
-        <div v-if="!isSubscriberNameValid" class="error-message m-1 text-red-500 ml-3">
-          {{ SubscriberErrorMessage }}
+          <div v-if="!isSubscriberNameValid" class="error-message m-1 text-red-500">
+            {{ SubscriberErrorMessage }}
+          </div>
         </div>
       </div>
       <div>
-        <div class="m-2 mb-4">
-          <h3>Add SLA Rule</h3>
-        </div>
-        <div class="flex rule-container m-1">
-          <div class="p-float-label">
-            <InputText id="ruleName" v-model="newRuleName" class="enter-rule m-1" />
-            <label for="ruleName">Rule name</label>
-          </div>
+        <h3>Add SLA Rule</h3>
+        <div class="rule-container m-1">
+          <InputText v-model="newRuleName" class="enter-rule m-1" placeholder="Enter rule name" />
           <Dropdown
             v-model="newOccurredIn"
             :options="occurredInOptions"
             class="select-occurred-in m-1"
             placeholder="Occurred in"
+          />
+          <MultiSelect
+            v-model="selectedIssueTypes"
+            :options="preparedIssueTypeOptions"
+            class="select-issueType-in m-1"
+            placeholder="Select issue types"
+            optionLabel="label"
+            optionValue="value"
+            multiple
+          />
+          <Dropdown
+            v-model="newPriority"
+            :options="priorityOptions"
+            class="select-priority-in m-1"
+            placeholder="Priority"
           />
           <Button
             class="add-rule m-1"
@@ -46,33 +55,33 @@
             style="background-color: var(--flowMetricsBlue)"
             @click="addRule"
           ></Button>
+          <div v-if="!isRuleNameValid" class="error-message m-1 text-red-500">{{
+            ruleErrorMessage
+          }}</div>
         </div>
-        <div v-if="!isRuleNameValid" class="error-message m-1 text-red-500 ml-3">{{
-          ruleErrorMessage
-        }}</div>
       </div>
       <div>
-        <div class="m-2 mb-4">
-          <h3>Add new SLA Category</h3>
-        </div>
-        <div class="flex category-container m-1">
-          <div class="p-float-label">
-            <InputText id="categoryName" v-model="categoryName" class="enter-category m-1" />
-            <label for="categoryName">Category name</label>
-          </div>
-          <Dropdown
-            v-model="selectedSubscriber"
-            :options="subscriber"
-            class="select-subscriber m-1"
+        <h3>Add new SLA Category</h3>
+        <div class="category-container m-1">
+          <MultiSelect
+            v-model="selectedCustomerProject"
+            :options="customerProjectOptions"
+            class="select-customer-in m-1"
+            placeholder="Select Customer Project"
             optionLabel="name"
-            placeholder="Select subscriber"
+            multiple
           />
           <Dropdown
             v-model="selectedRule"
-            :options="rules"
+            :options="slaStore.rules"
             class="select-rule m-1"
             optionLabel="name"
             placeholder="Select rule"
+          />
+          <InputText
+            v-model="categoryName"
+            class="enter-category m-1"
+            placeholder="Enter category name"
           />
           <Button
             class="add-category m-1"
@@ -93,7 +102,7 @@
         <div class="flex category-container m-1">
           <Dropdown
             v-model="selectedRuleForReactionTime"
-            :options="rules"
+            :options="slaStore.rules"
             class="select-rule-for-reaction-time m-1"
             optionLabel="name"
             placeholder="Select rule"
@@ -120,20 +129,29 @@
       </div>
       <div class="mt-4">
         <h3>SLA Categories</h3>
-        <DataTable :value="categories">
+        <DataTable :value="slaCategories">
           <Column field="name" header="Category" />
-          <Column field="subscriber.name" header="Subscriber" />
           <Column field="rule.name" header="Rule" />
-          <Column field="rule.reactionTimeInDays" header="Reaction Time (Days)" />
-          <Column field="rule.expirationDate" header="Due date" />
+          <Column header="Customer project">
+            <template #body="slotProps">
+              {{ slotProps.data.customerProject?.name }}
+            </template>
+          </Column>
+          <Column field="rule.reactionTimeInDays" header="Reaction time (Days)" />
           <Column field="rule.occurredIn" header="Occurred in" />
-          <Column field="rule.reactionTime" header="Reaction time" />
+          <Column field="rule.issueType" header="Issue type">
+            <template #body="slotProps">
+              <span>
+                {{ slotProps.data.rule?.issueType?.join(', ') }}
+              </span>
+            </template>
+          </Column>
           <Column header="Delete">
             <template #body="rowData">
               <Button
                 class="p-button-danger trash-size m-1"
                 icon="pi pi-trash"
-                @click="deleteCategory(rowData.data)"
+                @click="slaStore.deleteSlaCategory(rowData.data)"
               ></Button>
             </template>
           </Column>
@@ -146,169 +164,171 @@
   </Card>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-import useSlaStore from '@/store/slaStore';
-import type { SlaSubscriber } from '@/model/Sla/SlaSubscriber';
+<script lang="ts" setup>
+import type { ComputedRef, Ref } from 'vue';
+import { computed, ref } from 'vue';
+import type { SlaCustomerProject } from '@/model/Sla/SlaCustomerProject';
 import type { SlaRule } from '@/model/Sla/SlaRule';
 import type { SlaCategory } from '@/model/Sla/SlaCategory';
 import GeneratePDF from '@/components/GeneratePDF.vue';
+import useSlaStore from '@/store/slaStore';
 
-// Define the 'SLAComponent' component
-export default defineComponent({
-  name: 'SlaView',
-  components: { GeneratePDF },
-  data() {
-    return {
-      slaStore: useSlaStore(),
-      newSubscriber: ref(''),
-      isSubscriberNameValid: ref(true),
-      newRuleName: ref(''),
-      isRuleNameValid: ref(true),
-      newOccurredIn: ref(null),
-      selectedSubscriber: ref(null),
-      selectedRule: ref(null),
-      selectedRuleForReactionTime: ref<SlaRule | null>(null),
-      categoryName: ref(''),
-      newReactionTime: ref(''),
-      isSlaCategoryNameValid: ref(true),
-      isReactionTimeValid: ref(true),
-      occurredInOptions: ['Test', 'Pre-production', 'Production'],
-    };
-  },
-  methods: {
-    parseReactionTime(input: string): number | null {
-      const parts = input.match(/(\d+)w (\d+)d (\d+)h/);
-      if (!parts) {
-        return null;
-      }
+const slaStore = useSlaStore();
 
-      const weeks = parseInt(parts[1], 10);
-      const days = parseInt(parts[2], 10);
-      const hours = parseInt(parts[3], 10);
+const slaCategories = computed(() => slaStore.slaCategories);
 
-      // Convert to days (you may adjust this conversion based on your specific logic)
-      const totalDays = weeks * 7 + days + hours / 24;
-      return totalDays;
-    },
+const isSlaCategoryNameValid = ref(true);
+const selectedRuleForReactionTime: Ref<SlaRule | null> = ref(null);
+const newReactionTime = ref('');
+const isReactionTimeValid = ref(true);
 
-    // Add a new subscriber to the store
-    addSubscriber() {
-      if (this.newSubscriber.trim().length < 3) {
-        this.isSubscriberNameValid = false;
-        return;
-      }
-      this.isSubscriberNameValid = true;
-      const subscriber: SlaSubscriber = {
-        id: null,
-        name: this.newSubscriber.trim(),
-        description: null,
-      };
-      this.slaStore.addSubscriber(subscriber);
-      this.newSubscriber = '';
-    },
-    // Add a new rule to the store
-    addRule() {
-      if (this.newRuleName.trim().length < 3) {
-        this.isRuleNameValid = false;
-        return;
-      }
-      this.isRuleNameValid = true;
-      const rule: SlaRule = {
-        id: null,
-        name: this.newRuleName.trim(),
-        reactionTimeInDays: null,
-        expirationDate: null,
-        occurredIn: this.newOccurredIn,
-      };
-      this.slaStore.addRule(rule);
-      this.newRuleName = '';
-      this.newOccurredIn = null;
-    },
-    // Create a new category in the store
-    createCategory() {
-      if (this.categoryName.trim().length < 3) {
-        this.isSlaCategoryNameValid = false;
-        return;
-      }
-      this.isSlaCategoryNameValid = true;
-      if (this.selectedSubscriber && this.selectedRule) {
-        const category: SlaCategory = {
-          id: null,
-          name: this.categoryName.trim() || null,
-          subscriber: this.selectedSubscriber,
-          rule: this.selectedRule,
-        };
-        this.slaStore.addSlaCategory(category);
-        this.selectedSubscriber = null;
-        this.selectedRule = null;
-        this.categoryName = '';
-      }
-    },
-    // Delete a category from the store
-    deleteCategory(category: SlaCategory) {
-      this.slaStore.deleteSlaCategory(category);
-    },
-    // Add a reaction time to a rule
-    addReactionTime() {
-      if (this.newReactionTime.trim().length < 9) {
-        this.isReactionTimeValid = false;
-        return;
-      }
-      if (this.selectedRuleForReactionTime === null || this.newReactionTime === '00w 00d 00h') {
-        return;
-      }
-      const reactionTimeInDays = this.parseReactionTime(this.newReactionTime.trim());
-      const rule: SlaRule = {
-        id: this.selectedRuleForReactionTime?.id || null,
-        name: this.selectedRuleForReactionTime?.name || null,
-        reactionTimeInDays: reactionTimeInDays || null,
-        expirationDate: this.selectedRuleForReactionTime?.expirationDate || null,
-        occurredIn: this.selectedRuleForReactionTime?.occurredIn || null,
-      };
-      if (reactionTimeInDays) {
-        this.slaStore.addReactionTime(rule, reactionTimeInDays);
-        this.newReactionTime = '';
-        this.selectedRuleForReactionTime = null;
-        this.isReactionTimeValid = true;
-      }
-    },
-  },
-  computed: {
-    // Retrieve the subscribers from the store
-    subscriber(): SlaSubscriber[] {
-      return this.slaStore.subscriber;
-    },
-    // Retrieve the rules from the store
-    rules(): any {
-      return this.slaStore.rules;
-    },
-    // Retrieve the SLA categories from the store
-    categories(): SlaCategory[] {
-      return this.slaStore.slaCategories;
-    },
-    // Error message for invalid subscriber name
-    SubscriberErrorMessage(): string {
-      return !this.isSubscriberNameValid ? 'Subscriber name must be at least 3 characters.' : '';
-    },
-    // Error message for invalid rule name
-    ruleErrorMessage(): string {
-      return !this.isRuleNameValid ? 'Rule name must be at least 3 characters.' : '';
-    },
-    // Error message for invalid category name
-    categoryErrorMessage(): string {
-      return !this.isSlaCategoryNameValid ? 'Category name must be at least 3 characters.' : '';
-    },
-    // Error message for invalid reaction time
-    reactionTimeErrorMessage(): string {
-      return !this.isReactionTimeValid ? 'Reaction time must be in format 01w 23d 00h' : '';
-    },
-  },
-});
-</script>
+const newCustomer = ref('');
+const isSubscriberNameValid = ref(true);
+const newRuleName = ref('');
+const newRuleMaxAssignedEmployees = ref();
+const isRuleNameValid = ref(true);
+const newOccurredIn = ref(null);
+const selectedRule = ref(null);
+const categoryName = ref('');
+const occurredInOptions = ['Test', 'Pre-production', 'Production'];
+const customerProjectOptions: ComputedRef<SlaCustomerProject[]> = computed(() => slaStore.customer);
+const selectedCustomerProject: Ref<SlaCustomerProject[]> = ref([]);
+const newPriority = ref('');
+const priorityOptions = ['schwerwiegend', 'behindernd', 'leicht umgehbar', 'Kosmetik', ''];
+const issueTypeOptions = [
+  'bug',
+  'incident',
+  'coverage',
+  'enhancement',
+  'task',
+  'feature',
+  'support',
+  'documentation',
+  'review',
+  'refactor',
+  '',
+];
+const selectedIssueTypes: Ref<string[]> = ref([]);
 
-<style scoped>
-.error-message {
-  font-size: 16px;
+function addSubscriber() {
+  if (newCustomer.value.trim().length < 3) {
+    isSubscriberNameValid.value = false;
+    return;
+  }
+  isSubscriberNameValid.value = true;
+  const subscriber: SlaCustomerProject = {
+    id: 0,
+    name: newCustomer.value.trim(),
+    description: null,
+  };
+  slaStore.addSubscriber(subscriber);
+  newCustomer.value = '';
 }
-</style>
+
+function parseReactionTime(input: string): number | null {
+  const parts = input.match(/(\d+)w (\d+)d (\d+)h/);
+  if (!parts) {
+    return null;
+  }
+
+  const weeks = parseInt(parts[1], 10);
+  const days = parseInt(parts[2], 10);
+  const hours = parseInt(parts[3], 10);
+
+  // Convert to days (you may adjust this conversion based on your specific logic)
+  return weeks * 7 + days + hours / 24;
+}
+
+// Add a reaction time to a rule
+function addReactionTime() {
+  if (newReactionTime.value.trim().length < 9) {
+    isReactionTimeValid.value = false;
+    return;
+  }
+  if (selectedRuleForReactionTime.value === null || newReactionTime.value === '00w 00d 00h') {
+    return;
+  }
+  const reactionTimeInDays = parseReactionTime(newReactionTime.value.trim());
+  const rule: SlaRule = {
+    id: selectedRuleForReactionTime.value?.id || null,
+    name: selectedRuleForReactionTime.value?.name || null,
+    reactionTimeInDays: reactionTimeInDays || null,
+    expirationDate: selectedRuleForReactionTime.value?.expirationDate || null,
+    occurredIn: selectedRuleForReactionTime.value?.occurredIn || null,
+    priority: selectedRuleForReactionTime.value?.priority || null,
+    issueType: selectedRuleForReactionTime.value?.issueType || null,
+  };
+  if (reactionTimeInDays) {
+    slaStore.addReactionTime(rule, reactionTimeInDays);
+    newReactionTime.value = '';
+    selectedRuleForReactionTime.value = null;
+    isReactionTimeValid.value = true;
+  }
+}
+
+function addRule() {
+  if (newRuleName.value.trim().length < 3) {
+    isRuleNameValid.value = false;
+    return;
+  }
+  isRuleNameValid.value = true;
+  const rule: SlaRule = {
+    id: null,
+    name: newRuleName.value.trim(),
+    expirationDate: null,
+    reactionTimeInDays: 0,
+    occurredIn: newOccurredIn.value,
+    priority: newPriority.value,
+    issueType: selectedIssueTypes.value,
+  };
+  slaStore.addRule(rule);
+  newRuleName.value = '';
+  newRuleMaxAssignedEmployees.value = null;
+  newOccurredIn.value = null;
+  newPriority.value = '';
+  selectedIssueTypes.value = [];
+}
+
+function createCategory() {
+  if (categoryName.value.trim().length < 3) {
+    isSlaCategoryNameValid.value = false;
+    return;
+  }
+  isSlaCategoryNameValid.value = true;
+
+  if (selectedCustomerProject.value && selectedRule.value) {
+    selectedCustomerProject.value.forEach((customerProject) => {
+      const category: SlaCategory = {
+        id: null,
+        name: categoryName.value.trim() || null,
+        customerProject,
+        rule: selectedRule.value,
+      };
+      slaStore.addSlaCategory(category);
+    });
+  }
+  selectedCustomerProject.value = [];
+  selectedRule.value = null;
+  categoryName.value = '';
+}
+
+const preparedIssueTypeOptions = computed(() =>
+  issueTypeOptions.map((option) => ({ label: option, value: option }))
+);
+
+const SubscriberErrorMessage = computed(() =>
+  !isSubscriberNameValid.value ? 'Subscriber name must be at least 3 characters.' : ''
+);
+
+const ruleErrorMessage = computed(() =>
+  !isRuleNameValid.value ? 'Rule name must be at least 3 characters.' : ''
+);
+
+const categoryErrorMessage = computed(() =>
+  !isSlaCategoryNameValid.value ? 'Category name must be at least 3 characters.' : ''
+);
+
+const reactionTimeErrorMessage = computed(() =>
+  !isReactionTimeValid.value ? 'Reaction time must be in format 01w 23d 00h' : ''
+);
+</script>
