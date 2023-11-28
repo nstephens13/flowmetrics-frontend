@@ -46,8 +46,8 @@
             showGridlines
           >
             <Column field="id" header="Issue-ID"></Column>
-            <template #empty> No issues found. </template>
-            <template #loading> Loading issues. Please wait. </template>
+            <template #empty> No issues found.</template>
+            <template #loading> Loading issues. Please wait.</template>
             <Column field="name" header="Name"></Column>
             <Column field="description" header="Description"></Column>
             <Column field="assignedTo" header="Assigned to">
@@ -88,7 +88,18 @@
                 />
               </template>
             </Column>
-            <Column field="statusChanges" header="Status changes"></Column>
+            <Column header="Remaining Reaction Time">
+              <template #body="slotProps">
+                {{ calculateRemainingTime(slotProps.data) }}
+              </template>
+            </Column>
+            <Column header="Status changes" style="width: 150px">
+              <template #body="data">
+                <div v-for="statusChange in data.data.statusChanges" :key="statusChange.name">
+                  {{ statusChange.name }} : {{ statusChange.value }}
+                </div>
+              </template>
+            </Column>
           </DataTable>
         </div>
       </template>
@@ -103,6 +114,8 @@ import { FilterMatchMode } from 'primevue/api';
 import type { EmployeeIF } from '@/model/EmployeeIF';
 import { getIssueStatusList, type ProjectIF } from '@/model/ProjectIF';
 import getMockData from '@/assets/__mockdata__/mockDataComposer';
+import { calculateRemainingReactionTime } from '@/services/issueCalculator';
+import type { IssueIF } from '@/model/Issue/IssueIF';
 
 // Create a reference for the selectedProject with initial data
 const selectedProject = ref({
@@ -129,6 +142,25 @@ function printAssignedTo(employee: EmployeeIF | null): string {
   return `${firstName} ${lastName}`;
 }
 
+function calculateRemainingTime(issue: IssueIF): string {
+  const [hasSlaRule, remainingTimeInSeconds] = calculateRemainingReactionTime(issue);
+
+  if (!hasSlaRule) {
+    return ''; // Return an empty string if there's no SLA rule or the time has expired
+  }
+  if (hasSlaRule && remainingTimeInSeconds <= 0) {
+    return 'Expired';
+  }
+
+  const remainingDays = Math.floor(remainingTimeInSeconds / (60 * 60 * 24));
+  const remainingHours = Math.floor((remainingTimeInSeconds % (60 * 60 * 24)) / (60 * 60));
+
+  if (remainingDays > 1) {
+    return `${remainingDays} days`;
+  }
+  return `${remainingHours} hours`;
+}
+
 // Watch for changes in the selectedProject and update the statuses array
 watch(selectedProject, () => {
   statuses.value = getIssueStatusList(selectedProject.value.issues);
@@ -150,6 +182,7 @@ const projects: Ref<ProjectIF[]> = ref([
   margin: 15px;
   box-shadow: none;
 }
+
 .divider-position {
   width: 100%;
 }

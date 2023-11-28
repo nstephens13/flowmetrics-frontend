@@ -1,7 +1,7 @@
 import type { ProjectIF } from '@/model/ProjectIF';
 import type { EmployeeIF } from '@/model/EmployeeIF';
-import type { IssueIF } from '@/model/IssueIF';
-import type { IssueDataIF } from '@/model/IssueDataIF';
+import type { IssueIF } from '@/model/Issue/IssueIF';
+import type { IssueDataIF } from '@/model/Issue/IssueDataIF';
 
 // just temporary import
 import {
