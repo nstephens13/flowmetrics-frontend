@@ -76,12 +76,19 @@ sonarqube-check:
         - .frontendJob
 
 "Image-Build":
-    image: docker:24.0.2-dind
+    image: docker:20.10.16
+    services:
+      - name: docker:20.10.16-dind
+        alias: docker
     stage: Build
     tags:
         - image
     variables:
         IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
+        DOCKER_HOST: tcp://docker:2376
+        DOCKER_TLS_CERTDIR: "/certs"
+        DOCKER_TLS_VERIFY: 1
+        DOCKER_CERT_PATH: "/certs/client"
     script:
         - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
         - docker build -t $IMAGE_TAG .
@@ -103,7 +110,11 @@ sonarqube-check:
       - echo "$SSH_KEY_KAIN" > ~/.ssh/id_rsa_kain
       - chmod 600 ~/.ssh/id_rsa
       - chmod 600 ~/.ssh/id_rsa_kain
-      - ssh -i ~/.ssh/id_rsa $VM_USERNAME@$VM_IP -p $SSH_DEPLOYMENT_PORT "podman login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY && podman pull $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG && podman stop flowmetrics && podman run --name flowmetrics -d -p 40100:8080 --rm $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG && exit"
+      - ssh -i ~/.ssh/id_rsa $VM_USERNAME@$VM_IP -p $SSH_DEPLOYMENT_PORT "
+        podman login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY &&
+          podman pull $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG &&
+          podman stop flowmetrics &&
+          podman run -v /home/projekt1/ssl:/etc/nginx/ssl/ --name flowmetrics -d -p 40100:8080 --rm $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG && exit"
     only:
       - main
       - development

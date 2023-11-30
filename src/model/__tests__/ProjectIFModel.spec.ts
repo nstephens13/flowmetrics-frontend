@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { getIssueStatusList } from '@/model/ProjectIF';
-import type { IssueIF } from '../IssueIF';
+import type { IssueIF } from '../Issue/IssueIF';
 
 describe('getIssueStatusList', () => {
   it('returns an empty array if no issues are provided', () => {

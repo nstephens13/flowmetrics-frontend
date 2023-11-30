@@ -1,7 +1,9 @@
 import type { ProjectIF } from '../model/ProjectIF';
 import type { EmployeeIF } from '../model/EmployeeIF';
-import type { IssueIF } from '../model/IssueIF';
+import type { IssueIF } from '../model/Issue/IssueIF';
 import getMockData from '../assets/__mockdata__/mockDataComposer';
+import type { ChangeEventIF } from '@/model/ChangeEventIF';
+import { ChangeEventEnum } from '@/model/ChangeEventIF';
 
 /**
  * @brief: The Function map the issues to the Employees.
@@ -16,7 +18,7 @@ import getMockData from '../assets/__mockdata__/mockDataComposer';
  * @returns {Map} key:EmployeeIF,
  * value: IssueIF[]
  */
-function mapIssuesToEmployees(projects: ProjectIF[] | null): Map<EmployeeIF, IssueIF[]> {
+export function mapIssuesToEmployees(projects: ProjectIF[] | null): Map<EmployeeIF, IssueIF[]> {
   const mapToReturn: Map<EmployeeIF, IssueIF[]> = new Map([]);
   const issueSet: Set<IssueIF> = new Set<IssueIF>();
   let projectsToCalculate: ProjectIF[];
@@ -46,6 +48,7 @@ function mapIssuesToEmployees(projects: ProjectIF[] | null): Map<EmployeeIF, Iss
     }
     issueSet.add(issue);
   }
+
   projectsToCalculate.forEach((projectToCalculate) => {
     projectToCalculate.issues.forEach((issue) => {
       extractEmployeeAndUpdateEmployeeMap(issue);
@@ -55,4 +58,67 @@ function mapIssuesToEmployees(projects: ProjectIF[] | null): Map<EmployeeIF, Iss
   return mapToReturn;
 }
 
-export default mapIssuesToEmployees;
+export function calculateRestingTime(issue: IssueIF): [EmployeeIF | null, number] {
+  if (!issue.assignedTo || !issue.changelog) {
+    return [null, 0];
+  }
+
+  const assignedEvent = issue.changelog.find(
+    (event: ChangeEventIF) => event.changeDescription === ChangeEventEnum.assigned
+  );
+
+  // Check if assignedEvent exists and the assigned employee is the same as in IssueIF
+  if (assignedEvent && assignedEvent.assigned === issue.assignedTo) {
+    const assignedTimestamp = assignedEvent.timestamp;
+    const currentDate = new Date();
+
+    const restingTimeInSeconds = Math.floor(
+      (currentDate.getTime() - assignedTimestamp.getTime()) / 1000
+    );
+
+    return [issue.assignedTo, restingTimeInSeconds];
+  }
+
+  return [issue.assignedTo, 0];
+}
+
+/**
+ * Calculate the remaining reaction time for an issue.
+ *
+ * @param issue - The issue for which to calculate the remaining reaction time.
+ * @returns [boolean, number] - A tuple containing a boolean indicating whether the issue has an SLA rule,
+ * and the remaining reaction time in seconds.
+ */
+export function calculateRemainingReactionTime(issue: IssueIF): [boolean, number] {
+  if (!issue.createdAt || !issue.assignedSlaRule) {
+    return [false, 0];
+  }
+
+  // Find the shortest reaction time in the SLA rules
+  const shortestReactionTime = issue.assignedSlaRule.reduce((minTime: number | null, rule) => {
+    if (
+      rule.reactionTimeInDays !== null &&
+      (minTime === null || rule.reactionTimeInDays < minTime)
+    ) {
+      return rule.reactionTimeInDays;
+    }
+    return minTime;
+  }, null);
+
+  // If no reaction time is found, return 0
+  if (shortestReactionTime === null) {
+    return [false, 0];
+  }
+
+  // Calculate the expiration date based on the shortest reaction time
+  const expirationDate = new Date(issue.createdAt);
+  expirationDate.setDate(expirationDate.getDate() + shortestReactionTime);
+
+  // Calculate the remaining time in seconds
+  const currentDate = new Date();
+  const remainingTimeInSeconds = Math.floor(
+    (expirationDate.getTime() - currentDate.getTime()) / 1000
+  );
+
+  return [true, remainingTimeInSeconds];
+}

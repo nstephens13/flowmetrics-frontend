@@ -15,11 +15,12 @@ import ProgressBar from 'primevue/progressbar';
 import Chip from 'primevue/chip';
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
+import InputMask from 'primevue/inputmask';
 import IssueCalculator from '../../views/IssueCalculator.vue';
 import ProjectOverview from '../../views/ProjectOverview.vue';
 import router from '@/router/index';
 import EmployeeOverview from '../../views/EmployeeOverview.vue';
-import SLAComponent from '../../views/SLAView.vue';
+import SlaComponent from '../../views/SlaView.vue';
 
 describe('ProjectDescriptionPanel Divider component', () => {
   const wrapper = mount(ProjectOverview, {
@@ -109,9 +110,9 @@ describe('Issue Calculator view', () => {
   });
 });
 
-describe('SLA Rules view', () => {
+describe('Sla Rules view', () => {
   const pinia = createTestingPinia({ stubActions: false });
-  const wrapper = mount(SLAComponent, {
+  const wrapper = mount(SlaComponent, {
     global: {
       plugins: [PrimeVue, router, pinia],
       components: {
@@ -122,6 +123,7 @@ describe('SLA Rules view', () => {
         Column,
         DataTable,
         Divider,
+        InputMask,
       },
     },
   });

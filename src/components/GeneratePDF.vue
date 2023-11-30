@@ -13,8 +13,8 @@ import { ref } from 'vue';
 import autoTable from 'jspdf-autotable';
 import getMockData from '@/assets/__mockdata__/mockDataComposer';
 import type { ProjectIF } from '@/model/ProjectIF';
-import type { IssueIF } from '@/model/IssueIF';
-import { hasSLARule, printSLARuleNames } from '@/model/IssueIF';
+import type { IssueIF } from '@/model/Issue/IssueIF';
+import { printSlaRuleNames, hasSlaRule } from '@/model/Issue/IssueIF';
 
 const isGenerating = ref(false);
 const project = getMockData(7) as ProjectIF;
@@ -31,14 +31,14 @@ const generatePDF = () => {
   const doc = new jsPDF('landscape', 'mm', 'a4');
 
   const headerNames = [
-    { id: 'ID', name: 'Name', description: 'Description', assignedSLARule: 'Assigned SLA Rules' },
+    { id: 'ID', name: 'Name', description: 'Description', assignedSlaRule: 'Assigned SLA Rules' },
   ];
 
   const issueArray = issues.map((issue) => [
     issue.id,
     issue.name,
     issue.description,
-    hasSLARule(issue) ? printSLARuleNames(issue) : 'No SLA Rules assigned',
+    hasSlaRule(issue) ? printSlaRuleNames(issue) : 'No Sla Rules assigned',
   ]);
 
   const current = new Date();
@@ -46,7 +46,7 @@ const generatePDF = () => {
   // Document title
   doc.setFont('Helvetica', '', 'bold');
   doc.setFontSize(14);
-  doc.text('SLA Rule Report', 10, 10);
+  doc.text('Sla Rule Report', 10, 10);
   doc.text(date, 265, 10);
   // doc.line(10, 20, 287, 20);
   // Document content
@@ -55,7 +55,7 @@ const generatePDF = () => {
     head: headerNames,
     body: issueArray,
   });
-  doc.save('SLARuleReport.pdf');
+  doc.save('SlaRuleReport.pdf');
   // Enable the button after a 1-second delay
   setTimeout(() => {
     isGenerating.value = false;
