@@ -9,7 +9,6 @@
             icon="pi pi-bars"
             style="color: var(--primary-color-text)"
             aria-label="Submit"
-            @click="visible = !visible"
           >
           </Button>
         </div>
@@ -28,13 +27,13 @@
 import { ref } from 'vue';
 
 const productName = 'FlowMetrics';
-const visible = ref(false);
+const visible = ref();
 const showSidebar = () => {
   visible.value = true;
 };
 
 const hideSidebar = () => {
-  visible.value = false;
+  visible.value = true;
 };
 // Items to be listed in Sidebar
 const items = ref([
