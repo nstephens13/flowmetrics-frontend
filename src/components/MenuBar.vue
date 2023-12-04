@@ -25,15 +25,6 @@ const showSidebar = () => {
 const hideSidebar = () => {
   visible.value = false;
 };
-
-onMounted(() => {
-  window.addEventListener('mousemove', handleMouseMove);
-});
-
-onBeforeUnmount(() => {
-  window.removeEventListener('mousemove', handleMouseMove);
-});
-
 const handleMouseMove = (event) => {
   const mouseX = event.clientX;
   const threshold = 70;
@@ -44,6 +35,14 @@ const handleMouseMove = (event) => {
     hideSidebar();
   }
 };
+onMounted(() => {
+  window.addEventListener('mousemove', handleMouseMove);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener('mousemove', handleMouseMove);
+});
+
 // Items to be listed in Sidebar
 const items = ref([
   {
