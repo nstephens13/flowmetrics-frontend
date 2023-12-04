@@ -1,17 +1,7 @@
 <template>
-  <Menubar @mouseover="showSidebar" @mouseleave="hideSidebar">
+  <Menubar>
     <template #start>
       <div class="container">
-        <div>
-          <Button
-            id="sidebarButton"
-            text
-            icon="pi pi-bars"
-            style="color: var(--primary-color-text)"
-            aria-label="Submit"
-          >
-          </Button>
-        </div>
         <div>
           <h2 id="productName">{{ productName }}</h2>
         </div>
@@ -24,16 +14,35 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 
 const productName = 'FlowMetrics';
-const visible = ref();
+const visible = ref(false);
 const showSidebar = () => {
   visible.value = true;
 };
 
 const hideSidebar = () => {
-  visible.value = true;
+  visible.value = false;
+};
+
+onMounted(() => {
+  window.addEventListener('mousemove', handleMouseMove);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener('mousemove', handleMouseMove);
+});
+
+const handleMouseMove = (event) => {
+  const mouseX = event.clientX;
+  const threshold = 50; // Adjust the threshold as needed
+
+  if (mouseX <= threshold) {
+    showSidebar();
+  } else {
+    hideSidebar();
+  }
 };
 // Items to be listed in Sidebar
 const items = ref([
