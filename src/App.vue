@@ -1,7 +1,9 @@
 <template>
   <MenuBar></MenuBar>
   <body></body>
-  <RouterView />
+  <div class="content-wrapper">
+    <RouterView />
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -19,3 +21,9 @@ export default defineComponent({
   },
 });
 </script>
+
+<style scoped>
+.content-wrapper {
+  margin-top: 100px; /* Adjust the margin as needed */
+}
+</style>
