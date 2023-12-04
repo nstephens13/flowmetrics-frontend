@@ -1,5 +1,5 @@
 <template>
-  <Menubar>
+  <Menubar class="p-menubar">
     <template #start>
       <div class="container">
         <div>
@@ -74,10 +74,15 @@ const items = ref([
   color: #ffffff;
   border: 0;
   border-radius: 0;
+  height: 70px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
 }
 
 #productName {
-  margin: 0.3rem 0.5rem 0;
+  margin-left: 20px;
 }
 .container {
   display: flex;
