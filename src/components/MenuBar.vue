@@ -1,5 +1,5 @@
 <template>
-  <Menubar>
+  <Menubar @mouseover="showSidebar" @mouseleave="hideSidebar">
     <template #start>
       <div class="container">
         <div>
@@ -28,7 +28,14 @@
 import { ref } from 'vue';
 
 const productName = 'FlowMetrics';
-const visible = ref();
+const visible = ref(false);
+const showSidebar = () => {
+  visible.value = true;
+};
+
+const hideSidebar = () => {
+  visible.value = false;
+};
 // Items to be listed in Sidebar
 const items = ref([
   {
