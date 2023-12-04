@@ -36,7 +36,7 @@ onBeforeUnmount(() => {
 
 const handleMouseMove = (event) => {
   const mouseX = event.clientX;
-  const threshold = 50; // Adjust the threshold as needed
+  const threshold = 70;
 
   if (mouseX <= threshold) {
     showSidebar();
