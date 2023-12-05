@@ -8,7 +8,7 @@ import router from '@/router/index';
 import MenuBar from '@/components/MenuBar.vue';
 
 // Describe block for the test suite
-describe('Menubar Button should open sidebar', () => {
+describe('Menubar and sidebar', () => {
   // Mounting the MenuBar component with necessary configuration
   const wrapper = mount(MenuBar, {
     global: {
@@ -32,7 +32,7 @@ describe('Menubar Button should open sidebar', () => {
   });
 
   // Test to check opening and closing of the sidebar
-  test('should open and close sidebar', async () => {
+  test('should slide and hide sidebar', async () => {
     expect(wrapper.getComponent(Menubar).isVisible()).toBe(true);
     await window.dispatchEvent(new MouseEvent('mousemove', { clientX: 40 })); // mouse on 4O or less axis show SideMenu
     expect(wrapper.getComponent(Sidebar).vm.$props.visible).toBe(true);
