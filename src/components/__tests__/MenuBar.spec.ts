@@ -1,6 +1,5 @@
 import { describe, expect, test } from 'vitest';
 import { mount } from '@vue/test-utils';
-import Button from 'primevue/button';
 import Sidebar from 'primevue/sidebar';
 import Menu from 'primevue/menu';
 import PrimeVue from 'primevue/config';
@@ -35,9 +34,9 @@ describe('Menubar Button should open sidebar', () => {
   // Test to check opening and closing of the sidebar
   test('should open and close sidebar', async () => {
     expect(wrapper.getComponent(Menubar).isVisible()).toBe(true);
-    await window.dispatchEvent(new MouseEvent('mousemove', { clientX: 40 })); // mouse on 4O or less axies show SideMenu
+    await window.dispatchEvent(new MouseEvent('mousemove', { clientX: 40 })); // mouse on 4O or less axis show SideMenu
     expect(wrapper.getComponent(Sidebar).vm.$props.visible).toBe(true);
-    await window.dispatchEvent(new MouseEvent('mousemove', { clientX: 301 })); // mouse after 300 axies hide SideMenu
+    await window.dispatchEvent(new MouseEvent('mousemove', { clientX: 301 })); // mouse after 300 axis hide SideMenu
     expect(wrapper.getComponent(Sidebar).vm.$props.visible).toBe(false);
   });
 
@@ -45,8 +44,7 @@ describe('Menubar Button should open sidebar', () => {
   test('sidebar menu four items', async () => {
     const menubar = wrapper.findComponent(Menu);
     expect(menubar.exists()).toBe(false);
-    const button = wrapper.getComponent(Menubar).findComponent(Button);
-    await button.trigger('click');
+    await window.dispatchEvent(new MouseEvent('mousemove', { clientX: 40 }));
     wrapper.findComponent(Menu);
     const menu = await wrapper.getComponent(Sidebar).getComponent(Menu);
     expect(menu.findAll('.p-menuitem').length).toBe(4);
