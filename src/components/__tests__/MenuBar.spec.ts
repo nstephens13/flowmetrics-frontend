@@ -15,7 +15,6 @@ describe('Menubar Button should open sidebar', () => {
     global: {
       plugins: [PrimeVue, router],
       components: {
-        Button,
         Menu,
         Menubar,
         Sidebar,
@@ -30,22 +29,15 @@ describe('Menubar Button should open sidebar', () => {
   test('it mounts', () => {
     expect(wrapper.exists()).toBe(true);
     expect(wrapper.getComponent(Menubar).isVisible()).toBe(true);
-    expect(wrapper.getComponent(Button).isVisible()).toBe(true);
     expect(wrapper.isVisible()).toBe(true);
   });
 
   // Test to check opening and closing of the sidebar
   test('should open and close sidebar', async () => {
-    let menubar = wrapper.findComponent(Menu);
-    expect(menubar.exists()).toBe(false);
-
-    const button = wrapper.getComponent(Menubar).findComponent(Button);
-    await button.trigger('click');
-
+    expect(wrapper.getComponent(Menubar).isVisible()).toBe(true);
+    await window.dispatchEvent(new MouseEvent('mousemove', { clientX: 40 })); // mouse on 4O or less axies show SideMenu
     expect(wrapper.getComponent(Sidebar).vm.$props.visible).toBe(true);
-    menubar = wrapper.findComponent(Menu);
-
-    await button.trigger('click');
+    await window.dispatchEvent(new MouseEvent('mousemove', { clientX: 301 })); // mouse after 300 axies hide SideMenu
     expect(wrapper.getComponent(Sidebar).vm.$props.visible).toBe(false);
   });
 
