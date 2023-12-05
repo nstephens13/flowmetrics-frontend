@@ -25,7 +25,7 @@ const showSidebar = () => {
 const hideSidebar = () => {
   visible.value = false;
 };
-const handleMouseMove = (event) => {
+const handleMouseMove = (event: MouseEvent) => {
   const mouseX = event.clientX;
   const sidebarWidth = 300;
   const thresholdToShow = 40;
