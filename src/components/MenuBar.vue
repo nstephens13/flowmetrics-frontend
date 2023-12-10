@@ -1,7 +1,18 @@
 <template>
-  <Menubar class="p-menubar">
+  <Menubar>
     <template #start>
       <div class="container">
+        <div>
+          <Button
+            id="sidebarButton"
+            text
+            icon="pi pi-bars"
+            style="color: var(--primary-color-text)"
+            aria-label="Submit"
+            @click="visible = !visible"
+          >
+          </Button>
+        </div>
         <div>
           <h2 id="productName">{{ productName }}</h2>
         </div>
@@ -84,7 +95,7 @@ const items = ref([
 }
 
 #productName {
-  margin-left: 20px;
+  margin: 0.3rem 0.5rem 0;
 }
 .container {
   display: flex;
