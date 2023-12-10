@@ -13,6 +13,7 @@
           >
           </Button>
         </div>
+        <SlideMenuButton />
         <div>
           <h2 id="productName">{{ productName }}</h2>
         </div>
@@ -26,6 +27,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from 'vue';
+import SlideMenuButton from './SlideMenuButton.vue';
 
 const productName = 'FlowMetrics';
 const visible = ref(false);
