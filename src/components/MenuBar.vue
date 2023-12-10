@@ -13,7 +13,7 @@
           >
           </Button>
         </div>
-        <SlideMenuButton />
+        <SlideMenuButton @show-sidebar="showSidebar" />
         <div>
           <h2 id="productName">{{ productName }}</h2>
         </div>
@@ -31,22 +31,17 @@ import SlideMenuButton from './SlideMenuButton.vue';
 
 const productName = 'FlowMetrics';
 const visible = ref(false);
+
 const showSidebar = () => {
   visible.value = true;
 };
-
 const hideSidebar = () => {
   visible.value = false;
 };
 const handleMouseMove = (event: MouseEvent) => {
   const mouseX = event.clientX;
-  const sidebarWidth = 300;
-  const thresholdToShow = 40;
-  const thresholdToHide = sidebarWidth;
-
-  if (mouseX <= thresholdToShow) {
-    showSidebar();
-  } else if (mouseX > thresholdToHide) {
+  const thresholdToHide = 300;
+  if (mouseX > thresholdToHide) {
     hideSidebar();
   }
 };
