@@ -24,6 +24,6 @@ export default defineComponent({
 
 <style scoped>
 .content-wrapper {
-  margin-top: 100px; /* Adjust the margin as needed */
+  margin-top: 50px;
 }
 </style>
