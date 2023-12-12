@@ -5,9 +5,9 @@ import {
   getAssignedToName,
   getFormattedDate,
   getTimeLeft,
-} from '../Issue/Issue';
+  getSlaRules,
+} from '../../services/Issue';
 import type { EmployeeIF } from '../EmployeeIF';
-import type { StatusChangesIF } from '../Issue/StatusChangesIF';
 
 describe('Issue Class', () => {
   test('creates an instance of Issue with the provided properties', () => {
@@ -29,7 +29,6 @@ describe('Issue Class', () => {
     const dueTo = new Date();
     const status = 'Open';
     const assignedSlaRule = null;
-    const statusChanges: StatusChangesIF[] = [];
 
     const issue = new Issue(
       id,
@@ -41,10 +40,11 @@ describe('Issue Class', () => {
       closedAt,
       dueTo,
       status,
-      statusChanges,
-      assignedSlaRule,
-      null,
-      null
+      {},
+      {},
+      [],
+      [],
+      assignedSlaRule
     );
 
     expect(issue.id).toBe(id);
@@ -57,7 +57,6 @@ describe('Issue Class', () => {
     expect(issue.dueTo).toBe(dueTo);
     expect(issue.status).toBe(status);
     expect(issue.assignedSlaRule).toBe(assignedSlaRule);
-    expect(issue.statusChanges).toBe(statusChanges);
   });
 });
 
@@ -89,10 +88,11 @@ describe('getAssignedToName', () => {
       null,
       null,
       null,
+      {},
+      {},
       [],
-      null,
-      null,
-      null
+      [],
+      []
     );
     const assignedToName = getAssignedToName(issue);
     expect(assignedToName).toBe('John Doe');
@@ -117,10 +117,11 @@ describe('getAssignedToName', () => {
       null,
       null,
       null,
+      {},
+      {},
       [],
-      null,
-      null,
-      null
+      [],
+      []
     );
     const assignedToName = getAssignedToName(issue);
     expect(assignedToName).toBe('');
@@ -148,10 +149,11 @@ describe('getFormattedDate', () => {
       null,
       dueTo,
       null,
+      {},
+      {},
       [],
-      null,
-      null,
-      null
+      [],
+      []
     );
     const formattedDate = getFormattedDate(issue);
     expect(formattedDate).toBe('July 1, 2023');
@@ -176,10 +178,11 @@ describe('getFormattedDate', () => {
       null,
       null,
       null,
+      {},
+      {},
       [],
-      null,
-      null,
-      null
+      [],
+      []
     );
     const formattedDate = getFormattedDate(issue);
     expect(formattedDate).toBe('');
@@ -208,10 +211,11 @@ describe('getTimeLeft', () => {
       null,
       dueTo,
       null,
+      {},
+      {},
       [],
-      null,
-      null,
-      null
+      [],
+      []
     );
     const timeLeft = getTimeLeft(issue);
     const expectedTimeLeft = Math.ceil(
@@ -240,10 +244,11 @@ describe('getTimeLeft', () => {
       null,
       dueTo,
       null,
+      {},
+      {},
       [],
-      null,
-      null,
-      null
+      [],
+      []
     );
     const timeLeft = getTimeLeft(issue);
     expect(timeLeft).toBe(0);
@@ -268,10 +273,11 @@ describe('getTimeLeft', () => {
       null,
       null,
       null,
+      {},
+      {},
       [],
-      null,
-      null,
-      null
+      [],
+      []
     );
     const timeLeft = getTimeLeft(issue);
     expect(timeLeft).toBeNull();
@@ -298,10 +304,11 @@ describe('countIssuesByStatus', () => {
       null,
       null,
       'Open',
+      {},
+      {},
       [],
-      null,
-      null,
-      null
+      [],
+      []
     ),
     new Issue(
       2,
@@ -321,10 +328,11 @@ describe('countIssuesByStatus', () => {
       null,
       null,
       'Closed',
+      {},
+      {},
       [],
-      null,
-      null,
-      null
+      [],
+      []
     ),
     new Issue(
       3,
@@ -344,10 +352,11 @@ describe('countIssuesByStatus', () => {
       null,
       null,
       'In Progress',
+      {},
+      {},
       [],
-      null,
-      null,
-      null
+      [],
+      []
     ),
     new Issue(
       4,
@@ -367,10 +376,11 @@ describe('countIssuesByStatus', () => {
       null,
       null,
       'Open',
+      {},
+      {},
       [],
-      null,
-      null,
-      null
+      [],
+      []
     ),
     new Issue(
       5,
@@ -390,10 +400,11 @@ describe('countIssuesByStatus', () => {
       null,
       null,
       'Closed',
+      {},
+      {},
       [],
-      null,
-      null,
-      null
+      [],
+      []
     ),
   ];
 
@@ -410,5 +421,37 @@ describe('countIssuesByStatus', () => {
   test('returns the count of all issues when status is null', () => {
     const totalIssuesCount = countIssuesByStatus(issueList, null);
     expect(totalIssuesCount).toBe(issueList.length);
+  });
+});
+
+describe('getSlaRules', () => {
+  test('getSlaRules returns an empty array when assignedSlaRule is null', () => {
+    const issue = new Issue(
+      1,
+      'Test Issue',
+      null,
+      null,
+      {
+        id: 1,
+        firstName: 'Anna',
+        lastName: 'John',
+        emailAddress: 'anna.john@email.com',
+        status: 'active',
+        avatarUrl: 'none',
+        key: 'ajohn',
+      },
+      new Date(),
+      null,
+      null,
+      'Open',
+      {},
+      {},
+      [],
+      [],
+      []
+    );
+
+    const slaRules = getSlaRules(issue);
+    expect(slaRules).toEqual([]);
   });
 });

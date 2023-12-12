@@ -5,7 +5,7 @@ import type { IssueIF } from '@/model/Issue/IssueIF';
 import employeeJson from './Employees.json';
 import issueJson2 from './Issues_2.json';
 import issueJson from './Issues.json';
-import type { Issue } from '@/model/Issue/Issue';
+import type { Issue } from '@/services/Issue';
 import type { SlaRule } from '@/model/Sla/SlaRule';
 
 // Define lists of different category with statuses

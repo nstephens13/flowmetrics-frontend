@@ -1,9 +1,7 @@
-import type { ProjectIF } from '../model/ProjectIF';
-import type { EmployeeIF } from '../model/EmployeeIF';
-import type { IssueIF } from '../model/Issue/IssueIF';
+import type { ProjectIF } from '@/model/ProjectIF';
+import type { EmployeeIF } from '@/model/EmployeeIF';
+import type { IssueIF } from '@/model/Issue/IssueIF';
 import getMockData from '../assets/__mockdata__/mockDataComposer';
-import type { ChangeEventIF } from '@/model/ChangeEventIF';
-import { ChangeEventEnum } from '@/model/ChangeEventIF';
 
 /**
  * @brief: The Function map the issues to the Employees.
@@ -58,30 +56,6 @@ export function mapIssuesToEmployees(projects: ProjectIF[] | null): Map<Employee
   return mapToReturn;
 }
 
-export function calculateRestingTime(issue: IssueIF): [EmployeeIF | null, number] {
-  if (!issue.assignedTo || !issue.changelog) {
-    return [null, 0];
-  }
-
-  const assignedEvent = issue.changelog.find(
-    (event: ChangeEventIF) => event.changeDescription === ChangeEventEnum.assigned
-  );
-
-  // Check if assignedEvent exists and the assigned employee is the same as in IssueIF
-  if (assignedEvent && assignedEvent.assigned === issue.assignedTo) {
-    const assignedTimestamp = assignedEvent.timestamp;
-    const currentDate = new Date();
-
-    const restingTimeInSeconds = Math.floor(
-      (currentDate.getTime() - assignedTimestamp.getTime()) / 1000
-    );
-
-    return [issue.assignedTo, restingTimeInSeconds];
-  }
-
-  return [issue.assignedTo, 0];
-}
-
 /**
  * Calculate the remaining reaction time for an issue.
  *
@@ -121,4 +95,17 @@ export function calculateRemainingReactionTime(issue: IssueIF): [boolean, number
   );
 
   return [true, remainingTimeInSeconds];
+}
+
+// function to check if issue has an assigned SLA rule
+export function hasSlaRule(issue: IssueIF): boolean {
+  return issue.assignedSlaRule !== null;
+}
+
+// print assigned SLA rule names of issue
+export function printSlaRuleNames(issue: IssueIF): string {
+  if (issue.assignedSlaRule === null) {
+    return '';
+  }
+  return issue.assignedSlaRule.map((rule) => rule.name).join(', ');
 }

@@ -1,5 +1,5 @@
 import { describe, test, expect } from 'vitest';
-import { getTimeLeft, getFormattedDate, getAssignedToName } from '../../model/Issue/Issue';
+import { getTimeLeft, getFormattedDate, getAssignedToName } from '../Issue';
 import getMockData from '@/assets/__mockdata__/mockDataComposer';
 
 describe('Issue Tests', () => {

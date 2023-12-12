@@ -121,5 +121,25 @@
     "emailAddress": "ingmar.mustermann@email.com",
     "avatarUrl": "none",
     "key": "imustermann"
+  },
+  {
+    "id": 14,
+    "firstName": "Ingmar",
+    "lastName": "Mustermann",
+    "status": "active",
+    "assignedIssues": [],
+    "emailAddress": "ingmar.mustermann@email.com",
+    "avatarUrl": "none",
+    "key": "imustermann"
+  },
+  {
+    "id": 15,
+    "firstName": "Ingmar",
+    "lastName": "Mustermann",
+    "status": "active",
+    "assignedIssues": [],
+    "emailAddress": "ingmar.mustermann@email.com",
+    "avatarUrl": "none",
+    "key": "imustermann"
   }
 ]
