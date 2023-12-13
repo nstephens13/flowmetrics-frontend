@@ -48,7 +48,7 @@ describe('Project Overview should load all the Components', () => {
       .trigger('click')
       .then(() => {
         const dropdownOptions = wrapper.getComponent(Dropdown).props('options');
-        expect(6).toEqual(dropdownOptions.length);
+        expect(26).toEqual(dropdownOptions.length);
       });
   });
 
@@ -88,7 +88,7 @@ describe('Project Overview should load all the Components', () => {
             expect(Number.isInteger(Number(number))).toBe(true);
           });
         });
-        expect(6).toEqual(dropdownOptions.length);
+        expect(26).toEqual(dropdownOptions.length);
         expect('Mocking Bird Project').toEqual(mockingBirdProject.name);
       });
   });

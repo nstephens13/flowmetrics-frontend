@@ -116,6 +116,7 @@ import { getIssueStatusList, type ProjectIF } from '@/model/ProjectIF';
 import getMockData from '@/assets/__mockdata__/mockDataComposer';
 import { calculateRemainingReactionTime } from '@/services/issueCalculator';
 import type { IssueIF } from '@/model/Issue/IssueIF';
+import { getProject } from '@/assets/__mockdata__/mockdata';
 
 // Create a reference for the selectedProject with initial data
 const selectedProject = ref({
@@ -174,6 +175,26 @@ const projects: Ref<ProjectIF[]> = ref([
   getMockData(53),
   getMockData(54),
   getMockData(55),
+  getProject(1),
+  getProject(2),
+  getProject(3),
+  getProject(4),
+  getProject(5),
+  getProject(6),
+  getProject(7),
+  getProject(8),
+  getProject(9),
+  getProject(10),
+  getProject(11),
+  getProject(12),
+  getProject(13),
+  getProject(14),
+  getProject(15),
+  getProject(16),
+  getProject(17),
+  getProject(18),
+  getProject(19),
+  getProject(20),
 ] as ProjectIF[]);
 </script>
 
