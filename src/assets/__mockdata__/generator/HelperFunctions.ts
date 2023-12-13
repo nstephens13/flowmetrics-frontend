@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
 import type { EmployeeIF } from '@/model/EmployeeIF';
-import EmployeesJsonData from '@/assets/__mockdata__/json/EmployeesList.json';
+import EmployeesJsonData from '@/assets/__mockdata__/json/Employees.json';
 import IssuesWorkflowsJsonData from '@/assets/__mockdata__/json/IssuesWorkflows.json';
 
 export const issueTypes = [

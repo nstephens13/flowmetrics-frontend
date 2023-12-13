@@ -51,6 +51,8 @@ describe('Filter Test', () => {
       projectFilter: {
         projectsWhiteList: [],
         issueStatusIncludeFilter: [...planningStatusList, ...devStatusList],
+        minimumAssigneeRestingTime: 0,
+        minimumNumberOfStatusChanges: 0,
       },
     };
 
@@ -80,6 +82,8 @@ describe('Filter Test', () => {
       projectFilter: {
         projectsWhiteList: [project2, project3],
         issueStatusIncludeFilter: [],
+        minimumAssigneeRestingTime: 0,
+        minimumNumberOfStatusChanges: 0,
       },
     };
 

@@ -2,17 +2,18 @@ import { faker } from '@faker-js/faker';
 import type { ProjectIF } from '@/model/ProjectIF';
 import type { EmployeeIF } from '@/model/EmployeeIF';
 import type { IssueIF } from '@/model/Issue/IssueIF';
-import employeeJson from './Employees.json';
-import issueJson2 from './Issues_2.json';
-import issueJson from './Issues.json';
+import employeeJson from '@/assets/__mockdata__/json/Employees.json';
+import issueJson2 from '@/assets/__mockdata__/json//Issues_2.json';
+import issueJson from '@/assets/__mockdata__/json//Issues.json';
 import type { Issue } from '@/services/Issue';
 import type { SlaRule } from '@/model/Sla/SlaRule';
+import { Category, statusLists } from './generator/StatusLists';
 
 // Define lists of different category with statuses
-export const planningStatusList: string[] = ['Planned', 'Design', 'Open'];
-export const devStatusList: string[] = ['In Work', 'Review', 'In Progress'];
-export const testingStatusList: string[] = ['UnitTest', 'E2E'];
-export const nonDisplayedStatusList: string[] = ['Closed'];
+export const planningStatusList: string[] = statusLists[Category.planning];
+export const devStatusList: string[] = statusLists[Category.development];
+export const testingStatusList: string[] = statusLists[Category.testing];
+export const nonDisplayedStatusList: string[] = statusLists[Category.nonDisplayed];
 
 /**
  * Generates a random integer between 0 and the specified maximum value (exclusive).
@@ -41,10 +42,11 @@ function loadIssueDataFromFile(issues: any): Issue[] {
       createdAt: issue.createdAt ? new Date(issue.createdAt) : null,
       dueTo: issue.dueTo ? new Date(issue.dueTo) : null,
       status: issue.status as string,
+      assigneeRestingTime: null,
+      statusRestingTime: null,
+      assigneeChanges: null,
+      statusChanges: null,
       assignedSlaRule: issue.assignedSlaRule ? issue.assignedSlaRule : null,
-      statusChanges: issue.statusChanges ? issue.statusChanges : [],
-      lastStatusChange: faker.date.recent(),
-      changelog: null,
     });
   });
   return issueData;
@@ -296,7 +298,7 @@ function getMockData(dataset: number): ProjectIF {
         } else if (randomStatus === 1) {
           closedAt = faker.date.recent();
         }
-
+        /*
         const analyseStatusChanges = getRandomInt(10);
         const umsetzungStatusChanges = getRandomInt(10);
         const testStatusChanges = getRandomInt(10);
@@ -315,7 +317,7 @@ function getMockData(dataset: number): ProjectIF {
             value: testStatusChanges,
           },
         ];
-
+        */
         issuesForProject.push({
           id: iterator + 1,
           name: faker.company.catchPhrase(),
@@ -327,9 +329,10 @@ function getMockData(dataset: number): ProjectIF {
           createdBy: employeesArrayFromFile[getRandomInt(employeesForProject.length)],
           dueTo: faker.date.future(),
           assignedSlaRule: null,
-          statusChanges,
-          lastStatusChange: faker.date.recent(),
-          changelog: null,
+          assigneeRestingTime: null,
+          statusRestingTime: null,
+          assigneeChanges: null,
+          statusChanges: null,
         });
       }
 
@@ -369,7 +372,7 @@ function getMockData(dataset: number): ProjectIF {
         } else if (randomStatus === 1) {
           closedAt = faker.date.recent();
         }
-
+        /*
         const analyseStatusChanges = getRandomInt(10);
         const umsetzungStatusChanges = getRandomInt(10);
         const testStatusChanges = getRandomInt(10);
@@ -388,7 +391,7 @@ function getMockData(dataset: number): ProjectIF {
             value: testStatusChanges,
           },
         ];
-
+        */
         issuesForProject.push({
           id: iterator + 1,
           name: faker.company.catchPhrase(),
@@ -400,12 +403,10 @@ function getMockData(dataset: number): ProjectIF {
           createdBy: employeesArrayFromFile[getRandomInt(employeesForProject.length)],
           dueTo: faker.date.future(),
           assignedSlaRule: null,
-          statusChanges,
-          lastStatusChange: faker.date.between({
-            from: new Date().valueOf() - 259200000,
-            to: new Date().valueOf(),
-          }), // 259200000 is 3 days in ms
-          changelog: null,
+          assigneeRestingTime: null,
+          statusRestingTime: null,
+          assigneeChanges: null,
+          statusChanges: null,
         });
       }
 
@@ -497,9 +498,10 @@ function getMockData(dataset: number): ProjectIF {
           dueTo: faker.date.future(),
           status: '',
           assignedSlaRule: null,
-          statusChanges: [],
-          lastStatusChange: faker.date.recent(),
-          changelog: null,
+          assigneeRestingTime: null,
+          statusRestingTime: null,
+          assigneeChanges: null,
+          statusChanges: null,
         });
       }
 
@@ -564,9 +566,10 @@ function getMockData(dataset: number): ProjectIF {
           dueTo: faker.date.future(),
           status: '',
           assignedSlaRule: [],
-          statusChanges: [],
-          lastStatusChange: faker.date.recent(),
-          changelog: null,
+          assigneeRestingTime: null,
+          statusRestingTime: null,
+          assigneeChanges: null,
+          statusChanges: null,
         });
       }
 
