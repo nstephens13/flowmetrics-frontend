@@ -71,4 +71,46 @@ describe('Project Overview should load all the Components', () => {
     );
     expect(columnExists).toBe(true);
   });
+
+  test('DataTable should contain "Issue-ID" column with field ', () => {
+    const dataTable = wrapper.getComponent(DataTable);
+    const columns = dataTable.findAllComponents(Column);
+    const columnExists = columns.some((column) => column.props('field') === 'id');
+    expect(columnExists).toBe(true);
+  });
+
+  test('DataTable should contain "Description" column with field ', () => {
+    const dataTable = wrapper.getComponent(DataTable);
+    const columns = dataTable.findAllComponents(Column);
+    const columnExists = columns.some((column) => column.props('field') === 'description');
+    expect(columnExists).toBe(true);
+  });
+
+  test('DataTable should contain "createdBy" column with field ', () => {
+    const dataTable = wrapper.getComponent(DataTable);
+    const columns = dataTable.findAllComponents(Column);
+    const columnExists = columns.some((column) => column.props('field') === 'createdBy');
+    expect(columnExists).toBe(true);
+  });
+
+  test('DataTable should contain "assignedTo" column with field ', () => {
+    const dataTable = wrapper.getComponent(DataTable);
+    const columns = dataTable.findAllComponents(Column);
+    const columnExists = columns.some((column) => column.props('field') === 'assignedTo');
+    expect(columnExists).toBe(true);
+  });
+
+  test('DataTable should contain "dueTo" column with field ', () => {
+    const dataTable = wrapper.getComponent(DataTable);
+    const columns = dataTable.findAllComponents(Column);
+    const columnExists = columns.some((column) => column.props('field') === 'dueTo');
+    expect(columnExists).toBe(true);
+  });
+
+  test('DataTable should contain "status" column with field ', () => {
+    const dataTable = wrapper.getComponent(DataTable);
+    const columns = dataTable.findAllComponents(Column);
+    const columnExists = columns.some((column) => column.props('field') === 'status');
+    expect(columnExists).toBe(true);
+  });
 });
