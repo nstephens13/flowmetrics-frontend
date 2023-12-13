@@ -50,21 +50,13 @@
         :value="selectedProject.issues"
         showGridlines
       >
-        <Column field="id" header="Issue-ID"></Column>
-        <Column field="status" header="Status">
+        <Column field="id" header="Issue ID"></Column>
+        <Column field="name" header="Name"></Column>
+        <Column field="description" header="Description"></Column>
+        <Column field="createdAt" header="Created on"></Column>
+        <Column field="createdBy" header="Created by">
           <template #body="slotProps">
-            {{ slotProps.data.status?.toString() }}
-          </template>
-        </Column>
-        <Column field="dueTo" header="Due date"></Column>
-        <Column header="Time left (Days)">
-          <template #body="slotProps">
-            {{ getTimeLeft(slotProps.data) }}
-          </template>
-        </Column>
-        <Column header="Resting time">
-          <template #body="slotProps">
-            {{ printRestingTime(slotProps.data) }}
+            {{ printAssignedTo(slotProps.data.assignedTo) }}
           </template>
         </Column>
         <Column field="assignedTo" header="Assigned to">
@@ -72,7 +64,31 @@
             {{ printAssignedTo(slotProps.data.assignedTo) }}
           </template>
         </Column>
-        <Column field="Resting time (Assignee)" header="Resting Time (Assignee)"></Column>
+        <Column field="Resting time (Assignee)" header="Resting time (Assignee)"></Column>
+        <Column field="state" header="State"></Column>
+        <Column header="Status changes" style="width: 150px">
+          <template #body="data">
+            <div v-for="statusChange in data.data.statusChanges" :key="statusChange.name">
+              {{ statusChange.name }} : {{ statusChange.value }}
+            </div>
+          </template>
+        </Column>
+        <Column field="status" header="Status">
+          <template #body="slotProps">
+            {{ slotProps.data.status?.toString() }}
+          </template>
+        </Column>
+        <Column header="Resting time (Status)">
+          <template #body="slotProps">
+            {{ printRestingTime(slotProps.data) }}
+          </template>
+        </Column>
+        <Column field="dueTo" header="Due date"></Column>
+        <Column header="Remaining reaction time">
+          <template #body="slotProps">
+            {{ calculateRemainingTime(slotProps.data) }}
+          </template>
+        </Column>
       </DataTable>
     </template>
   </Card>
@@ -84,7 +100,8 @@ import type { Ref } from 'vue';
 import CircularProgressBar from '@/components/IssueCalculator/CircularProgressBar.vue';
 import type { ProjectIF } from '@/model/ProjectIF';
 import getMockData from '@/assets/__mockdata__/mockDataComposer';
-import { countIssuesByStatus, Issue, getTimeLeft } from '@/model/Issue/Issue';
+import { countIssuesByStatus, Issue } from '@/model/Issue/Issue';
+import { calculateRemainingReactionTime } from '@/services/issueCalculator';
 import type { EmployeeIF } from '@/model/EmployeeIF';
 import type { IssueIF } from '@/model/Issue/IssueIF';
 </script>
@@ -127,6 +144,25 @@ function printAssignedTo(employee: EmployeeIF | null): string {
   const firstName = employee?.firstName ?? '';
   const lastName = employee?.lastName ?? '';
   return `${firstName} ${lastName}`;
+}
+
+function calculateRemainingTime(issue: IssueIF): string {
+  const [hasSlaRule, remainingTimeInSeconds] = calculateRemainingReactionTime(issue);
+
+  if (!hasSlaRule) {
+    return ''; // Return an empty string if there's no SLA rule or the time has expired
+  }
+  if (hasSlaRule && remainingTimeInSeconds <= 0) {
+    return 'Expired';
+  }
+
+  const remainingDays = Math.floor(remainingTimeInSeconds / (60 * 60 * 24));
+  const remainingHours = Math.floor((remainingTimeInSeconds % (60 * 60 * 24)) / (60 * 60));
+
+  if (remainingDays > 1) {
+    return `${remainingDays} days`;
+  }
+  return `${remainingHours} hours`;
 }
 
 /**
