@@ -57,7 +57,7 @@
             </Column>
             <Column field="createdBy" header="Created by">
               <template #body="slotProps">
-                {{ printAssignedTo(slotProps.data.assignedTo) }}
+                {{ printAssignedTo(slotProps.data.createdBy) }}
               </template>
             </Column>
             <Column field="createdAt" header="Created on"></Column>

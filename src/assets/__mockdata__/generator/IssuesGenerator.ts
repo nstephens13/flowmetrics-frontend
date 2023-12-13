@@ -9,6 +9,7 @@ import {
   getRandomIntBetween,
 } from '@/assets/__mockdata__/generator/HelperFunctions';
 import { generateAssigneeChanges, generateStatusChanges } from './ChangeLogGenerator';
+import type { EmployeeIF } from '@/model/EmployeeIF';
 
 function getIssue(issueNumber: number, issueTypeNumber: number): IssueIF {
   const issueType = issueTypes[issueTypeNumber];
@@ -21,7 +22,7 @@ function getIssue(issueNumber: number, issueTypeNumber: number): IssueIF {
     issueType === 'zombie'
       ? faker.date.past({ refDate: getDateAndTimeInPast(30) })
       : faker.date.past({ refDate: getDateAndTimeInPast(4) });
-  const assigneedEmployee = getRandomEmployee();
+  const assigneedEmployee: EmployeeIF = getRandomEmployee();
   const generatedStatusChanges = generateStatusChanges(
     issueType,
     issueNumber,
@@ -34,14 +35,18 @@ function getIssue(issueNumber: number, issueTypeNumber: number): IssueIF {
     assigneedEmployee,
     createdDate
   );
+  const closedDate: Date | null =
+    issueStatus === 'closed'
+      ? generatedStatusChanges && generatedStatusChanges[generatedStatusChanges.length - 1]?.created
+      : null;
   return {
     id: issueNumber,
-    name: `${issueTypes[issueTypeNumber]} Issue : ${faker.hacker.adjective()}`,
+    name: `${issueTypes[issueTypeNumber]} : ${faker.hacker.adjective()}`,
     description: `${faker.hacker.phrase()}`,
     assignedTo: assigneedEmployee,
     createdBy: getRandomEmployee(),
     createdAt: createdDate,
-    closedAt: null,
+    closedAt: closedDate,
     dueTo: faker.date.future(),
     status: issueStatus,
     statusChanges: generatedStatusChanges,

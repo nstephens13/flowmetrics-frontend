@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 import type { EmployeeIF } from '@/model/EmployeeIF';
-import EmployeesJsonData from '@/assets/__mockdata__/EmployeesList.json';
-import IssuesWorkflowsJsonData from '@/assets/__mockdata__/IssuesWorkflows.json';
+import EmployeesJsonData from '@/assets/__mockdata__/json/EmployeesList.json';
+import IssuesWorkflowsJsonData from '@/assets/__mockdata__/json/IssuesWorkflows.json';
 
 export const issueTypes = [
   'bug',
@@ -16,11 +16,6 @@ export const issueTypes = [
   'refactor',
   'zombie',
 ];
-
-export const planningStatusList: string[] = ['planned', 'design', 'open'];
-export const devStatusList: string[] = ['in work', 'review', 'in progress'];
-export const testingStatusList: string[] = ['unit test', 'e2e'];
-export const nonDisplayedStatusList: string[] = ['resolved', 'closed'];
 
 export function getRandomInt(max: number) {
   return Math.floor(Math.random() * max);

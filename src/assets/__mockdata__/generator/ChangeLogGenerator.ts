@@ -2,7 +2,13 @@ import type { ChangeLogIF } from '@/model/Issue/ChangeLogIF';
 import type { EmployeeIF } from '@/model/EmployeeIF';
 import type { ChangeIF } from '@/model/Issue/ChangeIF';
 import { ChangeType } from '@/model/Issue/ChangeIF';
-import { getRandomEmployee, getDatesBetween, getWorkflow, getRandomInt } from './HelperFunctions';
+import {
+  getRandomEmployee,
+  getDatesBetween,
+  getWorkflow,
+  getRandomInt,
+  getDateAndTimeInPast,
+} from './HelperFunctions';
 
 export function generateStatusChanges(
   issueType: string,
@@ -46,7 +52,10 @@ export function generateAssigneeChanges(
 ): ChangeLogIF[] | null {
   const changeLogs: ChangeLogIF[] = [];
   const numberofAssigneeChanges = getRandomInt(10);
-  const assigneeChangesDates = getDatesBetween(createdDate, new Date(), numberofAssigneeChanges);
+  const assigneeChangesDates =
+    issueType === 'zombie'
+      ? getDatesBetween(createdDate, getDateAndTimeInPast(7), numberofAssigneeChanges)
+      : getDatesBetween(createdDate, new Date(), numberofAssigneeChanges);
   let bufferEmployee1: EmployeeIF = getRandomEmployee(currentAssignee);
   let bufferEmployee2: EmployeeIF = getRandomEmployee(bufferEmployee1);
   for (let i = 0; i < numberofAssigneeChanges; i++) {
