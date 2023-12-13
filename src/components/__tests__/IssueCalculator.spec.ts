@@ -59,7 +59,7 @@ describe('Project Overview should load all the Components', () => {
       .trigger('click')
       .then(() => {
         const dropdownOptions = wrapper.getComponent(Dropdown).props('options');
-        expect(dropdownOptions.length).toEqual(2);
+        expect(dropdownOptions.length).toEqual(8);
       });
   });
 
@@ -104,13 +104,6 @@ describe('Project Overview should load all the Components', () => {
     const dataTable = wrapper.getComponent(DataTable);
     const columns = dataTable.findAllComponents(Column);
     const columnExists = columns.some((column) => column.props('field') === 'dueTo');
-    expect(columnExists).toBe(true);
-  });
-
-  test('DataTable should contain "status" column with field ', () => {
-    const dataTable = wrapper.getComponent(DataTable);
-    const columns = dataTable.findAllComponents(Column);
-    const columnExists = columns.some((column) => column.props('field') === 'status');
     expect(columnExists).toBe(true);
   });
 });

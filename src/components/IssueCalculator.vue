@@ -42,10 +42,23 @@
     </template>
   </Panel>
   <Card>
+    <DataTable
+      v-model:filters="filters"
+      :globalFilterFields="['name']"
+      paginator
+      :rows="10"
+      filterDisplay="menu"
+      :rowsPerPageOptions="[10, 20, 50, 100]"
+      :value="selectedProject.issues"
+      showGridlines
+    />
     <template #content>
       <DataTable
+        v-model:filters="filters"
+        :globalFilterFields="['name']"
         paginator
         :rows="10"
+        filterDisplay="menu"
         :rowsPerPageOptions="[10, 20, 50, 100]"
         :value="selectedProject.issues"
         showGridlines
@@ -73,9 +86,29 @@
             </div>
           </template>
         </Column>
-        <Column field="status" header="Status">
-          <template #body="slotProps">
-            {{ slotProps.data.status?.toString() }}
+        <Column
+          header="Status"
+          filterField="status"
+          :showFilterMatchModes="false"
+          :filterMenuStyle="{ width: '7rem' }"
+          style="min-width: 10rem"
+          :show-apply-button="false"
+        >
+          <template #body="data">
+            <div class="flex align-items-center gap-2">
+              <span>{{ data.data.status }}</span>
+            </div>
+          </template>
+          <template #filter="{ filterModel, filterCallback }">
+            <MultiSelect
+              v-model="filterModel.value"
+              display="chip"
+              :options="statuses"
+              @change="filterCallback()"
+              placeholder="Select Status"
+              :maxSelectedLabels="3"
+              class="w-full md:w-10rem"
+            />
           </template>
         </Column>
         <Column header="Resting time (Status)">
@@ -95,11 +128,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import type { Ref } from 'vue';
+import { FilterMatchMode } from 'primevue/api';
 import CircularProgressBar from '@/components/IssueCalculator/CircularProgressBar.vue';
-import type { ProjectIF } from '@/model/ProjectIF';
 import getMockData from '@/assets/__mockdata__/mockDataComposer';
+import { getIssueStatusList, type ProjectIF } from '@/model/ProjectIF';
 import { countIssuesByStatus, Issue } from '@/model/Issue/Issue';
 import { calculateRemainingReactionTime } from '@/services/issueCalculator';
 import type { EmployeeIF } from '@/model/EmployeeIF';
@@ -118,8 +152,31 @@ const selectedProject: Ref<ProjectIF> = ref({
   slaSubscriber: null,
 } as ProjectIF);
 
+// Create a reference for the statuses array
+const statuses: Ref<string[]> = ref([]);
+
 // Create a reference for the projects array with mock data
-const projects: Ref<ProjectIF[]> = ref([getMockData(4), getMockData(5)] as ProjectIF[]);
+// Watch for changes in the selectedProject and update the statuses array
+watch(selectedProject, () => {
+  statuses.value = getIssueStatusList(selectedProject.value.issues);
+});
+
+// Create a reference for the filters object with initial configuration
+const filters = ref({
+  status: { value: null, matchMode: FilterMatchMode.IN },
+});
+
+// Create a reference for the projects array with mock data
+const projects: Ref<ProjectIF[]> = ref([
+  getMockData(1),
+  getMockData(2),
+  getMockData(3),
+  getMockData(4),
+  getMockData(5),
+  getMockData(53),
+  getMockData(54),
+  getMockData(55),
+] as ProjectIF[]);
 
 /**
  * Returns the maximum issue count from the given array of issues.
