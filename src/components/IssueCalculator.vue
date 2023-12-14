@@ -77,7 +77,11 @@
             {{ printAssignedTo(slotProps.data.assignedTo) }}
           </template>
         </Column>
-        <Column field="Resting time (Assignee)" header="Resting time (Assignee)"></Column>
+        <Column header="Resting time (Assignee)">
+          <template #body="slotProps">
+            {{ printRestingTime(slotProps.data) }}
+          </template>
+        </Column>
         <Column
           header="State"
           filterField="state"
@@ -234,7 +238,7 @@ function calculateRemainingTime(issue: IssueIF): string {
   const [hasSlaRule, remainingTimeInSeconds] = calculateRemainingReactionTime(issue);
 
   if (!hasSlaRule) {
-    return ''; // Return an empty string if there's no SLA rule or the time has expired
+    return 'kA'; // Return an empty string if there's no SLA rule or the time has expired
   }
   if (hasSlaRule && remainingTimeInSeconds <= 0) {
     return 'Expired';
