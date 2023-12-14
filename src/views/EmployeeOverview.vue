@@ -62,7 +62,7 @@ import type { ProjectIF } from '@/model/ProjectIF';
 import type { IssueDataIF } from '@/model/Issue/IssueDataIF';
 import { getIssueStatusList } from '@/model/ProjectIF';
 import { calculateWorkload, mergeEmployees } from '@/services/workloadCalculator';
-import filterProjectThatHasTheAllowedStatus from '@/services/filter/IssuesStateFilter';
+import { filterProjectThatHasTheAllowedStatus } from '@/services/filter/IssuesStateFilter';
 import useProjectsStore from '@/store/projectStore';
 import useFilterConfigStore from '@/store/filterConfigStore';
 
