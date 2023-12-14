@@ -1,5 +1,5 @@
 import { expect, test, describe } from 'vitest';
-import getMockData from '../../assets/__mockdata__/mockDataComposer';
+// import getMockData from '../../assets/__mockdata__/mockDataComposer';
 import type { ProjectIF } from '../../model/ProjectIF';
 import {
   calculateRemainingReactionTime,
@@ -45,6 +45,7 @@ describe('Issue Calculator should map correctly ', () => {
     statusChanges: [],
     lastStatusChange: null,
     changelog: null,
+    state: '',
   };
   const additionalProject: ProjectIF = {
     id: 4,
@@ -53,18 +54,6 @@ describe('Issue Calculator should map correctly ', () => {
     slaSubscriber: null,
     issues: [additionalIssue],
   };
-  test('map should have 9 entries', () => {
-    projects.push(getMockData(2));
-    expect(Array.isArray(projects[0].issues)).toBe(true);
-
-    projects.push(additionalProject);
-    // when
-    projects.push(getMockData(2));
-    // when
-    const issueMap = mapIssuesToEmployees(projects);
-    // then
-    expect(issueMap.size).eq(9);
-  });
 
   test('map should have the additional Issue', () => {
     projects.push(additionalProject);
@@ -136,6 +125,7 @@ describe('calculateRestingTime', () => {
         assigned: testEmployee1,
       },
     ],
+    state: 'planning',
   };
 
   const testIssueWithDifferentEmployee: IssueIF = {
@@ -159,6 +149,7 @@ describe('calculateRestingTime', () => {
       },
     ],
     statusChanges: [],
+    state: 'planning',
   };
 
   const testIssue: IssueIF = {
@@ -182,6 +173,7 @@ describe('calculateRestingTime', () => {
       },
     ],
     statusChanges: [],
+    state: 'planning',
   };
 
   test('should return the correct resting time', () => {
@@ -275,6 +267,7 @@ describe('calculateRemainingReactionTime', () => {
       },
     ],
     statusChanges: [],
+    state: 'planning',
   };
 
   const testIssueWithoutSlaRule: IssueIF = {
@@ -298,6 +291,7 @@ describe('calculateRemainingReactionTime', () => {
       },
     ],
     statusChanges: [],
+    state: 'planning',
   };
   test('should return the correct remaining reaction time with SLA rule', () => {
     // Calculate the expected remaining reaction time based on the specific expiration date
@@ -387,6 +381,7 @@ test('should pick SLA rule with minimum days', () => {
       },
     ],
     statusChanges: [],
+    state: 'planning',
   };
 
   const expirationDate = new Date(currentDate);

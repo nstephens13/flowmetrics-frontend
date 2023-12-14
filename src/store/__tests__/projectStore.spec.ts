@@ -40,6 +40,7 @@ const project1: ProjectIF = {
       statusChanges: [],
       lastStatusChange: null,
       changelog: null,
+      state: 'planning',
     },
     {
       id: 3,
@@ -71,6 +72,7 @@ const project1: ProjectIF = {
       assignedSlaRule: null,
       lastStatusChange: null,
       changelog: null,
+      state: 'development',
     },
   ],
 };
@@ -110,6 +112,7 @@ const project2: ProjectIF = {
       assignedSlaRule: null,
       lastStatusChange: null,
       changelog: null,
+      state: 'planning',
     },
     {
       id: 3,
@@ -141,6 +144,7 @@ const project2: ProjectIF = {
       statusChanges: [],
       lastStatusChange: null,
       changelog: null,
+      state: 'development',
     },
   ],
 };
