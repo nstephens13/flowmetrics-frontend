@@ -14,7 +14,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
         issues: [
           {
             id: 1,
-            status: 'Open',
+            status: 'open',
             name: 'Issue 1',
             description: 'Issue 1 description',
             assignedTo: {
@@ -38,14 +38,15 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
             dueTo: new Date('2021-01-01'),
             createdAt: new Date('2021-01-01'),
             closedAt: new Date('2021-01-02'),
-            statusChanges: [],
             assignedSlaRule: null,
-            lastStatusChange: null,
-            changelog: null,
+            assigneeRestingTime: null,
+            statusRestingTime: null,
+            assigneeChanges: null,
+            statusChanges: null,
           },
           {
             id: 3,
-            status: 'In Progress',
+            status: 'in progress',
             name: 'Issue 3',
             description: 'Issue 3 description',
             assignedTo: {
@@ -70,9 +71,10 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
             createdAt: new Date('2021-01-01'),
             closedAt: new Date('2021-01-02'),
             assignedSlaRule: null,
-            statusChanges: [],
-            lastStatusChange: null,
-            changelog: null,
+            assigneeRestingTime: null,
+            statusRestingTime: null,
+            assigneeChanges: null,
+            statusChanges: null,
           },
         ],
       },
@@ -84,7 +86,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
         issues: [
           {
             id: 5,
-            status: 'Open',
+            status: 'open',
             name: 'Issue 5',
             description: 'Issue 5 description',
             assignedTo: {
@@ -109,13 +111,14 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
             createdAt: new Date('2021-01-01'),
             closedAt: new Date('2021-01-02'),
             assignedSlaRule: null,
-            statusChanges: [],
-            lastStatusChange: null,
-            changelog: null,
+            assigneeRestingTime: null,
+            statusRestingTime: null,
+            assigneeChanges: null,
+            statusChanges: null,
           },
           {
             id: 3,
-            status: 'In Progress',
+            status: 'in progress',
             name: 'Issue 3',
             description: 'Issue 3 description',
             assignedTo: {
@@ -140,9 +143,10 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
             createdAt: new Date('2021-01-01'),
             closedAt: new Date('2021-01-02'),
             assignedSlaRule: null,
-            statusChanges: [],
-            lastStatusChange: null,
-            changelog: null,
+            assigneeRestingTime: null,
+            statusRestingTime: null,
+            assigneeChanges: null,
+            statusChanges: null,
           },
         ],
       },
@@ -152,7 +156,9 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
       id: 4,
       projectFilter: {
         projectsWhiteList: projects,
-        issueStatusIncludeFilter: ['Open', 'In Progress'],
+        issueStatusIncludeFilter: ['open', 'in progress'],
+        minimumAssigneeRestingTime: 0,
+        minimumNumberOfStatusChanges: 0,
       },
     };
 
@@ -166,7 +172,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
         issues: [
           {
             id: 1,
-            status: 'Open',
+            status: 'open',
             name: 'Issue 1',
             description: 'Issue 1 description',
             assignedTo: {
@@ -191,13 +197,14 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
             createdAt: new Date('2021-01-01'),
             closedAt: new Date('2021-01-02'),
             assignedSlaRule: null,
-            statusChanges: [],
-            lastStatusChange: null,
-            changelog: null,
+            assigneeRestingTime: null,
+            statusRestingTime: null,
+            assigneeChanges: null,
+            statusChanges: null,
           },
           {
             id: 3,
-            status: 'In Progress',
+            status: 'in progress',
             name: 'Issue 3',
             description: 'Issue 3 description',
             assignedTo: {
@@ -222,9 +229,10 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
             createdAt: new Date('2021-01-01'),
             closedAt: new Date('2021-01-02'),
             assignedSlaRule: null,
-            statusChanges: [],
-            lastStatusChange: null,
-            changelog: null,
+            assigneeRestingTime: null,
+            statusRestingTime: null,
+            assigneeChanges: null,
+            statusChanges: null,
           },
         ],
       },
@@ -236,7 +244,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
         issues: [
           {
             id: 5,
-            status: 'Open',
+            status: 'open',
             name: 'Issue 5',
             description: 'Issue 5 description',
             assignedTo: {
@@ -261,13 +269,14 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
             createdAt: new Date('2021-01-01'),
             closedAt: new Date('2021-01-02'),
             assignedSlaRule: null,
-            statusChanges: [],
-            lastStatusChange: null,
-            changelog: null,
+            assigneeRestingTime: null,
+            statusRestingTime: null,
+            assigneeChanges: null,
+            statusChanges: null,
           },
           {
             id: 3,
-            status: 'In Progress',
+            status: 'in progress',
             name: 'Issue 3',
             description: 'Issue 3 description',
             assignedTo: {
@@ -292,9 +301,10 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
             createdAt: new Date('2021-01-01'),
             closedAt: new Date('2021-01-02'),
             assignedSlaRule: null,
-            statusChanges: [],
-            lastStatusChange: null,
-            changelog: null,
+            assigneeRestingTime: null,
+            statusRestingTime: null,
+            assigneeChanges: null,
+            statusChanges: null,
           },
         ],
       },

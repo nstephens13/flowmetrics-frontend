@@ -14,7 +14,7 @@ import autoTable from 'jspdf-autotable';
 import getMockData from '@/assets/__mockdata__/mockDataComposer';
 import type { ProjectIF } from '@/model/ProjectIF';
 import type { IssueIF } from '@/model/Issue/IssueIF';
-import { printSlaRuleNames, hasSlaRule } from '@/model/Issue/IssueIF';
+import { printSlaRuleNames, hasSlaRule } from '@/services/issueCalculator';
 
 const isGenerating = ref(false);
 const project = getMockData(7) as ProjectIF;

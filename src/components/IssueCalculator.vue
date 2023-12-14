@@ -14,15 +14,15 @@
         <div class="flex-wrap flex align-items-center justify-content-center">
           <CircularProgressBar
             class="flex align-items-center justify-content-center m-2"
-            :value="countIssuesByStatus(selectedProject.issues, 'Open')"
+            :value="countIssuesByStatus(selectedProject.issues, 'open')"
             :max="getIssueCountMax(selectedProject.issues)"
             percentage
             rounded
-            title="Open issues"
+            title="open issues"
           />
           <CircularProgressBar
             class="flex align-items-center justify-content-center m-2"
-            :value="countIssuesByStatus(selectedProject.issues, 'Closed')"
+            :value="countIssuesByStatus(selectedProject.issues, 'closed')"
             :max="getIssueCountMax(selectedProject.issues)"
             percentage
             rounded
@@ -34,7 +34,7 @@
             :max="getIssueCountMax(selectedProject.issues)"
             percentage
             rounded
-            title="In Progress"
+            title="in progress"
           />
         </div>
         <div class="flex-grow-1 flex align-items-center justify-content-center"></div>
@@ -84,9 +84,10 @@ import type { Ref } from 'vue';
 import CircularProgressBar from '@/components/IssueCalculator/CircularProgressBar.vue';
 import type { ProjectIF } from '@/model/ProjectIF';
 import getMockData from '@/assets/__mockdata__/mockDataComposer';
-import { countIssuesByStatus, Issue, getTimeLeft } from '@/model/Issue/Issue';
+import { countIssuesByStatus, Issue, getTimeLeft } from '@/services/Issue';
 import type { EmployeeIF } from '@/model/EmployeeIF';
 import type { IssueIF } from '@/model/Issue/IssueIF';
+import { getProject } from '@/assets/__mockdata__/mockdata';
 </script>
 
 <script lang="ts">
@@ -102,7 +103,30 @@ const selectedProject: Ref<ProjectIF> = ref({
 } as ProjectIF);
 
 // Create a reference for the projects array with mock data
-const projects: Ref<ProjectIF[]> = ref([getMockData(4), getMockData(5)] as ProjectIF[]);
+const projects: Ref<ProjectIF[]> = ref([
+  getMockData(4),
+  getMockData(5),
+  getProject(1),
+  getProject(2),
+  getProject(3),
+  getProject(4),
+  getProject(5),
+  getProject(6),
+  getProject(7),
+  getProject(8),
+  getProject(9),
+  getProject(10),
+  getProject(11),
+  getProject(12),
+  getProject(13),
+  getProject(14),
+  getProject(15),
+  getProject(16),
+  getProject(17),
+  getProject(18),
+  getProject(19),
+  getProject(20),
+] as ProjectIF[]);
 
 /**
  * Returns the maximum issue count from the given array of issues.
@@ -135,11 +159,13 @@ function printAssignedTo(employee: EmployeeIF | null): string {
  * @return returns resting time in hours or if more than 24 hours returns in days
  */
 function printRestingTime(issue: IssueIF): string {
-  if (issue.lastStatusChange == null) {
+  if (issue.statusChanges == null) {
     return '0';
   }
   const currentTime: Date = new Date();
-  const difference: number = currentTime.valueOf() - issue.lastStatusChange.valueOf();
+  const difference: number =
+    currentTime.valueOf() -
+    (issue.statusChanges[issue.statusChanges.length - 1].created?.valueOf() ?? 0);
   if (difference >= 86400000) {
     return `${(difference / 86400000).toFixed(0).toString()}d`; // returns time in days (86400000 ms = 1 day)
   }
