@@ -78,7 +78,31 @@
           </template>
         </Column>
         <Column field="Resting time (Assignee)" header="Resting time (Assignee)"></Column>
-        <Column field="state" header="State"></Column>
+        <Column
+          header="State"
+          filterField="state"
+          :showFilterMatchModes="false"
+          :filterMenuStyle="{ width: '7rem' }"
+          style="min-width: 10rem"
+          :show-apply-button="false"
+        >
+          <template #body="data">
+            <div class="flex align-items-center gap-2">
+              <span>{{ data.data.state }}</span>
+            </div>
+          </template>
+          <template #filter="{ filterModel, filterCallback }">
+            <MultiSelect
+              v-model="filterModel.value"
+              display="chip"
+              :options="states"
+              @change="filterCallback()"
+              placeholder="Select States"
+              :maxSelectedLabels="3"
+              class="w-full md:w-10rem"
+            />
+          </template>
+        </Column>
         <Column header="Status changes" style="width: 150px">
           <template #body="data">
             <div v-for="statusChange in data.data.statusChanges" :key="statusChange.name">
@@ -154,6 +178,9 @@ const selectedProject: Ref<ProjectIF> = ref({
 
 // Create a reference for the statuses array
 const statuses: Ref<string[]> = ref([]);
+
+// Create a reference for the states array
+const states: Ref<string[]> = ref(['planning', 'development', 'testing']);
 
 // Create a reference for the projects array with mock data
 // Watch for changes in the selectedProject and update the statuses array

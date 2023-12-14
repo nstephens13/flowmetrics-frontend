@@ -1,5 +1,5 @@
 import { describe, assert, test } from 'vitest';
-import filterProjectThatHasTheAllowedStatus from '@/services/filter/IssuesStateFilter';
+import { filterProjectThatHasTheAllowedStatus } from '@/services/filter/IssuesStateFilter';
 import type { FilterConfigIF } from '@/model/FilterConfigIF';
 import type { ProjectIF } from '@/model/ProjectIF';
 
@@ -42,6 +42,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
             assignedSlaRule: null,
             lastStatusChange: null,
             changelog: null,
+            state: 'planning',
           },
           {
             id: 3,
@@ -73,6 +74,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
             statusChanges: [],
             lastStatusChange: null,
             changelog: null,
+            state: 'development',
           },
         ],
       },
@@ -112,6 +114,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
             statusChanges: [],
             lastStatusChange: null,
             changelog: null,
+            state: 'planning',
           },
           {
             id: 3,
@@ -143,6 +146,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
             statusChanges: [],
             lastStatusChange: null,
             changelog: null,
+            state: 'development',
           },
         ],
       },
@@ -153,6 +157,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
       projectFilter: {
         projectsWhiteList: projects,
         issueStatusIncludeFilter: ['Open', 'In Progress'],
+        issueStateIncludeFilter: ['planning', 'development', 'testing'],
       },
     };
 
@@ -194,6 +199,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
             statusChanges: [],
             lastStatusChange: null,
             changelog: null,
+            state: 'planning',
           },
           {
             id: 3,
@@ -225,6 +231,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
             statusChanges: [],
             lastStatusChange: null,
             changelog: null,
+            state: 'development',
           },
         ],
       },
@@ -264,6 +271,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
             statusChanges: [],
             lastStatusChange: null,
             changelog: null,
+            state: 'planning',
           },
           {
             id: 3,
@@ -295,6 +303,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
             statusChanges: [],
             lastStatusChange: null,
             changelog: null,
+            state: 'development',
           },
         ],
       },

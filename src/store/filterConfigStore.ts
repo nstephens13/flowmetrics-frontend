@@ -9,6 +9,7 @@ const useFilterConfigStore = defineStore('filterConfig', {
       projectFilter: {
         projectsWhiteList: [] as ProjectIF[],
         issueStatusIncludeFilter: [] as string[],
+        issueStateIncludeFilter: [] as string[],
       } as ProjectFilterConfigIF,
     } as FilterConfigIF,
   }),

@@ -26,6 +26,28 @@ export function filterIssuesInProjectWithAStatusWhitelist(
 }
 
 /**
+ * Filters the issues in a project based on the allowed state whitelist specified in the filter configuration.
+ *
+ * @param project - The project to filter.
+ * @param filterConfig - The filter configuration containing the allowed state whitelist.
+ * @returns The filtered project with only the issues that have the allowed state.
+ */
+export function filterIssuesInProjectWithStateWhitelist(
+  project: ProjectIF,
+  filterConfig: FilterConfigIF
+): ProjectIF {
+  const filteredIssues = project.issues.filter(
+    (issue: IssueIF) =>
+      issue.state && filterConfig.projectFilter.issueStateIncludeFilter.includes(issue.state)
+  );
+
+  return {
+    ...project,
+    issues: filteredIssues,
+  };
+}
+
+/**
  * Filters a project list based on the projects whitelist specified in the filter configuration.
  *
  * @param projects - The project list to filter.
