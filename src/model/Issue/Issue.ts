@@ -32,6 +32,10 @@ class Issue implements IssueIF {
 
   changelog: ChangeEventIF[] | null;
 
+  state: string | null;
+
+  static planningStatusList: any;
+
   constructor(
     id: number,
     name: string,
@@ -45,7 +49,8 @@ class Issue implements IssueIF {
     statusChanges: StatusChangesIF[],
     assignedSlaRule: SlaRule[] | null,
     lastStatusChange: Date | null,
-    changelog: ChangeEventIF[] | null
+    changelog: ChangeEventIF[] | null,
+    state: string | null
   ) {
     this.id = id;
     this.name = name;
@@ -60,14 +65,41 @@ class Issue implements IssueIF {
     this.statusChanges = statusChanges;
     this.lastStatusChange = lastStatusChange;
     this.changelog = changelog;
+    this.state = state;
   }
 }
 
+// Define lists of different category with statuses
+const planningStatusList: string[] = ['Planned', 'Design', 'Open'];
+const devStatusList: string[] = ['In Work', 'Review', 'In Progress'];
+const testingStatusList: string[] = ['UnitTest', 'E2E'];
+const nonDisplayedStatusList: string[] = ['Closed'];
+const nonDisplayedStateList: string[] = [''];
+
+// Function sets State using Issue-Status
+function assignStateToIssue(issue: Issue): string | null {
+  const status = issue.status || '';
+
+  if (planningStatusList.includes(status)) {
+    return 'planning';
+  }
+  if (devStatusList.includes(status)) {
+    return 'development';
+  }
+  if (testingStatusList.includes(status)) {
+    return 'testing';
+  }
+  if (nonDisplayedStatusList.includes(status)) {
+    return null;
+  }
+  return 'undefined';
+}
 /**
  * Returns the name of the employee assigned to the issue.
  * @param issue - The Issue object.
  * @returns The assigned employee's name.
  */
+
 function getAssignedToName(issue: Issue): string {
   if (issue.assignedTo) {
     return `${issue.assignedTo.firstName} ${issue.assignedTo.lastName}`;
@@ -127,4 +159,10 @@ export {
   getAssignedToName,
   countIssuesByStatus,
   getSlaRules,
+  assignStateToIssue,
+  planningStatusList,
+  devStatusList,
+  testingStatusList,
+  nonDisplayedStatusList,
+  nonDisplayedStateList,
 };

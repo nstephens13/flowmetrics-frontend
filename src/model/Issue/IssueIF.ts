@@ -18,6 +18,8 @@ import type { StatusChangesIF } from '@/model/Issue/StatusChangesIF';
  * @prop {StatusChangesIF[]} statusChanges the status changes of the issue
  * @prop {SlaRule} assignedSlaRule the assigned SLA rule of the issue
  * @prop {ChangeEventIF[]} changelog the changelog of the issue
+ * @prop {State} state the State of the status of issue-progress
+
  */
 
 // Enum to set status of Issue
@@ -35,6 +37,7 @@ export interface IssueIF {
   lastStatusChange: Date | null;
   assignedSlaRule: SlaRule[] | null;
   changelog: ChangeEventIF[] | null;
+  state: string | null;
 }
 
 // function to check if issue has an assigned SLA rule

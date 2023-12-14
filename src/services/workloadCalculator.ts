@@ -9,7 +9,7 @@ import {
   nonDisplayedStatusList,
   planningStatusList,
   testingStatusList,
-} from '@/assets/__mockdata__/mockDataComposer';
+} from '@/model/Issue/Issue';
 
 const UnassignedEmployee: EmployeeIF = {
   id: 0,
