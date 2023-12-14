@@ -7,9 +7,10 @@ import PrimeVue from 'primevue/config';
 import Menubar from 'primevue/menubar';
 import router from '@/router/index';
 import MenuBar from '@/components/MenuBar.vue';
+import SlideMenuButton from '@/components/SlideMenuButton.vue';
 
 // Describe block for the test suite
-describe('Menubar Button should open sidebar', () => {
+describe('Menubar and sidebar', () => {
   // Mounting the MenuBar component with necessary configuration
   const wrapper = mount(MenuBar, {
     global: {
@@ -35,17 +36,15 @@ describe('Menubar Button should open sidebar', () => {
   });
 
   // Test to check opening and closing of the sidebar
-  test('should open and close sidebar', async () => {
-    let menubar = wrapper.findComponent(Menu);
-    expect(menubar.exists()).toBe(false);
-
+  test('should slide and hide sidebar', async () => {
+    expect(wrapper.getComponent(Menubar).isVisible()).toBe(true);
     const button = wrapper.getComponent(Menubar).findComponent(Button);
     await button.trigger('click');
-
     expect(wrapper.getComponent(Sidebar).vm.$props.visible).toBe(true);
-    menubar = wrapper.findComponent(Menu);
-
-    await button.trigger('click');
+    const slideMenuButton = wrapper.findComponent(SlideMenuButton);
+    await slideMenuButton.trigger('mouseenter');
+    expect(wrapper.getComponent(Sidebar).vm.$props.visible).toBe(true);
+    await window.dispatchEvent(new MouseEvent('mousemove', { clientX: 301 })); // mouse after 300 axis hide SideMenu
     expect(wrapper.getComponent(Sidebar).vm.$props.visible).toBe(false);
   });
 
@@ -53,8 +52,8 @@ describe('Menubar Button should open sidebar', () => {
   test('sidebar menu four items', async () => {
     const menubar = wrapper.findComponent(Menu);
     expect(menubar.exists()).toBe(false);
-    const button = wrapper.getComponent(Menubar).findComponent(Button);
-    await button.trigger('click');
+    const slideMenuButton = wrapper.findComponent(SlideMenuButton);
+    await slideMenuButton.trigger('mouseenter');
     wrapper.findComponent(Menu);
     const menu = await wrapper.getComponent(Sidebar).getComponent(Menu);
     expect(menu.findAll('.p-menuitem').length).toBe(4);
