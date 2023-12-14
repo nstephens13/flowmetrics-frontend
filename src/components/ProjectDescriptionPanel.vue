@@ -49,20 +49,12 @@
             <template #empty> No issues found.</template>
             <template #loading> Loading issues. Please wait.</template>
             <Column field="name" header="Name"></Column>
-            <Column field="description" header="Description"></Column>
             <Column field="assignedTo" header="Assigned to">
               <template #body="slotProps">
                 {{ printAssignedTo(slotProps.data.assignedTo) }}
               </template>
             </Column>
-            <Column field="createdBy" header="Created by">
-              <template #body="slotProps">
-                {{ printAssignedTo(slotProps.data.assignedTo) }}
-              </template>
-            </Column>
             <Column field="createdAt" header="Created on"></Column>
-            <Column field="closedAt" header="Closed on"></Column>
-            <Column field="dueTo" header="Due on"></Column>
             <Column
               header="Status"
               filterField="status"
@@ -88,15 +80,17 @@
                 />
               </template>
             </Column>
-            <Column header="Remaining Reaction Time">
-              <template #body="slotProps">
-                {{ calculateRemainingTime(slotProps.data) }}
-              </template>
-            </Column>
-            <Column header="Status changes" style="width: 150px">
+            <Column
+              header="State"
+              filterField="state"
+              :showFilterMatchModes="false"
+              :filterMenuStyle="{ width: '7rem' }"
+              style="min-width: 10rem"
+              :show-apply-button="false"
+            >
               <template #body="data">
-                <div v-for="statusChange in data.data.statusChanges" :key="statusChange.name">
-                  {{ statusChange.name }} : {{ statusChange.value }}
+                <div class="flex align-items-center gap-2">
+                  <span>{{ data.data.state }}</span>
                 </div>
               </template>
             </Column>
@@ -114,8 +108,6 @@ import { FilterMatchMode } from 'primevue/api';
 import type { EmployeeIF } from '@/model/EmployeeIF';
 import { getIssueStatusList, type ProjectIF } from '@/model/ProjectIF';
 import getMockData from '@/assets/__mockdata__/mockDataComposer';
-import { calculateRemainingReactionTime } from '@/services/issueCalculator';
-import type { IssueIF } from '@/model/Issue/IssueIF';
 
 // Create a reference for the selectedProject with initial data
 const selectedProject = ref({
@@ -140,25 +132,6 @@ function printAssignedTo(employee: EmployeeIF | null): string {
   const firstName = employee?.firstName ?? '';
   const lastName = employee?.lastName ?? '';
   return `${firstName} ${lastName}`;
-}
-
-function calculateRemainingTime(issue: IssueIF): string {
-  const [hasSlaRule, remainingTimeInSeconds] = calculateRemainingReactionTime(issue);
-
-  if (!hasSlaRule) {
-    return ''; // Return an empty string if there's no SLA rule or the time has expired
-  }
-  if (hasSlaRule && remainingTimeInSeconds <= 0) {
-    return 'Expired';
-  }
-
-  const remainingDays = Math.floor(remainingTimeInSeconds / (60 * 60 * 24));
-  const remainingHours = Math.floor((remainingTimeInSeconds % (60 * 60 * 24)) / (60 * 60));
-
-  if (remainingDays > 1) {
-    return `${remainingDays} days`;
-  }
-  return `${remainingHours} hours`;
 }
 
 // Watch for changes in the selectedProject and update the statuses array
