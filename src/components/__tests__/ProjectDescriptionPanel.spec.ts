@@ -69,27 +69,30 @@ describe('Project Overview should load all the Components', () => {
       });
   });
 
-  test('Status changes are shown in Mocking Bird Project', async () => {
-    const dropdownOptions = wrapper.getComponent(Dropdown).props('options');
-    const mockingBirdProject = dropdownOptions[2];
-    wrapper.getComponent(Dropdown).vm.$emit('change', dropdownOptions[2]);
+  test('DataTable should contain "id" column with field ', () => {
+    const dataTable = wrapper.getComponent(DataTable);
+    const columns = dataTable.findAllComponents(Column);
+    const columnExists = columns.some((column) => column.props('field') === 'id');
+    expect(columnExists).toBe(true);
+  });
 
-    wrapper
-      .getComponent(Dropdown)
-      .setValue(mockingBirdProject)
-      .then(() => {
-        wrapper.trigger('click', mockingBirdProject).then(() => {
-          const statusChangesColumnCells = wrapper.findAll('.p-datatable-tbody tr td:last-child');
-          const statusChangesColumnData = (statusChangesColumnCells.at(0) as any)?.text();
-          const expectedData = /\b\d+\b/g; // is a regular expression that matches one or more digits (\d+) surrounded by word boundaries (\b). The g flag indicates a global search, so it will find all matches in the string.
-          const extractedNumbers = statusChangesColumnData.match(expectedData);
-          expect(extractedNumbers).toHaveLength(1);
-          extractedNumbers.forEach((number: string) => {
-            expect(Number.isInteger(Number(number))).toBe(true);
-          });
-        });
-        expect(6).toEqual(dropdownOptions.length);
-        expect('Mocking Bird Project').toEqual(mockingBirdProject.name);
-      });
+  test('DataTable should contain "name" column with field ', () => {
+    const dataTable = wrapper.getComponent(DataTable);
+    const columns = dataTable.findAllComponents(Column);
+    const columnExists = columns.some((column) => column.props('field') === 'name');
+    expect(columnExists).toBe(true);
+  });
+  test('DataTable should contain "assignedTo" column with field ', () => {
+    const dataTable = wrapper.getComponent(DataTable);
+    const columns = dataTable.findAllComponents(Column);
+    const columnExists = columns.some((column) => column.props('field') === 'assignedTo');
+    expect(columnExists).toBe(true);
+  });
+
+  test('DataTable should contain "createdAt" column with field ', () => {
+    const dataTable = wrapper.getComponent(DataTable);
+    const columns = dataTable.findAllComponents(Column);
+    const columnExists = columns.some((column) => column.props('field') === 'createdAt');
+    expect(columnExists).toBe(true);
   });
 });
