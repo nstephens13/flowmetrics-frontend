@@ -23,9 +23,10 @@ import EmployeeOverview from '../../views/EmployeeOverview.vue';
 import SlaComponent from '../../views/SlaView.vue';
 
 describe('ProjectDescriptionPanel Divider component', () => {
+  const pinia = createTestingPinia({ stubActions: true });
   const wrapper = mount(ProjectOverview, {
     global: {
-      plugins: [PrimeVue, router],
+      plugins: [PrimeVue, router, pinia],
       components: {
         Dropdown,
         Panel,
@@ -94,6 +95,7 @@ describe('Issue Calculator view', () => {
         Dropdown,
         Panel,
         Card,
+        MultiSelect,
         DataTable,
         Column,
         Divider,
@@ -111,13 +113,14 @@ describe('Issue Calculator view', () => {
 });
 
 describe('Sla Rules view', () => {
-  const pinia = createTestingPinia({ stubActions: false });
+  const pinia = createTestingPinia({ stubActions: true });
   const wrapper = mount(SlaComponent, {
     global: {
       plugins: [PrimeVue, router, pinia],
       components: {
         InputText,
         Dropdown,
+        MultiSelect,
         Card,
         Button,
         Column,

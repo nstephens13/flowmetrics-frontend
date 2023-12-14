@@ -109,3 +109,28 @@ export function printSlaRuleNames(issue: IssueIF): string {
   }
   return issue.assignedSlaRule.map((rule) => rule.name).join(', ');
 }
+
+// function to calculate the status changes of an issue from the changeLog
+// the status changes are calculated by the switch between the statuses
+export function calculateStatusChanges(issue: IssueIF): number {
+  if (issue.statusChanges === null) {
+    return 0;
+  }
+  let statusChanges = 0;
+  let lastStatus: EmployeeIF | string | null = '';
+
+  issue.statusChanges.forEach((statusChange) => {
+    if (statusChange.changes !== null) {
+      statusChange.changes.forEach((change) => {
+        if (change.changeType === 'status') {
+          if (lastStatus !== change.to) {
+            statusChanges += 1;
+            lastStatus = change.to;
+          }
+        }
+      });
+    }
+  });
+
+  return statusChanges;
+}

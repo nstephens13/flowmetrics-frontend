@@ -12,7 +12,7 @@ const project1: ProjectIF = {
   issues: [
     {
       id: 1,
-      status: 'Open',
+      status: 'open',
       name: 'Issue 1',
       description: 'Issue 1 description',
       assignedTo: {
@@ -44,7 +44,7 @@ const project1: ProjectIF = {
     },
     {
       id: 3,
-      status: 'In Progress',
+      status: 'in progress',
       name: 'Issue 3',
       description: 'Issue 3 description',
       assignedTo: {
@@ -84,7 +84,7 @@ const project2: ProjectIF = {
   issues: [
     {
       id: 5,
-      status: 'Open',
+      status: 'open',
       name: 'Issue 5',
       description: 'Issue 5 description',
       assignedTo: {
@@ -116,7 +116,7 @@ const project2: ProjectIF = {
     },
     {
       id: 3,
-      status: 'In Progress',
+      status: 'in progress',
       name: 'Issue 3',
       description: 'Issue 3 description',
       assignedTo: {

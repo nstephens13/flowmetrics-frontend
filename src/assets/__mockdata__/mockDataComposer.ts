@@ -3,8 +3,8 @@ import type { ProjectIF } from '@/model/ProjectIF';
 import type { EmployeeIF } from '@/model/EmployeeIF';
 import type { IssueIF } from '@/model/Issue/IssueIF';
 import employeeJson from '@/assets/__mockdata__/json/Employees.json';
-import issueJson2 from '@/assets/__mockdata__/json//Issues_2.json';
-import issueJson from '@/assets/__mockdata__/json//Issues.json';
+import issueJson2 from '@/assets/__mockdata__/json/Issues_2.json';
+import issueJson from '@/assets/__mockdata__/json/Issues.json';
 import type { Issue } from '@/services/Issue';
 import type { SlaRule } from '@/model/Sla/SlaRule';
 import { Category, statusLists } from './generator/StatusLists';
@@ -288,13 +288,13 @@ function getMockData(dataset: number): ProjectIF {
 
     case 3: {
       for (let iterator = 0; iterator < 280; iterator++) {
-        let status = 'Open';
+        let status = 'open';
         let closedAt = null;
 
-        const randomStatus = getRandomInt(3); // 0: Open, 1: Closed, 2: In Progress
+        const randomStatus = getRandomInt(3); // 0: open, 1: closed, 2: in progress
 
         if (randomStatus === 2) {
-          status = 'In Progress';
+          status = 'in progress';
         } else if (randomStatus === 1) {
           closedAt = faker.date.recent();
         }
@@ -362,13 +362,13 @@ function getMockData(dataset: number): ProjectIF {
       [employeesArrayFromFile, issuesArrayFromFile] = loadArraysFromFile(issueJson2);
 
       for (let iterator = 0; iterator < 280; iterator++) {
-        let status = 'Open';
+        let status = 'open';
         let closedAt = null;
 
-        const randomStatus = getRandomInt(3); // 0: Open, 1: Closed, 2: In Progress
+        const randomStatus = getRandomInt(3); // 0: open, 1: closed, 2: in progress
 
         if (randomStatus === 2) {
-          status = 'In Progress';
+          status = 'in progress';
         } else if (randomStatus === 1) {
           closedAt = faker.date.recent();
         }
@@ -510,10 +510,10 @@ function getMockData(dataset: number): ProjectIF {
       const numberOfEmployees = employeesArrayFromFile.length;
 
       for (let iterator = 0; iterator < numberOfIssues; iterator++) {
-        const randomStatus = getRandomInt(4); // 0: Open, 1: Closed, 2: In Progress
+        const randomStatus = getRandomInt(4); // 0: open, 1: closed, 2: in progress
 
         if (randomStatus === 2) {
-          issues[iterator].status = 'In Progress';
+          issues[iterator].status = 'in progress';
           const [devStatus] = devStatusList;
           issues[iterator].status = devStatus;
         } else if (randomStatus === 1) {
@@ -578,10 +578,10 @@ function getMockData(dataset: number): ProjectIF {
       const numberOfEmployees = employeesArrayFromFile.length;
 
       for (let iterator = 0; iterator < numberOfIssues; iterator++) {
-        const randomStatus = getRandomInt(4); // 0: Open, 1: Closed, 2: In Progress
+        const randomStatus = getRandomInt(4); // 0: open, 1: closed, 2: in progress
 
         if (randomStatus === 2) {
-          issues[iterator].status = 'In Progress';
+          issues[iterator].status = 'in progress';
           const [devStatus] = devStatusList;
           issues[iterator].status = devStatus;
         } else if (randomStatus === 1) {
@@ -745,41 +745,41 @@ function getMockData(dataset: number): ProjectIF {
       };
 
       const date = new Date(2018, 0o5, 0o5, 17, 23, 42, 11);
-      issuesForProject[0].status = 'In Progress';
+      issuesForProject[0].status = 'in progress';
       issuesForProject[0].createdAt = new Date();
       issuesForProject[0].assignedSlaRule = [slaRule1];
-      issuesForProject[2].status = 'Closed';
+      issuesForProject[2].status = 'closed';
       issuesForProject[2].closedAt = date; // Set the specific closedAt date
-      issuesForProject[3].status = 'Closed';
+      issuesForProject[3].status = 'closed';
       issuesForProject[3].closedAt = date; // Set the specific closedAt date
-      issuesForProject[4].status = 'Closed';
+      issuesForProject[4].status = 'closed';
       issuesForProject[4].closedAt = date; // Set the specific closedAt date
-      issuesForProject[5].status = 'In Progress';
+      issuesForProject[5].status = 'in progress';
       issuesForProject[5].createdAt = new Date();
       issuesForProject[5].assignedSlaRule = [slaRule2, slaRule3];
-      issuesForProject[6].status = 'Closed';
+      issuesForProject[6].status = 'closed';
       issuesForProject[6].createdAt = date;
       issuesForProject[6].closedAt = date; // Set the specific closedAt date
       issuesForProject[6].assignedSlaRule = [slaRule2, slaRule3];
 
-      [issuesForProject[0].status, issuesForProject[0].status] = ['In Progress', devStatusList[0]];
+      [issuesForProject[0].status, issuesForProject[0].status] = ['in progress', devStatusList[0]];
       [issuesForProject[1].status] = [planningStatusList[0]];
       [issuesForProject[2].status, issuesForProject[2].status, issuesForProject[2].closedAt] = [
-        'Closed',
+        'closed',
         testingStatusList[0],
         date,
       ];
       [issuesForProject[3].status, issuesForProject[3].status, issuesForProject[3].closedAt] = [
-        'Closed',
+        'closed',
         testingStatusList[0],
         date,
       ];
       [issuesForProject[4].status, issuesForProject[4].status, issuesForProject[4].closedAt] = [
-        'Closed',
+        'closed',
         testingStatusList[0],
         date,
       ];
-      [issuesForProject[5].status, issuesForProject[5].status] = ['In Progress', devStatusList[0]];
+      [issuesForProject[5].status, issuesForProject[5].status] = ['in progress', devStatusList[0]];
       [issuesForProject[6].status, issuesForProject[6].closedAt] = [testingStatusList[0], date];
 
       return {

@@ -27,7 +27,7 @@ describe('Issue Class', () => {
     const createdAt = new Date();
     const closedAt = null;
     const dueTo = new Date();
-    const status = 'Open';
+    const status = 'open';
     const assignedSlaRule = null;
 
     const issue = new Issue(
@@ -303,7 +303,7 @@ describe('countIssuesByStatus', () => {
       new Date(),
       null,
       null,
-      'Open',
+      'open',
       {},
       {},
       [],
@@ -327,7 +327,7 @@ describe('countIssuesByStatus', () => {
       new Date(),
       null,
       null,
-      'Closed',
+      'closed',
       {},
       {},
       [],
@@ -351,7 +351,7 @@ describe('countIssuesByStatus', () => {
       new Date(),
       null,
       null,
-      'In Progress',
+      'in progress',
       {},
       {},
       [],
@@ -375,7 +375,7 @@ describe('countIssuesByStatus', () => {
       new Date(),
       null,
       null,
-      'Open',
+      'open',
       {},
       {},
       [],
@@ -399,7 +399,7 @@ describe('countIssuesByStatus', () => {
       new Date(),
       null,
       null,
-      'Closed',
+      'closed',
       {},
       {},
       [],
@@ -409,9 +409,9 @@ describe('countIssuesByStatus', () => {
   ];
 
   test('returns the count of issues with the specified status', () => {
-    const openIssuesCount = countIssuesByStatus(issueList, 'Open');
-    const closedIssuesCount = countIssuesByStatus(issueList, 'Closed');
-    const inProgressIssuesCount = countIssuesByStatus(issueList, 'In Progress');
+    const openIssuesCount = countIssuesByStatus(issueList, 'open');
+    const closedIssuesCount = countIssuesByStatus(issueList, 'closed');
+    const inProgressIssuesCount = countIssuesByStatus(issueList, 'in progress');
 
     expect(openIssuesCount).toBe(2);
     expect(closedIssuesCount).toBe(2);
@@ -443,7 +443,7 @@ describe('getSlaRules', () => {
       new Date(),
       null,
       null,
-      'Open',
+      'open',
       {},
       {},
       [],

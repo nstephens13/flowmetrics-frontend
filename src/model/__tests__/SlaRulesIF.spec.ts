@@ -42,7 +42,7 @@ describe('assignedSlaRules', () => {
       createdAt: new Date(),
       closedAt: null,
       dueTo: null,
-      status: 'Open',
+      status: 'open',
       assignedSlaRule: slaRules,
       statusRestingTime: null,
       assigneeRestingTime: null,
