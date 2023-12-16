@@ -238,7 +238,7 @@ function calculateRemainingTime(issue: IssueIF): string {
   const [hasSlaRule, remainingTimeInSeconds] = calculateRemainingReactionTime(issue);
 
   if (!hasSlaRule) {
-    return 'kA'; // Return an empty string if there's no SLA rule or the time has expired
+    return ''; // Return an empty string if there's no SLA rule or the time has expired
   }
   if (hasSlaRule && remainingTimeInSeconds <= 0) {
     return 'Expired';
