@@ -1,9 +1,17 @@
 <template>
-  <card style="background-color: var(--flowMetricsBlue); color: #ffffffff">
+  <card style="background-color: var(--flowMetricsBlue); color: #ffffffff; width: 400px">
     <template #title> Key Facts </template>
     <template #content>
-      <div> Opened issues: {{ getNumberOfIssues(project) }} </div>
-      <div> Complied SLA Rules: {{ getPercentageSlaRulesComplied(project) }}%</div>
+      <div class="flex flex-row justify-content-between">
+        <div class="flex flex-column">
+          <div> Opened issues:</div>
+          <div> Complied SLA Rules:</div>
+        </div>
+        <div class="flex flex-column">
+          <div>{{ getNumberOfIssues(project) }}</div>
+          <div>{{ getPercentageSlaRulesComplied(project) }}%</div>
+        </div>
+      </div>
     </template>
   </card>
 </template>

@@ -6,7 +6,7 @@
         <Divider class="p-divider p-divider-horizontal divider-position" />
       </template>
       <template #content>
-        <div class="flex-container">
+        <div class="flex flex-row justify-content-between">
           <Dropdown
             v-model="selectedProject"
             :options="projects"
@@ -178,10 +178,5 @@ const projects: Ref<ProjectIF[]> = ref([
 
 .divider-position {
   width: 100%;
-}
-.flex-container {
-  display: flex;
-  justify-content: space-between;
-  align-self: start;
 }
 </style>
