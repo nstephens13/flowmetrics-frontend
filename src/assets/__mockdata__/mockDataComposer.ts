@@ -208,7 +208,7 @@ function getMockData(dataset: number): ProjectIF {
       [issuesForProject] = assignIssueToEmployee(1, 1, issuesArrayFromFile, employeesArrayFromFile);
       const [planningStatus] = planningStatusList;
       issuesForProject[1].status = planningStatus;
-      issuesForProject[1].state = 'planning';
+      issuesForProject[1].state = 'Planning';
 
       return {
         id: 1,
@@ -289,7 +289,7 @@ function getMockData(dataset: number): ProjectIF {
         issuesForProject[4].state,
         issuesForProject[5].state,
         issuesForProject[6].state,
-      ] = ['planning', 'planning', 'planning', 'planning', 'planning', 'planning', 'planning'];
+      ] = ['Planning', 'Planning', 'Planning', 'Planning', 'Planning', 'Planning', 'Planning'];
 
       return {
         id: 2,
@@ -387,13 +387,13 @@ function getMockData(dataset: number): ProjectIF {
       for (let iterator = 0; iterator < 280; iterator++) {
         let status = 'Open';
         let closedAt = null;
-        let state = 'planning';
+        let state = 'Planning';
 
         const randomStatus = getRandomInt(3); // 0: Open, 1: Closed, 2: In Progress
 
         if (randomStatus === 2) {
           status = 'In Progress';
-          state = 'development';
+          state = 'Development';
         } else if (randomStatus === 1) {
           closedAt = faker.date.recent();
         }
@@ -794,54 +794,54 @@ function getMockData(dataset: number): ProjectIF {
 
       const date = new Date(2018, 0o5, 0o5, 17, 23, 42, 11);
       issuesForProject[0].status = 'E2E';
-      issuesForProject[0].state = 'testing';
+      issuesForProject[0].state = 'Testing';
       issuesForProject[0].createdAt = new Date();
       issuesForProject[0].assignedSlaRule = [slaRule1];
       issuesForProject[2].status = 'In Progress';
-      issuesForProject[0].state = 'development';
+      issuesForProject[0].state = 'Development';
       issuesForProject[2].closedAt = date; // Set the specific closedAt date
       issuesForProject[3].status = 'Review';
-      issuesForProject[0].state = 'development';
+      issuesForProject[0].state = 'Development';
       issuesForProject[3].closedAt = date; // Set the specific closedAt date
       issuesForProject[4].status = 'Review';
-      issuesForProject[0].state = 'development';
+      issuesForProject[0].state = 'Development';
       issuesForProject[4].closedAt = date; // Set the specific closedAt date
       issuesForProject[5].status = 'E2E';
-      issuesForProject[0].state = 'testing';
+      issuesForProject[0].state = 'Testing';
       issuesForProject[5].createdAt = new Date();
       issuesForProject[5].assignedSlaRule = [slaRule2, slaRule3];
       issuesForProject[6].status = 'Design';
-      issuesForProject[0].state = 'planning';
+      issuesForProject[0].state = 'Planning';
       issuesForProject[6].createdAt = date;
       issuesForProject[6].closedAt = date; // Set the specific closedAt date
       issuesForProject[6].assignedSlaRule = [slaRule2, slaRule3];
 
       [issuesForProject[0].status, issuesForProject[0].status] = ['In Progress', devStatusList[0]];
-      [issuesForProject[0].state, issuesForProject[0].state] = 'development';
+      [issuesForProject[0].state, issuesForProject[0].state] = 'Development';
       [issuesForProject[1].status] = [planningStatusList[0]];
-      [issuesForProject[1].state, issuesForProject[1].state] = 'planning';
+      [issuesForProject[1].state, issuesForProject[1].state] = 'Planning';
       [issuesForProject[2].status, issuesForProject[2].status, issuesForProject[2].closedAt] = [
         'Closed',
         testingStatusList[0],
         date,
       ];
-      [issuesForProject[2].state, issuesForProject[2].state] = 'testing';
+      [issuesForProject[2].state, issuesForProject[2].state] = 'Testing';
       [issuesForProject[3].status, issuesForProject[3].status, issuesForProject[3].closedAt] = [
         'Closed',
         testingStatusList[0],
         date,
       ];
-      [issuesForProject[3].state, issuesForProject[3].state] = 'testing';
+      [issuesForProject[3].state, issuesForProject[3].state] = 'Testing';
       [issuesForProject[4].status, issuesForProject[4].status, issuesForProject[4].closedAt] = [
         'Closed',
         testingStatusList[0],
         date,
       ];
-      [issuesForProject[4].state, issuesForProject[4].state] = 'testing';
+      [issuesForProject[4].state, issuesForProject[4].state] = 'Testing';
       [issuesForProject[5].status, issuesForProject[5].status] = ['In Progress', devStatusList[0]];
-      [issuesForProject[5].state, issuesForProject[5].state] = 'development';
+      [issuesForProject[5].state, issuesForProject[5].state] = 'Development';
       [issuesForProject[6].status, issuesForProject[6].closedAt] = [testingStatusList[0], date];
-      [issuesForProject[6].state, issuesForProject[6].state] = 'testing';
+      [issuesForProject[6].state, issuesForProject[6].state] = 'Testing';
 
       return {
         id: 55,

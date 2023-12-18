@@ -81,18 +81,18 @@ function assignStateToIssue(issue: Issue): string | null {
   const status = issue.status || '';
 
   if (planningStatusList.includes(status)) {
-    return 'planning';
+    return 'Planning';
   }
   if (devStatusList.includes(status)) {
-    return 'development';
+    return 'Development';
   }
   if (testingStatusList.includes(status)) {
-    return 'testing';
+    return 'Testing';
   }
   if (nonDisplayedStatusList.includes(status)) {
     return null;
   }
-  return 'undefined';
+  return 'Undefined';
 }
 /**
  * Returns the name of the employee assigned to the issue.

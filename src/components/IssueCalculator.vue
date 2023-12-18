@@ -184,7 +184,7 @@ const selectedProject: Ref<ProjectIF> = ref({
 const statuses: Ref<string[]> = ref([]);
 
 // Create a reference for the states array
-const states: Ref<string[]> = ref(['planning', 'development', 'testing']);
+const states: Ref<string[]> = ref(['Planning', 'Development', 'Testing']);
 
 // Create a reference for the projects array with mock data
 // Watch for changes in the selectedProject and update the statuses array
