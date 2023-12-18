@@ -10,7 +10,7 @@ function numberOfFulfilledSlaRules(issue: IssueIF): number {
   if (!issue.assignedSlaRule) return 0;
   let count = 0;
   for (let i = 0; i < issue.assignedSlaRule.length; ++i) {
-    if ((issue.assignedSlaRule[i].expirationDate ?? 0).valueOf < new Date().valueOf) {
+    if ((issue.assignedSlaRule[i].expirationDate ?? new Date(0)).valueOf() > new Date().valueOf()) {
       count += 1;
     }
   }
