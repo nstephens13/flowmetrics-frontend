@@ -12,7 +12,7 @@
             :options="projects"
             optionLabel="name"
             placeholder="Select a project"
-            class="w-full md:w-14rem"
+            class="w-full h-3rem md:w-14rem"
           />
           <KeyFactsCard :project="selectedProject"></KeyFactsCard>
         </div>
