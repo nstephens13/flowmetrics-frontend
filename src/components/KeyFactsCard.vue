@@ -5,11 +5,11 @@
       <div class="flex flex-row justify-content-between">
         <div class="flex flex-column">
           <div> Opened issues:</div>
-          <div> Complied SLA Rules:</div>
+          <div> % SLA rule complied</div>
         </div>
         <div class="flex flex-column">
-          <div>{{ project.issues.length }}</div>
-          <div>{{ getPercentageSlaRulesComplied(project) }}%</div>
+          <div>{{ project?.issues.length }}</div>
+          <div>{{ getPercentageSlaRulesComplied(project) }}</div>
         </div>
       </div>
     </template>

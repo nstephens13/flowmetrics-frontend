@@ -131,6 +131,6 @@ describe('keyFactsTests', () => {
   } as ProjectIF;
 
   test('percentageCorrect', () => {
-    expect(getPercentageSlaRulesComplied(testProject)).toEqual(33);
+    expect(getPercentageSlaRulesComplied(testProject)).toEqual('33%');
   });
 });

@@ -45,11 +45,11 @@ function getNumberOfSlaRulesOfProject(project: ProjectIF): number {
  * @param project analyzed project
  * @returns percentile of complied Sla rules, without digits after the comma
  */
-export default function getPercentageSlaRulesComplied(project: ProjectIF): number {
-  if (!project || getNumberOfSlaRulesOfProject(project) === 0) return 0;
+export default function getPercentageSlaRulesComplied(project: ProjectIF | undefined): string {
+  if (!project || getNumberOfSlaRulesOfProject(project) === 0) return '-';
   let count = 0;
   for (let i = 0; i < project.issues.length; ++i) {
     count += numberOfFulfilledSlaRules(project.issues[i]);
   }
-  return Math.trunc((count / getNumberOfSlaRulesOfProject(project)) * 100);
+  return `${Math.trunc((count / getNumberOfSlaRulesOfProject(project)) * 100)}%`;
 }
