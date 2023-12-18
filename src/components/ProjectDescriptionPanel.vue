@@ -93,6 +93,17 @@
                   <span>{{ data.data.state }}</span>
                 </div>
               </template>
+              <template #filter="{ filterModel, filterCallback }">
+                <MultiSelect
+                  v-model="filterModel.value"
+                  display="chip"
+                  :options="states"
+                  @change="filterCallback()"
+                  placeholder="Select State"
+                  :maxSelectedLabels="3"
+                  class="w-full md:w-10rem"
+                />
+              </template>
             </Column>
           </DataTable>
         </div>
@@ -106,7 +117,7 @@ import { ref, watch } from 'vue';
 import type { Ref } from 'vue';
 import { FilterMatchMode } from 'primevue/api';
 import type { EmployeeIF } from '@/model/EmployeeIF';
-import { getIssueStatusList, type ProjectIF } from '@/model/ProjectIF';
+import { getIssueStatusList, getIssueStateList, type ProjectIF } from '@/model/ProjectIF';
 import getMockData from '@/assets/__mockdata__/mockDataComposer';
 
 // Create a reference for the selectedProject with initial data
@@ -119,12 +130,24 @@ const selectedProject = ref({
   slaSubscriber: null,
 } as ProjectIF);
 
-// Create a reference for the statuses array
+// Create a reference for the statuses and states array
 const statuses: Ref<string[]> = ref([]);
+const states: Ref<string[]> = ref(['Planning', 'Development', 'Testing']);
 
 // Create a reference for the filters object with initial configuration
 const filters = ref({
   status: { value: null, matchMode: FilterMatchMode.IN },
+  state: { value: null, matchMode: FilterMatchMode.IN },
+});
+
+// Watch for changes in the selectedProject and update the statuses array
+watch(selectedProject, () => {
+  statuses.value = getIssueStatusList(selectedProject.value.issues);
+});
+
+// Watch for changes in the selectedProject and update the states array
+watch(selectedProject, () => {
+  states.value = getIssueStateList(selectedProject.value.issues);
 });
 
 // Function to print the assigned employee's full name
