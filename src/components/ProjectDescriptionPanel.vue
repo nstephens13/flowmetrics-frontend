@@ -6,24 +6,16 @@
         <Divider class="p-divider p-divider-horizontal divider-position" />
       </template>
       <template #content>
-        <Panel>
-          <template #icons>
-            <Dropdown
-              v-model="selectedProject"
-              :options="projects"
-              optionLabel="name"
-              placeholder="Select a project"
-              class="w-full md:w-14rem"
-            />
-          </template>
-          <template #default>
-            <div class="flex flex-row flex-wrap card-container justify-content-left">
-              <h4 class="m-2">Project-ID: {{ selectedProject.id }}</h4>
-              <h4 class="m-2">Description: {{ selectedProject.description }}</h4>
-              <h4 class="m-2">Total issues: {{ selectedProject.issues.length }}</h4>
-            </div>
-          </template>
-        </Panel>
+        <div class="flex-container">
+          <Dropdown
+            v-model="selectedProject"
+            :options="projects"
+            optionLabel="name"
+            placeholder="Select a project"
+            class="w-full md:w-14rem"
+          />
+          <KeyFactsCard :project="selectedProject"></KeyFactsCard>
+        </div>
       </template>
     </Card>
   </div>
@@ -116,6 +108,7 @@ import { getIssueStatusList, type ProjectIF } from '@/model/ProjectIF';
 import getMockData from '@/assets/__mockdata__/mockDataComposer';
 import { calculateRemainingReactionTime } from '@/services/issueCalculator';
 import type { IssueIF } from '@/model/Issue/IssueIF';
+import KeyFactsCard from '@/components/KeyFactsCard.vue';
 
 // Create a reference for the selectedProject with initial data
 const selectedProject = ref({
@@ -185,5 +178,10 @@ const projects: Ref<ProjectIF[]> = ref([
 
 .divider-position {
   width: 100%;
+}
+.flex-container {
+  display: flex;
+  justify-content: space-between;
+  align-self: start;
 }
 </style>
