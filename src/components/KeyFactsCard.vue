@@ -8,7 +8,7 @@
           <div> Complied SLA Rules:</div>
         </div>
         <div class="flex flex-column">
-          <div>{{ getNumberOfIssues(project) }}</div>
+          <div>{{ project.issues.length }}</div>
           <div>{{ getPercentageSlaRulesComplied(project) }}%</div>
         </div>
       </div>
@@ -17,7 +17,7 @@
 </template>
 
 <script setup lang="ts">
-import { getNumberOfIssues, getPercentageSlaRulesComplied } from '@/services/keyFactsCalculator';
+import getPercentageSlaRulesComplied from '@/services/keyFactsCalculator';
 import type { ProjectIF } from '@/model/ProjectIF';
 
 defineProps({

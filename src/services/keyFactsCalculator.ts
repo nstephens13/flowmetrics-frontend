@@ -1,11 +1,6 @@
 import type { ProjectIF } from '@/model/ProjectIF';
 import type { IssueIF } from '@/model/Issue/IssueIF';
 
-export function getNumberOfIssues(project: ProjectIF): number {
-  if (!project) return 0;
-  return project.issues.length;
-}
-
 function numberOfFulfilledSlaRules(issue: IssueIF): number {
   if (!issue.assignedSlaRule) return 0;
   let count = 0;
@@ -30,11 +25,11 @@ function getNumberOfSlaRulesOfProject(project: ProjectIF): number {
   return count;
 }
 
-export function getPercentageSlaRulesComplied(project: ProjectIF): number {
+export default function getPercentageSlaRulesComplied(project: ProjectIF): number {
   if (!project || getNumberOfSlaRulesOfProject(project) === 0) return 0;
   let count = 0;
   for (let i = 0; i < project.issues.length; ++i) {
     count += numberOfFulfilledSlaRules(project.issues[i]);
   }
-  return (count / getNumberOfSlaRulesOfProject(project)) * 100;
+  return Math.trunc((count / getNumberOfSlaRulesOfProject(project)) * 100);
 }
