@@ -9,12 +9,12 @@ import Column from 'primevue/column';
 import Divider from 'primevue/divider';
 import CircularProgressBar from '../IssueCalculator/CircularProgressBar.vue';
 import router from '../../router';
-import IssueCalculator from '../IssueCalculator.vue';
+import IssueCalc from '../IssueCalc.vue';
 
 // Describe block for the test suite
 describe('Project Overview should load all the Components', () => {
   // Mounting the IssueCalculator component with necessary configuration
-  const wrapper = mount(IssueCalculator, {
+  const wrapper = mount(IssueCalc, {
     global: {
       plugins: [PrimeVue, router],
       components: {
