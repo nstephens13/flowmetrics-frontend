@@ -161,7 +161,7 @@ import type { Ref } from 'vue';
 import { FilterMatchMode } from 'primevue/api';
 import CircularProgressBar from '@/components/IssueCalculator/CircularProgressBar.vue';
 import getMockData from '@/assets/__mockdata__/mockDataComposer';
-import { getIssueStatusList, type ProjectIF } from '@/model/ProjectIF';
+import { getIssueStatusList, getIssueStateList, type ProjectIF } from '@/model/ProjectIF';
 import { countIssuesByStatus, Issue } from '@/model/Issue/Issue';
 import { calculateRemainingReactionTime } from '@/services/issueCalculator';
 import type { EmployeeIF } from '@/model/EmployeeIF';
@@ -192,9 +192,14 @@ watch(selectedProject, () => {
   statuses.value = getIssueStatusList(selectedProject.value.issues);
 });
 
+watch(selectedProject, () => {
+  states.value = getIssueStateList(selectedProject.value.issues);
+});
+
 // Create a reference for the filters object with initial configuration
 const filters = ref({
   status: { value: null, matchMode: FilterMatchMode.IN },
+  state: { value: null, matchMode: FilterMatchMode.IN },
 });
 
 // Create a reference for the projects array with mock data
