@@ -210,7 +210,7 @@ function getMockData(dataset: number): ProjectIF {
       [issuesForProject] = assignIssueToEmployee(1, 1, issuesArrayFromFile, employeesArrayFromFile);
       const [planningStatus] = planningStatusList;
       issuesForProject[1].status = planningStatus;
-      issuesForProject[1].state = 'Planning';
+      issuesForProject[1].state = 'planning';
 
       return {
         id: 1,
@@ -291,7 +291,7 @@ function getMockData(dataset: number): ProjectIF {
         issuesForProject[4].state,
         issuesForProject[5].state,
         issuesForProject[6].state,
-      ] = ['Planning', 'Planning', 'Planning', 'Planning', 'Planning', 'Planning', 'Planning'];
+      ] = ['planning', 'planning', 'planning', 'planning', 'planning', 'planning', 'planning'];
 
       return {
         id: 2,
@@ -372,7 +372,7 @@ function getMockData(dataset: number): ProjectIF {
       for (let iterator = 0; iterator < 280; iterator++) {
         let status = 'open';
         let closedAt = null;
-        let state = 'Planning';
+        let state = 'planning';
 
         const randomStatus = getRandomInt(3); // 0: open, 1: closed, 2: in progress
 
@@ -803,17 +803,17 @@ function getMockData(dataset: number): ProjectIF {
         testingStatusList[0],
         date,
       ];
-      [issuesForProject[3].state, issuesForProject[3].state] = 'Testing';
+      [issuesForProject[3].state, issuesForProject[3].state] = 'testing';
       [issuesForProject[4].status, issuesForProject[4].status, issuesForProject[4].closedAt] = [
         'closed',
         testingStatusList[0],
         date,
       ];
       [issuesForProject[5].status, issuesForProject[5].status] = ['in progress', devStatusList[0]];
-      [issuesForProject[4].state, issuesForProject[4].state] = 'Testing';
-      [issuesForProject[5].state, issuesForProject[5].state] = 'Development';
+      [issuesForProject[4].state, issuesForProject[4].state] = 'testing';
+      [issuesForProject[5].state, issuesForProject[5].state] = 'development';
       [issuesForProject[6].status, issuesForProject[6].closedAt] = [testingStatusList[0], date];
-      [issuesForProject[6].state, issuesForProject[6].state] = 'Testing';
+      [issuesForProject[6].state, issuesForProject[6].state] = 'testing';
 
       return {
         id: 55,
