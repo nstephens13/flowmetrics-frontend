@@ -1,4 +1,4 @@
-import { nonDisplayedStatusList, nonDisplayedStateList } from '@/model/Issue/Issue';
+import { nonDisplayedStatusList, nonDisplayedStateList } from '@/services/Issue';
 import type { IssueIF } from './Issue/IssueIF';
 import type { SlaCustomerProject } from '@/model/Sla/SlaCustomerProject';
 

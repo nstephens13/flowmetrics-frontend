@@ -43,8 +43,6 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
             statusRestingTime: null,
             assigneeChanges: null,
             statusChanges: null,
-            lastStatusChange: null,
-            changelog: null,
             state: 'planning',
           },
           {

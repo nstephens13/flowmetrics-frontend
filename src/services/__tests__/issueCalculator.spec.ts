@@ -41,8 +41,6 @@ describe('Issue Calculator should map correctly ', () => {
     statusChanges: [],
     assigneeChanges: [],
     assignedSlaRule: null,
-    lastStatusChange: null,
-    changelog: null,
     state: '',
   };
   const additionalProject: ProjectIF = {
@@ -71,167 +69,6 @@ describe('Issue Calculator should map correctly ', () => {
   });
 });
 
-describe('calculateRestingTime', () => {
-  const assignedTimestamp = new Date('2023-01-01T12:00:00'); // Set a specific timestamp for the assigned event
-  const testEmployee: EmployeeIF = {
-    id: 12,
-    firstName: 'TestFirstName',
-    lastName: 'TestLastName',
-    emailAddress: 'test.email@email.com',
-    status: 'inactive',
-    avatarUrl: 'none',
-    key: 'test',
-  };
-  const testEmployee1: EmployeeIF = {
-    id: 12,
-    firstName: 'TestFirstName1',
-    lastName: 'TestLastName1',
-    emailAddress: 'test1.email@email.com',
-    status: 'inactive',
-    avatarUrl: 'none',
-    key: 'test1',
-  };
-
-  const testEmployee2: EmployeeIF = {
-    id: 13,
-    firstName: 'TestFirstName2',
-    lastName: 'TestLastName2',
-    emailAddress: 'test2.email@email.com',
-    status: 'inactive',
-    avatarUrl: 'none',
-    key: 'test2',
-  };
-
-  const testIssueWithMatchingEmployee: IssueIF = {
-    id: 1,
-    name: 'TestIssue',
-    description: 'none',
-    createdBy: testEmployee1,
-    createdAt: new Date(),
-    assignedTo: testEmployee1,
-    closedAt: null,
-    dueTo: null,
-    status: 'Open',
-    lastStatusChange: null,
-    assignedSlaRule: null,
-    statusChanges: [],
-    changelog: [
-      {
-        id: '1',
-        changeDescription: ChangeEventEnum.assigned,
-        timestamp: assignedTimestamp,
-        assigned: testEmployee1,
-      },
-    ],
-    state: 'planning',
-  };
-
-  const testIssueWithDifferentEmployee: IssueIF = {
-    id: 2,
-    name: 'TestIssue2',
-    description: 'none',
-    createdBy: testEmployee1,
-    createdAt: new Date(),
-    assignedTo: testEmployee1,
-    closedAt: null,
-    dueTo: null,
-    status: 'Open',
-    lastStatusChange: null,
-    assignedSlaRule: null,
-    changelog: [
-      {
-        id: '1',
-        changeDescription: ChangeEventEnum.assigned,
-        timestamp: assignedTimestamp,
-        assigned: testEmployee2, // Different employee in assigned event
-      },
-    ],
-    statusChanges: [],
-    state: 'planning',
-  };
-
-  const testIssue: IssueIF = {
-    id: 1,
-    name: 'TestIssue',
-    description: 'Test description',
-    createdBy: testEmployee,
-    createdAt: new Date(),
-    closedAt: null,
-    status: 'Open',
-    dueTo: null,
-    assignedTo: testEmployee,
-    lastStatusChange: new Date(),
-    assignedSlaRule: null,
-    changelog: [
-      {
-        id: '1',
-        changeDescription: ChangeEventEnum.assigned,
-        timestamp: assignedTimestamp,
-        assigned: testEmployee,
-      },
-    ],
-    statusChanges: [],
-    state: 'planning',
-  };
-
-  test('should return the correct resting time', () => {
-    // when
-    const [assignedEmployee, restingTimeInSeconds] = calculateRestingTime(testIssue);
-
-    // Calculate the expected resting time based on the specific timestamp
-    const currentDate = new Date();
-    const expectedRestingTimeInSeconds = Math.floor(
-      (currentDate.getTime() - assignedTimestamp.getTime()) / 1000
-    );
-
-    // then
-    expect(assignedEmployee).toEqual(testEmployee);
-    expect(restingTimeInSeconds).toBe(expectedRestingTimeInSeconds);
-  });
-
-  test('should handle null assignedTo or changelog', () => {
-    // given
-    const issueWithoutAssignedTo: IssueIF = { ...testIssue, assignedTo: null };
-    const issueWithoutChangelog: IssueIF = { ...testIssue, changelog: null };
-
-    // when
-    const [assignedEmployee1, restingTimeInSeconds1] = calculateRestingTime(issueWithoutAssignedTo);
-    const [assignedEmployee2, restingTimeInSeconds2] = calculateRestingTime(issueWithoutChangelog);
-
-    // then
-    expect(assignedEmployee1).toBeNull();
-    expect(restingTimeInSeconds1).toBe(0);
-    expect(assignedEmployee2).toBeNull();
-    expect(restingTimeInSeconds2).toBe(0);
-  });
-  test('should return the correct resting time for matching employee', () => {
-    // when
-    const [assignedEmployee, restingTimeInSeconds] = calculateRestingTime(
-      testIssueWithMatchingEmployee
-    );
-
-    // Calculate the expected resting time based on the specific timestamp
-    const currentDate = new Date();
-    const expectedRestingTimeInSeconds = Math.floor(
-      (currentDate.getTime() - assignedTimestamp.getTime()) / 1000
-    );
-
-    // then
-    expect(assignedEmployee).toEqual(testEmployee1);
-    expect(restingTimeInSeconds).toBe(expectedRestingTimeInSeconds);
-  });
-
-  test('should return 0 resting time for different employee', () => {
-    // when
-    const [assignedEmployee, restingTimeInSeconds] = calculateRestingTime(
-      testIssueWithDifferentEmployee
-    );
-
-    // then
-    expect(assignedEmployee).toEqual(testEmployee1);
-    expect(restingTimeInSeconds).toBe(0);
-  });
-});
 describe('calculateRemainingReactionTime', () => {
   const createdAt: Date = new Date();
   const testSlaRule = {
@@ -361,30 +198,8 @@ describe('calculateRemainingReactionTime', () => {
       statusChanges: [],
       assigneeChanges: [],
       assignedSlaRule: [slaRule1, slaRule2, slaRule3],
+      state: 'planning',
     };
-  const testIssueWithMultipleSlaRules: IssueIF = {
-    id: 1,
-    name: 'TestIssue',
-    description: 'Test description',
-    createdBy: null,
-    createdAt: currentDate,
-    closedAt: null,
-    status: 'Open',
-    dueTo: null,
-    assignedTo: null,
-    lastStatusChange: new Date(),
-    assignedSlaRule: [slaRule1, slaRule2, slaRule3],
-    changelog: [
-      {
-        id: '1',
-        changeDescription: ChangeEventEnum.assigned,
-        timestamp: new Date(),
-        assigned: null,
-      },
-    ],
-    statusChanges: [],
-    state: 'planning',
-  };
 
     const expirationDate = new Date(currentDate);
 

@@ -9,7 +9,7 @@ import {
   nonDisplayedStatusList,
   planningStatusList,
   testingStatusList,
-} from '@/model/Issue/Issue';
+} from '@/services/Issue';
 
 const UnassignedEmployee: EmployeeIF = {
   id: 0,

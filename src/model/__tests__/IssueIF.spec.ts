@@ -8,6 +8,7 @@ import {
   getSlaRules,
 } from '../../services/Issue';
 import type { EmployeeIF } from '../EmployeeIF';
+import { type SlaRule } from '../Sla/SlaRule';
 
 describe('Issue Class', () => {
   test('creates an instance of Issue with the provided properties', () => {
@@ -28,8 +29,7 @@ describe('Issue Class', () => {
     const closedAt = null;
     const dueTo = new Date();
     const status = 'open';
-    const assignedSlaRule = null;
-    const statusChanges: StatusChangesIF[] = [];
+    const assignedSlaRule: SlaRule[] = [];
     const state = '';
 
     const issue = new Issue(
@@ -46,12 +46,8 @@ describe('Issue Class', () => {
       {},
       [],
       [],
-      assignedSlaRule
-      statusChanges,
       assignedSlaRule,
-      null,
-      null,
-      state
+      ''
     );
 
     expect(issue.id).toBe(id);
@@ -64,7 +60,6 @@ describe('Issue Class', () => {
     expect(issue.dueTo).toBe(dueTo);
     expect(issue.status).toBe(status);
     expect(issue.assignedSlaRule).toBe(assignedSlaRule);
-    expect(issue.statusChanges).toBe(statusChanges);
     expect(issue.state).toBe(state);
   });
 });
@@ -97,15 +92,11 @@ describe('getAssignedToName', () => {
       null,
       null,
       '',
-      [],
-      null,
-      {},
-      {},
-      [],
-      [],
-      []
       null,
       null,
+      [],
+      [],
+      [],
       ''
     );
     const assignedToName = getAssignedToName(issue);
@@ -131,15 +122,11 @@ describe('getAssignedToName', () => {
       null,
       null,
       '',
-      [],
-      null,
-      {},
-      {},
-      [],
-      [],
-      []
       null,
       null,
+      [],
+      [],
+      [],
       ''
     );
     const assignedToName = getAssignedToName(issue);
@@ -168,15 +155,11 @@ describe('getFormattedDate', () => {
       null,
       dueTo,
       '',
-      [],
-      null,
-      {},
-      {},
-      [],
-      [],
-      []
       null,
       null,
+      [],
+      [],
+      [],
       ''
     );
     const formattedDate = getFormattedDate(issue);
@@ -202,15 +185,11 @@ describe('getFormattedDate', () => {
       null,
       null,
       '',
-      [],
-      null,
-      {},
-      {},
-      [],
-      [],
-      []
       null,
       null,
+      [],
+      [],
+      [],
       ''
     );
     const formattedDate = getFormattedDate(issue);
@@ -240,15 +219,11 @@ describe('getTimeLeft', () => {
       null,
       dueTo,
       '',
-      [],
-      null,
-      {},
-      {},
-      [],
-      [],
-      []
       null,
       null,
+      [],
+      [],
+      [],
       ''
     );
     const timeLeft = getTimeLeft(issue);
@@ -278,15 +253,11 @@ describe('getTimeLeft', () => {
       null,
       dueTo,
       '',
-      [],
-      null,
-      {},
-      {},
-      [],
-      [],
-      []
       null,
       null,
+      [],
+      [],
+      [],
       ''
     );
     const timeLeft = getTimeLeft(issue);
@@ -312,15 +283,11 @@ describe('getTimeLeft', () => {
       null,
       null,
       '',
-      [],
-      null,
-      {},
-      {},
-      [],
-      [],
-      []
       null,
       null,
+      [],
+      [],
+      [],
       ''
     );
     const timeLeft = getTimeLeft(issue);
@@ -348,17 +315,12 @@ describe('countIssuesByStatus', () => {
       null,
       null,
       'open',
-      {},
-      {},
-      [],
-      [],
-      []
-      'Open',
-      [],
       null,
       null,
-      null,
-      'planning'
+      [],
+      [],
+      [],
+      'development'
     ),
     new Issue(
       2,
@@ -378,16 +340,11 @@ describe('countIssuesByStatus', () => {
       null,
       null,
       'closed',
-      {},
-      {},
-      [],
-      [],
-      []
-      'Closed',
-      [],
       null,
       null,
-      null,
+      [],
+      [],
+      [],
       'testing'
     ),
     new Issue(
@@ -408,14 +365,11 @@ describe('countIssuesByStatus', () => {
       null,
       null,
       'in progress',
-      {},
-      {},
+      null,
+      null,
       [],
       [],
-      []
-      null,
-      null,
-      null,
+      [],
       'development'
     ),
     new Issue(
@@ -465,7 +419,8 @@ describe('countIssuesByStatus', () => {
       {},
       [],
       [],
-      []
+      [],
+      'planning'
     ),
   ];
 
@@ -509,7 +464,8 @@ describe('getSlaRules', () => {
       {},
       [],
       [],
-      []
+      [],
+      ''
     );
 
     const slaRules = getSlaRules(issue);

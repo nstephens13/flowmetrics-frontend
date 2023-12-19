@@ -11,7 +11,7 @@ import {
   nonDisplayedStatusList,
   planningStatusList,
   testingStatusList,
-} from '../../model/Issue/Issue';
+} from '../Issue';
 
 describe('Filter Test', () => {
   test('After Applying Filter the Issues without the allowed Status should be deleted from the IssueArray', () => {

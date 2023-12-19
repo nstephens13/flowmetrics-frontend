@@ -48,8 +48,6 @@ describe('assignedSlaRules', () => {
       assigneeRestingTime: null,
       statusChanges: [],
       assigneeChanges: [],
-      lastStatusChange: null,
-      changelog: null,
       state: 'planning',
     };
 

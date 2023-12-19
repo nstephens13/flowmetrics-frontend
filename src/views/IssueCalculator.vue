@@ -6,14 +6,14 @@
         <Divider class="p-divider p-divider-horizontal divider-position" />
       </template>
       <template #content>
-        <IssueCalc></IssueCalc>
+        <IssueCalculator></IssueCalculator>
       </template>
     </Card>
   </div>
 </template>
 
 <script setup lang="ts">
-import IssueCalc from '@/components/IssueCalc.vue';
+import IssueCalculator from '@/components/IssueCalculator.vue';
 </script>
 
 <style scoped>

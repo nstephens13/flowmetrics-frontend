@@ -50,9 +50,9 @@ class Issue implements IssueIF {
     status: string | null,
     assigneeRestingTime: DurationLikeObject | null,
     statusRestingTime: DurationLikeObject | null,
-    statusChanges: ChangeLogIF[] | null,
-    assigneeChanges: ChangeLogIF[] | null,
-    assignedSlaRule: SlaRule[] | null,
+    statusChanges: ChangeLogIF[],
+    assigneeChanges: ChangeLogIF[],
+    assignedSlaRule: SlaRule[],
     state: string | null
   ) {
     this.id = id;
@@ -69,17 +69,15 @@ class Issue implements IssueIF {
     this.statusChanges = statusChanges;
     this.assigneeChanges = assigneeChanges;
     this.assignedSlaRule = assignedSlaRule;
-    this.lastStatusChange = lastStatusChange;
-    this.changelog = changelog;
     this.state = state;
   }
 }
 
 // Define lists of different category with statuses
-const planningStatusList: string[] = ['Planned', 'Design', 'Open'];
-const devStatusList: string[] = ['In Work', 'Review', 'In Progress'];
-const testingStatusList: string[] = ['UnitTest', 'E2E'];
-const nonDisplayedStatusList: string[] = ['Closed'];
+const planningStatusList: string[] = ['planned', 'design', 'open'];
+const devStatusList: string[] = ['in work', 'review', 'in progress'];
+const testingStatusList: string[] = ['unit test', 'e2e'];
+const nonDisplayedStatusList: string[] = ['closed'];
 const nonDisplayedStateList: string[] = [''];
 
 // Function sets State using Issue-Status
@@ -87,18 +85,18 @@ function assignStateToIssue(issue: Issue): string | null {
   const status = issue.status || '';
 
   if (planningStatusList.includes(status)) {
-    return 'Planning';
+    return 'planning';
   }
   if (devStatusList.includes(status)) {
-    return 'Development';
+    return 'development';
   }
   if (testingStatusList.includes(status)) {
-    return 'Testing';
+    return 'testing';
   }
   if (nonDisplayedStatusList.includes(status)) {
     return null;
   }
-  return 'Undefined';
+  return 'undefined';
 }
 /**
  * Returns the name of the employee assigned to the issue.
