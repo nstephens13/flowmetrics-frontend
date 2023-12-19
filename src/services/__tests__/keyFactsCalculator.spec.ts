@@ -22,6 +22,10 @@ describe('keyFactsTests', () => {
         status: null,
         statusChanges: [],
         lastStatusChange: null,
+        assigneeRestingTime: null,
+        assigneeChanges: null,
+        statusRestingTime: null,
+        state: null,
         assignedSlaRule: [
           {
             id: null,
@@ -56,6 +60,10 @@ describe('keyFactsTests', () => {
         status: null,
         statusChanges: [],
         lastStatusChange: null,
+        assigneeRestingTime: null,
+        assigneeChanges: null,
+        statusRestingTime: null,
+        state: null,
         assignedSlaRule: [
           {
             id: null,
@@ -90,6 +98,10 @@ describe('keyFactsTests', () => {
         status: null,
         statusChanges: [],
         lastStatusChange: null,
+        assigneeRestingTime: null,
+        assigneeChanges: null,
+        statusRestingTime: null,
+        state: null,
         assignedSlaRule: [
           {
             id: null,
@@ -126,6 +138,10 @@ describe('keyFactsTests', () => {
         lastStatusChange: null,
         assignedSlaRule: [],
         changelog: null,
+        assigneeRestingTime: null,
+        assigneeChanges: null,
+        statusRestingTime: null,
+        state: null,
       } as IssueIF,
     ],
   } as ProjectIF;
