@@ -4,8 +4,8 @@
     <template #content>
       <div class="flex flex-row justify-content-between">
         <div class="flex flex-column">
-          <div> Opened issues:</div>
-          <div> % SLA rule complied</div>
+          <div>Opened issues:</div>
+          <div>SLA rule complied (in %)</div>
         </div>
         <div class="flex flex-column">
           <div>{{ project?.issues.length }}</div>
