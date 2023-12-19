@@ -1,16 +1,17 @@
 import { describe, expect, test } from 'vitest';
-import getMockData, {
-  devStatusList,
-  nonDisplayedStatusList,
-  planningStatusList,
-  testingStatusList,
-} from '../../assets/__mockdata__/mockDataComposer';
+import getMockData from '../../assets/__mockdata__/mockDataComposer';
 import type { FilterConfigIF } from '../../model/FilterConfigIF';
 import type { IssueIF } from '../../model/Issue/IssueIF';
 import {
   filterIssuesInProjectWithAStatusWhitelist,
   filterProjectListWithAProjectWhitelist,
 } from '../filter/ProjectsFilter';
+import {
+  devStatusList,
+  nonDisplayedStatusList,
+  planningStatusList,
+  testingStatusList,
+} from '../Issue';
 
 describe('Filter Test', () => {
   test('After Applying Filter the Issues without the allowed Status should be deleted from the IssueArray', () => {
@@ -53,6 +54,7 @@ describe('Filter Test', () => {
         issueStatusIncludeFilter: [...planningStatusList, ...devStatusList],
         minimumAssigneeRestingTime: 0,
         minimumNumberOfStatusChanges: 0,
+        issueStateIncludeFilter: [],
       },
     };
 
@@ -84,6 +86,7 @@ describe('Filter Test', () => {
         issueStatusIncludeFilter: [],
         minimumAssigneeRestingTime: 0,
         minimumNumberOfStatusChanges: 0,
+        issueStateIncludeFilter: [],
       },
     };
 

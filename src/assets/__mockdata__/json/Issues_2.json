@@ -17,7 +17,8 @@
     "closedAt": null,
     "dueTo": "2023-06-30T00:00:00.000Z",
     "status": "open",
-    "userStatus": "open"
+    "userStatus": "open",
+    "state": "planning"
   },
   {
     "id": 148093,
@@ -45,7 +46,8 @@
     "closedAt": "2023-06-05T00:00:00.000Z",
     "dueTo": "2023-06-10T00:00:00.000Z",
     "status": "closed",
-    "userStatus": "closed"
+    "userStatus": "closed",
+    "state": "testing"
   },
   {
     "id": 23253,
@@ -73,7 +75,8 @@
     "closedAt": null,
     "dueTo": "2023-07-20T00:00:00.000Z",
     "status": "in progress",
-    "userStatus": "in progress"
+    "userStatus": "in progress",
+    "state": "development"
   },
   {
     "id": 49764,
@@ -93,7 +96,8 @@
     "closedAt": null,
     "dueTo": "2023-06-15T00:00:00.000Z",
     "status": "open",
-    "userStatus": "open"
+    "userStatus": "open",
+    "state": "planning"
   },
   {
     "id": 3423455,
@@ -120,6 +124,7 @@
     "createdAt": "2023-06-05T00:00:00.000Z",
     "closedAt": null,
     "dueTo": "2023-06-25T00:00:00.000Z",
+    "state": "development",
     "status": "in progress",
     "userStatus": "in progress"
   },
@@ -141,7 +146,8 @@
     "closedAt": null,
     "dueTo": "2023-06-20T00:00:00.000Z",
     "status": "open",
-    "userStatus": "open"
+    "userStatus": "open",
+    "state": "planning"
   },
   {
     "id": 32542527,
@@ -169,7 +175,8 @@
     "closedAt": null,
     "dueTo": "2023-06-30T00:00:00.000Z",
     "status": "",
-    "userStatus": ""
+    "userStatus": "",
+    "state": ""
   },
   {
     "id": 345358,
@@ -197,7 +204,8 @@
     "closedAt": null,
     "dueTo": "2023-07-10T00:00:00.000Z",
     "status": "in progress",
-    "userStatus": "in progress"
+    "userStatus": "in progress",
+    "state": "development"
   },
   {
     "id": 9645754,
@@ -225,7 +233,8 @@
     "closedAt": null,
     "dueTo": "2023-07-15T00:00:00.000Z",
     "status": "in progress",
-    "userStatus": "in progress"
+    "userStatus": "in progress",
+    "state": "development"
   },
   {
     "id": 132440,
@@ -253,6 +262,7 @@
     "closedAt": null,
     "dueTo": "2023-07-20T00:00:00.000Z",
     "status": "in progress",
-    "userStatus": "in progress"
+    "userStatus": "in progress",
+    "state": "development"
   }
 ]

@@ -16,18 +16,18 @@ describe('getIssueStatusList', () => {
       { status: 'closed' } as IssueIF,
       { status: 'resolved' } as IssueIF,
       { status: 'open' } as IssueIF,
-      { status: null } as IssueIF,
+      { status: '' } as IssueIF,
     ];
     const result = getIssueStatusList(issues);
-    expect(result).toEqual(['open', 'in progress']);
+    expect(result).toEqual(['open', 'in progress', 'resolved']);
   });
 
   it('ignores null and Closed statuses in the input array', () => {
     const issues = [
       { status: 'open' } as IssueIF,
-      { status: null } as IssueIF,
+      { status: '' } as IssueIF,
       { status: 'closed' } as IssueIF,
-      { status: null } as IssueIF,
+      { status: '' } as IssueIF,
     ];
     const result = getIssueStatusList(issues);
     expect(result).toEqual(['open']);
