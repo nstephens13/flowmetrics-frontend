@@ -9,6 +9,8 @@ export default function initFilterConfigStore() {
     projectFilter: {
       projectsWhiteList: [] as ProjectIF[],
       issueStatusIncludeFilter: [] as string[],
+      minimumAssigneeRestingTime: 0,
+      minimumNumberOfStatusChanges: 0,
     } as ProjectFilterConfigIF,
   });
 }

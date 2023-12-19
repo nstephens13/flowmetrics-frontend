@@ -1,3 +1,4 @@
+import type { DurationLikeObject } from 'luxon';
 import { defineStore } from 'pinia';
 import type { FilterConfigIF, ProjectFilterConfigIF } from '@/model/FilterConfigIF';
 import type { ProjectIF } from '@/model/ProjectIF';
@@ -9,6 +10,9 @@ const useFilterConfigStore = defineStore('filterConfig', {
       projectFilter: {
         projectsWhiteList: [] as ProjectIF[],
         issueStatusIncludeFilter: [] as string[],
+        minimumAssigneeRestingTime: {} as DurationLikeObject,
+        minimumNumberOfStatusChanges: 0,
+        issueStateIncludeFilter: [] as string[],
       } as ProjectFilterConfigIF,
     } as FilterConfigIF,
   }),
@@ -22,6 +26,12 @@ const useFilterConfigStore = defineStore('filterConfig', {
   actions: {
     setFilterConfig(config: FilterConfigIF) {
       this.filter = config;
+    },
+    setMinimumAssigneeRestingTime(minimumAssigneeRestingTime: number | null) {
+      this.filter.projectFilter.minimumAssigneeRestingTime = minimumAssigneeRestingTime as number;
+    },
+    setMinimumNumberOfStatusChanges(minimumNumberOfStatusChanges: number) {
+      this.filter.projectFilter.minimumNumberOfStatusChanges = minimumNumberOfStatusChanges;
     },
   },
 });

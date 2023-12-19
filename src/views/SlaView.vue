@@ -1,8 +1,10 @@
 <template>
   <Card>
     <template #title>
-      <h4>SLA Management View</h4>
-      <Divider class="p-divider p-divider-horizontal divider-position" />
+      <div>
+        <p>SLA Management View</p>
+        <Divider class="p-divider p-divider-horizontal divider-position" />
+      </div>
     </template>
     <template #content>
       <div>
