@@ -1,37 +1,6 @@
 import { describe, expect, test } from 'vitest';
 import type { IssueIF } from '../Issue/IssueIF';
 import type { SlaRule } from '../Sla/SlaRule';
-import { getSlaRules, Issue } from '../Issue/Issue';
-
-test('getSlaRules returns an empty array when assignedSlaRule is null', () => {
-  const issue = new Issue(
-    1,
-    'Test Issue',
-    null,
-    null,
-    {
-      id: 1,
-      firstName: 'Anna',
-      lastName: 'John',
-      emailAddress: 'anna.john@email.com',
-      status: 'active',
-      avatarUrl: 'none',
-      key: 'ajohn',
-    },
-    new Date(),
-    null,
-    null,
-    'Open',
-    [],
-    null,
-    null,
-    null,
-    'planning'
-  );
-
-  const slaRules = getSlaRules(issue);
-  expect(slaRules).toEqual([]);
-});
 
 describe('assignedSlaRules', () => {
   test('returns assigned SlaRules when assignedSlaRules is not null', () => {
@@ -73,9 +42,12 @@ describe('assignedSlaRules', () => {
       createdAt: new Date(),
       closedAt: null,
       dueTo: null,
-      status: 'Open',
+      status: 'open',
       assignedSlaRule: slaRules,
+      statusRestingTime: null,
+      assigneeRestingTime: null,
       statusChanges: [],
+      assigneeChanges: [],
       lastStatusChange: null,
       changelog: null,
       state: 'planning',

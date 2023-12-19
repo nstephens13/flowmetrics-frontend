@@ -1,7 +1,7 @@
+import type { DurationLikeObject } from 'luxon';
 import type { EmployeeIF } from '../EmployeeIF';
 import type { SlaRule } from '@/model/Sla/SlaRule';
-import type { ChangeEventIF } from '@/model/ChangeEventIF';
-import type { StatusChangesIF } from '@/model/Issue/StatusChangesIF';
+import type { ChangeLogIF } from '@/model/Issue/ChangeLogIF';
 
 /**
  *
@@ -13,6 +13,12 @@ import type { StatusChangesIF } from '@/model/Issue/StatusChangesIF';
  * @prop {Date} createdAt the Date when the issue was created
  * @prop {Date| null} closedAt the Date when the issue was closed
  * @prop {Date| null} dueTo Due date for the Issue
+ * @prop {string} status the Status of issue-progress
+ * @prop {DurationLikeObject} assigneeRestingTime the resting time for current assignee
+ * @prop {DurationLikeObject} statusRestingTime the resting time for current status
+ * @prop {ChangeLogIF[]} statusChanges All status changes on the issue
+ * @prop {ChangeLogIF[]} assigneeChanges All assignee changes on the issue
+ * @prop {SlaRule[]} assignedSlaRule assigned Sla Rule to the issue
  * @prop {Status} status the Status of issue-progress
  * @prop {Date} lastStatusChange the last status change of the issue
  * @prop {StatusChangesIF[]} statusChanges the status changes of the issue
@@ -33,8 +39,10 @@ export interface IssueIF {
   closedAt: Date | null;
   dueTo: Date | null;
   status: string | null;
-  statusChanges: StatusChangesIF[];
-  lastStatusChange: Date | null;
+  assigneeRestingTime: DurationLikeObject | null;
+  statusRestingTime: DurationLikeObject | null;
+  statusChanges: ChangeLogIF[] | null;
+  assigneeChanges: ChangeLogIF[] | null;
   assignedSlaRule: SlaRule[] | null;
   changelog: ChangeEventIF[] | null;
   state: string | null;

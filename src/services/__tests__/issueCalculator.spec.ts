@@ -1,12 +1,7 @@
 import { expect, test, describe } from 'vitest';
 // import getMockData from '../../assets/__mockdata__/mockDataComposer';
 import type { ProjectIF } from '../../model/ProjectIF';
-import {
-  calculateRemainingReactionTime,
-  calculateRestingTime,
-  mapIssuesToEmployees,
-} from '../issueCalculator';
-import { ChangeEventEnum } from '../../model/ChangeEventIF';
+import { calculateRemainingReactionTime, mapIssuesToEmployees } from '../issueCalculator';
 import type { IssueIF } from '../../model/Issue/IssueIF';
 import type { EmployeeIF } from '../../model/EmployeeIF';
 
@@ -41,8 +36,11 @@ describe('Issue Calculator should map correctly ', () => {
     status: '',
     dueTo: null,
     assignedTo: testEmployee,
-    assignedSlaRule: null,
+    statusRestingTime: {},
+    assigneeRestingTime: {},
     statusChanges: [],
+    assigneeChanges: [],
+    assignedSlaRule: null,
     lastStatusChange: null,
     changelog: null,
     state: '',
@@ -253,20 +251,14 @@ describe('calculateRemainingReactionTime', () => {
     createdBy: null,
     createdAt,
     closedAt: null,
-    status: 'Open',
+    status: 'open',
     dueTo: null,
     assignedTo: null,
-    lastStatusChange: new Date(),
     assignedSlaRule: [testSlaRule],
-    changelog: [
-      {
-        id: '1',
-        changeDescription: ChangeEventEnum.assigned,
-        timestamp: new Date(),
-        assigned: null,
-      },
-    ],
+    statusRestingTime: {},
+    assigneeRestingTime: {},
     statusChanges: [],
+    assigneeChanges: [],
     state: 'planning',
   };
 
@@ -277,20 +269,14 @@ describe('calculateRemainingReactionTime', () => {
     createdBy: null,
     createdAt,
     closedAt: null,
-    status: 'Open',
+    status: 'open',
     dueTo: null,
     assignedTo: null,
-    lastStatusChange: new Date(),
-    assignedSlaRule: null,
-    changelog: [
-      {
-        id: '1',
-        changeDescription: ChangeEventEnum.assigned,
-        timestamp: new Date(),
-        assigned: null,
-      },
-    ],
+    statusRestingTime: {},
+    assigneeRestingTime: {},
     statusChanges: [],
+    assigneeChanges: [],
+    assignedSlaRule: null,
     state: 'planning',
   };
   test('should return the correct remaining reaction time with SLA rule', () => {
@@ -326,40 +312,56 @@ describe('calculateRemainingReactionTime', () => {
     expect(remainingReactionTimeInSeconds).toBe(0);
     expect(hasRemainingTime).toBe(false);
   });
-});
-test('should pick SLA rule with minimum days', () => {
-  const currentDate = new Date();
-  // SLA rules with different reaction times
-  const slaRule1 = {
-    id: 1,
-    name: 'TestRule1',
-    reactionTimeInDays: 3,
-    expirationDate: null,
-    occurredIn: 'TestLocation1',
-    priority: 'behindernd',
-    issueType: ['bug', 'test'],
-  };
 
-  const slaRule2 = {
-    id: 2,
-    name: 'TestRule2',
-    reactionTimeInDays: 1,
-    expirationDate: null,
-    occurredIn: 'TestLocation2',
-    priority: 'behindernd',
-    issueType: ['bug', 'test'],
-  };
+  test('should pick SLA rule with minimum days', () => {
+    const currentDate = new Date();
+    // SLA rules with different reaction times
+    const slaRule1 = {
+      id: 1,
+      name: 'TestRule1',
+      reactionTimeInDays: 3,
+      expirationDate: null,
+      occurredIn: 'TestLocation1',
+      priority: 'behindernd',
+      issueType: ['bug', 'test'],
+    };
 
-  const slaRule3 = {
-    id: 3,
-    name: 'TestRule3',
-    reactionTimeInDays: 5,
-    expirationDate: null,
-    occurredIn: 'TestLocation3',
-    priority: 'behindernd',
-    issueType: ['bug', 'test'],
-  };
+    const slaRule2 = {
+      id: 2,
+      name: 'TestRule2',
+      reactionTimeInDays: 1,
+      expirationDate: null,
+      occurredIn: 'TestLocation2',
+      priority: 'behindernd',
+      issueType: ['bug', 'test'],
+    };
 
+    const slaRule3 = {
+      id: 3,
+      name: 'TestRule3',
+      reactionTimeInDays: 5,
+      expirationDate: null,
+      occurredIn: 'TestLocation3',
+      priority: 'behindernd',
+      issueType: ['bug', 'test'],
+    };
+
+    const testIssueWithMultipleSlaRules: IssueIF = {
+      id: 1,
+      name: 'TestIssue',
+      description: 'Test description',
+      createdBy: null,
+      createdAt: currentDate,
+      closedAt: null,
+      status: 'open',
+      dueTo: null,
+      assignedTo: null,
+      statusRestingTime: {},
+      assigneeRestingTime: {},
+      statusChanges: [],
+      assigneeChanges: [],
+      assignedSlaRule: [slaRule1, slaRule2, slaRule3],
+    };
   const testIssueWithMultipleSlaRules: IssueIF = {
     id: 1,
     name: 'TestIssue',
@@ -384,27 +386,30 @@ test('should pick SLA rule with minimum days', () => {
     state: 'planning',
   };
 
-  const expirationDate = new Date(currentDate);
+    const expirationDate = new Date(currentDate);
 
-  // Add two days to the expiration date
-  expirationDate.setDate(expirationDate.getDate() + 1);
+    // Add two days to the expiration date
+    expirationDate.setDate(expirationDate.getDate() + 1);
 
-  const wrongExpirationDate = new Date(currentDate);
+    const wrongExpirationDate = new Date(currentDate);
 
-  // Add two days to the expiration date
-  wrongExpirationDate.setDate(expirationDate.getDate() + 3);
+    // Add two days to the expiration date
+    wrongExpirationDate.setDate(expirationDate.getDate() + 3);
 
-  const expectedRemainingTimeInSeconds = Math.floor(
-    (expirationDate.getTime() - currentDate.getTime()) / 1000
-  );
+    const expectedRemainingTimeInSeconds = Math.floor(
+      (expirationDate.getTime() - currentDate.getTime()) / 1000
+    );
 
-  const [hasRemainingTime, remainingReactionTimeInSeconds] = calculateRemainingReactionTime(
-    testIssueWithMultipleSlaRules
-  );
+    const [hasRemainingTime, remainingReactionTimeInSeconds] = calculateRemainingReactionTime(
+      testIssueWithMultipleSlaRules
+    );
 
-  // Ensure that the issue has remaining time
-  expect(hasRemainingTime).toBe(true);
+    // Ensure that the issue has remaining time
+    expect(hasRemainingTime).toBe(true);
 
-  // Optionally, you can also check if the result is close to the expected value within a tolerance
-  expect(Math.abs(expectedRemainingTimeInSeconds - remainingReactionTimeInSeconds)).toBeLessThan(2);
+    // Optionally, you can also check if the result is close to the expected value within a tolerance
+    expect(Math.abs(expectedRemainingTimeInSeconds - remainingReactionTimeInSeconds)).toBeLessThan(
+      2
+    );
+  });
 });

@@ -5,7 +5,7 @@ import type { EmployeeIF } from '../../model/EmployeeIF';
 import type { ProjectIF } from '../../model/ProjectIF';
 import type { IssueIF } from '../../model/Issue/IssueIF';
 
-import employeeJson from '../../assets/__mockdata__/Employees.json';
+import employeeJson from '../../assets/__mockdata__/json/Employees.json';
 
 // checking first the mock data, my tools, describe the testcase,
 // you are working in a closed block, see the '{'

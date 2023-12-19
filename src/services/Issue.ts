@@ -1,8 +1,8 @@
-import type { EmployeeIF } from '../EmployeeIF';
-import type { IssueIF } from './IssueIF';
+import type { DurationLikeObject } from 'luxon';
+import type { EmployeeIF } from '@/model/EmployeeIF';
+import type { IssueIF } from '@/model/Issue/IssueIF';
 import type { SlaRule } from '@/model/Sla/SlaRule';
-import type { ChangeEventIF } from '@/model/ChangeEventIF';
-import type { StatusChangesIF } from '@/model/Issue/StatusChangesIF';
+import type { ChangeLogIF } from '@/model/Issue/ChangeLogIF';
 
 // Issue Class implements IssueIF
 class Issue implements IssueIF {
@@ -24,13 +24,15 @@ class Issue implements IssueIF {
 
   status: string | null;
 
-  statusChanges: StatusChangesIF[];
+  assigneeRestingTime: DurationLikeObject | null;
+
+  statusRestingTime: DurationLikeObject | null;
+
+  statusChanges: ChangeLogIF[] | null;
+
+  assigneeChanges: ChangeLogIF[] | null;
 
   assignedSlaRule: SlaRule[] | null;
-
-  lastStatusChange: Date | null;
-
-  changelog: ChangeEventIF[] | null;
 
   state: string | null;
 
@@ -46,10 +48,11 @@ class Issue implements IssueIF {
     closedAt: Date | null,
     dueTo: Date | null,
     status: string | null,
-    statusChanges: StatusChangesIF[],
+    assigneeRestingTime: DurationLikeObject | null,
+    statusRestingTime: DurationLikeObject | null,
+    statusChanges: ChangeLogIF[] | null,
+    assigneeChanges: ChangeLogIF[] | null,
     assignedSlaRule: SlaRule[] | null,
-    lastStatusChange: Date | null,
-    changelog: ChangeEventIF[] | null,
     state: string | null
   ) {
     this.id = id;
@@ -61,8 +64,11 @@ class Issue implements IssueIF {
     this.closedAt = closedAt;
     this.dueTo = dueTo;
     this.status = status;
-    this.assignedSlaRule = assignedSlaRule;
+    this.assigneeRestingTime = assigneeRestingTime;
+    this.statusRestingTime = statusRestingTime;
     this.statusChanges = statusChanges;
+    this.assigneeChanges = assigneeChanges;
+    this.assignedSlaRule = assignedSlaRule;
     this.lastStatusChange = lastStatusChange;
     this.changelog = changelog;
     this.state = state;

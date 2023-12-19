@@ -60,6 +60,7 @@ describe('Project Overview should load all the Components', () => {
       .then(() => {
         const dropdownOptions = wrapper.getComponent(Dropdown).props('options');
         expect(dropdownOptions.length).toEqual(8);
+        expect(dropdownOptions.length).toEqual(22);
       });
   });
 

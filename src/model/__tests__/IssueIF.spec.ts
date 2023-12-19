@@ -5,9 +5,9 @@ import {
   getAssignedToName,
   getFormattedDate,
   getTimeLeft,
-} from '../Issue/Issue';
+  getSlaRules,
+} from '../../services/Issue';
 import type { EmployeeIF } from '../EmployeeIF';
-import type { StatusChangesIF } from '../Issue/StatusChangesIF';
 
 describe('Issue Class', () => {
   test('creates an instance of Issue with the provided properties', () => {
@@ -27,7 +27,7 @@ describe('Issue Class', () => {
     const createdAt = new Date();
     const closedAt = null;
     const dueTo = new Date();
-    const status = 'Open';
+    const status = 'open';
     const assignedSlaRule = null;
     const statusChanges: StatusChangesIF[] = [];
     const state = '';
@@ -42,6 +42,11 @@ describe('Issue Class', () => {
       closedAt,
       dueTo,
       status,
+      {},
+      {},
+      [],
+      [],
+      assignedSlaRule
       statusChanges,
       assignedSlaRule,
       null,
@@ -94,6 +99,11 @@ describe('getAssignedToName', () => {
       '',
       [],
       null,
+      {},
+      {},
+      [],
+      [],
+      []
       null,
       null,
       ''
@@ -123,6 +133,11 @@ describe('getAssignedToName', () => {
       '',
       [],
       null,
+      {},
+      {},
+      [],
+      [],
+      []
       null,
       null,
       ''
@@ -155,6 +170,11 @@ describe('getFormattedDate', () => {
       '',
       [],
       null,
+      {},
+      {},
+      [],
+      [],
+      []
       null,
       null,
       ''
@@ -184,6 +204,11 @@ describe('getFormattedDate', () => {
       '',
       [],
       null,
+      {},
+      {},
+      [],
+      [],
+      []
       null,
       null,
       ''
@@ -217,6 +242,11 @@ describe('getTimeLeft', () => {
       '',
       [],
       null,
+      {},
+      {},
+      [],
+      [],
+      []
       null,
       null,
       ''
@@ -250,6 +280,11 @@ describe('getTimeLeft', () => {
       '',
       [],
       null,
+      {},
+      {},
+      [],
+      [],
+      []
       null,
       null,
       ''
@@ -279,6 +314,11 @@ describe('getTimeLeft', () => {
       '',
       [],
       null,
+      {},
+      {},
+      [],
+      [],
+      []
       null,
       null,
       ''
@@ -307,6 +347,12 @@ describe('countIssuesByStatus', () => {
       new Date(),
       null,
       null,
+      'open',
+      {},
+      {},
+      [],
+      [],
+      []
       'Open',
       [],
       null,
@@ -331,6 +377,12 @@ describe('countIssuesByStatus', () => {
       new Date(),
       null,
       null,
+      'closed',
+      {},
+      {},
+      [],
+      [],
+      []
       'Closed',
       [],
       null,
@@ -355,8 +407,12 @@ describe('countIssuesByStatus', () => {
       new Date(),
       null,
       null,
-      'In Progress',
+      'in progress',
+      {},
+      {},
       [],
+      [],
+      []
       null,
       null,
       null,
@@ -379,11 +435,12 @@ describe('countIssuesByStatus', () => {
       new Date(),
       null,
       null,
-      'Open',
+      'open',
+      {},
+      {},
       [],
-      null,
-      null,
-      null,
+      [],
+      [],
       'planning'
     ),
     new Issue(
@@ -403,19 +460,19 @@ describe('countIssuesByStatus', () => {
       new Date(),
       null,
       null,
-      'Closed',
+      'closed',
+      {},
+      {},
       [],
-      null,
-      null,
-      null,
-      'testing'
+      [],
+      []
     ),
   ];
 
   test('returns the count of issues with the specified status', () => {
-    const openIssuesCount = countIssuesByStatus(issueList, 'Open');
-    const closedIssuesCount = countIssuesByStatus(issueList, 'Closed');
-    const inProgressIssuesCount = countIssuesByStatus(issueList, 'In Progress');
+    const openIssuesCount = countIssuesByStatus(issueList, 'open');
+    const closedIssuesCount = countIssuesByStatus(issueList, 'closed');
+    const inProgressIssuesCount = countIssuesByStatus(issueList, 'in progress');
 
     expect(openIssuesCount).toBe(2);
     expect(closedIssuesCount).toBe(2);
@@ -425,5 +482,37 @@ describe('countIssuesByStatus', () => {
   test('returns the count of all issues when status is null', () => {
     const totalIssuesCount = countIssuesByStatus(issueList, null);
     expect(totalIssuesCount).toBe(issueList.length);
+  });
+});
+
+describe('getSlaRules', () => {
+  test('getSlaRules returns an empty array when assignedSlaRule is null', () => {
+    const issue = new Issue(
+      1,
+      'Test Issue',
+      null,
+      null,
+      {
+        id: 1,
+        firstName: 'Anna',
+        lastName: 'John',
+        emailAddress: 'anna.john@email.com',
+        status: 'active',
+        avatarUrl: 'none',
+        key: 'ajohn',
+      },
+      new Date(),
+      null,
+      null,
+      'open',
+      {},
+      {},
+      [],
+      [],
+      []
+    );
+
+    const slaRules = getSlaRules(issue);
+    expect(slaRules).toEqual([]);
   });
 });
