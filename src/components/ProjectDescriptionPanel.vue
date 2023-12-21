@@ -2,28 +2,24 @@
   <div class="card" style="position: relative">
     <Card>
       <template #title>
-        <p>Project Overview</p>
+        <div
+          class="flex flex-row align-content-center align-items-center justify-content-between mt-2"
+        >
+          <p>Project Overview</p>
+          <Dropdown
+            v-model="selectedProject"
+            :options="projects"
+            optionLabel="name"
+            placeholder="Select a project"
+            class="w-full md:w-14rem"
+          />
+        </div>
         <Divider class="p-divider p-divider-horizontal divider-position" />
       </template>
       <template #content>
-        <Panel>
-          <template #icons>
-            <Dropdown
-              v-model="selectedProject"
-              :options="projects"
-              optionLabel="name"
-              placeholder="Select a project"
-              class="w-full md:w-14rem"
-            />
-          </template>
-          <template #default>
-            <div class="flex flex-row flex-wrap card-container justify-content-left">
-              <h4 class="m-2">Project-ID: {{ selectedProject?.id }}</h4>
-              <h4 class="m-2">Description: {{ selectedProject?.description }}</h4>
-              <h4 class="m-2">Total issues: {{ selectedProject?.issues?.length }}</h4>
-            </div>
-          </template>
-        </Panel>
+        <div class="flex flex-row justify-content-between">
+          <KeyFactsCard :project="selectedProject"></KeyFactsCard>
+        </div>
       </template>
     </Card>
   </div>
@@ -114,6 +110,7 @@ import { getIssueStatusList, type ProjectIF } from '@/model/ProjectIF';
 import { calculateRemainingReactionTime, calculateStatusChanges } from '@/services/issueCalculator';
 import type { IssueIF } from '@/model/Issue/IssueIF';
 import projectStore from '@/store/projectStore';
+import KeyFactsCard from '@/components/KeyFactsCard.vue';
 
 // Create a reference for the selectedProject with initial data
 const selectedProject = ref({
