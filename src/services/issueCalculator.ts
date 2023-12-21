@@ -2,6 +2,8 @@ import type { ProjectIF } from '@/model/ProjectIF';
 import type { EmployeeIF } from '@/model/EmployeeIF';
 import type { IssueIF } from '@/model/Issue/IssueIF';
 import getMockData from '../assets/__mockdata__/mockDataComposer';
+import type { Category } from '@/assets/__mockdata__/StatusLists';
+import { statusLists } from '@/assets/__mockdata__/StatusLists';
 
 /**
  * @brief: The Function map the issues to the Employees.
@@ -133,4 +135,54 @@ export function calculateStatusChanges(issue: IssueIF): number {
   });
 
   return statusChanges;
+}
+
+/**
+ *
+ * @param Issues array of issues
+ * @param category category of the issues
+ * @returns Map with the status and the number of issues
+ */
+export function getStatusesFromCategory(
+  Issues: IssueIF[],
+  category: Category
+): Map<string, number> {
+  const mapToReturn: Map<string, number> = new Map([]);
+  // write code to get all the statuses from the issue status and return a map with the status and the number of issues
+  Issues.forEach((issue) => {
+    if (statusLists[category].includes(issue.status as string)) {
+      const numberOfIssues =
+        mapToReturn.get(issue.status as string) === undefined
+          ? 0
+          : mapToReturn.get(issue.status as string);
+      if (numberOfIssues !== undefined) {
+        mapToReturn.set(issue.status as string, numberOfIssues + 1);
+      } else {
+        mapToReturn.set(issue.status as string, 1);
+      }
+    }
+  });
+  return mapToReturn;
+}
+
+/**
+ *
+ * @param Issues array of issues
+ * @returns Map with the status and the number of issues
+ */
+export function getStatusesfromIssues(Issues: IssueIF[]): Map<string, number> {
+  const mapToReturn: Map<string, number> = new Map([]);
+  // write code to get all the statuses from the issue status and return a map with the status and the number of issues
+  Issues.forEach((issue) => {
+    const numberOfIssues =
+      mapToReturn.get(issue.status as string) === undefined
+        ? 0
+        : mapToReturn.get(issue.status as string);
+    if (numberOfIssues !== undefined) {
+      mapToReturn.set(issue.status as string, numberOfIssues + 1);
+    } else {
+      mapToReturn.set(issue.status as string, 1);
+    }
+  });
+  return mapToReturn;
 }
