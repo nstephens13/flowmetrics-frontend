@@ -2,18 +2,22 @@
   <div class="card" style="position: relative">
     <Card>
       <template #title>
-        <p>Project Overview</p>
-        <Divider class="p-divider p-divider-horizontal divider-position" />
-      </template>
-      <template #content>
-        <div class="flex flex-row justify-content-between">
+        <div
+          class="flex flex-row align-content-center align-items-center justify-content-between mt-2"
+        >
+          <p>Project Overview</p>
           <Dropdown
             v-model="selectedProject"
             :options="projects"
             optionLabel="name"
             placeholder="Select a project"
-            class="w-full h-3rem md:w-14rem"
+            class="w-full md:w-14rem"
           />
+        </div>
+        <Divider class="p-divider p-divider-horizontal divider-position" />
+      </template>
+      <template #content>
+        <div class="flex flex-row justify-content-between">
           <KeyFactsCard :project="selectedProject"></KeyFactsCard>
         </div>
       </template>
