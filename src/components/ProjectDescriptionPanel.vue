@@ -143,7 +143,6 @@ import { calculateRemainingReactionTime, calculateStatusChanges } from '@/servic
 import type { IssueIF } from '@/model/Issue/IssueIF';
 import projectStore from '@/store/projectStore';
 import KeyFactsCard from '@/components/KeyFactsCard.vue';
-import getPercentageSlaRulesComplied from '@/services/keyFactsCalculator';
 
 // Create a reference for the selectedProject with initial data
 const selectedProject = ref({
