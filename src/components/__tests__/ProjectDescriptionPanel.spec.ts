@@ -10,6 +10,7 @@ import MultiSelect from 'primevue/multiselect';
 import { createTestingPinia } from '@pinia/testing';
 import router from '@/router/index';
 import ProjectDescriptionPanel from '../ProjectDescriptionPanel.vue';
+import KeyFactsCard from '../KeyFactsCard.vue';
 
 // Describe block for the test suite
 describe('Project Overview should load all the Components', () => {
@@ -57,6 +58,7 @@ describe('Project Overview should load all the Components', () => {
         Column,
         Divider,
         MultiSelect,
+        KeyFactsCard,
       },
     },
   });
@@ -65,6 +67,7 @@ describe('Project Overview should load all the Components', () => {
   test('it mounts', () => {
     expect(wrapper.getComponent(Dropdown).isVisible()).toBe(true);
     expect(wrapper.getComponent(Card).isVisible()).toBe(true);
+    expect(wrapper.getComponent(KeyFactsCard).isVisible()).toBe(true);
   });
 
   // Test to check the placeholder text of the dropdown select

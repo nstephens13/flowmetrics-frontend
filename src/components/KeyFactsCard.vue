@@ -4,12 +4,12 @@
     <template #content>
       <div class="flex flex-row justify-content-between">
         <div class="flex flex-column">
-          <div> Opened issues:</div>
-          <div> Complied SLA Rules:</div>
+          <div>Opened issues:</div>
+          <div>SLA rule complied (in %)</div>
         </div>
         <div class="flex flex-column">
-          <div>{{ getNumberOfIssues(project) }}</div>
-          <div>{{ getPercentageSlaRulesComplied(project) }}%</div>
+          <div>{{ project?.issues.length }}</div>
+          <div>{{ getPercentageSlaRulesComplied(project) }}</div>
         </div>
       </div>
     </template>
@@ -17,7 +17,7 @@
 </template>
 
 <script setup lang="ts">
-import { getNumberOfIssues, getPercentageSlaRulesComplied } from '@/services/keyFactsCalculator';
+import getPercentageSlaRulesComplied from '@/services/keyFactsCalculator';
 import type { ProjectIF } from '@/model/ProjectIF';
 
 defineProps({
