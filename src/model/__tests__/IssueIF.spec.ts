@@ -5,9 +5,10 @@ import {
   getAssignedToName,
   getFormattedDate,
   getTimeLeft,
-} from '../Issue/Issue';
+  getSlaRules,
+} from '../../services/Issue';
 import type { EmployeeIF } from '../EmployeeIF';
-import type { StatusChangesIF } from '../Issue/StatusChangesIF';
+import { type SlaRule } from '../Sla/SlaRule';
 
 describe('Issue Class', () => {
   test('creates an instance of Issue with the provided properties', () => {
@@ -27,9 +28,9 @@ describe('Issue Class', () => {
     const createdAt = new Date();
     const closedAt = null;
     const dueTo = new Date();
-    const status = 'Open';
-    const assignedSlaRule = null;
-    const statusChanges: StatusChangesIF[] = [];
+    const status = 'open';
+    const assignedSlaRule: SlaRule[] = [];
+    const state = '';
 
     const issue = new Issue(
       id,
@@ -41,10 +42,12 @@ describe('Issue Class', () => {
       closedAt,
       dueTo,
       status,
-      statusChanges,
+      {},
+      {},
+      [],
+      [],
       assignedSlaRule,
-      null,
-      null
+      ''
     );
 
     expect(issue.id).toBe(id);
@@ -57,7 +60,7 @@ describe('Issue Class', () => {
     expect(issue.dueTo).toBe(dueTo);
     expect(issue.status).toBe(status);
     expect(issue.assignedSlaRule).toBe(assignedSlaRule);
-    expect(issue.statusChanges).toBe(statusChanges);
+    expect(issue.state).toBe(state);
   });
 });
 
@@ -88,11 +91,13 @@ describe('getAssignedToName', () => {
       new Date(),
       null,
       null,
+      '',
+      null,
       null,
       [],
-      null,
-      null,
-      null
+      [],
+      [],
+      ''
     );
     const assignedToName = getAssignedToName(issue);
     expect(assignedToName).toBe('John Doe');
@@ -116,11 +121,13 @@ describe('getAssignedToName', () => {
       new Date(),
       null,
       null,
+      '',
+      null,
       null,
       [],
-      null,
-      null,
-      null
+      [],
+      [],
+      ''
     );
     const assignedToName = getAssignedToName(issue);
     expect(assignedToName).toBe('');
@@ -147,11 +154,13 @@ describe('getFormattedDate', () => {
       new Date(),
       null,
       dueTo,
+      '',
+      null,
       null,
       [],
-      null,
-      null,
-      null
+      [],
+      [],
+      ''
     );
     const formattedDate = getFormattedDate(issue);
     expect(formattedDate).toBe('July 1, 2023');
@@ -175,11 +184,13 @@ describe('getFormattedDate', () => {
       new Date(),
       null,
       null,
+      '',
+      null,
       null,
       [],
-      null,
-      null,
-      null
+      [],
+      [],
+      ''
     );
     const formattedDate = getFormattedDate(issue);
     expect(formattedDate).toBe('');
@@ -207,11 +218,13 @@ describe('getTimeLeft', () => {
       new Date(),
       null,
       dueTo,
+      '',
+      null,
       null,
       [],
-      null,
-      null,
-      null
+      [],
+      [],
+      ''
     );
     const timeLeft = getTimeLeft(issue);
     const expectedTimeLeft = Math.ceil(
@@ -239,11 +252,13 @@ describe('getTimeLeft', () => {
       new Date(),
       null,
       dueTo,
+      '',
+      null,
       null,
       [],
-      null,
-      null,
-      null
+      [],
+      [],
+      ''
     );
     const timeLeft = getTimeLeft(issue);
     expect(timeLeft).toBe(0);
@@ -267,11 +282,13 @@ describe('getTimeLeft', () => {
       new Date(),
       null,
       null,
+      '',
+      null,
       null,
       [],
-      null,
-      null,
-      null
+      [],
+      [],
+      ''
     );
     const timeLeft = getTimeLeft(issue);
     expect(timeLeft).toBeNull();
@@ -297,11 +314,13 @@ describe('countIssuesByStatus', () => {
       new Date(),
       null,
       null,
-      'Open',
+      'open',
+      null,
+      null,
       [],
-      null,
-      null,
-      null
+      [],
+      [],
+      'development'
     ),
     new Issue(
       2,
@@ -320,11 +339,13 @@ describe('countIssuesByStatus', () => {
       new Date(),
       null,
       null,
-      'Closed',
+      'closed',
+      null,
+      null,
       [],
-      null,
-      null,
-      null
+      [],
+      [],
+      'testing'
     ),
     new Issue(
       3,
@@ -343,11 +364,13 @@ describe('countIssuesByStatus', () => {
       new Date(),
       null,
       null,
-      'In Progress',
+      'in progress',
+      null,
+      null,
       [],
-      null,
-      null,
-      null
+      [],
+      [],
+      'development'
     ),
     new Issue(
       4,
@@ -366,11 +389,13 @@ describe('countIssuesByStatus', () => {
       new Date(),
       null,
       null,
-      'Open',
+      'open',
+      {},
+      {},
       [],
-      null,
-      null,
-      null
+      [],
+      [],
+      'planning'
     ),
     new Issue(
       5,
@@ -389,18 +414,20 @@ describe('countIssuesByStatus', () => {
       new Date(),
       null,
       null,
-      'Closed',
+      'closed',
+      {},
+      {},
       [],
-      null,
-      null,
-      null
+      [],
+      [],
+      'planning'
     ),
   ];
 
   test('returns the count of issues with the specified status', () => {
-    const openIssuesCount = countIssuesByStatus(issueList, 'Open');
-    const closedIssuesCount = countIssuesByStatus(issueList, 'Closed');
-    const inProgressIssuesCount = countIssuesByStatus(issueList, 'In Progress');
+    const openIssuesCount = countIssuesByStatus(issueList, 'open');
+    const closedIssuesCount = countIssuesByStatus(issueList, 'closed');
+    const inProgressIssuesCount = countIssuesByStatus(issueList, 'in progress');
 
     expect(openIssuesCount).toBe(2);
     expect(closedIssuesCount).toBe(2);
@@ -410,5 +437,38 @@ describe('countIssuesByStatus', () => {
   test('returns the count of all issues when status is null', () => {
     const totalIssuesCount = countIssuesByStatus(issueList, null);
     expect(totalIssuesCount).toBe(issueList.length);
+  });
+});
+
+describe('getSlaRules', () => {
+  test('getSlaRules returns an empty array when assignedSlaRule is null', () => {
+    const issue = new Issue(
+      1,
+      'Test Issue',
+      null,
+      null,
+      {
+        id: 1,
+        firstName: 'Anna',
+        lastName: 'John',
+        emailAddress: 'anna.john@email.com',
+        status: 'active',
+        avatarUrl: 'none',
+        key: 'ajohn',
+      },
+      new Date(),
+      null,
+      null,
+      'open',
+      {},
+      {},
+      [],
+      [],
+      [],
+      ''
+    );
+
+    const slaRules = getSlaRules(issue);
+    expect(slaRules).toEqual([]);
   });
 });

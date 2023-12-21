@@ -1,5 +1,5 @@
 import { describe, test, expect } from 'vitest';
-import { getTimeLeft, getFormattedDate, getAssignedToName } from '../../model/Issue/Issue';
+import { getTimeLeft, getFormattedDate, getAssignedToName } from '../Issue';
 import getMockData from '@/assets/__mockdata__/mockDataComposer';
 
 describe('Issue Tests', () => {
@@ -34,7 +34,7 @@ describe('Issue Tests', () => {
 
   test('getStatus should return the status of the issue', () => {
     const issue = getMockData(5).issues[7]; // Assuming the first issue has a status
-    expect(issue.status).not.toBeNull();
+    expect(issue.status).not.toBe('');
     expect(typeof issue.status).toBe('string');
   });
 

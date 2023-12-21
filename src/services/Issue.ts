@@ -1,8 +1,8 @@
-import type { EmployeeIF } from '../EmployeeIF';
-import type { IssueIF } from './IssueIF';
+import type { DurationLikeObject } from 'luxon';
+import type { EmployeeIF } from '@/model/EmployeeIF';
+import type { IssueIF } from '@/model/Issue/IssueIF';
 import type { SlaRule } from '@/model/Sla/SlaRule';
-import type { ChangeEventIF } from '@/model/ChangeEventIF';
-import type { StatusChangesIF } from '@/model/Issue/StatusChangesIF';
+import type { ChangeLogIF } from '@/model/Issue/ChangeLogIF';
 
 // Issue Class implements IssueIF
 class Issue implements IssueIF {
@@ -24,13 +24,19 @@ class Issue implements IssueIF {
 
   status: string | null;
 
-  statusChanges: StatusChangesIF[];
+  assigneeRestingTime: DurationLikeObject | null;
+
+  statusRestingTime: DurationLikeObject | null;
+
+  statusChanges: ChangeLogIF[] | null;
+
+  assigneeChanges: ChangeLogIF[] | null;
 
   assignedSlaRule: SlaRule[] | null;
 
-  lastStatusChange: Date | null;
+  state: string | null;
 
-  changelog: ChangeEventIF[] | null;
+  static planningStatusList: any;
 
   constructor(
     id: number,
@@ -42,10 +48,12 @@ class Issue implements IssueIF {
     closedAt: Date | null,
     dueTo: Date | null,
     status: string | null,
-    statusChanges: StatusChangesIF[],
-    assignedSlaRule: SlaRule[] | null,
-    lastStatusChange: Date | null,
-    changelog: ChangeEventIF[] | null
+    assigneeRestingTime: DurationLikeObject | null,
+    statusRestingTime: DurationLikeObject | null,
+    statusChanges: ChangeLogIF[],
+    assigneeChanges: ChangeLogIF[],
+    assignedSlaRule: SlaRule[],
+    state: string | null
   ) {
     this.id = id;
     this.name = name;
@@ -56,18 +64,46 @@ class Issue implements IssueIF {
     this.closedAt = closedAt;
     this.dueTo = dueTo;
     this.status = status;
-    this.assignedSlaRule = assignedSlaRule;
+    this.assigneeRestingTime = assigneeRestingTime;
+    this.statusRestingTime = statusRestingTime;
     this.statusChanges = statusChanges;
-    this.lastStatusChange = lastStatusChange;
-    this.changelog = changelog;
+    this.assigneeChanges = assigneeChanges;
+    this.assignedSlaRule = assignedSlaRule;
+    this.state = state;
   }
 }
 
+// Define lists of different category with statuses
+const planningStatusList: string[] = ['planned', 'design', 'open'];
+const devStatusList: string[] = ['in work', 'review', 'in progress'];
+const testingStatusList: string[] = ['unit test', 'e2e'];
+const nonDisplayedStatusList: string[] = ['closed'];
+const nonDisplayedStateList: string[] = [''];
+
+// Function sets State using Issue-Status
+function assignStateToIssue(issue: Issue): string | null {
+  const status = issue.status || '';
+
+  if (planningStatusList.includes(status)) {
+    return 'planning';
+  }
+  if (devStatusList.includes(status)) {
+    return 'development';
+  }
+  if (testingStatusList.includes(status)) {
+    return 'testing';
+  }
+  if (nonDisplayedStatusList.includes(status)) {
+    return null;
+  }
+  return 'undefined';
+}
 /**
  * Returns the name of the employee assigned to the issue.
  * @param issue - The Issue object.
  * @returns The assigned employee's name.
  */
+
 function getAssignedToName(issue: Issue): string {
   if (issue.assignedTo) {
     return `${issue.assignedTo.firstName} ${issue.assignedTo.lastName}`;
@@ -127,4 +163,10 @@ export {
   getAssignedToName,
   countIssuesByStatus,
   getSlaRules,
+  assignStateToIssue,
+  planningStatusList,
+  devStatusList,
+  testingStatusList,
+  nonDisplayedStatusList,
+  nonDisplayedStateList,
 };

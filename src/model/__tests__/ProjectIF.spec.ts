@@ -11,25 +11,25 @@ describe('getIssueStatusList', () => {
 
   it('returns unique status list without non-displayed statuses', () => {
     const issues: IssueIF[] = [
-      { status: 'Open' } as IssueIF,
-      { status: 'In Progress' } as IssueIF,
-      { status: 'Closed' } as IssueIF,
-      { status: 'Resolved' } as IssueIF,
-      { status: 'Open' } as IssueIF,
-      { status: null } as IssueIF,
+      { status: 'open' } as IssueIF,
+      { status: 'in progress' } as IssueIF,
+      { status: 'closed' } as IssueIF,
+      { status: 'resolved' } as IssueIF,
+      { status: 'open' } as IssueIF,
+      { status: '' } as IssueIF,
     ];
     const result = getIssueStatusList(issues);
-    expect(result).toEqual(['Open', 'In Progress', 'Resolved']);
+    expect(result).toEqual(['open', 'in progress', 'resolved']);
   });
 
   it('ignores null and Closed statuses in the input array', () => {
     const issues = [
-      { status: 'Open' } as IssueIF,
-      { status: null } as IssueIF,
-      { status: 'Closed' } as IssueIF,
-      { status: null } as IssueIF,
+      { status: 'open' } as IssueIF,
+      { status: '' } as IssueIF,
+      { status: 'closed' } as IssueIF,
+      { status: '' } as IssueIF,
     ];
     const result = getIssueStatusList(issues);
-    expect(result).toEqual(['Open']);
+    expect(result).toEqual(['open']);
   });
 });
