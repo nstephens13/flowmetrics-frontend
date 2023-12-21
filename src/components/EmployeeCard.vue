@@ -34,7 +34,7 @@
     </div>
   </div>
   <div class="flex flex-column gap-1 mt-2">
-    <!--Open Issues Progress Bar-->
+    <!--open Issues Progress Bar-->
     <div class="field mb-0">
       <label class="mb-2 font-semibold" for="planningProgressbar">{{
         categoryNames.firstCategory
@@ -48,7 +48,7 @@
         </ProgressBar>
       </div>
     </div>
-    <!--In Progress Issues Progress Bar-->
+    <!--in progress Issues Progress Bar-->
     <div class="field mb-0">
       <label class="mb-2 font-semibold" for="developmentProgressbar">{{
         categoryNames.secondCategory

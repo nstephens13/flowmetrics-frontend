@@ -2,17 +2,18 @@ import { faker } from '@faker-js/faker';
 import type { ProjectIF } from '@/model/ProjectIF';
 import type { EmployeeIF } from '@/model/EmployeeIF';
 import type { IssueIF } from '@/model/Issue/IssueIF';
-import employeeJson from './Employees.json';
-import issueJson2 from './Issues_2.json';
-import issueJson from './Issues.json';
-import type { Issue } from '@/model/Issue/Issue';
+import employeeJson from '@/assets/__mockdata__/json/Employees.json';
+import issueJson2 from '@/assets/__mockdata__/json/Issues_2.json';
+import issueJson from '@/assets/__mockdata__/json/Issues.json';
+import { Issue } from '@/services/Issue';
 import type { SlaRule } from '@/model/Sla/SlaRule';
+import { Category, statusLists } from './generator/StatusLists';
 
 // Define lists of different category with statuses
-export const planningStatusList: string[] = ['Planned', 'Design', 'Open'];
-export const devStatusList: string[] = ['In Work', 'Review', 'In Progress'];
-export const testingStatusList: string[] = ['UnitTest', 'E2E'];
-export const nonDisplayedStatusList: string[] = ['Closed'];
+export const planningStatusList: string[] = statusLists[Category.planning];
+export const devStatusList: string[] = statusLists[Category.development];
+export const testingStatusList: string[] = statusLists[Category.testing];
+export const nonDisplayedStatusList: string[] = statusLists[Category.nonDisplayed];
 
 /**
  * Generates a random integer between 0 and the specified maximum value (exclusive).
@@ -41,10 +42,12 @@ function loadIssueDataFromFile(issues: any): Issue[] {
       createdAt: issue.createdAt ? new Date(issue.createdAt) : null,
       dueTo: issue.dueTo ? new Date(issue.dueTo) : null,
       status: issue.status as string,
+      assigneeRestingTime: null,
+      statusRestingTime: null,
+      assigneeChanges: null,
       assignedSlaRule: issue.assignedSlaRule ? issue.assignedSlaRule : null,
       statusChanges: issue.statusChanges ? issue.statusChanges : [],
-      lastStatusChange: faker.date.recent(),
-      changelog: null,
+      state: issue.state as string,
     });
   });
   return issueData;
@@ -101,6 +104,7 @@ function loadArraysFromFile(
             closedAt: null;
             dueTo: string;
             status: string;
+            state: string;
           }
         | {
             id: number;
@@ -127,6 +131,7 @@ function loadArraysFromFile(
             closedAt: string;
             dueTo: string;
             status: string;
+            state: string;
           }
         | {
             id: number;
@@ -152,6 +157,7 @@ function loadArraysFromFile(
             closedAt: null;
             dueTo: string;
             status: string;
+            state: string;
           }
         | {
             id: number;
@@ -177,6 +183,7 @@ function loadArraysFromFile(
             closedAt: null;
             dueTo: string;
             status: string;
+            state: string;
           }
       )[]
     | { id: number; name: string; description: string; assignedTo: null }[]
@@ -203,6 +210,7 @@ function getMockData(dataset: number): ProjectIF {
       [issuesForProject] = assignIssueToEmployee(1, 1, issuesArrayFromFile, employeesArrayFromFile);
       const [planningStatus] = planningStatusList;
       issuesForProject[1].status = planningStatus;
+      issuesForProject[1].state = 'planning';
 
       return {
         id: 1,
@@ -275,6 +283,16 @@ function getMockData(dataset: number): ProjectIF {
         planningStatusList[0],
       ];
 
+      [
+        issuesForProject[0].state,
+        issuesForProject[1].state,
+        issuesForProject[2].state,
+        issuesForProject[3].state,
+        issuesForProject[4].state,
+        issuesForProject[5].state,
+        issuesForProject[6].state,
+      ] = ['planning', 'planning', 'planning', 'planning', 'planning', 'planning', 'planning'];
+
       return {
         id: 2,
         name: faker.science.chemicalElement().name,
@@ -286,35 +304,26 @@ function getMockData(dataset: number): ProjectIF {
 
     case 3: {
       for (let iterator = 0; iterator < 280; iterator++) {
-        let status = 'Open';
+        let status = 'open';
         let closedAt = null;
 
-        const randomStatus = getRandomInt(3); // 0: Open, 1: Closed, 2: In Progress
+        const randomStatus = getRandomInt(3); // 0: open, 1: closed, 2: in progress
 
         if (randomStatus === 2) {
-          status = 'In Progress';
+          status = 'in progress';
         } else if (randomStatus === 1) {
           closedAt = faker.date.recent();
         }
 
-        const analyseStatusChanges = getRandomInt(10);
-        const umsetzungStatusChanges = getRandomInt(10);
-        const testStatusChanges = getRandomInt(10);
-
-        const statusChanges = [
-          {
-            name: 'analysis',
-            value: analyseStatusChanges,
-          },
-          {
-            name: 'in progress',
-            value: umsetzungStatusChanges,
-          },
-          {
-            name: 'closed',
-            value: testStatusChanges,
-          },
-        ];
+        const slaRule1: SlaRule = {
+          id: 1,
+          name: 'SLA Rule 1',
+          reactionTimeInDays: 3,
+          expirationDate: new Date('2023-12-24T00:00:00.000Z'),
+          occurredIn: null,
+          priority: 'Kosmetik',
+          issueType: ['documentation', 'coverage'],
+        };
 
         issuesForProject.push({
           id: iterator + 1,
@@ -322,14 +331,16 @@ function getMockData(dataset: number): ProjectIF {
           description: faker.hacker.phrase(),
           closedAt,
           status,
-          assignedTo: null,
+          assignedTo: employeesArrayFromFile[getRandomInt(employeesForProject.length)],
           createdAt: faker.date.past(),
           createdBy: employeesArrayFromFile[getRandomInt(employeesForProject.length)],
           dueTo: faker.date.future(),
-          assignedSlaRule: null,
-          statusChanges,
-          lastStatusChange: faker.date.recent(),
-          changelog: null,
+          assignedSlaRule: [slaRule1],
+          assigneeRestingTime: null,
+          statusRestingTime: null,
+          assigneeChanges: null,
+          statusChanges: null,
+          state: '',
         });
       }
 
@@ -359,35 +370,18 @@ function getMockData(dataset: number): ProjectIF {
       [employeesArrayFromFile, issuesArrayFromFile] = loadArraysFromFile(issueJson2);
 
       for (let iterator = 0; iterator < 280; iterator++) {
-        let status = 'Open';
+        let status = 'open';
         let closedAt = null;
+        let state = 'planning';
 
-        const randomStatus = getRandomInt(3); // 0: Open, 1: Closed, 2: In Progress
+        const randomStatus = getRandomInt(3); // 0: open, 1: closed, 2: in progress
 
         if (randomStatus === 2) {
-          status = 'In Progress';
+          status = 'in progress';
+          state = 'development';
         } else if (randomStatus === 1) {
           closedAt = faker.date.recent();
         }
-
-        const analyseStatusChanges = getRandomInt(10);
-        const umsetzungStatusChanges = getRandomInt(10);
-        const testStatusChanges = getRandomInt(10);
-
-        const statusChanges = [
-          {
-            name: 'analysis',
-            value: analyseStatusChanges,
-          },
-          {
-            name: 'in progress',
-            value: umsetzungStatusChanges,
-          },
-          {
-            name: 'closed',
-            value: testStatusChanges,
-          },
-        ];
 
         issuesForProject.push({
           id: iterator + 1,
@@ -395,17 +389,26 @@ function getMockData(dataset: number): ProjectIF {
           description: faker.hacker.phrase(),
           closedAt,
           status,
-          assignedTo: null,
+          assignedTo: employeesArrayFromFile[getRandomInt(employeesForProject.length)],
           createdAt: faker.date.past(),
           createdBy: employeesArrayFromFile[getRandomInt(employeesForProject.length)],
           dueTo: faker.date.future(),
-          assignedSlaRule: null,
-          statusChanges,
-          lastStatusChange: faker.date.between({
-            from: new Date().valueOf() - 259200000,
-            to: new Date().valueOf(),
-          }), // 259200000 is 3 days in ms
-          changelog: null,
+          assignedSlaRule: [
+            {
+              id: 1,
+              name: 'SLA Rule 2',
+              reactionTimeInDays: 5,
+              expirationDate: new Date('2024-01-17T00:00:00.000Z'),
+              occurredIn: null,
+              priority: 'Kosmetik',
+              issueType: ['documentation', 'coverage'],
+            },
+          ],
+          assigneeChanges: null,
+          assigneeRestingTime: null,
+          statusChanges: null,
+          statusRestingTime: null,
+          state,
         });
       }
 
@@ -491,15 +494,27 @@ function getMockData(dataset: number): ProjectIF {
           name: faker.company.catchPhrase(),
           description: faker.hacker.phrase(),
           closedAt: null,
-          assignedTo: null,
+          assignedTo: employeesArrayFromFile[getRandomInt(employeesForProject.length)],
           createdAt: faker.date.past(),
           createdBy: employeesArrayFromFile[getRandomInt(employeesForProject.length)],
           dueTo: faker.date.future(),
           status: '',
-          assignedSlaRule: null,
+          assignedSlaRule: [
+            {
+              id: 1,
+              name: 'SLA Rule 1',
+              reactionTimeInDays: 3,
+              expirationDate: new Date('2024-02-17T00:00:00.000Z'),
+              occurredIn: null,
+              priority: 'Kosmetik',
+              issueType: ['documentation', 'coverage'],
+            },
+          ],
           statusChanges: [],
-          lastStatusChange: faker.date.recent(),
-          changelog: null,
+          state: '',
+          assigneeRestingTime: null,
+          statusRestingTime: null,
+          assigneeChanges: null,
         });
       }
 
@@ -508,10 +523,10 @@ function getMockData(dataset: number): ProjectIF {
       const numberOfEmployees = employeesArrayFromFile.length;
 
       for (let iterator = 0; iterator < numberOfIssues; iterator++) {
-        const randomStatus = getRandomInt(4); // 0: Open, 1: Closed, 2: In Progress
+        const randomStatus = getRandomInt(4); // 0: open, 1: closed, 2: in progress
 
         if (randomStatus === 2) {
-          issues[iterator].status = 'In Progress';
+          issues[iterator].status = 'in progress';
           const [devStatus] = devStatusList;
           issues[iterator].status = devStatus;
         } else if (randomStatus === 1) {
@@ -558,15 +573,17 @@ function getMockData(dataset: number): ProjectIF {
           name: faker.company.catchPhrase(),
           description: faker.hacker.phrase(),
           closedAt: null,
-          assignedTo: null,
+          assignedTo: employeesArrayFromFile[getRandomInt(employeesForProject.length)],
           createdAt: faker.date.past(),
           createdBy: employeesArrayFromFile[getRandomInt(employeesForProject.length)],
           dueTo: faker.date.future(),
           status: '',
           assignedSlaRule: [],
+          assigneeRestingTime: null,
+          statusRestingTime: null,
+          assigneeChanges: null,
           statusChanges: [],
-          lastStatusChange: faker.date.recent(),
-          changelog: null,
+          state: '',
         });
       }
 
@@ -575,10 +592,10 @@ function getMockData(dataset: number): ProjectIF {
       const numberOfEmployees = employeesArrayFromFile.length;
 
       for (let iterator = 0; iterator < numberOfIssues; iterator++) {
-        const randomStatus = getRandomInt(4); // 0: Open, 1: Closed, 2: In Progress
+        const randomStatus = getRandomInt(4); // 0: open, 1: closed, 2: in progress
 
         if (randomStatus === 2) {
-          issues[iterator].status = 'In Progress';
+          issues[iterator].status = 'in progress';
           const [devStatus] = devStatusList;
           issues[iterator].status = devStatus;
         } else if (randomStatus === 1) {
@@ -742,42 +759,61 @@ function getMockData(dataset: number): ProjectIF {
       };
 
       const date = new Date(2018, 0o5, 0o5, 17, 23, 42, 11);
-      issuesForProject[0].status = 'In Progress';
+      issuesForProject[0].status = 'in progress';
+      issuesForProject[0].status = 'e2e';
+      issuesForProject[0].state = 'testing';
       issuesForProject[0].createdAt = new Date();
       issuesForProject[0].assignedSlaRule = [slaRule1];
-      issuesForProject[2].status = 'Closed';
+      issuesForProject[2].status = 'closed';
+      issuesForProject[2].status = 'in progress';
+      issuesForProject[0].state = 'development';
       issuesForProject[2].closedAt = date; // Set the specific closedAt date
-      issuesForProject[3].status = 'Closed';
+      issuesForProject[3].status = 'closed';
+      issuesForProject[3].status = 'review';
+      issuesForProject[0].state = 'development';
       issuesForProject[3].closedAt = date; // Set the specific closedAt date
-      issuesForProject[4].status = 'Closed';
+      issuesForProject[4].status = 'closed';
+      issuesForProject[4].status = 'review';
+      issuesForProject[0].state = 'development';
       issuesForProject[4].closedAt = date; // Set the specific closedAt date
-      issuesForProject[5].status = 'In Progress';
+      issuesForProject[5].status = 'in progress';
+      issuesForProject[5].status = 'e2e';
+      issuesForProject[0].state = 'testing';
       issuesForProject[5].createdAt = new Date();
       issuesForProject[5].assignedSlaRule = [slaRule2, slaRule3];
-      issuesForProject[6].status = 'Closed';
+      issuesForProject[6].status = 'closed';
+      issuesForProject[6].status = 'design';
+      issuesForProject[0].state = 'planning';
       issuesForProject[6].createdAt = date;
       issuesForProject[6].closedAt = date; // Set the specific closedAt date
       issuesForProject[6].assignedSlaRule = [slaRule2, slaRule3];
 
-      [issuesForProject[0].status, issuesForProject[0].status] = ['In Progress', devStatusList[0]];
+      [issuesForProject[0].status, issuesForProject[0].status] = ['in progress', devStatusList[0]];
+      [issuesForProject[0].state, issuesForProject[0].state] = 'development';
       [issuesForProject[1].status] = [planningStatusList[0]];
+      [issuesForProject[1].state, issuesForProject[1].state] = 'planning';
       [issuesForProject[2].status, issuesForProject[2].status, issuesForProject[2].closedAt] = [
-        'Closed',
+        'closed',
         testingStatusList[0],
         date,
       ];
+      [issuesForProject[2].state, issuesForProject[2].state] = 'testing';
       [issuesForProject[3].status, issuesForProject[3].status, issuesForProject[3].closedAt] = [
-        'Closed',
+        'closed',
         testingStatusList[0],
         date,
       ];
+      [issuesForProject[3].state, issuesForProject[3].state] = 'testing';
       [issuesForProject[4].status, issuesForProject[4].status, issuesForProject[4].closedAt] = [
-        'Closed',
+        'closed',
         testingStatusList[0],
         date,
       ];
-      [issuesForProject[5].status, issuesForProject[5].status] = ['In Progress', devStatusList[0]];
+      [issuesForProject[5].status, issuesForProject[5].status] = ['in progress', devStatusList[0]];
+      [issuesForProject[4].state, issuesForProject[4].state] = 'testing';
+      [issuesForProject[5].state, issuesForProject[5].state] = 'development';
       [issuesForProject[6].status, issuesForProject[6].closedAt] = [testingStatusList[0], date];
+      [issuesForProject[6].state, issuesForProject[6].state] = 'testing';
 
       return {
         id: 55,

@@ -2,28 +2,24 @@
   <div class="card" style="position: relative">
     <Card>
       <template #title>
-        <p>Project Overview</p>
+        <div
+          class="flex flex-row align-content-center align-items-center justify-content-between mt-2"
+        >
+          <p>Project Overview</p>
+          <Dropdown
+            v-model="selectedProject"
+            :options="projects"
+            optionLabel="name"
+            placeholder="Select a project"
+            class="w-full md:w-14rem"
+          />
+        </div>
         <Divider class="p-divider p-divider-horizontal divider-position" />
       </template>
       <template #content>
-        <Panel>
-          <template #icons>
-            <Dropdown
-              v-model="selectedProject"
-              :options="projects"
-              optionLabel="name"
-              placeholder="Select a project"
-              class="w-full md:w-14rem"
-            />
-          </template>
-          <template #default>
-            <div class="flex flex-row flex-wrap card-container justify-content-left">
-              <h4 class="m-2">Project-ID: {{ selectedProject.id }}</h4>
-              <h4 class="m-2">Description: {{ selectedProject.description }}</h4>
-              <h4 class="m-2">Total issues: {{ selectedProject.issues.length }}</h4>
-            </div>
-          </template>
-        </Panel>
+        <div class="flex flex-row justify-content-between">
+          <KeyFactsCard :project="selectedProject"></KeyFactsCard>
+        </div>
       </template>
     </Card>
   </div>
@@ -42,7 +38,7 @@
             :rows="10"
             filterDisplay="menu"
             :rowsPerPageOptions="[10, 20, 50, 100]"
-            :value="selectedProject.issues"
+            :value="selectedProject ? selectedProject.issues : []"
             showGridlines
           >
             <Column field="id" header="Issue-ID"></Column>
@@ -80,6 +76,14 @@
                 />
               </template>
             </Column>
+            <Column header="Remaining Reaction Time">
+              <template #body="slotProps">
+                {{ calculateRemainingTime(slotProps.data) }}
+              </template>
+            </Column>
+            <Column header="Status changes" style="width: 150px">
+              <template #body="slotProps">
+                {{ calculateStatusChanges(slotProps.data) }}
             <Column
               header="State"
               filterField="state"
@@ -113,41 +117,29 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { computed, ref } from 'vue';
 import type { Ref } from 'vue';
 import { FilterMatchMode } from 'primevue/api';
 import type { EmployeeIF } from '@/model/EmployeeIF';
 import { getIssueStatusList, getIssueStateList, type ProjectIF } from '@/model/ProjectIF';
-import getMockData from '@/assets/__mockdata__/mockDataComposer';
+import { calculateRemainingReactionTime, calculateStatusChanges } from '@/services/issueCalculator';
+import type { IssueIF } from '@/model/Issue/IssueIF';
+import projectStore from '@/store/projectStore';
+import KeyFactsCard from '@/components/KeyFactsCard.vue';
 
 // Create a reference for the selectedProject with initial data
 const selectedProject = ref({
   id: 0,
-  name: 'Project_Name',
+  name: '',
   description: '',
-  milestones: [],
   issues: [],
   slaSubscriber: null,
 } as ProjectIF);
 
-// Create a reference for the statuses and states array
-const statuses: Ref<string[]> = ref([]);
-const states: Ref<string[]> = ref(['Planning', 'Development', 'Testing']);
-
 // Create a reference for the filters object with initial configuration
 const filters = ref({
   status: { value: null, matchMode: FilterMatchMode.IN },
-  state: { value: null, matchMode: FilterMatchMode.IN },
-});
-
-// Watch for changes in the selectedProject and update the statuses array
-watch(selectedProject, () => {
-  statuses.value = getIssueStatusList(selectedProject.value.issues);
-});
-
-// Watch for changes in the selectedProject and update the states array
-watch(selectedProject, () => {
-  states.value = getIssueStateList(selectedProject.value.issues);
+    state: { value: null, matchMode: FilterMatchMode.IN },
 });
 
 // Function to print the assigned employee's full name
@@ -157,20 +149,32 @@ function printAssignedTo(employee: EmployeeIF | null): string {
   return `${firstName} ${lastName}`;
 }
 
-// Watch for changes in the selectedProject and update the statuses array
-watch(selectedProject, () => {
-  statuses.value = getIssueStatusList(selectedProject.value.issues);
-});
+function calculateRemainingTime(issue: IssueIF): string {
+  const [hasSlaRule, remainingTimeInSeconds] = calculateRemainingReactionTime(issue);
 
+  if (!hasSlaRule) {
+    return ''; // Return an empty string if there's no SLA rule or the time has expired
+  }
+  if (hasSlaRule && remainingTimeInSeconds <= 0) {
+    return 'Expired';
+  }
+
+  const remainingDays = Math.floor(remainingTimeInSeconds / (60 * 60 * 24));
+  const remainingHours = Math.floor((remainingTimeInSeconds % (60 * 60 * 24)) / (60 * 60));
+
+  if (remainingDays > 1) {
+    return `${remainingDays} days`;
+  }
+  return `${remainingHours} hours`;
+}
+
+// Create a reference for the statuses array
+const statuses = computed(() => getIssueStatusList(selectedProject.value.issues));
+const states = computed(() =>
+    getIssueStateList(selectedProject.value.issues) ? getIssueStateList(selectedProject.value.issues) : ['Planning', 'Development', 'Testing']
+);
 // Create a reference for the projects array with mock data
-const projects: Ref<ProjectIF[]> = ref([
-  getMockData(1),
-  getMockData(2),
-  getMockData(3),
-  getMockData(53),
-  getMockData(54),
-  getMockData(55),
-] as ProjectIF[]);
+const projects: Ref<ProjectIF[]> = ref(projectStore().getProjects);
 </script>
 
 <style scoped>
