@@ -3,13 +3,13 @@
     <template #title> Key Facts </template>
     <template #content>
       <div class="flex flex-row justify-content-between">
-        <div class="flex flex-column">
+        <div class="flex flex-column mr-2">
           <div>Opened issues:</div>
-          <div>SLA rule complied (in %)</div>
+          <div>SLA rule complied (in %): </div>
         </div>
         <div class="flex flex-column">
-          <div>{{ project?.issues.length }}</div>
-          <div>{{ getPercentageSlaRulesComplied(project) }}</div>
+          <div class="font-bold">{{ project?.issues.length }}</div>
+          <div class="font-bold">{{ getPercentageSlaRulesComplied(project) }}</div>
         </div>
       </div>
     </template>

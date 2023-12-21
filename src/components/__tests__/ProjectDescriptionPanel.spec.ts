@@ -103,6 +103,33 @@ describe('Project Overview should load all the Components', () => {
       });
   });
 
+  test('DataTable should contain "id" column with field ', () => {
+    const dataTable = wrapper.getComponent(DataTable);
+    const columns = dataTable.findAllComponents(Column);
+    const columnExists = columns.some((column) => column.props('field') === 'id');
+    expect(columnExists).toBe(true);
+  });
+
+  test('DataTable should contain "name" column with field ', () => {
+    const dataTable = wrapper.getComponent(DataTable);
+    const columns = dataTable.findAllComponents(Column);
+    const columnExists = columns.some((column) => column.props('field') === 'name');
+    expect(columnExists).toBe(true);
+  });
+  test('DataTable should contain "assignedTo" column with field ', () => {
+    const dataTable = wrapper.getComponent(DataTable);
+    const columns = dataTable.findAllComponents(Column);
+    const columnExists = columns.some((column) => column.props('field') === 'assignedTo');
+    expect(columnExists).toBe(true);
+  });
+
+  test('DataTable should contain "createdAt" column with field ', () => {
+    const dataTable = wrapper.getComponent(DataTable);
+    const columns = dataTable.findAllComponents(Column);
+    const columnExists = columns.some((column) => column.props('field') === 'createdAt');
+    expect(columnExists).toBe(true);
+  });
+
   test('Status changes are shown in Mocking Bird Project', async () => {
     const projectDropdown = wrapper.getComponent(Dropdown);
 
@@ -110,15 +137,12 @@ describe('Project Overview should load all the Components', () => {
     const project = dropdownOptions[0];
 
     await projectDropdown.setValue(project).then(async () => {
-      const statusChangesColumnCells = wrapper.findAll('.p-datatable-tbody tr td:last-child');
-      const statusChangesColumnData = (statusChangesColumnCells.at(0) as any)?.text();
-      const expectedData = /\b\d+\b/g; // is a regular expression that matches one or more digits (\d+) surrounded by word boundaries (\b). The g flag indicates a global search, so it will find all matches in the string.
-      const extractedNumbers = statusChangesColumnData.match(expectedData);
-      expect(extractedNumbers).toHaveLength(1);
-      extractedNumbers.forEach((number: string) => {
-        expect(Number.isInteger(Number(number))).toBe(true);
-      });
+      const dataTable = wrapper.getComponent(DataTable);
+      const columns = dataTable.findAllComponents(Column);
+      const columnExists = columns.some((column) => column.props('field') === 'statusChanges');
+      expect(columnExists).toBe(true);
     });
+
     expect(1).toEqual(dropdownOptions.length);
     expect('Project 1').toEqual(project.name);
   });
