@@ -3,7 +3,7 @@
     <Card>
       <template #title>
         <div
-          class="flex flex-row align-content-center align-items-center justify-content-between mt-3"
+          class="flex flex-row align-content-center align-items-center justify-content-start mt-3"
         >
           Project Overview
           <Dropdown
@@ -11,15 +11,18 @@
             :options="projects"
             optionLabel="name"
             placeholder="Select a project"
-            class="w-full md:w-14rem"
+            class="w-full md:w-20rem ml-4"
           />
         </div>
         <Divider class="p-divider p-divider-horizontal divider-position" />
       </template>
       <template #content>
-        <div class="flex flex-row justify-content-end">
+        <div class="flex flex-row justify-content-start">
           <card style="background-color: var(--flowMetricsBlue); color: #ffffffff; width: 400px">
-            <template #title> Project Infos </template>
+            <template #title>
+              <div v-if="selectedProject.name"> {{ selectedProject.name }} </div>
+              <div v-else> Project </div>
+            </template>
             <template #content>
               <div class="flex flex-row justify-center">
                 <div class="flex flex-column mr-2">
@@ -45,88 +48,93 @@
         <Divider class="p-divider p-divider-horizontal divider-position" />
       </template>
       <template #content>
-        <div class="card">
-          <DataTable
-            v-model:filters="filters"
-            :globalFilterFields="['name']"
-            paginator
-            :rows="10"
-            filterDisplay="menu"
-            :rowsPerPageOptions="[10, 20, 50, 100]"
-            :value="selectedProject ? selectedProject.issues : []"
-            showGridlines
-          >
-            <Column field="id" header="Issue-ID"></Column>
-            <template #empty> No issues found.</template>
-            <template #loading> Loading issues. Please wait.</template>
-            <Column field="name" header="Name"></Column>
-            <Column field="assignedTo" header="Assigned to">
-              <template #body="slotProps">
-                {{ printAssignedTo(slotProps.data.assignedTo) }}
-              </template>
-            </Column>
-            <Column field="createdAt" header="Created on"></Column>
-            <Column
-              header="Status"
-              filterField="status"
-              :showFilterMatchModes="false"
-              :filterMenuStyle="{ width: '7rem' }"
-              style="min-width: 10rem"
-              :show-apply-button="false"
+        <div class="flex flex-row">
+          <div style="width: 60%">
+            <DataTable
+              v-model:filters="filters"
+              :globalFilterFields="['name']"
+              paginator
+              :rows="5"
+              filterDisplay="menu"
+              :rowsPerPageOptions="[10, 20, 50, 100]"
+              :value="selectedProject ? selectedProject.issues : []"
+              showGridlines
             >
-              <template #body="data">
-                <div class="flex align-items-center gap-2">
-                  <span>{{ data.data.status }}</span>
-                </div>
-              </template>
-              <template #filter="{ filterModel, filterCallback }">
-                <MultiSelect
-                  v-model="filterModel.value"
-                  display="chip"
-                  :options="statuses"
-                  @change="filterCallback()"
-                  placeholder="Select Status"
-                  :maxSelectedLabels="3"
-                  class="w-full md:w-10rem"
-                />
-              </template>
-            </Column>
-            <Column header="Remaining Reaction Time">
-              <template #body="slotProps">
-                {{ calculateRemainingTime(slotProps.data) }}
-              </template>
-            </Column>
-            <Column field="statusChanges" header="Status changes" style="width: 150px">
-              <template #body="slotProps">
-                {{ calculateStatusChanges(slotProps.data) }}
-              </template>
-            </Column>
-            <Column
-              header="State"
-              filterField="state"
-              :showFilterMatchModes="false"
-              :filterMenuStyle="{ width: '7rem' }"
-              style="min-width: 10rem"
-              :show-apply-button="false"
-            >
-              <template #body="data">
-                <div class="flex align-items-center gap-2">
-                  <span>{{ data.data.state }}</span>
-                </div>
-              </template>
-              <template #filter="{ filterModel, filterCallback }">
-                <MultiSelect
-                  v-model="filterModel.value"
-                  display="chip"
-                  :options="states"
-                  @change="filterCallback()"
-                  placeholder="Select State"
-                  :maxSelectedLabels="3"
-                  class="w-full md:w-10rem"
-                />
-              </template>
-            </Column>
-          </DataTable>
+              <Column field="id" header="Issue-ID"></Column>
+              <template #empty> No issues found.</template>
+              <template #loading> Loading issues. Please wait.</template>
+              <Column field="name" header="Name"></Column>
+              <Column field="assignedTo" header="Assigned to">
+                <template #body="slotProps">
+                  {{ printAssignedTo(slotProps.data.assignedTo) }}
+                </template>
+              </Column>
+              <Column field="createdAt" header="Created on"></Column>
+              <Column
+                header="Status"
+                filterField="status"
+                :showFilterMatchModes="false"
+                :filterMenuStyle="{ width: '7rem' }"
+                style="min-width: 10rem"
+                :show-apply-button="false"
+              >
+                <template #body="data">
+                  <div class="flex align-items-center gap-2">
+                    <span>{{ data.data.status }}</span>
+                  </div>
+                </template>
+                <template #filter="{ filterModel, filterCallback }">
+                  <MultiSelect
+                    v-model="filterModel.value"
+                    display="chip"
+                    :options="statuses"
+                    @change="filterCallback()"
+                    placeholder="Select Status"
+                    :maxSelectedLabels="3"
+                    class="w-full md:w-10rem"
+                  />
+                </template>
+              </Column>
+              <Column header="Remaining Reaction Time">
+                <template #body="slotProps">
+                  {{ calculateRemainingTime(slotProps.data) }}
+                </template>
+              </Column>
+              <Column field="statusChanges" header="Status changes" style="width: 150px">
+                <template #body="slotProps">
+                  {{ calculateStatusChanges(slotProps.data) }}
+                </template>
+              </Column>
+              <Column
+                header="State"
+                filterField="state"
+                :showFilterMatchModes="false"
+                :filterMenuStyle="{ width: '7rem' }"
+                style="min-width: 10rem"
+                :show-apply-button="false"
+              >
+                <template #body="data">
+                  <div class="flex align-items-center gap-2">
+                    <span>{{ data.data.state }}</span>
+                  </div>
+                </template>
+                <template #filter="{ filterModel, filterCallback }">
+                  <MultiSelect
+                    v-model="filterModel.value"
+                    display="chip"
+                    :options="states"
+                    @change="filterCallback()"
+                    placeholder="Select State"
+                    :maxSelectedLabels="3"
+                    class="w-full md:w-10rem"
+                  />
+                </template>
+              </Column>
+            </DataTable>
+          </div>
+          <div style="width: 40%">
+            <BarDiagram :project="selectedProject"></BarDiagram>
+          </div>
         </div>
       </template>
     </Card>
@@ -143,6 +151,7 @@ import { calculateRemainingReactionTime, calculateStatusChanges } from '@/servic
 import type { IssueIF } from '@/model/Issue/IssueIF';
 import projectStore from '@/store/projectStore';
 import KeyFactsCard from '@/components/KeyFactsCard.vue';
+import BarDiagram from '@/components/BarDiagram.vue';
 
 // Create a reference for the selectedProject with initial data
 const selectedProject = ref({
@@ -190,7 +199,7 @@ const statuses = computed(() => getIssueStatusList(selectedProject.value.issues)
 
 // get computed states
 const states = computed(
-  () => getIssueStateList(selectedProject.value.issues) ?? ['Planning', 'Development', 'Testing']
+  () => getIssueStateList(selectedProject.value.issues) ?? ['planning', 'development', 'testing']
 );
 // Create a reference for the projects array with mock data
 const projects: Ref<ProjectIF[]> = ref(projectStore().getProjects);

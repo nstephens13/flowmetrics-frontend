@@ -27,6 +27,7 @@ import Chip from 'primevue/chip';
 import Tooltip from 'primevue/tooltip';
 import InputMask from 'primevue/inputmask';
 import OverlayPanel from 'primevue/overlaypanel';
+import Chart from 'primevue/chart';
 
 import router from './router';
 import App from './App.vue';
@@ -69,6 +70,7 @@ app.component('Chip', Chip);
 app.component('InputMask', InputMask);
 app.component('OverlayPanel', OverlayPanel);
 app.directive('tooltip', Tooltip);
+app.component('Chart', Chart);
 
 app.mount('#app');
 
