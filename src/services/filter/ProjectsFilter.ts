@@ -1,7 +1,9 @@
-import { Duration, type DurationLikeObject } from 'luxon';
-import type { ProjectIF } from '@/model/ProjectIF';
-import type { IssueIF } from '@/model/Issue/IssueIF';
-import type { FilterConfigIF } from '@/model/FilterConfigIF';
+import {Duration, type DurationLikeObject} from 'luxon';
+import type {ProjectIF} from '@/model/ProjectIF';
+import type {IssueIF} from '@/model/Issue/IssueIF';
+import type {FilterConfigIF, ProjectFilterConfigIF} from '@/model/FilterConfigIF';
+import {FilterService} from "primevue/api";
+import filter = FilterService.filter;
 
 /**
  * Filters the issues in a project based on the allowed status whitelist specified in the filter configuration.
@@ -67,4 +69,35 @@ export function filterProjectIssuesWithAMinimumAssigneeRestingTime(
   );
 
   return filteredIssues;
+}
+
+export function filterProjectIssuesWithMinimumStatusRestingTime(
+  issues: IssueIF[],
+  filterConfig: FilterConfigIF
+): IssueIF[] {
+  return issues.filter(
+    (issue: IssueIF) =>
+      DurationLikeObjectToDays(issue.statusRestingTime) >=
+      filterConfig.projectFilter.minimumStatusRestingTime
+  );
+}
+
+export function filterProjectIssuesWithMinimalStatusChanges(
+  issues: IssueIF[],
+  filterConfig: FilterConfigIF
+): IssueIF[] {
+  return issues.filter(
+    (issue: IssueIF) =>
+      (issue.statusChanges?.length ?? 0) >= filterConfig.projectFilter.minimumNumberOfStatusChanges
+  );
+}
+
+export function filterIssuesMinimumStatusChangesAndRestingTime(
+  issues: IssueIF[],
+  filterConfig: FilterConfigIF
+): IssueIF[] {
+  return filterProjectIssuesWithMinimumStatusRestingTime(
+    filterProjectIssuesWithMinimalStatusChanges(issues, filterConfig),
+    filterConfig
+  );
 }

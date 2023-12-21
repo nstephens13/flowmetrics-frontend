@@ -24,14 +24,12 @@
     <Card>
       <template #content>
         <div>Minimal resting time in current status (days)</div>
+        <InputNumber v-Model="minimalRestingTime"></InputNumber>
         <div>Minimal number of status changes</div>
+        <InputNumber v-Model="minimalStatusChanges"></InputNumber>
         <div>
-          <Button>
-
-          </Button>
-          <Button>
-
-          </Button>
+          <Button label="Clear" @click="clearFilters"> </Button>
+          <Button label="Apply" @click="applyFilters"> </Button>
         </div>
       </template>
     </Card>
@@ -39,18 +37,48 @@
 </template>
 
 <script setup lang="ts">
+import { Ref, ref } from 'vue';
 import type { ProjectIF } from '@/model/ProjectIF';
-import {Ref, ref} from "vue";
-import type {IssueIF} from "@/model/Issue/IssueIF";
-import useFilterConfigStore from "@/store/filterConfigStore";
+import type { IssueIF } from '@/model/Issue/IssueIF';
+import type { FilterConfigIF, ProjectFilterConfigIF } from '@/model/FilterConfigIF';
+import {
+  filterIssuesMinimumStatusChangesAndRestingTime,
+  filterProjectIssuesWithAnMinimumStatusRestingTime,
+  filterProjectIssuesWithMinimalStatusChanges
+} from '@/services/filter/ProjectsFilter';
 
-defineProps({
+const props = defineProps({
   project: Object as () => ProjectIF,
 });
-const filteredIssues: Ref<[IssueIF]> = ref([]);
-const maximumRestingTime: Ref<number> = ref(0);
-const minimalStatusChanges: Ref<number> = ref(0);
-const filterConfigStore = useFilterConfigStore();
-filterConfigStore.setFilterConfig()
-filteredIssues.value =
+
+const filteredIssues: Ref<IssueIF[]> = ref([]);
+const minimalRestingTime: Ref<number> = ref(0);
+const minimalStatusChanges: Ref<number> = ref(5);
+const filterConfig = {
+  id: 0,
+  projectFilter: {
+    projectsWhiteList: [],
+    issueStatusIncludeFilter: [],
+    minimumAssigneeRestingTime: 0,
+    minimumNumberOfStatusChanges: 0,
+    minimalStatusRestingTime: 0,
+  } as ProjectFilterConfigIF,
+} as FilterConfigIF;
+
+function updateFilteredIssues(): void {
+  if (!props.project) return;
+  filterIssuesMinimumStatusChangesAndRestingTime(props.project.issues, filterConfig);
+}
+
+const applyFilters = () => {
+  filterConfig.projectFilter.minimalStatusRestingTime = minimalRestingTime.value;
+  filterConfig.projectFilter.minimumNumberOfStatusChanges = minimalStatusChanges.value;
+  updateFilteredIssues();
+};
+
+const clearFilters = () => {
+  filterConfig.projectFilter.minimalStatusRestingTime = 0;
+  filterConfig.projectFilter.minimumNumberOfStatusChanges = 0;
+  updateFilteredIssues();
+};
 </script>
