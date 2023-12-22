@@ -1,9 +1,7 @@
-import {Duration, type DurationLikeObject} from 'luxon';
-import type {ProjectIF} from '@/model/ProjectIF';
-import type {IssueIF} from '@/model/Issue/IssueIF';
-import type {FilterConfigIF, ProjectFilterConfigIF} from '@/model/FilterConfigIF';
-import {FilterService} from "primevue/api";
-import filter = FilterService.filter;
+import { Duration, type DurationLikeObject } from 'luxon';
+import type { ProjectIF } from '@/model/ProjectIF';
+import type { IssueIF } from '@/model/Issue/IssueIF';
+import type { FilterConfigIF } from '@/model/FilterConfigIF';
 
 /**
  * Filters the issues in a project based on the allowed status whitelist specified in the filter configuration.
@@ -54,7 +52,7 @@ function DurationLikeObjectToDays(durationLikeObject: DurationLikeObject | null)
 /**
  * Filters a project list based on the minimum assignee resting time specified in the filter configuration.
  *
- * @param projects - The project list to filter.
+ * @param project - The project list to filter.
  * @param filterConfig - The filter configuration containing the minimum assignee resting time.
  * @returns The filtered project list with only the projects that have an assignee resting time greater than the minimum assignee resting time.
  */

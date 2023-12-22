@@ -9,7 +9,8 @@ import getMockData, {
 import type { FilterConfigIF, ProjectFilterConfigIF } from '../../model/FilterConfigIF';
 import type { IssueIF } from '../../model/Issue/IssueIF';
 import {
-  filterIssuesInProjectWithAStatusWhitelist, filterIssuesMinimumStatusChangesAndRestingTime,
+  filterIssuesInProjectWithAStatusWhitelist,
+  filterIssuesMinimumStatusChangesAndRestingTime,
   filterProjectIssuesWithMinimalStatusChanges,
   filterProjectIssuesWithMinimumStatusRestingTime,
   filterProjectListWithAProjectWhitelist,

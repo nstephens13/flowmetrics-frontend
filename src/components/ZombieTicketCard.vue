@@ -37,15 +37,12 @@
 </template>
 
 <script setup lang="ts">
-import { Ref, ref } from 'vue';
+import { ref } from 'vue';
+import type { Ref } from 'vue';
 import type { ProjectIF } from '@/model/ProjectIF';
 import type { IssueIF } from '@/model/Issue/IssueIF';
 import type { FilterConfigIF, ProjectFilterConfigIF } from '@/model/FilterConfigIF';
-import {
-  filterIssuesMinimumStatusChangesAndRestingTime,
-  filterProjectIssuesWithAnMinimumStatusRestingTime,
-  filterProjectIssuesWithMinimalStatusChanges
-} from '@/services/filter/ProjectsFilter';
+import { filterIssuesMinimumStatusChangesAndRestingTime } from '@/services/filter/ProjectsFilter';
 
 const props = defineProps({
   project: Object as () => ProjectIF,
@@ -61,7 +58,7 @@ const filterConfig = {
     issueStatusIncludeFilter: [],
     minimumAssigneeRestingTime: 0,
     minimumNumberOfStatusChanges: 0,
-    minimalStatusRestingTime: 0,
+    minimumStatusRestingTime: 0,
   } as ProjectFilterConfigIF,
 } as FilterConfigIF;
 
@@ -71,13 +68,13 @@ function updateFilteredIssues(): void {
 }
 
 const applyFilters = () => {
-  filterConfig.projectFilter.minimalStatusRestingTime = minimalRestingTime.value;
+  filterConfig.projectFilter.minimumStatusRestingTime = minimalRestingTime.value;
   filterConfig.projectFilter.minimumNumberOfStatusChanges = minimalStatusChanges.value;
   updateFilteredIssues();
 };
 
 const clearFilters = () => {
-  filterConfig.projectFilter.minimalStatusRestingTime = 0;
+  filterConfig.projectFilter.minimumStatusRestingTime = 0;
   filterConfig.projectFilter.minimumNumberOfStatusChanges = 0;
   updateFilteredIssues();
 };

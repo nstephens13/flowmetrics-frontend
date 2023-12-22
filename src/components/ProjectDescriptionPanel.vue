@@ -117,7 +117,7 @@ import { getIssueStatusList, type ProjectIF } from '@/model/ProjectIF';
 import { calculateRemainingReactionTime, calculateStatusChanges } from '@/services/issueCalculator';
 import type { IssueIF } from '@/model/Issue/IssueIF';
 import projectStore from '@/store/projectStore';
-import ZombieTicketCard from "@/components/ZombieTicketCard.vue";
+import ZombieTicketCard from '@/components/ZombieTicketCard.vue';
 
 // Create a reference for the selectedProject with initial data
 const selectedProject = ref({
