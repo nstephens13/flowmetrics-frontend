@@ -74,6 +74,7 @@
               {{ printAssignedTo(slotProps.data.assignedTo) }}
             </template>
           </Column>
+          <Column field="createdAt" header="Created on"></Column>
           <Column
             header="Status"
             filterField="status"

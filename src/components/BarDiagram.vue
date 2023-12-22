@@ -1,20 +1,21 @@
 <template>
-  <card style="background-color: #ffffff; width: 100%; height: 30rem">
+  <Card style="background-color: #ffffff; width: 100%; height: 30rem">
     <template #title>
       <div class="flex flex-row align-content-center align-items-center justify-content-between">
-        <p>Issues per Status</p>
+        Issues per Status
         <MultiSelect
           v-model="selectedCategory"
           :options="categories"
           placeholder="Category"
           class="w-full md:w-14rem"
+          id="category-select"
         />
       </div>
     </template>
     <template #content>
       <Chart type="bar" :data="chartData" :options="chartOptions" class="w-100rem h-30rem" />
     </template>
-  </card>
+  </Card>
 </template>
 <script setup lang="ts">
 import { ref, onMounted, computed, type Ref } from 'vue';
@@ -54,7 +55,7 @@ const chartData = computed(() => {
     labels,
     datasets: [
       {
-        label: 'Issues',
+        label: 'issues',
         backgroundColor: documentStyle.getPropertyValue('--blue-500'),
         borderColor: documentStyle.getPropertyValue('--blue-500'),
         data: AllNumberOfIssues,
