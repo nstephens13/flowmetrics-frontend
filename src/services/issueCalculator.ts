@@ -2,8 +2,7 @@ import type { ProjectIF } from '@/model/ProjectIF';
 import type { EmployeeIF } from '@/model/EmployeeIF';
 import type { IssueIF } from '@/model/Issue/IssueIF';
 import getMockData from '../assets/__mockdata__/mockDataComposer';
-import type { Category } from '@/assets/__mockdata__/StatusLists';
-import { statusLists } from '@/assets/__mockdata__/StatusLists';
+import { Category, statusLists } from '@/assets/__mockdata__/StatusLists';
 
 /**
  * @brief: The Function map the issues to the Employees.
@@ -170,12 +169,12 @@ export function getStatusesFromCategories(
   categories?: Category[]
 ): Map<string, number> {
   const mapToReturn: Map<string, number> = new Map([]);
+  const selectedCategories: Category[] =
+    categories === undefined
+      ? [Category.planning, Category.development, Category.testing]
+      : categories;
 
-  if (categories === undefined) {
-    return getStatusesfromIssues(Issues);
-  }
-
-  categories.forEach((category) => {
+  selectedCategories.forEach((category) => {
     Issues.forEach((issue) => {
       if (statusLists[category].includes(issue.status as string)) {
         const numberOfIssues =

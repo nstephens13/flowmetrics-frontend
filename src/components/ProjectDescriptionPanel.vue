@@ -17,7 +17,7 @@
         <Divider class="p-divider p-divider-horizontal divider-position" />
       </template>
       <template #content>
-        <div class="flex flex-row justify-content-start flex-wrap h-25rem">
+        <div class="flex flex-row justify-content-start flex-wrap h-30rem">
           <div class="w-4">
             <card style="background-color: var(--flowMetricsBlue); color: #ffffffff">
               <template #title>
