@@ -1,5 +1,6 @@
 <template>
-  <card style="background-color: #ffffff; color: var(--flowMetricsBlue); width: 100%">
+  <card style="background-color: #ffffff; width: 100%">
+    <template #title> <p>Issues per Status</p><p> </p></template>
     <template #content>
       <Chart type="bar" :data="chartData" :options="chartOptions" class="w-100rem h-30rem" />
     </template>

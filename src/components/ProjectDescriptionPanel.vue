@@ -1,5 +1,5 @@
 <template>
-  <div class="card" style="position: relative">
+  <div class="card">
     <Card>
       <template #title>
         <div
@@ -17,125 +17,124 @@
         <Divider class="p-divider p-divider-horizontal divider-position" />
       </template>
       <template #content>
-        <div class="flex flex-row justify-content-start">
-          <card style="background-color: var(--flowMetricsBlue); color: #ffffffff; width: 400px">
-            <template #title>
-              <div v-if="selectedProject.name"> {{ selectedProject.name }} </div>
-              <div v-else> Project </div>
-            </template>
-            <template #content>
-              <div class="flex flex-row justify-center">
-                <div class="flex flex-column mr-2">
-                  <div>Project ID: </div>
-                  <div>Description: </div>
+        <div class="flex flex-row justify-content-start flex-wrap h-25rem">
+          <div class="w-4">
+            <card style="background-color: var(--flowMetricsBlue); color: #ffffffff">
+              <template #title>
+                <div v-if="selectedProject.name"> {{ selectedProject.name }} </div>
+                <div v-else> Project </div>
+              </template>
+              <template #content>
+                <div class="flex flex-row justify-center">
+                  <div class="flex flex-column mr-2">
+                    <div>Project ID: </div>
+                    <div>Description: </div>
+                  </div>
+                  <div class="flex flex-column">
+                    <div class="font-bold">{{ selectedProject.id }}</div>
+                    <div class="font-bold">{{ selectedProject.description }}</div>
+                  </div>
                 </div>
-                <div class="flex flex-column">
-                  <div class="font-bold">{{ selectedProject.id }}</div>
-                  <div class="font-bold">{{ selectedProject.description }}</div>
-                </div>
-              </div>
-            </template>
-          </card>
-          <KeyFactsCard :project="selectedProject"></KeyFactsCard>
+              </template>
+            </card>
+          </div>
+          <div class="w-3">
+            <KeyFactsCard :project="selectedProject"></KeyFactsCard>
+          </div>
+          <div class="w-5">
+            <BarDiagram :project="selectedProject"></BarDiagram>
+          </div>
         </div>
       </template>
     </Card>
   </div>
-  <div class="card">
-    <Card>
+  <div class="flex flex-row">
+    <Card style="width: 100%">
       <template #title>
         <p>Issues</p>
-        <Divider class="p-divider p-divider-horizontal divider-position" />
       </template>
       <template #content>
-        <div class="flex flex-row">
-          <div style="width: 60%">
-            <DataTable
-              v-model:filters="filters"
-              :globalFilterFields="['name']"
-              paginator
-              :rows="5"
-              filterDisplay="menu"
-              :rowsPerPageOptions="[10, 20, 50, 100]"
-              :value="selectedProject ? selectedProject.issues : []"
-              showGridlines
-            >
-              <Column field="id" header="Issue-ID"></Column>
-              <template #empty> No issues found.</template>
-              <template #loading> Loading issues. Please wait.</template>
-              <Column field="name" header="Name"></Column>
-              <Column field="assignedTo" header="Assigned to">
-                <template #body="slotProps">
-                  {{ printAssignedTo(slotProps.data.assignedTo) }}
-                </template>
-              </Column>
-              <Column field="createdAt" header="Created on"></Column>
-              <Column
-                header="Status"
-                filterField="status"
-                :showFilterMatchModes="false"
-                :filterMenuStyle="{ width: '7rem' }"
-                style="min-width: 10rem"
-                :show-apply-button="false"
-              >
-                <template #body="data">
-                  <div class="flex align-items-center gap-2">
-                    <span>{{ data.data.status }}</span>
-                  </div>
-                </template>
-                <template #filter="{ filterModel, filterCallback }">
-                  <MultiSelect
-                    v-model="filterModel.value"
-                    display="chip"
-                    :options="statuses"
-                    @change="filterCallback()"
-                    placeholder="Select Status"
-                    :maxSelectedLabels="3"
-                    class="w-full md:w-10rem"
-                  />
-                </template>
-              </Column>
-              <Column header="Remaining Reaction Time">
-                <template #body="slotProps">
-                  {{ calculateRemainingTime(slotProps.data) }}
-                </template>
-              </Column>
-              <Column field="statusChanges" header="Status changes" style="width: 150px">
-                <template #body="slotProps">
-                  {{ calculateStatusChanges(slotProps.data) }}
-                </template>
-              </Column>
-              <Column
-                header="State"
-                filterField="state"
-                :showFilterMatchModes="false"
-                :filterMenuStyle="{ width: '7rem' }"
-                style="min-width: 10rem"
-                :show-apply-button="false"
-              >
-                <template #body="data">
-                  <div class="flex align-items-center gap-2">
-                    <span>{{ data.data.state }}</span>
-                  </div>
-                </template>
-                <template #filter="{ filterModel, filterCallback }">
-                  <MultiSelect
-                    v-model="filterModel.value"
-                    display="chip"
-                    :options="states"
-                    @change="filterCallback()"
-                    placeholder="Select State"
-                    :maxSelectedLabels="3"
-                    class="w-full md:w-10rem"
-                  />
-                </template>
-              </Column>
-            </DataTable>
-          </div>
-          <div style="width: 40%">
-            <BarDiagram :project="selectedProject"></BarDiagram>
-          </div>
-        </div>
+        <DataTable
+          v-model:filters="filters"
+          :globalFilterFields="['name']"
+          paginator
+          :rows="5"
+          filterDisplay="menu"
+          :rowsPerPageOptions="[10, 20, 50, 100]"
+          :value="selectedProject ? selectedProject.issues : []"
+          showGridlines
+          stripedRows
+        >
+          <Column field="id" header="Issue-ID"></Column>
+          <template #empty> No issues found.</template>
+          <template #loading> Loading issues. Please wait.</template>
+          <Column field="name" header="Name"></Column>
+          <Column field="assignedTo" header="Assigned to">
+            <template #body="slotProps">
+              {{ printAssignedTo(slotProps.data.assignedTo) }}
+            </template>
+          </Column>
+          <Column
+            header="Status"
+            filterField="status"
+            :showFilterMatchModes="false"
+            :filterMenuStyle="{ width: '7rem' }"
+            style="min-width: 10rem"
+            :show-apply-button="false"
+          >
+            <template #body="data">
+              <div class="flex align-items-center gap-2">
+                <span>{{ data.data.status }}</span>
+              </div>
+            </template>
+            <template #filter="{ filterModel, filterCallback }">
+              <MultiSelect
+                v-model="filterModel.value"
+                display="chip"
+                :options="statuses"
+                @change="filterCallback()"
+                placeholder="Select Status"
+                :maxSelectedLabels="3"
+                class="w-full md:w-10rem"
+              />
+            </template>
+          </Column>
+          <Column header="Remaining Reaction Time">
+            <template #body="slotProps">
+              {{ calculateRemainingTime(slotProps.data) }}
+            </template>
+          </Column>
+          <Column field="statusChanges" header="Status changes" style="width: 150px">
+            <template #body="slotProps">
+              {{ calculateStatusChanges(slotProps.data) }}
+            </template>
+          </Column>
+          <Column
+            header="State"
+            filterField="state"
+            :showFilterMatchModes="false"
+            :filterMenuStyle="{ width: '7rem' }"
+            style="min-width: 10rem"
+            :show-apply-button="false"
+          >
+            <template #body="data">
+              <div class="flex align-items-center gap-2">
+                <span>{{ data.data.state }}</span>
+              </div>
+            </template>
+            <template #filter="{ filterModel, filterCallback }">
+              <MultiSelect
+                v-model="filterModel.value"
+                display="chip"
+                :options="states"
+                @change="filterCallback()"
+                placeholder="Select State"
+                :maxSelectedLabels="3"
+                class="w-full md:w-10rem"
+              />
+            </template>
+          </Column>
+        </DataTable>
       </template>
     </Card>
   </div>
@@ -210,7 +209,9 @@ const projects: Ref<ProjectIF[]> = ref(projectStore().getProjects);
   margin: 15px;
   box-shadow: none;
 }
-
+.p-card-content {
+  padding: 0;
+}
 .divider-position {
   width: 100%;
 }
