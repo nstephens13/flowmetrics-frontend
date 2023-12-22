@@ -159,6 +159,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
         issueStatusIncludeFilter: ['open', 'in progress'],
         minimumAssigneeRestingTime: 0,
         minimumNumberOfStatusChanges: 0,
+        minimumStatusRestingTime: 0,
       },
     };
 

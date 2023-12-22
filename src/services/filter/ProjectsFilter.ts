@@ -47,7 +47,7 @@ function DurationLikeObjectToDays(durationLikeObject: DurationLikeObject | null)
   if (durationLikeObject === null) {
     return 0;
   }
-  const duration = Duration.fromObject(durationLikeObject);
+  const duration = Duration.fromDurationLike(durationLikeObject);
   return duration.as('days');
 }
 
@@ -88,7 +88,8 @@ export function filterProjectIssuesWithMinimalStatusChanges(
 ): IssueIF[] {
   return issues.filter(
     (issue: IssueIF) =>
-      (issue.statusChanges?.length ?? 0) >= filterConfig.projectFilter.minimumNumberOfStatusChanges
+      (issue.statusChanges ? issue.statusChanges.length : 0) >=
+      filterConfig.projectFilter.minimumNumberOfStatusChanges
   );
 }
 
