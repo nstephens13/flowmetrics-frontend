@@ -10,3 +10,10 @@ export const statusLists = {
   [Category.testing]: ['unit test', 'e2e'],
   [Category.nonDisplayed]: ['resolved', 'closed'],
 };
+
+export function getCategory(status: string): Category | null {
+  const foundCategory = Object.keys(statusLists).find((cat) =>
+    (statusLists as any)[cat].includes(status)
+  );
+  return foundCategory as Category | null;
+}
