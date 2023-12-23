@@ -15,7 +15,7 @@ export const statusListsColors = {
   [Category.planning]: '#4b8bf2',
   [Category.development]: '#025ff5',
   [Category.testing]: '#0448b5',
-  [Category.nonDisplayed]: '#2f5187',
+  [Category.nonDisplayed]: '#002869',
 };
 
 export function getCategory(status: string): Category | null {

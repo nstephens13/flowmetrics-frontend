@@ -171,7 +171,7 @@ export function getStatusesFromCategories(
   const mapToReturn: Map<string, number> = new Map([]);
   const selectedCategories: Category[] =
     categories === undefined || categories.length === 0
-      ? [Category.planning, Category.development, Category.testing]
+      ? [Category.planning, Category.development, Category.testing, Category.nonDisplayed]
       : categories;
 
   selectedCategories.forEach((category) => {

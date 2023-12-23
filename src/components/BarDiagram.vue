@@ -12,6 +12,11 @@
         />
       </div>
     </template>
+    <template #subtitle>
+      <div class="flex flex-row align-content-center align-items-center justify-content-between">
+        <div class="text-sm text-gray-500">Total number of issues {{ totalNumberOfIssues }}</div>
+      </div>
+    </template>
     <template #content>
       <Chart type="bar" :data="chartData" :options="chartOptions" class="w-100rem h-30rem" />
     </template>
@@ -34,7 +39,6 @@ const categories: string[] = [
   Category.nonDisplayed,
 ];
 const selectedCategory: Ref<Category[] | undefined> = ref();
-
 const props = defineProps({
   project: {
     type: Object as () => ProjectIF,
@@ -42,7 +46,11 @@ const props = defineProps({
   },
 });
 
-const chartOptions = ref({});
+const totalNumberOfIssues = computed(() =>
+  Array.from(
+    getStatusesFromCategories(props.project.issues, selectedCategory.value).values()
+  ).reduce((accumulator, currentValue) => accumulator + currentValue, 0)
+);
 
 const chartData = computed(() => {
   const labels = Array.from(
@@ -55,14 +63,21 @@ const chartData = computed(() => {
     labels,
     datasets: [
       {
-        label: 'issues',
+        label:
+          selectedCategory.value === undefined ||
+          JSON.stringify(selectedCategory.value) ===
+            JSON.stringify(['planning', 'development', 'testing', 'nonDisplayed']) ||
+          selectedCategory.value?.length === 0
+            ? 'issues'
+            : selectedCategory.value?.join(', '),
         backgroundColor: getColorsforStatuses(labels),
-        borderColor: documentStyle.getPropertyValue('--blue-500'),
         data: AllNumberOfIssues,
       },
     ],
   };
 });
+
+const chartOptions = ref({});
 
 onMounted(() => {
   chartOptions.value = {
