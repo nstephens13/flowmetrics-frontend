@@ -92,9 +92,10 @@ export function filterProjectIssuesWithMinimalStatusChanges(
 }
 
 export function filterIssuesMinimumStatusChangesAndRestingTime(
-  issues: IssueIF[],
+  issues: IssueIF[] | undefined,
   filterConfig: FilterConfigIF
 ): IssueIF[] {
+  if (!issues) return [];
   return filterProjectIssuesWithMinimumStatusRestingTime(
     filterProjectIssuesWithMinimalStatusChanges(issues, filterConfig),
     filterConfig

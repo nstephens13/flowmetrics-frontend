@@ -7,7 +7,9 @@
           paginator
           :rows="5"
           :rowsPerPageOptions="[5, 10, 20, 50]"
-          :value="filteredIssues"
+          :value="
+            filterIssuesMinimumStatusChangesAndRestingTime(props.project?.issues, filterConfig)
+          "
           showGridlines
         >
           <Column field="id" header="Issue ID"></Column>
@@ -19,20 +21,24 @@
           </Column>
           <Column field="createdAt" header="Created on"></Column>
           <Column field="state" header="State"></Column>
-          <Column field="statusChanges.length" header="Status Changes"></Column>
+          <Column field="statusChanges" header="Status Changes">
+            <template #body="slotProps">
+              {{ calculateStatusChanges(slotProps.data) }}
+            </template>
+          </Column>
           <Column field="status" header="Status"></Column>
           <Column field="statusRestingTime" header="Resting time (Status)"></Column>
         </DataTable>
       </template>
     </Card>
-    <Card class="mr-2 w-22rem">
-      <template #title>input parameters</template>
+    <Card class="mr-2 w-30rem">
+      <template #title>Input Parameters</template>
       <template #content>
         <div class="flex flex-column align-content-start">
           <div>Minimal resting time in current status (days)</div>
-          <InputNumber v-Model="minimalRestingTime"></InputNumber>
+          <InputNumber v-model="minimalRestingTime"></InputNumber>
           <div>Minimal number of status changes</div>
-          <InputNumber v-Model="minimalStatusChanges"></InputNumber>
+          <InputNumber v-model="minimalStatusChanges"></InputNumber>
           <div class="flex align-items-center justify-content-evenly mt-2">
             <Button label="Clear" @click="clearFilters" class="mr-2"> </Button>
             <Button label="Apply" @click="applyFilters" class="ml-2"> </Button>
@@ -45,21 +51,19 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import type { Ref } from 'vue';
-import type { ProjectIF } from '@/model/ProjectIF';
-import type { IssueIF } from '@/model/Issue/IssueIF';
-import type { FilterConfigIF, ProjectFilterConfigIF } from '@/model/FilterConfigIF';
+import { calculateStatusChanges } from '@/services/issueCalculator';
 import { filterIssuesMinimumStatusChangesAndRestingTime } from '@/services/filter/ProjectsFilter';
-import { EmployeeIF } from '@/model/EmployeeIF';
+import type { ProjectIF } from '@/model/ProjectIF';
+import type { FilterConfigIF, ProjectFilterConfigIF } from '@/model/FilterConfigIF';
+import type { EmployeeIF } from '@/model/EmployeeIF';
 
 const props = defineProps({
   project: Object as () => ProjectIF,
 });
 
-const filteredIssues: Ref<IssueIF[]> = ref([]);
-const minimalRestingTime: Ref<number> = ref(0);
-const minimalStatusChanges: Ref<number> = ref(0);
-const filterConfig = {
+const minimalRestingTime = ref(0);
+const minimalStatusChanges = ref(0);
+const filterConfig = ref({
   id: 0,
   projectFilter: {
     projectsWhiteList: [],
@@ -68,26 +72,18 @@ const filterConfig = {
     minimumNumberOfStatusChanges: 0,
     minimumStatusRestingTime: 0,
   } as ProjectFilterConfigIF,
-} as FilterConfigIF;
-
-function updateFilteredIssues(): void {
-  if (!props.project) return;
-  filteredIssues.value = filterIssuesMinimumStatusChangesAndRestingTime(
-    props.project.issues,
-    filterConfig
-  );
-}
+} as FilterConfigIF);
 
 const applyFilters = () => {
-  filterConfig.projectFilter.minimumStatusRestingTime = minimalRestingTime.value;
-  filterConfig.projectFilter.minimumNumberOfStatusChanges = minimalStatusChanges.value;
-  updateFilteredIssues();
+  filterConfig.value.projectFilter.minimumStatusRestingTime = minimalRestingTime.value;
+  filterConfig.value.projectFilter.minimumNumberOfStatusChanges = minimalStatusChanges.value;
 };
 
 const clearFilters = () => {
-  filterConfig.projectFilter.minimumStatusRestingTime = 0;
-  filterConfig.projectFilter.minimumNumberOfStatusChanges = 0;
-  updateFilteredIssues();
+  filterConfig.value.projectFilter.minimumStatusRestingTime = 0;
+  filterConfig.value.projectFilter.minimumNumberOfStatusChanges = 0;
+  minimalRestingTime.value = 0;
+  minimalStatusChanges.value = 0;
 };
 
 function printAssignedTo(employee: EmployeeIF | null): string {
