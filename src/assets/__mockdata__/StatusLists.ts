@@ -11,9 +11,27 @@ export const statusLists = {
   [Category.nonDisplayed]: ['resolved', 'closed'],
 };
 
+export const statusListsColors = {
+  [Category.planning]: '#4b8bf2',
+  [Category.development]: '#025ff5',
+  [Category.testing]: '#0448b5',
+  [Category.nonDisplayed]: '#2f5187',
+};
+
 export function getCategory(status: string): Category | null {
   const foundCategory = Object.keys(statusLists).find((cat) =>
     (statusLists as any)[cat].includes(status)
   );
   return foundCategory as Category | null;
+}
+
+export function getColorsforStatuses(status: string[]): string[] {
+  const colors: string[] = [];
+  status.forEach((stat) => {
+    const category = getCategory(stat);
+    if (category) {
+      colors.push(statusListsColors[category]);
+    }
+  });
+  return colors;
 }

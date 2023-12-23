@@ -21,7 +21,7 @@
 import { ref, onMounted, computed, type Ref } from 'vue';
 import type { ProjectIF } from '@/model/ProjectIF';
 import { getStatusesFromCategories } from '@/services/issueCalculator';
-import { Category } from '@/assets/__mockdata__/StatusLists';
+import { Category, getColorsforStatuses } from '@/assets/__mockdata__/StatusLists';
 
 const documentStyle = getComputedStyle(document.documentElement);
 const textColor = documentStyle.getPropertyValue('--text-color');
@@ -56,7 +56,7 @@ const chartData = computed(() => {
     datasets: [
       {
         label: 'issues',
-        backgroundColor: documentStyle.getPropertyValue('--blue-500'),
+        backgroundColor: getColorsforStatuses(labels),
         borderColor: documentStyle.getPropertyValue('--blue-500'),
         data: AllNumberOfIssues,
       },
