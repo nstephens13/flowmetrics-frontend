@@ -42,7 +42,7 @@
             <KeyFactsCard :project="selectedProject"></KeyFactsCard>
           </div>
           <div class="w-5">
-            <BarDiagram :project="selectedProject"></BarDiagram>
+            <BarDiagram :project="selectedProject" class="visualisation-card"></BarDiagram>
           </div>
         </div>
       </template>
@@ -210,8 +210,14 @@ const projects: Ref<ProjectIF[]> = ref(projectStore().getProjects);
   margin: 15px 15px 0 15px;
   box-shadow: none;
 }
-:deep(.project-card .p-card-body) {
+:deep(.project-card > .p-card-body) {
   padding-bottom: 0;
+}
+:deep(.project-card > .p-card-body > .p-card-content) {
+  padding: 0;
+}
+:deep(.visualisation-card > .p-card-body) {
+  padding: 0;
 }
 :deep(.issues-card .p-card-body) {
   padding-top: 0;
