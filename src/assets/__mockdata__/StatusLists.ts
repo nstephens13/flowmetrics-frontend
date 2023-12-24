@@ -1,8 +1,8 @@
 export enum Category {
-  planning = 'planning',
-  development = 'development',
-  testing = 'testing',
-  nonDisplayed = 'nonDisplayed',
+  planning = 'Planning',
+  development = 'Development',
+  testing = 'Testing',
+  nonDisplayed = 'NonDisplayed',
 }
 export const statusLists = {
   [Category.planning]: ['planned', 'design', 'open'],

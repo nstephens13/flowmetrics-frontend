@@ -2,7 +2,7 @@
   <Card>
     <template #title>
       <div class="flex flex-row align-content-center align-items-center justify-content-between">
-        Issues per Status
+        Issues per status
         <MultiSelect
           v-model="selectedCategory"
           :options="categories"
@@ -68,7 +68,7 @@ const chartData = computed(() => {
           JSON.stringify(selectedCategory.value) ===
             JSON.stringify(['planning', 'development', 'testing', 'nonDisplayed']) ||
           selectedCategory.value?.length === 0
-            ? 'issues'
+            ? 'Issues'
             : selectedCategory.value?.join(', '),
         backgroundColor: getColorsforStatuses(labels),
         data: AllNumberOfIssues,
