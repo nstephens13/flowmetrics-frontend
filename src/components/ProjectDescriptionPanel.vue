@@ -1,6 +1,6 @@
 <template>
   <div class="card">
-    <Card>
+    <Card class="project-card">
       <template #title>
         <div
           class="flex flex-row align-content-center align-items-center justify-content-start mt-3"
@@ -49,7 +49,7 @@
     </Card>
   </div>
   <div class="flex flex-row">
-    <Card style="width: 100%">
+    <Card style="width: 100%" class="issues-card">
       <template #title>
         <p>Issues</p>
       </template>
@@ -207,11 +207,17 @@ const projects: Ref<ProjectIF[]> = ref(projectStore().getProjects);
 
 <style scoped>
 .p-card {
-  margin: 15px;
+  margin: 15px 15px 0 15px;
   box-shadow: none;
 }
-.p-card-content {
-  padding: 0;
+:deep(.project-card .p-card-body) {
+  padding-bottom: 0;
+}
+:deep(.issues-card .p-card-body) {
+  padding-top: 0;
+}
+:deep(.issues-card .p-card-content) {
+  padding-top: 0;
 }
 .divider-position {
   width: 100%;
