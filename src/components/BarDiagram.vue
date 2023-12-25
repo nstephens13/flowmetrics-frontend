@@ -66,7 +66,12 @@ const chartData = computed(() => {
         label:
           selectedCategory.value === undefined ||
           JSON.stringify(selectedCategory.value) ===
-            JSON.stringify(['planning', 'development', 'testing', 'nonDisplayed']) ||
+            JSON.stringify([
+              Category.planning,
+              Category.development,
+              Category.testing,
+              Category.nonDisplayed,
+            ]) ||
           selectedCategory.value?.length === 0
             ? 'Issues'
             : selectedCategory.value?.join(', '),

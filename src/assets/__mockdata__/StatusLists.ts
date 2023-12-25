@@ -2,13 +2,14 @@ export enum Category {
   planning = 'Planning',
   development = 'Development',
   testing = 'Testing',
-  nonDisplayed = 'NonDisplayed',
+  nonDisplayed = 'Non-displayed',
 }
+
 export const statusLists = {
-  [Category.planning]: ['planned', 'design', 'open'],
-  [Category.development]: ['in work', 'review', 'in progress'],
-  [Category.testing]: ['unit test', 'e2e'],
-  [Category.nonDisplayed]: ['resolved', 'closed'],
+  [Category.planning]: ['Planned', 'Design', 'Open'],
+  [Category.development]: ['In work', 'Review', 'In progress'],
+  [Category.testing]: ['Unit Test', 'E2E'],
+  [Category.nonDisplayed]: ['Resolved', 'Closed'],
 };
 
 export const statusListsColors = {
