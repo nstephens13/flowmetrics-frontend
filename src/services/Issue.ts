@@ -3,6 +3,7 @@ import type { EmployeeIF } from '@/model/EmployeeIF';
 import type { IssueIF } from '@/model/Issue/IssueIF';
 import type { SlaRule } from '@/model/Sla/SlaRule';
 import type { ChangeLogIF } from '@/model/Issue/ChangeLogIF';
+import { Category, statusLists } from '@/assets/__mockdata__/StatusLists';
 
 // Issue Class implements IssueIF
 class Issue implements IssueIF {
@@ -74,10 +75,10 @@ class Issue implements IssueIF {
 }
 
 // Define lists of different category with statuses
-const planningStatusList: string[] = ['planned', 'design', 'open'];
-const devStatusList: string[] = ['in work', 'review', 'in progress'];
-const testingStatusList: string[] = ['unit test', 'e2e'];
-const nonDisplayedStatusList: string[] = ['closed'];
+const planningStatusList: string[] = statusLists[Category.planning];
+const devStatusList: string[] = statusLists[Category.development];
+const testingStatusList: string[] = statusLists[Category.testing];
+const nonDisplayedStatusList: string[] = statusLists[Category.nonDisplayed];
 const nonDisplayedStateList: string[] = [''];
 
 // Function sets State using Issue-Status
