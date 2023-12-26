@@ -8,7 +8,7 @@ export enum Category {
 export const statusLists = {
   [Category.planning]: ['Planned', 'Design', 'Open'],
   [Category.development]: ['In work', 'Review', 'In progress'],
-  [Category.testing]: ['Unit Test', 'E2E'],
+  [Category.testing]: ['Unit test', 'E2E'],
   [Category.nonDisplayed]: ['Resolved', 'Closed'],
 };
 
