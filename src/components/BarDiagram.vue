@@ -64,15 +64,7 @@ const chartData = computed(() => {
     datasets: [
       {
         label:
-          selectedCategory.value === undefined ||
-          JSON.stringify(selectedCategory.value) ===
-            JSON.stringify([
-              Category.planning,
-              Category.development,
-              Category.testing,
-              Category.nonDisplayed,
-            ]) ||
-          selectedCategory.value?.length === 0
+          selectedCategory.value === undefined || selectedCategory.value?.length === 0
             ? 'Issues'
             : selectedCategory.value?.join(', '),
         backgroundColor: getColorsforStatuses(labels),
