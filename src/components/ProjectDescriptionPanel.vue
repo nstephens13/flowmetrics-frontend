@@ -152,15 +152,10 @@ import type { IssueIF } from '@/model/Issue/IssueIF';
 import projectStore from '@/store/projectStore';
 import KeyFactsCard from '@/components/KeyFactsCard.vue';
 import BarDiagram from '@/components/BarDiagram.vue';
+import { getProject } from '@/assets/__mockdata__/mockdata';
 
 // Create a reference for the selectedProject with initial data
-const selectedProject = ref({
-  id: 0,
-  name: '',
-  description: '',
-  issues: [],
-  slaSubscriber: null,
-} as ProjectIF);
+const selectedProject = ref(getProject(11) as ProjectIF);
 
 // Create a reference for the filters object with initial configuration
 const filters = ref({
