@@ -9,8 +9,7 @@ function getAllProjects(): ProjectIF[] {
 }
 
 function getIssueStatuses(projects: ProjectIF[]): string[] {
-  const statusList: string[] = getIssueStatusList(projects.flatMap((project) => project.issues));
-  return statusList;
+  return getIssueStatusList(projects.flatMap((project) => project.issues));
 }
 export default function initFilterConfigStore() {
   const filterConfigStore = useFilterConfigStore();
