@@ -3,15 +3,15 @@ import { getIssueStatusList, type ProjectIF } from '@/model/ProjectIF';
 import type { ProjectFilterConfigIF } from '@/model/FilterConfigIF';
 import useProjectsStore from '@/store/projectStore';
 
-function getAllProjects(): ProjectIF[] {
+export function getAllProjects(): ProjectIF[] {
   const projectStore = useProjectsStore();
   return projectStore.getProjects;
 }
 
-function getIssueStatuses(projects: ProjectIF[]): string[] {
+export function getIssueStatuses(projects: ProjectIF[]): string[] {
   return getIssueStatusList(projects.flatMap((project) => project.issues));
 }
-export default function initFilterConfigStore() {
+export function initFilterConfigStore() {
   const filterConfigStore = useFilterConfigStore();
   filterConfigStore.setFilterConfig({
     id: 1,
