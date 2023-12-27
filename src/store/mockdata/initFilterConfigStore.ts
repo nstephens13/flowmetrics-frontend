@@ -1,16 +1,27 @@
 import useFilterConfigStore from '@/store/filterConfigStore';
-import type { ProjectIF } from '@/model/ProjectIF';
+import { getIssueStatusList, type ProjectIF } from '@/model/ProjectIF';
 import type { ProjectFilterConfigIF } from '@/model/FilterConfigIF';
+import useProjectsStore from '@/store/projectStore';
 
+function getAllProjects(): ProjectIF[] {
+  const projectStore = useProjectsStore();
+  return projectStore.getProjects;
+}
+
+function getIssueStatuses(projects: ProjectIF[]): string[] {
+  const statusList: string[] = getIssueStatusList(projects.flatMap((project) => project.issues));
+  return statusList;
+}
 export default function initFilterConfigStore() {
   const filterConfigStore = useFilterConfigStore();
   filterConfigStore.setFilterConfig({
     id: 1,
     projectFilter: {
-      projectsWhiteList: [] as ProjectIF[],
-      issueStatusIncludeFilter: [] as string[],
+      projectsWhiteList: getAllProjects(),
+      issueStatusIncludeFilter: getIssueStatuses(getAllProjects()),
       minimumAssigneeRestingTime: 0,
       minimumNumberOfStatusChanges: 0,
+      issueStateIncludeFilter: [] as string[],
     } as ProjectFilterConfigIF,
   });
 }
