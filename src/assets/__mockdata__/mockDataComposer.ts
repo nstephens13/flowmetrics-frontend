@@ -312,13 +312,13 @@ function getMockData(dataset: number): ProjectIF {
 
     case 3: {
       for (let iterator = 0; iterator < 280; iterator++) {
-        let status = 'open';
+        let status = 'Open';
         let closedAt = null;
 
-        const randomStatus = getRandomInt(3); // 0: open, 1: closed, 2: in progress
+        const randomStatus = getRandomInt(3); // 0: Open, 1: closed, 2: In progress
 
         if (randomStatus === 2) {
-          status = 'in progress';
+          status = 'In progress';
         } else if (randomStatus === 1) {
           closedAt = faker.date.recent();
         }
@@ -378,14 +378,14 @@ function getMockData(dataset: number): ProjectIF {
       [employeesArrayFromFile, issuesArrayFromFile] = loadArraysFromFile(issueJson2);
 
       for (let iterator = 0; iterator < 280; iterator++) {
-        let status = 'open';
+        let status = 'Open';
         let closedAt = null;
         let state = Category.planning;
 
-        const randomStatus = getRandomInt(3); // 0: open, 1: closed, 2: in progress
+        const randomStatus = getRandomInt(3); // 0: Open, 1: closed, 2: In progress
 
         if (randomStatus === 2) {
-          status = 'in progress';
+          status = 'In progress';
           state = Category.development;
         } else if (randomStatus === 1) {
           closedAt = faker.date.recent();
@@ -531,10 +531,10 @@ function getMockData(dataset: number): ProjectIF {
       const numberOfEmployees = employeesArrayFromFile.length;
 
       for (let iterator = 0; iterator < numberOfIssues; iterator++) {
-        const randomStatus = getRandomInt(4); // 0: open, 1: closed, 2: in progress
+        const randomStatus = getRandomInt(4); // 0: Open, 1: closed, 2: In progress
 
         if (randomStatus === 2) {
-          issues[iterator].status = 'in progress';
+          issues[iterator].status = 'In progress';
           const [devStatus] = devStatusList;
           issues[iterator].status = devStatus;
         } else if (randomStatus === 1) {
@@ -600,10 +600,10 @@ function getMockData(dataset: number): ProjectIF {
       const numberOfEmployees = employeesArrayFromFile.length;
 
       for (let iterator = 0; iterator < numberOfIssues; iterator++) {
-        const randomStatus = getRandomInt(4); // 0: open, 1: closed, 2: in progress
+        const randomStatus = getRandomInt(4); // 0: Open, 1: closed, 2: In progress
 
         if (randomStatus === 2) {
-          issues[iterator].status = 'in progress';
+          issues[iterator].status = 'In progress';
           const [devStatus] = devStatusList;
           issues[iterator].status = devStatus;
         } else if (randomStatus === 1) {
@@ -767,57 +767,57 @@ function getMockData(dataset: number): ProjectIF {
       };
 
       const date = new Date(2018, 0o5, 0o5, 17, 23, 42, 11);
-      issuesForProject[0].status = 'in progress';
+      issuesForProject[0].status = 'In progress';
       issuesForProject[0].status = 'e2e';
       issuesForProject[0].state = Category.testing;
       issuesForProject[0].createdAt = new Date();
       issuesForProject[0].assignedSlaRule = [slaRule1];
-      issuesForProject[2].status = 'closed';
-      issuesForProject[2].status = 'in progress';
+      issuesForProject[2].status = 'Closed';
+      issuesForProject[2].status = 'In progress';
       issuesForProject[0].state = Category.development;
       issuesForProject[2].closedAt = date; // Set the specific closedAt date
-      issuesForProject[3].status = 'closed';
-      issuesForProject[3].status = 'review';
+      issuesForProject[3].status = 'Closed';
+      issuesForProject[3].status = 'Review';
       issuesForProject[0].state = Category.development;
       issuesForProject[3].closedAt = date; // Set the specific closedAt date
-      issuesForProject[4].status = 'closed';
-      issuesForProject[4].status = 'review';
+      issuesForProject[4].status = 'Closed';
+      issuesForProject[4].status = 'Review';
       issuesForProject[0].state = Category.development;
       issuesForProject[4].closedAt = date; // Set the specific closedAt date
-      issuesForProject[5].status = 'in progress';
+      issuesForProject[5].status = 'In progress';
       issuesForProject[5].status = 'e2e';
       issuesForProject[0].state = Category.testing;
       issuesForProject[5].createdAt = new Date();
       issuesForProject[5].assignedSlaRule = [slaRule2, slaRule3];
-      issuesForProject[6].status = 'closed';
-      issuesForProject[6].status = 'design';
+      issuesForProject[6].status = 'Closed';
+      issuesForProject[6].status = 'Design';
       issuesForProject[0].state = Category.planning;
       issuesForProject[6].createdAt = date;
       issuesForProject[6].closedAt = date; // Set the specific closedAt date
       issuesForProject[6].assignedSlaRule = [slaRule2, slaRule3];
 
-      [issuesForProject[0].status, issuesForProject[0].status] = ['in progress', devStatusList[0]];
+      [issuesForProject[0].status, issuesForProject[0].status] = ['In progress', devStatusList[0]];
       [issuesForProject[0].state, issuesForProject[0].state] = Category.development;
       [issuesForProject[1].status] = [planningStatusList[0]];
       [issuesForProject[1].state, issuesForProject[1].state] = Category.planning;
       [issuesForProject[2].status, issuesForProject[2].status, issuesForProject[2].closedAt] = [
-        'closed',
+        'Closed',
         testingStatusList[0],
         date,
       ];
       [issuesForProject[2].state, issuesForProject[2].state] = Category.testing;
       [issuesForProject[3].status, issuesForProject[3].status, issuesForProject[3].closedAt] = [
-        'closed',
+        'Closed',
         testingStatusList[0],
         date,
       ];
       [issuesForProject[3].state, issuesForProject[3].state] = Category.testing;
       [issuesForProject[4].status, issuesForProject[4].status, issuesForProject[4].closedAt] = [
-        'closed',
+        'Closed',
         testingStatusList[0],
         date,
       ];
-      [issuesForProject[5].status, issuesForProject[5].status] = ['in progress', devStatusList[0]];
+      [issuesForProject[5].status, issuesForProject[5].status] = ['In progress', devStatusList[0]];
       [issuesForProject[4].state, issuesForProject[4].state] = Category.testing;
       [issuesForProject[5].state, issuesForProject[5].state] = Category.development;
       [issuesForProject[6].status, issuesForProject[6].closedAt] = [testingStatusList[0], date];
