@@ -1,5 +1,5 @@
 <template>
-  <card style="background-color: var(--flowMetricsBlue); color: #ffffffff; width: 400px">
+  <card style="background-color: var(--flowMetricsBlue); color: #ffffffff">
     <template #title> Key Facts </template>
     <template #content>
       <div class="flex flex-row justify-content-between">

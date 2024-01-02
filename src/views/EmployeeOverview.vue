@@ -113,8 +113,8 @@ const categoryNames = ref<{
   secondCategory: string;
   thirdCategory: string;
 }>({
-  firstCategory: 'planning',
-  secondCategory: 'development',
+  firstCategory: 'Planning',
+  secondCategory: 'Development',
   thirdCategory: 'Testing',
 });
 </script>

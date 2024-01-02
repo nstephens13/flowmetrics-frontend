@@ -16,9 +16,9 @@
     "createdAt": "2023-06-01T00:00:00.000Z",
     "closedAt": null,
     "dueTo": "2023-06-30T00:00:00.000Z",
-    "status": "open",
-    "userStatus": "open",
-    "state": "planning"
+    "status": "Open",
+    "userStatus": "Open",
+    "state": "Planning"
   },
   {
     "id": 148093,
@@ -45,9 +45,9 @@
     "createdAt": "2023-06-02T00:00:00.000Z",
     "closedAt": "2023-06-05T00:00:00.000Z",
     "dueTo": "2023-06-10T00:00:00.000Z",
-    "status": "closed",
-    "userStatus": "closed",
-    "state": "testing"
+    "status": "Closed",
+    "userStatus": "Closed",
+    "state": "Testing"
   },
   {
     "id": 23253,
@@ -74,9 +74,9 @@
     "createdAt": "2023-06-03T00:00:00.000Z",
     "closedAt": null,
     "dueTo": "2023-07-20T00:00:00.000Z",
-    "status": "in progress",
-    "userStatus": "in progress",
-    "state": "development"
+    "status": "In Progress",
+    "userStatus": "In Progress",
+    "state": "Development"
   },
   {
     "id": 49764,
@@ -95,9 +95,9 @@
     "createdAt": "2023-06-04T00:00:00.000Z",
     "closedAt": null,
     "dueTo": "2023-06-15T00:00:00.000Z",
-    "status": "open",
-    "userStatus": "open",
-    "state": "planning"
+    "status": "Open",
+    "userStatus": "Open",
+    "state": "Planning"
   },
   {
     "id": 3423455,
@@ -124,9 +124,9 @@
     "createdAt": "2023-06-05T00:00:00.000Z",
     "closedAt": null,
     "dueTo": "2023-06-25T00:00:00.000Z",
-    "state": "development",
-    "status": "in progress",
-    "userStatus": "in progress"
+    "state": "Development",
+    "status": "In Progress",
+    "userStatus": "In Progress"
   },
   {
     "id": 654353,
@@ -145,9 +145,9 @@
     "createdAt": "2023-06-10T00:00:00.000Z",
     "closedAt": null,
     "dueTo": "2023-06-20T00:00:00.000Z",
-    "status": "open",
-    "userStatus": "open",
-    "state": "planning"
+    "status": "Open",
+    "userStatus": "Open",
+    "state": "Planning"
   },
   {
     "id": 32542527,
@@ -203,9 +203,9 @@
     "createdAt": "2023-06-20T00:00:00.000Z",
     "closedAt": null,
     "dueTo": "2023-07-10T00:00:00.000Z",
-    "status": "in progress",
-    "userStatus": "in progress",
-    "state": "development"
+    "status": "In Progress",
+    "userStatus": "In Progress",
+    "state": "Development"
   },
   {
     "id": 9645754,
@@ -232,9 +232,9 @@
     "createdAt": "2023-06-25T00:00:00.000Z",
     "closedAt": null,
     "dueTo": "2023-07-15T00:00:00.000Z",
-    "status": "in progress",
-    "userStatus": "in progress",
-    "state": "development"
+    "status": "In Progress",
+    "userStatus": "In Progress",
+    "state": "Development"
   },
   {
     "id": 132440,
@@ -261,8 +261,8 @@
     "createdAt": "2023-06-30T00:00:00.000Z",
     "closedAt": null,
     "dueTo": "2023-07-20T00:00:00.000Z",
-    "status": "in progress",
-    "userStatus": "in progress",
-    "state": "development"
+    "status": "In Progress",
+    "userStatus": "In Progress",
+    "state": "Development"
   }
 ]

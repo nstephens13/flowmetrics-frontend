@@ -2,6 +2,7 @@ import type { DurationLikeObject } from 'luxon';
 import type { EmployeeIF } from '../EmployeeIF';
 import type { SlaRule } from '@/model/Sla/SlaRule';
 import type { ChangeLogIF } from '@/model/Issue/ChangeLogIF';
+import type { Category } from '@/assets/__mockdata__/StatusLists';
 
 /**
  *
@@ -44,7 +45,7 @@ export interface IssueIF {
   statusChanges: ChangeLogIF[] | null;
   assigneeChanges: ChangeLogIF[] | null;
   assignedSlaRule: SlaRule[] | null;
-  state: string | null;
+  state: string | Category | null;
 }
 
 // function to check if issue has an assigned SLA rule
