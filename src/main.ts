@@ -37,7 +37,7 @@ import 'primeicons/primeicons.css';
 import 'primeflex/primeflex.css';
 import initSlaStore from '@/store/mockdata/initSlaStore';
 import initProjectStore from '@/store/mockdata/initProjectStore';
-import initFilterConfigStore from '@/store/mockdata/initFilterConfigStore';
+import { initFilterConfigStore } from '@/store/mockdata/initFilterConfigStore';
 
 const app = createApp(App);
 const pinia = createPinia();
