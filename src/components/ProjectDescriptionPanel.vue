@@ -47,9 +47,9 @@
         </div>
       </template>
     </Card>
-    <div>
-      <ZombieTicketCard :project="selectedProject"></ZombieTicketCard>
-    </div>
+  </div>
+  <div>
+    <ZombieTicketCard :project="selectedProject"></ZombieTicketCard>
   </div>
   <div class="flex flex-row">
     <Card style="width: 100%" class="issues-card">
