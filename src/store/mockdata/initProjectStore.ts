@@ -7,6 +7,7 @@ export default function initProjectStore() {
   projectStore.addProject(getMockData(1));
   projectStore.addProject(getMockData(3));
   projectStore.addProject(getMockData(4));
+  projectStore.addProject(getMockData(5));
   projectStore.addProject(getMockData(6));
   projectStore.addProject(getProject(1));
   projectStore.addProject(getProject(2));

@@ -75,6 +75,7 @@ const filterConfig = ref({
     minimumAssigneeRestingTime: 0,
     minimumNumberOfStatusChanges: 0,
     minimumStatusRestingTime: 0,
+    issueStateIncludeFilter: [],
   } as ProjectFilterConfigIF,
 } as FilterConfigIF);
 

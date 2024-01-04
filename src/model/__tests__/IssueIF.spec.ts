@@ -8,6 +8,7 @@ import {
   getSlaRules,
 } from '../../services/Issue';
 import type { EmployeeIF } from '../EmployeeIF';
+import { type SlaRule } from '../Sla/SlaRule';
 
 describe('Issue Class', () => {
   test('creates an instance of Issue with the provided properties', () => {
@@ -28,7 +29,8 @@ describe('Issue Class', () => {
     const closedAt = null;
     const dueTo = new Date();
     const status = 'open';
-    const assignedSlaRule = null;
+    const assignedSlaRule: SlaRule[] = [];
+    const state = '';
 
     const issue = new Issue(
       id,
@@ -44,7 +46,8 @@ describe('Issue Class', () => {
       {},
       [],
       [],
-      assignedSlaRule
+      assignedSlaRule,
+      ''
     );
 
     expect(issue.id).toBe(id);
@@ -57,6 +60,7 @@ describe('Issue Class', () => {
     expect(issue.dueTo).toBe(dueTo);
     expect(issue.status).toBe(status);
     expect(issue.assignedSlaRule).toBe(assignedSlaRule);
+    expect(issue.state).toBe(state);
   });
 });
 
@@ -87,12 +91,13 @@ describe('getAssignedToName', () => {
       new Date(),
       null,
       null,
+      '',
       null,
-      {},
-      {},
+      null,
       [],
       [],
-      []
+      [],
+      ''
     );
     const assignedToName = getAssignedToName(issue);
     expect(assignedToName).toBe('John Doe');
@@ -116,12 +121,13 @@ describe('getAssignedToName', () => {
       new Date(),
       null,
       null,
+      '',
       null,
-      {},
-      {},
+      null,
       [],
       [],
-      []
+      [],
+      ''
     );
     const assignedToName = getAssignedToName(issue);
     expect(assignedToName).toBe('');
@@ -148,12 +154,13 @@ describe('getFormattedDate', () => {
       new Date(),
       null,
       dueTo,
+      '',
       null,
-      {},
-      {},
+      null,
       [],
       [],
-      []
+      [],
+      ''
     );
     const formattedDate = getFormattedDate(issue);
     expect(formattedDate).toBe('July 1, 2023');
@@ -177,12 +184,13 @@ describe('getFormattedDate', () => {
       new Date(),
       null,
       null,
+      '',
       null,
-      {},
-      {},
+      null,
       [],
       [],
-      []
+      [],
+      ''
     );
     const formattedDate = getFormattedDate(issue);
     expect(formattedDate).toBe('');
@@ -210,12 +218,13 @@ describe('getTimeLeft', () => {
       new Date(),
       null,
       dueTo,
+      '',
       null,
-      {},
-      {},
+      null,
       [],
       [],
-      []
+      [],
+      ''
     );
     const timeLeft = getTimeLeft(issue);
     const expectedTimeLeft = Math.ceil(
@@ -243,12 +252,13 @@ describe('getTimeLeft', () => {
       new Date(),
       null,
       dueTo,
+      '',
       null,
-      {},
-      {},
+      null,
       [],
       [],
-      []
+      [],
+      ''
     );
     const timeLeft = getTimeLeft(issue);
     expect(timeLeft).toBe(0);
@@ -272,12 +282,13 @@ describe('getTimeLeft', () => {
       new Date(),
       null,
       null,
+      '',
       null,
-      {},
-      {},
+      null,
       [],
       [],
-      []
+      [],
+      ''
     );
     const timeLeft = getTimeLeft(issue);
     expect(timeLeft).toBeNull();
@@ -304,11 +315,12 @@ describe('countIssuesByStatus', () => {
       null,
       null,
       'open',
-      {},
-      {},
+      null,
+      null,
       [],
       [],
-      []
+      [],
+      'development'
     ),
     new Issue(
       2,
@@ -328,11 +340,12 @@ describe('countIssuesByStatus', () => {
       null,
       null,
       'closed',
-      {},
-      {},
+      null,
+      null,
       [],
       [],
-      []
+      [],
+      'testing'
     ),
     new Issue(
       3,
@@ -352,11 +365,12 @@ describe('countIssuesByStatus', () => {
       null,
       null,
       'in progress',
-      {},
-      {},
+      null,
+      null,
       [],
       [],
-      []
+      [],
+      'development'
     ),
     new Issue(
       4,
@@ -380,7 +394,8 @@ describe('countIssuesByStatus', () => {
       {},
       [],
       [],
-      []
+      [],
+      'planning'
     ),
     new Issue(
       5,
@@ -404,7 +419,8 @@ describe('countIssuesByStatus', () => {
       {},
       [],
       [],
-      []
+      [],
+      'planning'
     ),
   ];
 
@@ -448,7 +464,8 @@ describe('getSlaRules', () => {
       {},
       [],
       [],
-      []
+      [],
+      ''
     );
 
     const slaRules = getSlaRules(issue);

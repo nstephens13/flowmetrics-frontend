@@ -1,5 +1,5 @@
 import { describe, assert, test } from 'vitest';
-import filterProjectThatHasTheAllowedStatus from '@/services/filter/IssuesStateFilter';
+import { filterProjectThatHasTheAllowedStatus } from '@/services/filter/IssuesStateFilter';
 import type { FilterConfigIF } from '@/model/FilterConfigIF';
 import type { ProjectIF } from '@/model/ProjectIF';
 
@@ -43,6 +43,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
             statusRestingTime: null,
             assigneeChanges: null,
             statusChanges: null,
+            state: 'planning',
           },
           {
             id: 3,
@@ -75,6 +76,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
             statusRestingTime: null,
             assigneeChanges: null,
             statusChanges: null,
+            state: 'development',
           },
         ],
       },
@@ -115,6 +117,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
             statusRestingTime: null,
             assigneeChanges: null,
             statusChanges: null,
+            state: 'planning',
           },
           {
             id: 3,
@@ -147,6 +150,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
             statusRestingTime: null,
             assigneeChanges: null,
             statusChanges: null,
+            state: 'development',
           },
         ],
       },
@@ -159,6 +163,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
         issueStatusIncludeFilter: ['open', 'in progress'],
         minimumAssigneeRestingTime: 0,
         minimumNumberOfStatusChanges: 0,
+        issueStateIncludeFilter: ['planning', 'development', 'testing'],
         minimumStatusRestingTime: 0,
       },
     };
@@ -202,6 +207,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
             statusRestingTime: null,
             assigneeChanges: null,
             statusChanges: null,
+            state: 'planning',
           },
           {
             id: 3,
@@ -234,6 +240,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
             statusRestingTime: null,
             assigneeChanges: null,
             statusChanges: null,
+            state: 'development',
           },
         ],
       },
@@ -274,6 +281,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
             statusRestingTime: null,
             assigneeChanges: null,
             statusChanges: null,
+            state: 'planning',
           },
           {
             id: 3,
@@ -306,6 +314,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
             statusRestingTime: null,
             assigneeChanges: null,
             statusChanges: null,
+            state: 'development',
           },
         ],
       },

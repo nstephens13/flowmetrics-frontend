@@ -6,6 +6,7 @@ export interface ProjectFilterConfigIF {
   minimumAssigneeRestingTime: number;
   minimumNumberOfStatusChanges: number;
   minimumStatusRestingTime: number;
+  issueStateIncludeFilter: string[];
 }
 
 export interface FilterConfigIF {

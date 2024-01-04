@@ -1,11 +1,6 @@
 import { describe, expect, test } from 'vitest';
 import { Duration } from 'luxon';
-import getMockData, {
-  devStatusList,
-  nonDisplayedStatusList,
-  planningStatusList,
-  testingStatusList,
-} from '../../assets/__mockdata__/mockDataComposer';
+import getMockData from '../../assets/__mockdata__/mockDataComposer';
 import type { FilterConfigIF, ProjectFilterConfigIF } from '../../model/FilterConfigIF';
 import type { IssueIF } from '../../model/Issue/IssueIF';
 import {
@@ -15,6 +10,12 @@ import {
   filterProjectIssuesWithMinimumStatusRestingTime,
   filterProjectListWithAProjectWhitelist,
 } from '../filter/ProjectsFilter';
+import {
+  devStatusList,
+  nonDisplayedStatusList,
+  planningStatusList,
+  testingStatusList,
+} from '../Issue';
 import type { ChangeLogIF } from '../../model/Issue/ChangeLogIF';
 
 describe('Filter Test', () => {
@@ -58,6 +59,7 @@ describe('Filter Test', () => {
         issueStatusIncludeFilter: [...planningStatusList, ...devStatusList],
         minimumAssigneeRestingTime: 0,
         minimumNumberOfStatusChanges: 0,
+        issueStateIncludeFilter: [],
         minimumStatusRestingTime: 0,
       },
     };
@@ -90,6 +92,7 @@ describe('Filter Test', () => {
         issueStatusIncludeFilter: [],
         minimumAssigneeRestingTime: 0,
         minimumNumberOfStatusChanges: 0,
+        issueStateIncludeFilter: [],
         minimumStatusRestingTime: 0,
       },
     };
@@ -122,6 +125,7 @@ describe('filterTests', () => {
       statusChanges: null,
       assigneeChanges: null,
       assignedSlaRule: null,
+      state: null,
     } as IssueIF,
     {
       id: 1,
@@ -135,6 +139,7 @@ describe('filterTests', () => {
       status: null,
       assigneeRestingTime: null,
       statusRestingTime: Duration.fromMillis(86400000), // 1 Day
+      state: null,
       statusChanges: [
         {
           id: 0,
@@ -170,6 +175,7 @@ describe('filterTests', () => {
       status: null,
       assigneeRestingTime: null,
       statusRestingTime: Duration.fromMillis(259200000), // 3 days
+      state: null,
       statusChanges: [
         {
           id: 0,
@@ -193,6 +199,7 @@ describe('filterTests', () => {
       status: null,
       assigneeRestingTime: null,
       statusRestingTime: Duration.fromMillis(259200000), // 3 Days
+      state: null,
       statusChanges: [
         {
           id: 0,
@@ -226,6 +233,7 @@ describe('filterTests', () => {
         minimumAssigneeRestingTime: 0,
         minimumNumberOfStatusChanges: 2,
         minimumStatusRestingTime: 2,
+        issueStateIncludeFilter: [],
       } as ProjectFilterConfigIF,
     } as FilterConfigIF;
     const filteredIssues: IssueIF[] = filterProjectIssuesWithMinimalStatusChanges(
@@ -245,6 +253,7 @@ describe('filterTests', () => {
         minimumAssigneeRestingTime: 0,
         minimumNumberOfStatusChanges: 2,
         minimumStatusRestingTime: 2,
+        issueStateIncludeFilter: [],
       } as ProjectFilterConfigIF,
     } as FilterConfigIF;
     const filteredIssues: IssueIF[] = filterProjectIssuesWithMinimumStatusRestingTime(
@@ -264,6 +273,7 @@ describe('filterTests', () => {
         minimumAssigneeRestingTime: 0,
         minimumNumberOfStatusChanges: 2,
         minimumStatusRestingTime: 2,
+        issueStateIncludeFilter: [],
       } as ProjectFilterConfigIF,
     } as FilterConfigIF;
     const filteredIssues: IssueIF[] = filterIssuesMinimumStatusChangesAndRestingTime(

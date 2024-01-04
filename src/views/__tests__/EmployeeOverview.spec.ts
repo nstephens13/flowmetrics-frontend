@@ -65,7 +65,7 @@ describe('Employee Overview should load all the Components', () => {
   });
 });
 
-describe('Employee Overview should load all the Components', () => {
+describe('Employee Overview should load all the Components 2', () => {
   // Mounting the EmployeeOverview component with necessary configuration
   const wrapper = mount(EmployeeOverview, {
     global: {
@@ -99,7 +99,7 @@ describe('Employee Overview should load all the Components', () => {
                       createdAt: '2023-06-01T00:00:00.000Z',
                       closedAt: null,
                       dueTo: '2023-06-30T00:00:00.000Z',
-                      status: 'open',
+                      status: 'Open',
                       assigneeRestingTime: null,
                       statusRestingTime: null,
                       statusChanges: null,
@@ -123,7 +123,7 @@ describe('Employee Overview should load all the Components', () => {
                       createdAt: '2023-06-01T00:00:00.000Z',
                       closedAt: null,
                       dueTo: '2023-06-30T00:00:00.000Z',
-                      status: 'open',
+                      status: 'Open',
                       assigneeRestingTime: null,
                       statusRestingTime: null,
                       statusChanges: null,
@@ -147,7 +147,7 @@ describe('Employee Overview should load all the Components', () => {
                       createdAt: '2023-06-01T00:00:00.000Z',
                       closedAt: null,
                       dueTo: '2023-06-30T00:00:00.000Z',
-                      status: 'open',
+                      status: 'Open',
                       assigneeRestingTime: null,
                       statusRestingTime: null,
                       statusChanges: null,

@@ -10,6 +10,7 @@ import {
 } from '@/assets/__mockdata__/generator/HelperFunctions';
 import { generateAssigneeChanges, generateStatusChanges } from './ChangeLogGenerator';
 import type { EmployeeIF } from '@/model/EmployeeIF';
+import { getCategory } from '../StatusLists';
 
 function getIssue(issueNumber: number, issueTypeNumber: number): IssueIF {
   const issueType = issueTypes[issueTypeNumber];
@@ -39,6 +40,7 @@ function getIssue(issueNumber: number, issueTypeNumber: number): IssueIF {
     issueStatus === 'closed'
       ? generatedStatusChanges && generatedStatusChanges[generatedStatusChanges.length - 1]?.created
       : null;
+  const state = getCategory(issueStatus);
   return {
     id: issueNumber,
     name: `${issueTypes[issueTypeNumber]} : ${faker.hacker.adjective()}`,
@@ -54,6 +56,7 @@ function getIssue(issueNumber: number, issueTypeNumber: number): IssueIF {
     assigneeRestingTime: null, // function already in backend
     statusRestingTime: null, // function already in backend
     assignedSlaRule: null,
+    state,
   } as IssueIF;
 }
 

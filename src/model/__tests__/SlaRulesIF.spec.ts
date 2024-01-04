@@ -48,6 +48,7 @@ describe('assignedSlaRules', () => {
       assigneeRestingTime: null,
       statusChanges: [],
       assigneeChanges: [],
+      state: 'planning',
     };
 
     const assignedSlaRules = issue.assignedSlaRule;

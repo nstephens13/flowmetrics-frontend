@@ -28,6 +28,7 @@ import Tooltip from 'primevue/tooltip';
 import InputMask from 'primevue/inputmask';
 import OverlayPanel from 'primevue/overlaypanel';
 import InputNumber from 'primevue/inputnumber';
+import Chart from 'primevue/chart';
 
 import router from './router';
 import App from './App.vue';
@@ -37,7 +38,7 @@ import 'primeicons/primeicons.css';
 import 'primeflex/primeflex.css';
 import initSlaStore from '@/store/mockdata/initSlaStore';
 import initProjectStore from '@/store/mockdata/initProjectStore';
-import initFilterConfigStore from '@/store/mockdata/initFilterConfigStore';
+import { initFilterConfigStore } from '@/store/mockdata/initFilterConfigStore';
 
 const app = createApp(App);
 const pinia = createPinia();
@@ -71,6 +72,7 @@ app.component('InputMask', InputMask);
 app.component('OverlayPanel', OverlayPanel);
 app.component('InputNumber', InputNumber);
 app.directive('tooltip', Tooltip);
+app.component('Chart', Chart);
 
 app.mount('#app');
 

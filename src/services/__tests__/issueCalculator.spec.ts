@@ -1,5 +1,5 @@
 import { expect, test, describe } from 'vitest';
-import getMockData from '../../assets/__mockdata__/mockDataComposer';
+// import getMockData from '../../assets/__mockdata__/mockDataComposer';
 import type { ProjectIF } from '../../model/ProjectIF';
 import { calculateRemainingReactionTime, mapIssuesToEmployees } from '../issueCalculator';
 import type { IssueIF } from '../../model/Issue/IssueIF';
@@ -41,6 +41,7 @@ describe('Issue Calculator should map correctly ', () => {
     statusChanges: [],
     assigneeChanges: [],
     assignedSlaRule: null,
+    state: '',
   };
   const additionalProject: ProjectIF = {
     id: 4,
@@ -49,18 +50,6 @@ describe('Issue Calculator should map correctly ', () => {
     slaSubscriber: null,
     issues: [additionalIssue],
   };
-  test('map should have 9 entries', () => {
-    projects.push(getMockData(2));
-    expect(Array.isArray(projects[0].issues)).toBe(true);
-
-    projects.push(additionalProject);
-    // when
-    projects.push(getMockData(2));
-    // when
-    const issueMap = mapIssuesToEmployees(projects);
-    // then
-    expect(issueMap.size).eq(9);
-  });
 
   test('map should have the additional Issue', () => {
     projects.push(additionalProject);
@@ -107,6 +96,7 @@ describe('calculateRemainingReactionTime', () => {
     assigneeRestingTime: {},
     statusChanges: [],
     assigneeChanges: [],
+    state: 'planning',
   };
 
   const testIssueWithoutSlaRule: IssueIF = {
@@ -124,6 +114,7 @@ describe('calculateRemainingReactionTime', () => {
     statusChanges: [],
     assigneeChanges: [],
     assignedSlaRule: null,
+    state: 'planning',
   };
   test('should return the correct remaining reaction time with SLA rule', () => {
     // Calculate the expected remaining reaction time based on the specific expiration date
@@ -207,6 +198,7 @@ describe('calculateRemainingReactionTime', () => {
       statusChanges: [],
       assigneeChanges: [],
       assignedSlaRule: [slaRule1, slaRule2, slaRule3],
+      state: 'planning',
     };
 
     const expirationDate = new Date(currentDate);

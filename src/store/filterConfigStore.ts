@@ -12,6 +12,7 @@ const useFilterConfigStore = defineStore('filterConfig', {
         issueStatusIncludeFilter: [] as string[],
         minimumAssigneeRestingTime: {} as DurationLikeObject,
         minimumNumberOfStatusChanges: 0,
+        issueStateIncludeFilter: [] as string[],
       } as ProjectFilterConfigIF,
     } as FilterConfigIF,
   }),

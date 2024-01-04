@@ -41,6 +41,7 @@ const project1: ProjectIF = {
       statusRestingTime: null,
       assigneeChanges: null,
       statusChanges: null,
+      state: 'planning',
     },
     {
       id: 3,
@@ -73,6 +74,7 @@ const project1: ProjectIF = {
       statusRestingTime: null,
       assigneeChanges: null,
       statusChanges: null,
+      state: 'development',
     },
   ],
 };
@@ -113,6 +115,7 @@ const project2: ProjectIF = {
       statusRestingTime: null,
       assigneeChanges: null,
       statusChanges: null,
+      state: 'planning',
     },
     {
       id: 3,
@@ -145,6 +148,7 @@ const project2: ProjectIF = {
       statusRestingTime: null,
       assigneeChanges: null,
       statusChanges: null,
+      state: 'development',
     },
   ],
 };
