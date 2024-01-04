@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-row mr-4 ml-4">
-    <Card class="mr-2 ml-2 flex-grow-1">
+    <Card class="mr-2 ml-2 flex-grow-1 border-3 border-round border-red-500">
       <template #title>Zombie Tickets</template>
       <template #content>
         <DataTable
@@ -12,6 +12,8 @@
           "
           showGridlines
         >
+          <template #empty> No issues found.</template>
+          <template #loading> Loading issues. Please wait.</template>
           <Column field="id" header="Issue ID"></Column>
           <Column field="name" header="Name"></Column>
           <Column field="assignedTo" header="Assigned to">
@@ -31,10 +33,12 @@
         </DataTable>
       </template>
     </Card>
-    <Card class="mr-2 w-30rem">
-      <template #title>Input Parameters</template>
+    <Card class="mr-2 w-23rem border-3 border-round border-red-500">
+      <template #title>
+        <div class="flex flex-column align-items-center">Input Parameters</div>
+      </template>
       <template #content>
-        <div class="flex flex-column align-content-start">
+        <div class="flex flex-column align-items-center">
           <div>Minimal resting time in current status (days)</div>
           <InputNumber v-model="minimalRestingTime"></InputNumber>
           <div>Minimal number of status changes</div>
