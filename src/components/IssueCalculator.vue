@@ -68,7 +68,7 @@
     </Column>
     <Column header="Resting time (Assignee)">
       <template #body="slotProps">
-        {{ printRestingTime(slotProps.data) }}
+        {{ printRestingTime(slotProps.data.assigneeRestingTime) }}
       </template>
     </Column>
     <Column
@@ -97,10 +97,8 @@
       </template>
     </Column>
     <Column header="Status changes" style="width: 150px">
-      <template #body="data">
-        <div v-for="statusChange in data.data.statusChanges" :key="statusChange.name">
-          {{ statusChange.name }} : {{ statusChange.value }}
-        </div>
+      <template #body="slotProps">
+        {{ calculateStatusChanges(slotProps.data) }}
       </template>
     </Column>
     <Column
@@ -130,7 +128,7 @@
     </Column>
     <Column header="Resting time (Status)">
       <template #body="slotProps">
-        {{ printRestingTime(slotProps.data) }}
+        {{ printRestingTime(slotProps.data.statusRestingTime) }}
       </template>
     </Column>
     <Column field="dueTo" header="Due date"></Column>
@@ -145,6 +143,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import type { Ref } from 'vue';
+import { Duration } from 'luxon';
 import { FilterMatchMode } from 'primevue/api';
 import CircularProgressBar from '@/components/CircularProgressBar.vue';
 import type { ProjectIF } from '@/model/ProjectIF';
@@ -152,7 +151,7 @@ import { countIssuesByStatus, Issue } from '@/services/Issue';
 import type { EmployeeIF } from '@/model/EmployeeIF';
 import type { IssueIF } from '@/model/Issue/IssueIF';
 import { getIssueStateList, getIssueStatusList } from '@/model/ProjectIF';
-import { calculateRemainingReactionTime } from '@/services/issueCalculator';
+import { calculateRemainingReactionTime, calculateStatusChanges } from '@/services/issueCalculator';
 import projectStore from '@/store/projectStore';
 
 // Create a reference for the selectedProject with initial data
@@ -211,18 +210,11 @@ function printAssignedTo(employee: EmployeeIF | null): string {
  * @param issue an instance of an IssueIF
  * @return returns resting time in hours or if more than 24 hours returns in days
  */
-function printRestingTime(issue: IssueIF): string {
-  if (issue.statusChanges == null) {
+function printRestingTime(restingTime: any): string {
+  if (restingTime == null) {
     return '0';
   }
-  const currentTime: Date = new Date();
-  const difference: number =
-    currentTime.valueOf() -
-    (issue.statusChanges[issue.statusChanges.length - 1].created?.valueOf() ?? 0);
-  if (difference >= 86400000) {
-    return `${(difference / 86400000).toFixed(0).toString()}d`; // returns time in days (86400000 ms = 1 day)
-  }
-  return `${(difference / 3600000).toFixed(0).toString()}h`; // returns the time in hours (3600000 ms = 1 hour)
+  return Duration.fromObject(restingTime).toFormat("d'd 'h'h 'm'm'").toString();
 }
 
 function calculateRemainingTime(issue: IssueIF): string {

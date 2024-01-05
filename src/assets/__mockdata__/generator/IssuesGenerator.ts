@@ -11,6 +11,7 @@ import {
 import { generateAssigneeChanges, generateStatusChanges } from './ChangeLogGenerator';
 import type { EmployeeIF } from '@/model/EmployeeIF';
 import { getCategory } from '../StatusLists';
+import getTimeDifference from '@/services/timeCalculator';
 
 function getIssue(issueNumber: number, issueTypeNumber: number): IssueIF {
   const issueType = issueTypes[issueTypeNumber];
@@ -36,6 +37,14 @@ function getIssue(issueNumber: number, issueTypeNumber: number): IssueIF {
     assigneedEmployee,
     createdDate
   );
+  const statusRestingTime =
+    generatedStatusChanges === null
+      ? null
+      : getTimeDifference(generatedStatusChanges[generatedStatusChanges.length - 1]);
+  const assigneeRestingTime =
+    generatedAssigneeChanges === null
+      ? null
+      : getTimeDifference(generatedAssigneeChanges[generatedAssigneeChanges.length - 1]);
   const closedDate: Date | null =
     issueStatus === 'closed'
       ? generatedStatusChanges && generatedStatusChanges[generatedStatusChanges.length - 1]?.created
@@ -53,8 +62,8 @@ function getIssue(issueNumber: number, issueTypeNumber: number): IssueIF {
     status: issueStatus,
     statusChanges: generatedStatusChanges,
     assigneeChanges: generatedAssigneeChanges,
-    assigneeRestingTime: null, // function already in backend
-    statusRestingTime: null, // function already in backend
+    assigneeRestingTime,
+    statusRestingTime,
     assignedSlaRule: null,
     state,
   } as IssueIF;
