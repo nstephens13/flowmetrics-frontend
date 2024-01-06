@@ -1,5 +1,8 @@
 <template>
-  <card class="assignee-card border-3 p-0" style="border-color: #4b8bf2">
+  <Card
+    class="assignee-card shadow-4"
+    style="background-color: var(--flowMetricsBlue); color: #ffffffff"
+  >
     <template #title>
       <div class="flex flex-row justify-content-start">
         <span class="pi pi-users mr-3" style="font-size: 2rem; font-weight: 100"></span>
@@ -24,7 +27,7 @@
         </div>
       </div>
     </template>
-  </card>
+  </Card>
 </template>
 
 <script setup lang="ts">

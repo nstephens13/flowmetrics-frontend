@@ -1,5 +1,8 @@
 <template>
-  <card class="assignee-card border-3 p-0" style="border-color: #4b8bf2">
+  <card
+    class="status-resting-time-card shadow-4"
+    style="background-color: #4b8bf2; color: #ffffffff"
+  >
     <template #title>
       <div class="flex flex-row justify-content-start">
         <span class="pi pi-clock mr-3" style="font-size: 2rem; font-weight: 100"></span>

@@ -18,7 +18,7 @@
       </template>
       <template #content>
         <div class="grid">
-          <Card class="project-info-card col-6 border-3 p-0" style="border-color: #4b8bf2">
+          <Card class="project-info-card col-7">
             <template #title>
               <div v-if="selectedProject.name">
                 {{ selectedProject.name }}
@@ -51,7 +51,7 @@
             </template>
           </Card>
           <BarDiagram :project="selectedProject"></BarDiagram>
-          <Card class="issues-card col-12 border-3 p-0" style="border-color: #4b8bf2">
+          <Card class="issues-table-card col-12">
             <template #title>
               <p>Issues</p>
             </template>
@@ -209,12 +209,11 @@ const projects: Ref<ProjectIF[]> = ref(projectStore().getProjects);
 </script>
 
 <style scoped>
-:deep(.col-6) {
-  padding: 0;
-}
 .p-card {
-  margin: 15px 15px 0 15px;
   box-shadow: none;
+}
+.project-card {
+  margin: 15px 15px 0 15px;
 }
 :deep(.project-card > .p-card-body) {
   padding-bottom: 0;
@@ -223,24 +222,38 @@ const projects: Ref<ProjectIF[]> = ref(projectStore().getProjects);
   padding: 0;
 }
 :deep(.project-info-card > .p-card-body) {
-  padding: 0;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 :deep(.visualisation-card > .p-card-body) {
-  padding: 0;
-}
-:deep(.issues-card .p-card-body) {
   padding-top: 0;
+  padding-bottom: 0;
 }
-:deep(.issues-card .p-card-content) {
+:deep(.visualisation-card > .p-card-body > .p-card-content) {
   padding-top: 0;
+  padding-bottom: 0;
+}
+:deep(.issues-card > .p-card-body) {
+  padding-right: 0;
+  padding-bottom: 0;
 }
 :deep(.assignee-card > .p-card-body) {
   padding-right: 0;
   padding-bottom: 0;
 }
-:deep(.state-resting-time-card > .p-card-body) {
+:deep(.key-facts-card > .p-card-body) {
   padding-right: 0;
   padding-bottom: 0;
+}
+:deep(.status-resting-time-card > .p-card-body) {
+  padding-right: 0;
+  padding-bottom: 0;
+}
+:deep(.issues-table-card > .p-card-body) {
+  padding-top: 0;
+}
+:deep(.issues-table-card > .p-card-body > .p-card-content) {
+  padding-top: 0;
 }
 .divider-position {
   width: 100%;
