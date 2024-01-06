@@ -10,7 +10,7 @@ import {
 } from '@/assets/__mockdata__/generator/HelperFunctions';
 import { generateAssigneeChanges, generateStatusChanges } from './ChangeLogGenerator';
 import type { EmployeeIF } from '@/model/EmployeeIF';
-import { getCategory } from '../StatusLists';
+import { Category, getCategory, statusLists } from '../StatusLists';
 import getTimeDifference from '@/services/timeCalculator';
 
 function getIssue(issueNumber: number, issueTypeNumber: number): IssueIF {
@@ -46,8 +46,8 @@ function getIssue(issueNumber: number, issueTypeNumber: number): IssueIF {
       ? null
       : getTimeDifference(generatedAssigneeChanges[generatedAssigneeChanges.length - 1]);
   const closedDate: Date | null =
-    issueStatus === 'closed'
-      ? generatedStatusChanges && generatedStatusChanges[generatedStatusChanges.length - 1]?.created
+    statusLists[Category.nonDisplayed].includes(issueStatus) && generatedStatusChanges
+      ? generatedStatusChanges[generatedStatusChanges.length - 1]?.created
       : null;
   const state = getCategory(issueStatus);
   return {

@@ -6,7 +6,7 @@
     <template #title>
       <div class="flex flex-row justify-content-start">
         <span class="pi pi-users mr-3" style="font-size: 2rem; font-weight: 100"></span>
-        <span class="text-xl mt-1"> Assigned employee </span>
+        <span class="text-xl mt-1"> Assigned employees </span>
       </div>
     </template>
     <template #content>

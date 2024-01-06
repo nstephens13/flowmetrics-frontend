@@ -18,7 +18,7 @@
       </template>
       <template #content>
         <div class="flex flex-wrap overflow-hidden" style="min-width: 100%">
-          <div class="flex flex-grow-1 lg:flex-grow-0" style="min-width: 60%">
+          <div class="flex" style="width: 60%">
             <Card class="project-info-card" style="width: 100%">
               <template #title>
                 <div v-if="selectedProject.name">
@@ -240,8 +240,7 @@ const projects: Ref<ProjectIF[]> = ref(projectStore().getProjects);
   padding: 0;
 }
 :deep(.project-info-card > .p-card-body) {
-  padding-top: 0;
-  padding-bottom: 0;
+  padding: 0;
 }
 :deep(.visualisation-card > .p-card-body) {
   padding-top: 0;

@@ -53,3 +53,14 @@ export default function getPercentageSlaRulesComplied(project: ProjectIF | undef
   }
   return `${Math.trunc((count / getNumberOfSlaRulesOfProject(project)) * 100)}%`;
 }
+
+export function getAverageSolvingTime(project: ProjectIF | undefined): string {
+  if (!project || project.issues.length === 0) return '-';
+  let count = 0;
+  for (let i = 0; i < project.issues.length; ++i) {
+    if (project.issues[i].closedAt && project.issues[i].createdAt) {
+      count += project.issues[i].closedAt.valueOf() - project.issues[i].createdAt.valueOf();
+    }
+  }
+  return `${Math.trunc(count / project.issues.length)}ms`;
+}
