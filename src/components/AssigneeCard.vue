@@ -6,14 +6,14 @@
     <template #title>
       <div class="flex flex-row justify-content-start">
         <span class="pi pi-users mr-3" style="font-size: 2rem; font-weight: 100"></span>
-        <span class="text-xl mt-1"> Assignee </span>
+        <span class="text-xl mt-1"> Assigned employee </span>
       </div>
     </template>
     <template #content>
       <div class="field grid mb-0">
-        <label for="total-assignee" class="col-9">Total assignees :</label>
+        <label for="total-assignee" class="col-9">Total assigned employees :</label>
         <div class="col-3">
-          <span id="total-assignee">{{ project?.issues.length }}</span>
+          <span id="total-assignee">{{ getAssigneeCountFromIssues(project) }}</span>
         </div>
       </div>
       <div class="field grid mb-0">
@@ -31,6 +31,7 @@
 <script setup lang="ts">
 import getPercentageSlaRulesComplied from '@/services/keyFactsCalculator';
 import type { ProjectIF } from '@/model/ProjectIF';
+import { getAssigneeCountFromIssues } from '@/services/assigneeCardCalculator';
 
 defineProps({
   project: Object as () => ProjectIF,
