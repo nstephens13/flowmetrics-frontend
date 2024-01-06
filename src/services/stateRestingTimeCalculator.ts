@@ -21,7 +21,7 @@ export default function calculateStateAverageRestingTime(
   const count = issues.reduce((totalCount, issue) => {
     if (
       issue.assigneeRestingTime !== null &&
-      !statusLists[Category.nonDisplayed].includes(issue.status as string)
+      !statusLists[category].includes(issue.status as string)
     ) {
       return totalCount + 1;
     }

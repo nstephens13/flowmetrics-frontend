@@ -1,5 +1,7 @@
+import { DateTime, Duration } from 'luxon';
 import type { ProjectIF } from '@/model/ProjectIF';
 import type { IssueIF } from '@/model/Issue/IssueIF';
+import { Category, statusLists } from '@/assets/__mockdata__/StatusLists';
 
 /**
  * @brief calculates the amount of fulfilled sla rules of one issue
@@ -45,7 +47,7 @@ function getNumberOfSlaRulesOfProject(project: ProjectIF): number {
  * @param project analyzed project
  * @returns percentile of complied Sla rules, without digits after the comma
  */
-export default function getPercentageSlaRulesComplied(project: ProjectIF | undefined): string {
+export function getPercentageSlaRulesComplied(project: ProjectIF | undefined): string {
   if (!project || getNumberOfSlaRulesOfProject(project) === 0) return '-';
   let count = 0;
   for (let i = 0; i < project.issues.length; ++i) {
@@ -54,13 +56,36 @@ export default function getPercentageSlaRulesComplied(project: ProjectIF | undef
   return `${Math.trunc((count / getNumberOfSlaRulesOfProject(project)) * 100)}%`;
 }
 
-export function getAverageSolvingTime(project: ProjectIF | undefined): string {
-  if (!project || project.issues.length === 0) return '-';
-  let count = 0;
-  for (let i = 0; i < project.issues.length; ++i) {
-    if (project.issues[i].closedAt && project.issues[i].createdAt) {
-      count += project.issues[i].closedAt.valueOf() - project.issues[i].createdAt.valueOf();
+export function calculateAverageSolvingTime(issues: IssueIF[] | undefined): string {
+  if (!issues) return '-';
+  const totalRestingTime = issues.reduce((total, issue) => {
+    if (
+      issue.statusRestingTime !== null &&
+      statusLists[Category.nonDisplayed].includes(issue.status as string) &&
+      issue.statusChanges !== null
+    ) {
+      const createdAt = DateTime.fromJSDate(issue.createdAt as Date);
+      const statusRestingTime = DateTime.fromJSDate(
+        issue.statusChanges[issue.statusChanges.length - 1].created as Date
+      );
+      return total + statusRestingTime.diff(createdAt).as('milliseconds');
     }
-  }
-  return `${Math.trunc(count / project.issues.length)}ms`;
+    return total;
+  }, 0);
+
+  const count = issues.reduce((totalCount, issue) => {
+    if (
+      issue.assigneeRestingTime !== null &&
+      !statusLists[Category.nonDisplayed].includes(issue.status as string)
+    ) {
+      return totalCount + 1;
+    }
+    return totalCount;
+  }, 0);
+
+  return count > 0
+    ? Duration.fromMillis(totalRestingTime / count)
+        .toFormat("d 'days' h 'hours'")
+        .toString()
+    : '-';
 }

@@ -10,7 +10,7 @@
       <div class="field grid mb-0">
         <label for="average-solving-time" class="col-7">Average solving time: </label>
         <div class="col-5">
-          <span id="average-solving-time">{{ project?.issues.length }}</span>
+          <span id="average-solving-time">{{ calculateAverageSolvingTime(project?.issues) }}</span>
         </div>
       </div>
       <div class="field grid mb-0">
@@ -24,7 +24,10 @@
 </template>
 
 <script setup lang="ts">
-import getPercentageSlaRulesComplied from '@/services/keyFactsCalculator';
+import {
+  getPercentageSlaRulesComplied,
+  calculateAverageSolvingTime,
+} from '@/services/keyFactsCalculator';
 import type { ProjectIF } from '@/model/ProjectIF';
 
 defineProps({
