@@ -13,19 +13,25 @@
       <div class="field grid mb-0">
         <label for="planning" class="col-7">Planning :</label>
         <div class="col-5">
-          <span id="planning">{{ project?.issues.length }}</span>
+          <span id="planning">{{
+            calculateStateAverageRestingTime(project?.issues, Category.planning)
+          }}</span>
         </div>
       </div>
       <div class="field grid mb-0">
         <label for="development" class="col-7">Development :</label>
         <div class="col-5">
-          <span id="development">{{ project?.issues.length }}</span>
+          <span id="development">{{
+            calculateStateAverageRestingTime(project?.issues, Category.development)
+          }}</span>
         </div>
       </div>
       <div class="field grid mb-0">
         <label for="testing" class="col-7">Testing :</label>
         <div class="col-5">
-          <span id="testing">{{ project?.issues.length }}</span>
+          <span id="testing">{{
+            calculateStateAverageRestingTime(project?.issues, Category.testing)
+          }}</span>
         </div>
       </div>
     </template>
@@ -33,7 +39,10 @@
 </template>
 
 <script setup lang="ts">
+import { defineProps } from 'vue';
 import type { ProjectIF } from '@/model/ProjectIF';
+import calculateStateAverageRestingTime from '@/services/stateRestingTimeCalculator';
+import { Category } from '@/assets/__mockdata__/StatusLists';
 
 defineProps({
   project: Object as () => ProjectIF,

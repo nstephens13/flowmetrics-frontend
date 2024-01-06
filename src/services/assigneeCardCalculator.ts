@@ -5,7 +5,7 @@ import type { IssueIF } from '@/model/Issue/IssueIF';
 import type { ProjectIF } from '@/model/ProjectIF';
 
 export function calculateAverageRestingTime(issues: IssueIF[] | undefined): string {
-  if (!issues) return '0 days 0 hours 0 minutes';
+  if (!issues) return '-';
   const totalRestingTime = issues.reduce((total, issue) => {
     if (
       issue.assigneeRestingTime !== null &&
@@ -31,7 +31,7 @@ export function calculateAverageRestingTime(issues: IssueIF[] | undefined): stri
     ? Duration.fromMillis(totalRestingTime / count)
         .toFormat("d 'days' h 'hours' m 'minutes'")
         .toString()
-    : '0 days 0 hours 0 minutes';
+    : '-';
 }
 
 export function getAssigneeCountFromIssues(project: ProjectIF | undefined): number {

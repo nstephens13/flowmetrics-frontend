@@ -39,7 +39,11 @@ export function getRandomEmployee(employee?: EmployeeIF): EmployeeIF {
 }
 
 export function getDatesBetween(startDate: Date, endDate: Date, numberOfDates: number): Date[] {
-  return faker.date.betweens({ from: startDate, to: endDate, count: numberOfDates });
+  return faker.date.betweens({
+    from: startDate,
+    to: endDate,
+    count: numberOfDates === 0 ? 1 : numberOfDates,
+  });
 }
 
 export function getWorkflow(issueType: string) {
