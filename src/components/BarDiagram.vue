@@ -1,5 +1,5 @@
 <template>
-  <Card class="visualisation-card col-5">
+  <Card class="visualisation-card" style="width: 100%; height: 100%">
     <template #title>
       <div class="flex flex-row align-content-center align-items-center justify-content-between">
         Issues per status
@@ -18,7 +18,12 @@
       </div>
     </template>
     <template #content>
-      <Chart type="bar" :data="chartData" :options="chartOptions" class="w-100rem h-30rem" />
+      <Chart
+        type="bar"
+        :data="chartData"
+        :options="chartOptions"
+        style="height: 100%; width: 100%"
+      />
     </template>
   </Card>
 </template>

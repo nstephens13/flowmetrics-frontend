@@ -17,9 +17,7 @@
         </div>
       </div>
       <div class="field grid mb-0">
-        <label for="average-assignee-resting-time" class="col-9"
-          >Average assignee resting time :</label
-        >
+        <label for="average-assignee-resting-time" class="col-9">Average resting time :</label>
         <div class="col-3">
           <span id="average-assignee-resting-time">{{
             getPercentageSlaRulesComplied(project)

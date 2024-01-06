@@ -2,9 +2,11 @@
   <card class="issues-card shadow-4" style="background-color: #0448b5; color: #ffffffff">
     <template #title>
       <div class="flex flex-row justify-content-start">
-        <span class="mr-3" style="font-size: 1.9rem; font-weight: 400; width: 32px; height: 32px">{{
-          project?.issues.length
-        }}</span>
+        <span
+          class="mr-3"
+          style="font-size: 1.75rem; font-weight: 400; width: 32px; height: 32px"
+          >{{ project?.issues.length }}</span
+        >
         <span class="text-xl mt-1">Total issues </span>
       </div>
     </template>
