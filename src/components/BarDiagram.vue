@@ -1,5 +1,5 @@
 <template>
-  <Card>
+  <Card class="visualisation-card col-5 border-3" style="border-color: #4b8bf2">
     <template #title>
       <div class="flex flex-row align-content-center align-items-center justify-content-between">
         Issues per status
