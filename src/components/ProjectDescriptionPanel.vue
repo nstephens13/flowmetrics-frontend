@@ -21,7 +21,7 @@
           <div class="flex" style="width: 60%">
             <Card class="project-info-card" style="width: 100%">
               <template #title>
-                <div v-if="selectedProject.name">
+                <div class="ml-2" v-if="selectedProject.name">
                   {{ selectedProject.name }}
                   <Chip class="pl-0 pr-3">
                     <span
@@ -33,7 +33,9 @@
                 </div>
                 <div v-else> Project </div>
               </template>
-              <template #subtitle>{{ selectedProject.description }}</template>
+              <template #subtitle
+                ><span class="ml-2">{{ selectedProject.description }}</span></template
+              >
               <template #content>
                 <div class="flex flex-wrap" style="min-width: 100%">
                   <div class="flex m-2" style="min-width: 48%">
@@ -247,7 +249,6 @@ const projects: Ref<ProjectIF[]> = ref(projectStore().getProjects);
   padding-bottom: 0;
 }
 :deep(.visualisation-card > .p-card-body > .p-card-content) {
-  padding-top: 0;
   padding-bottom: 0;
 }
 :deep(.issues-card > .p-card-body) {
