@@ -11,20 +11,20 @@
     </template>
     <template #content>
       <div class="field grid mb-0">
-        <label for="planning" class="col-9">Planning :</label>
-        <div class="col-3">
+        <label for="planning" class="col-7">Planning :</label>
+        <div class="col-5">
           <span id="planning">{{ project?.issues.length }}</span>
         </div>
       </div>
       <div class="field grid mb-0">
-        <label for="development" class="col-9">Development :</label>
-        <div class="col-3">
+        <label for="development" class="col-7">Development :</label>
+        <div class="col-5">
           <span id="development">{{ project?.issues.length }}</span>
         </div>
       </div>
       <div class="field grid mb-0">
-        <label for="testing" class="col-9">Testing :</label>
-        <div class="col-3">
+        <label for="testing" class="col-7">Testing :</label>
+        <div class="col-5">
           <span id="testing">{{ project?.issues.length }}</span>
         </div>
       </div>

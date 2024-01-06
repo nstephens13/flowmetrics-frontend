@@ -8,14 +8,14 @@
     </template>
     <template #content>
       <div class="field grid mb-0">
-        <label for="average-solving-time" class="col-9">Average solving time: </label>
-        <div class="col-3">
+        <label for="average-solving-time" class="col-7">Average solving time: </label>
+        <div class="col-5">
           <span id="average-solving-time">{{ project?.issues.length }}</span>
         </div>
       </div>
       <div class="field grid mb-0">
-        <label for="sla-rule-complied" class="col-9">SLA rule complied (in %): </label>
-        <div class="col-3">
+        <label for="sla-rule-complied" class="col-7">SLA rule complied (in %): </label>
+        <div class="col-5">
           <span id="sla-rule-complied">{{ getPercentageSlaRulesComplied(project) }}</span>
         </div>
       </div>

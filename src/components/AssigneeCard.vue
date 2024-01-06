@@ -11,16 +11,16 @@
     </template>
     <template #content>
       <div class="field grid mb-0">
-        <label for="total-assignee" class="col-9">Total assigned employees :</label>
-        <div class="col-3">
+        <label for="total-assignee" class="col-7">Total assigned employees :</label>
+        <div class="col-5">
           <span id="total-assignee">{{ getAssigneeCountFromIssues(project) }}</span>
         </div>
       </div>
       <div class="field grid mb-0">
-        <label for="average-assignee-resting-time" class="col-9">Average resting time :</label>
-        <div class="col-3">
+        <label for="average-assignee-resting-time" class="col-7">Average resting time :</label>
+        <div class="col-5">
           <span id="average-assignee-resting-time">{{
-            getPercentageSlaRulesComplied(project)
+            calculateAverageRestingTime(project?.issues)
           }}</span>
         </div>
       </div>
@@ -29,9 +29,11 @@
 </template>
 
 <script setup lang="ts">
-import getPercentageSlaRulesComplied from '@/services/keyFactsCalculator';
 import type { ProjectIF } from '@/model/ProjectIF';
-import { getAssigneeCountFromIssues } from '@/services/assigneeCardCalculator';
+import {
+  getAssigneeCountFromIssues,
+  calculateAverageRestingTime,
+} from '@/services/assigneeCardCalculator';
 
 defineProps({
   project: Object as () => ProjectIF,
