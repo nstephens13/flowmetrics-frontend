@@ -1,5 +1,8 @@
 <template>
-  <card class="key-facts-card shadow-4" style="background-color: #002869; color: #ffffffff">
+  <card
+    class="key-facts-card shadow-4"
+    style="background-color: var(--flowMetricsBlue-4); color: #ffffffff"
+  >
     <template #title
       ><div class="flex flex-row justify-content-start">
         <span class="pi pi-key mr-3" style="font-size: 2rem; font-weight: 100"></span>

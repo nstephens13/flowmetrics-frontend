@@ -1,5 +1,8 @@
 <template>
-  <card class="issues-card shadow-4" style="background-color: #0448b5; color: #ffffffff">
+  <card
+    class="issues-card shadow-4"
+    style="background-color: var(--flowMetricsBlue-2    ); color: #ffffffff"
+  >
     <template #title>
       <div class="flex flex-row justify-content-start">
         <span

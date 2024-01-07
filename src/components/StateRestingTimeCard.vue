@@ -1,7 +1,7 @@
 <template>
   <card
     class="status-resting-time-card shadow-4"
-    style="background-color: #4b8bf2; color: #ffffffff"
+    style="background-color: var(--flowMetricsBlue-1); color: #ffffffff"
   >
     <template #title>
       <div class="flex flex-row justify-content-start">

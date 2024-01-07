@@ -2,7 +2,7 @@ import { describe, expect, test } from 'vitest';
 import type { IssueIF } from '../../model/Issue/IssueIF';
 import type { ProjectIF } from '../../model/ProjectIF';
 import type { SlaRule } from '../../model/Sla/SlaRule';
-import getPercentageSlaRulesComplied from '../keyFactsCalculator';
+import { getPercentageSlaRulesComplied } from '../keyFactsCalculator';
 
 describe('keyFactsTests', () => {
   const testProject = {

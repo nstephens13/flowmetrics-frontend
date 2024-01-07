@@ -1,7 +1,7 @@
 <template>
   <Card
     class="assignee-card shadow-4"
-    style="background-color: var(--flowMetricsBlue); color: #ffffffff"
+    style="background-color: var(--flowMetricsBlue-3); color: #ffffffff"
   >
     <template #title>
       <div class="flex flex-row justify-content-start">
