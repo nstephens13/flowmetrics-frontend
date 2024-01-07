@@ -29,7 +29,7 @@ export function calculateAverageRestingTime(issues: IssueIF[] | undefined): stri
 
   return count > 0
     ? Duration.fromMillis(totalRestingTime / count)
-        .toFormat("d 'days' h 'hours' m 'minutes'")
+        .toFormat("d 'days' h 'hours'")
         .toString()
     : '-';
 }

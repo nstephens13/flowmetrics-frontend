@@ -1,8 +1,5 @@
 <template>
-  <card
-    class="issues-card shadow-4"
-    style="background-color: var(--flowMetricsBlue-2    ); color: #ffffffff"
-  >
+  <card class="issues-card shadow-3">
     <template #title>
       <div class="flex flex-row justify-content-start">
         <span
@@ -14,24 +11,58 @@
       </div>
     </template>
     <template #content>
-      <div class="field grid mb-0">
-        <label for="planning" class="col-7">Planning :</label>
-        <div class="col-5">
-          <span id="planning">{{ getIssueCountfromCategory(Category.planning, project) }}</span>
+      <div class="flex flex-column gap-1 mr-4">
+        <!--open Issues Progress Bar-->
+        <div class="field mb-0">
+          <label class="mb-2 font-semibold" for="planningProgressbar">{{
+            Category.planning
+          }}</label>
+          <div>
+            <ProgressBar
+              class="planningProgressbar"
+              id="planningProgressbar"
+              :value="
+                (getIssueCountfromCategory(Category.planning, project) /
+                  getOpenIssueCount(project)) *
+                100
+              "
+              >{{ getIssueCountfromCategory(Category.planning, project) }}
+            </ProgressBar>
+          </div>
         </div>
-      </div>
-      <div class="field grid mb-0">
-        <label for="development" class="col-7">Development :</label>
-        <div class="col-5">
-          <span id="development">{{
-            getIssueCountfromCategory(Category.development, project)
-          }}</span>
+        <!--in progress Issues Progress Bar-->
+        <div class="field mb-0">
+          <label class="mb-2 font-semibold" for="planningProgressbar">{{
+            Category.development
+          }}</label>
+          <div>
+            <ProgressBar
+              class="developmentProgressbar"
+              id="developmentProgressbar"
+              :value="
+                (getIssueCountfromCategory(Category.development, project) /
+                  getOpenIssueCount(project)) *
+                100
+              "
+              >{{ getIssueCountfromCategory(Category.development, project) }}
+            </ProgressBar>
+          </div>
         </div>
-      </div>
-      <div class="field grid mb-0">
-        <label for="testing" class="col-7">Testing :</label>
-        <div class="col-5">
-          <span id="testing">{{ getIssueCountfromCategory(Category.testing, project) }}</span>
+        <!--Closed Issues Progress Bar-->
+        <div class="field mb-0">
+          <label class="mb-2 font-semibold" for="planningProgressbar">{{ Category.testing }}</label>
+          <div>
+            <ProgressBar
+              class="testingProgressbar"
+              id="testingProgressbar"
+              :value="
+                (getIssueCountfromCategory(Category.testing, project) /
+                  getOpenIssueCount(project)) *
+                100
+              "
+              >{{ getIssueCountfromCategory(Category.testing, project) }}
+            </ProgressBar>
+          </div>
         </div>
       </div>
     </template>
@@ -48,3 +79,15 @@ defineProps({
   project: Object as () => ProjectIF,
 });
 </script>
+
+<style scoped>
+:deep(.developmentProgressbar .p-progressbar-value) {
+  background: linear-gradient(to right, #515f68, #748696);
+}
+:deep(.planningProgressbar .p-progressbar-value) {
+  background: linear-gradient(to right, #1961be, #69a5f3);
+}
+:deep(.testingProgressbar .p-progressbar-value) {
+  background: linear-gradient(to right, #6d6172, #b595bb);
+}
+</style>
