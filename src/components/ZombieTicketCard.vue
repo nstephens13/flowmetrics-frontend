@@ -38,15 +38,27 @@
         <div class="flex flex-column align-items-center">Input Parameters</div>
       </template>
       <template #content>
-        <div class="flex flex-column align-items-center">
+        <div class="flex flex-column align-items-start gap-2">
           <div>Minimal resting time in current status (days)</div>
           <InputNumber v-model="minimalRestingTime"></InputNumber>
           <div>Minimal number of status changes</div>
           <InputNumber v-model="minimalStatusChanges"></InputNumber>
-          <div class="flex align-items-center justify-content-evenly mt-2">
-            <Button label="Clear" @click="clearFilters" class="mr-2"> </Button>
-            <Button label="Apply" @click="applyFilters" class="ml-2"> </Button>
-          </div>
+        </div>
+        <div class="flex align-items-center justify-content-evenly mt-4">
+          <Button
+            label="Clear"
+            @click="clearFilters"
+            class="mr-2"
+            style="background-color: var(--flowMetricsBlue)"
+          >
+          </Button>
+          <Button
+            label="Apply"
+            @click="applyFilters"
+            class="ml-2"
+            style="background-color: var(--flowMetricsBlue)"
+          >
+          </Button>
         </div>
       </template>
     </Card>
