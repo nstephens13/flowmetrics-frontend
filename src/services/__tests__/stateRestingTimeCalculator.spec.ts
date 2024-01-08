@@ -3,7 +3,11 @@ import type { IssueIF } from '../../model/Issue/IssueIF';
 import type { ProjectIF } from '../../model/ProjectIF';
 import type { EmployeeIF } from '../../model/EmployeeIF';
 import { Category } from '../../assets/__mockdata__/StatusLists';
-import { getIssueCountfromCategory, getOpenIssueCount } from '../issuesCardCalculator';
+import {
+  calculateStateAverageRestingTime,
+  calculateAverageRestingTime,
+  getPercentOfIncreaseOrDecrease,
+} from '../stateRestingTimeCalculator';
 
 const testProject: ProjectIF = {
   id: 1,
@@ -40,7 +44,14 @@ const testProject: ProjectIF = {
         milliseconds: 0,
       },
       assigneeChanges: null,
-      statusRestingTime: null,
+      statusRestingTime: {
+        weeks: 0,
+        days: 1,
+        hours: 4,
+        minutes: 0,
+        seconds: 0,
+        milliseconds: 0,
+      },
       state: null,
       assignedSlaRule: null,
       changelog: null,
@@ -74,7 +85,14 @@ const testProject: ProjectIF = {
         milliseconds: 0,
       },
       assigneeChanges: null,
-      statusRestingTime: null,
+      statusRestingTime: {
+        weeks: 0,
+        days: 1,
+        hours: 4,
+        minutes: 0,
+        seconds: 0,
+        milliseconds: 0,
+      },
       state: null,
       assignedSlaRule: null,
       changelog: null,
@@ -108,7 +126,14 @@ const testProject: ProjectIF = {
         milliseconds: 0,
       },
       assigneeChanges: null,
-      statusRestingTime: null,
+      statusRestingTime: {
+        weeks: 0,
+        days: 1,
+        hours: 4,
+        minutes: 0,
+        seconds: 0,
+        milliseconds: 0,
+      },
       state: null,
       assignedSlaRule: null,
       changelog: null,
@@ -142,7 +167,14 @@ const testProject: ProjectIF = {
         milliseconds: 0,
       },
       assigneeChanges: null,
-      statusRestingTime: null,
+      statusRestingTime: {
+        weeks: 0,
+        days: 1,
+        hours: 4,
+        minutes: 0,
+        seconds: 0,
+        milliseconds: 0,
+      },
       state: null,
       assignedSlaRule: null,
       changelog: null,
@@ -176,7 +208,14 @@ const testProject: ProjectIF = {
         milliseconds: 0,
       },
       assigneeChanges: null,
-      statusRestingTime: null,
+      statusRestingTime: {
+        weeks: 0,
+        days: 1,
+        hours: 4,
+        minutes: 0,
+        seconds: 0,
+        milliseconds: 0,
+      },
       state: null,
       assignedSlaRule: null,
       changelog: null,
@@ -210,7 +249,14 @@ const testProject: ProjectIF = {
         milliseconds: 0,
       },
       assigneeChanges: null,
-      statusRestingTime: null,
+      statusRestingTime: {
+        weeks: 0,
+        days: 1,
+        hours: 4,
+        minutes: 0,
+        seconds: 0,
+        milliseconds: 0,
+      },
       state: null,
       assignedSlaRule: null,
       changelog: null,
@@ -218,34 +264,47 @@ const testProject: ProjectIF = {
   ],
 };
 
-describe('assigneeCardCalculator', () => {
-  test('getIssueCountfromCategory', () => {
-    expect(getIssueCountfromCategory(Category.planning, testProject)).toBe(3);
-    expect(getIssueCountfromCategory(Category.development, testProject)).toBe(1);
-    expect(getIssueCountfromCategory(Category.testing, testProject)).toBe(2);
-    expect(getIssueCountfromCategory(Category.nonDisplayed, testProject)).toBe(0);
+describe('stateRestingTimeCalculator', () => {
+  test('calculateStateAverageRestingTime', () => {
+    expect(
+      calculateStateAverageRestingTime(testProject.issues, Category.planning)
+        ?.toFormat("d 'days' h 'hours'")
+        .toString()
+    ).toEqual('1 days 4 hours');
+    expect(
+      calculateStateAverageRestingTime(testProject.issues, Category.development)
+        ?.toFormat("d 'days' h 'hours'")
+        .toString()
+    ).toEqual('1 days 4 hours');
+    expect(
+      calculateStateAverageRestingTime(testProject.issues, Category.testing)
+        ?.toFormat("d 'days' h 'hours'")
+        .toString()
+    ).toEqual('1 days 4 hours');
+    expect(
+      calculateStateAverageRestingTime(testProject.issues, Category.nonDisplayed)
+        ?.toFormat("d 'days' h 'hours'")
+        .toString()
+    ).toEqual(undefined);
   });
-  test('getIssueCountfromCategory with empty project', () => {
-    expect(getIssueCountfromCategory(Category.planning, undefined)).toBe(0);
-    expect(getIssueCountfromCategory(Category.development, undefined)).toBe(0);
-    expect(getIssueCountfromCategory(Category.testing, undefined)).toBe(0);
-    expect(getIssueCountfromCategory(Category.nonDisplayed, undefined)).toBe(0);
+  test('calculateStateAverageRestingTime with empty issues', () => {
+    expect(calculateStateAverageRestingTime(undefined, Category.planning)).toEqual(null);
+    expect(calculateStateAverageRestingTime(undefined, Category.development)).toEqual(null);
+    expect(calculateStateAverageRestingTime(undefined, Category.testing)).toEqual(null);
+    expect(calculateStateAverageRestingTime(undefined, Category.nonDisplayed)).toEqual(null);
   });
-  test('getIssueCountfromCategory with empty project issues', () => {
-    expect(getIssueCountfromCategory(Category.planning, { ...testProject, issues: [] })).toBe(0);
-    expect(getIssueCountfromCategory(Category.development, { ...testProject, issues: [] })).toBe(0);
-    expect(getIssueCountfromCategory(Category.testing, { ...testProject, issues: [] })).toBe(0);
-    expect(getIssueCountfromCategory(Category.nonDisplayed, { ...testProject, issues: [] })).toBe(
-      0
-    );
+  test('calculateAverageRestingTime', () => {
+    expect(
+      calculateAverageRestingTime(testProject.issues)?.toFormat("d 'days' h 'hours'").toString()
+    ).toEqual('1 days 4 hours');
   });
-  test('getOpenIssueCount', () => {
-    expect(getOpenIssueCount(testProject)).toBe(6);
+  test('calculateAverageRestingTime with empty issues', () => {
+    expect(calculateAverageRestingTime(undefined)).toEqual(null);
   });
-  test('getOpenIssueCount with empty project', () => {
-    expect(getOpenIssueCount(undefined)).toBe(0);
+  test('getPercentOfIncreaseOrDecrease', () => {
+    expect(getPercentOfIncreaseOrDecrease(testProject.issues, Category.planning)).toEqual(' 0.00%');
   });
-  test('getOpenIssueCount with empty project issues', () => {
-    expect(getOpenIssueCount({ ...testProject, issues: [] })).toBe(0);
+  test('getPercentOfIncreaseOrDecrease with empty issues', () => {
+    expect(getPercentOfIncreaseOrDecrease(undefined, Category.planning)).toEqual('');
   });
 });

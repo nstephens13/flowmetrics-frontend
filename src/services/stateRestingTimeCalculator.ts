@@ -70,5 +70,5 @@ export function getPercentOfIncreaseOrDecrease(
     ((stateAverageRestingTime.as('milliseconds') - averageRestingTime.as('milliseconds')) /
       averageRestingTime.as('milliseconds')) *
     100;
-  return percent > 0 ? ` +${percent.toFixed(2)}% ` : ` ${percent.toFixed(2)}% `;
+  return percent > 0 ? ` +${percent.toFixed(2)}% ` : ` ${percent.toFixed(2)}%`;
 }
