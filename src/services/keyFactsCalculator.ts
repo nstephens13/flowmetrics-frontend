@@ -60,7 +60,6 @@ export function calculateAverageSolvingTime(issues: IssueIF[] | undefined): stri
   if (!issues) return '-';
   const totalRestingTime = issues.reduce((total, issue) => {
     if (
-      issue.statusRestingTime !== null &&
       statusLists[Category.nonDisplayed].includes(issue.status as string) &&
       issue.statusChanges !== null
     ) {
@@ -74,15 +73,11 @@ export function calculateAverageSolvingTime(issues: IssueIF[] | undefined): stri
   }, 0);
 
   const count = issues.reduce((totalCount, issue) => {
-    if (
-      issue.assigneeRestingTime !== null &&
-      !statusLists[Category.nonDisplayed].includes(issue.status as string)
-    ) {
+    if (statusLists[Category.nonDisplayed].includes(issue.status as string)) {
       return totalCount + 1;
     }
     return totalCount;
   }, 0);
-
   return count > 0
     ? Duration.fromMillis(totalRestingTime / count)
         .toFormat("d 'days' h 'hours'")
