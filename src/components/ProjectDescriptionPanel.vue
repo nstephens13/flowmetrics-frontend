@@ -178,12 +178,13 @@ import projectStore from '@/store/projectStore';
 import KeyFactsCard from '@/components/KeyFactsCard.vue';
 import AssigneeCard from '@/components/AssigneeCard.vue';
 import BarDiagram from '@/components/BarDiagram.vue';
-import { getProject } from '@/assets/__mockdata__/mockdata';
 import StateRestingTimeCard from './StateRestingTimeCard.vue';
 import IssuesCard from './IssuesCard.vue';
 
+// Create a reference for the projects array with mock data
+const projects: Ref<ProjectIF[]> = ref(projectStore().getProjects);
 // Create a reference for the selectedProject with initial data
-const selectedProject = ref(getProject(11) as ProjectIF);
+const selectedProject = ref(projects.value[15]);
 
 // Create a reference for the filters object with initial configuration
 const filters = ref({
@@ -224,8 +225,6 @@ const statuses = computed(() => getIssueStatusList(selectedProject.value.issues)
 const states = computed(
   () => getIssueStateList(selectedProject.value.issues) ?? ['planning', 'development', 'testing']
 );
-// Create a reference for the projects array with mock data
-const projects: Ref<ProjectIF[]> = ref(projectStore().getProjects);
 </script>
 
 <style scoped>
