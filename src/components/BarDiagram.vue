@@ -32,6 +32,7 @@ import { ref, onMounted, computed, type Ref } from 'vue';
 import type { ProjectIF } from '@/model/ProjectIF';
 import { getStatusesFromCategories } from '@/services/issueCalculator';
 import { Category, getColorsforStatuses } from '@/assets/__mockdata__/StatusLists';
+import type { IssueIF } from '@/model/Issue/IssueIF';
 
 const documentStyle = getComputedStyle(document.documentElement);
 const textColor = documentStyle.getPropertyValue('--text-color');
@@ -48,6 +49,14 @@ const props = defineProps({
   project: {
     type: Object as () => ProjectIF,
     required: true,
+    default: () =>
+      ({
+        id: 0 as number,
+        name: '' as string,
+        description: '' as string,
+        issues: [] as IssueIF[],
+        slaSubscriber: null,
+      } as ProjectIF),
   },
 });
 

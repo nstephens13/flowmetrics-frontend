@@ -34,7 +34,7 @@
                 <div v-else> Project </div>
               </template>
               <template #subtitle
-                ><span class="ml-2">{{ selectedProject.description }}</span></template
+                ><span class="ml-2">{{ selectedProject?.description }}</span></template
               >
               <template #content>
                 <div class="flex flex-wrap" style="min-width: 100%">
@@ -184,7 +184,13 @@ import IssuesCard from './IssuesCard.vue';
 // Create a reference for the projects array with mock data
 const projects: Ref<ProjectIF[]> = ref(projectStore().getProjects);
 // Create a reference for the selectedProject with initial data
-const selectedProject = ref(projects.value[15]);
+const selectedProject: Ref<ProjectIF> = ref({
+  id: 0,
+  name: 'Project',
+  description: 'This is the project',
+  issues: [] as IssueIF[],
+  slaSubscriber: null,
+} as ProjectIF);
 
 // Create a reference for the filters object with initial configuration
 const filters = ref({
