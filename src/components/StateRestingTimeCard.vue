@@ -65,7 +65,6 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps } from 'vue';
 import type { ProjectIF } from '@/model/ProjectIF';
 import {
   calculateStateAverageRestingTime,

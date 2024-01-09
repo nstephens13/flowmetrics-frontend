@@ -8,6 +8,9 @@ import Column from 'primevue/column';
 import Divider from 'primevue/divider';
 import MultiSelect from 'primevue/multiselect';
 import { createTestingPinia } from '@pinia/testing';
+import Chart from 'primevue/chart';
+import Chip from 'primevue/chip';
+import ProgressBar from 'primevue/progressbar';
 import router from '@/router/index';
 import ProjectDescriptionPanel from '../ProjectDescriptionPanel.vue';
 import KeyFactsCard from '../KeyFactsCard.vue';
@@ -54,11 +57,14 @@ describe('Project Overview should load all the Components', () => {
       components: {
         Dropdown,
         Card,
+        Chip,
+        Chart,
         DataTable,
         Column,
         Divider,
         MultiSelect,
         KeyFactsCard,
+        ProgressBar,
       },
     },
   });

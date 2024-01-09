@@ -70,7 +70,6 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps } from 'vue';
 import type { ProjectIF } from '@/model/ProjectIF';
 import { getIssueCountfromCategory, getOpenIssueCount } from '@/services/issuesCardCalculator';
 import { Category } from '@/assets/__mockdata__/StatusLists';
