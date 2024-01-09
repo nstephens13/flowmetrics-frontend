@@ -23,9 +23,9 @@
               <template #title>
                 <div class="ml-2" v-if="selectedProject.name">
                   {{ selectedProject.name }}
-                  <Chip class="pl-0 pr-3">
+                  <Chip class="ml-2 pl-0 pr-3">
                     <span
-                      class="bg-primary font-bold border-circle w-2rem h-2rem flex align-items-center justify-content-center"
+                      class="bg-blue-600 text-white font-bold border-circle w-2rem h-2rem flex align-items-center justify-content-center"
                       >ID</span
                     >
                     <span class="ml-2 font-medium">{{ selectedProject.id }}</span>
