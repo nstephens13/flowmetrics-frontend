@@ -4,11 +4,11 @@
       <div class="flex flex-row align-content-center align-items-center justify-content-between">
         Issues per status
         <MultiSelect
+          ref="multiselect"
           v-model="selectedCategory"
           :options="categories"
           placeholder="Category"
-          class="w-full md:w-14rem"
-          id="category-select"
+          class="multiselect-container w-full md:w-14rem"
         />
       </div>
     </template>

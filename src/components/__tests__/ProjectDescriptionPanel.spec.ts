@@ -14,6 +14,10 @@ import ProgressBar from 'primevue/progressbar';
 import router from '@/router/index';
 import ProjectDescriptionPanel from '../ProjectDescriptionPanel.vue';
 import KeyFactsCard from '../KeyFactsCard.vue';
+import AssigneeCard from '../AssigneeCard.vue';
+import IssuesCard from '../IssuesCard.vue';
+import StateRestingTimeCard from '../StateRestingTimeCard.vue';
+import BarDiagram from '../BarDiagram.vue';
 
 // Describe block for the test suite
 describe('Project Overview should load all the Components', () => {
@@ -57,14 +61,18 @@ describe('Project Overview should load all the Components', () => {
       components: {
         Dropdown,
         Card,
-        Chip,
-        Chart,
         DataTable,
         Column,
         Divider,
-        MultiSelect,
+        Chip,
+        BarDiagram,
         KeyFactsCard,
+        AssigneeCard,
+        IssuesCard,
+        StateRestingTimeCard,
+        MultiSelect,
         ProgressBar,
+        Chart,
       },
     },
   });

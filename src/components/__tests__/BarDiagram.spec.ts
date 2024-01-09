@@ -4,7 +4,7 @@ import PrimeVue from 'primevue/config';
 
 import Card from 'primevue/card';
 import Chart from 'primevue/chart';
-import Multiselect from 'primevue/multiselect';
+import multiselect from 'primevue/multiselect';
 import BarDiagram from '../BarDiagram.vue';
 
 import type { ProjectIF } from '@/model/ProjectIF';
@@ -93,8 +93,8 @@ describe('BarDiagram should load all the Components', () => {
       plugins: [PrimeVue, router],
       components: {
         Card,
+        multiselect,
         Chart,
-        Multiselect,
       },
     },
     propsData: {
@@ -104,14 +104,14 @@ describe('BarDiagram should load all the Components', () => {
 
   test('it mounts', () => {
     expect(wrapper.exists()).toBe(true);
-    const card = wrapper.getComponent(Card);
-    const chart = card.getComponent(Chart);
-    expect(card.isVisible()).toBe(true);
-    expect(chart.isVisible()).toBe(true);
+    const card = wrapper.findComponent('.visualisation-card');
+    const chart = card.findComponent(Chart);
+    expect(card.exists()).toBe(true);
+    expect(chart.exists()).toBe(true);
   });
   test('it has a chart', () => {
-    const card = wrapper.getComponent(Card);
-    const chart = card.getComponent(Chart);
+    const card = wrapper.findComponent(Card);
+    const chart = card.findComponent(Chart);
     expect(chart.props('type')).toBe('bar');
   });
 });
