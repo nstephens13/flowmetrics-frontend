@@ -48,6 +48,9 @@
       </template>
     </Card>
   </div>
+  <div>
+    <ZombieTicketCard :project="selectedProject"></ZombieTicketCard>
+  </div>
   <div class="flex flex-row">
     <Card style="width: 100%" class="issues-card">
       <template #title>
@@ -150,6 +153,7 @@ import { getIssueStatusList, getIssueStateList, type ProjectIF } from '@/model/P
 import { calculateRemainingReactionTime, calculateStatusChanges } from '@/services/issueCalculator';
 import type { IssueIF } from '@/model/Issue/IssueIF';
 import projectStore from '@/store/projectStore';
+import ZombieTicketCard from '@/components/ZombieTicketCard.vue';
 import KeyFactsCard from '@/components/KeyFactsCard.vue';
 import BarDiagram from '@/components/BarDiagram.vue';
 import { getProject } from '@/assets/__mockdata__/mockdata';

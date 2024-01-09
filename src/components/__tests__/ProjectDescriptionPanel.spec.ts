@@ -7,7 +7,10 @@ import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import Divider from 'primevue/divider';
 import MultiSelect from 'primevue/multiselect';
+import InputNumber from 'primevue/inputnumber';
 import { createTestingPinia } from '@pinia/testing';
+import Button from 'primevue/button';
+import Chart from 'primevue/chart';
 import router from '@/router/index';
 import ProjectDescriptionPanel from '../ProjectDescriptionPanel.vue';
 import KeyFactsCard from '../KeyFactsCard.vue';
@@ -59,6 +62,9 @@ describe('Project Overview should load all the Components', () => {
         Divider,
         MultiSelect,
         KeyFactsCard,
+        InputNumber,
+        Button,
+        Chart,
       },
     },
   });
@@ -95,7 +101,7 @@ describe('Project Overview should load all the Components', () => {
       .getComponent(Dropdown)
       .setValue(dropdownOptions[0])
       .then(() => {
-        const tableButton = wrapper.getComponent(DataTable).find('.p-column-filter-menu-button');
+        const tableButton = wrapper.find('.p-column-filter-menu-button');
         tableButton.trigger('click').then(() => {
           const multiSelect = wrapper.getComponent(MultiSelect);
           expect(4).toEqual(multiSelect.props('options').length);

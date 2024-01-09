@@ -67,14 +67,14 @@ function DurationLikeObjectToDays(durationLikeObject: DurationLikeObject | null)
   if (durationLikeObject === null) {
     return 0;
   }
-  const duration = Duration.fromObject(durationLikeObject);
+  const duration = Duration.fromDurationLike(durationLikeObject);
   return duration.as('days');
 }
 
 /**
  * Filters a project list based on the minimum assignee resting time specified in the filter configuration.
  *
- * @param projects - The project list to filter.
+ * @param project - The project list to filter.
  * @param filterConfig - The filter configuration containing the minimum assignee resting time.
  * @returns The filtered project list with only the projects that have an assignee resting time greater than the minimum assignee resting time.
  */
@@ -89,4 +89,37 @@ export function filterProjectIssuesWithAMinimumAssigneeRestingTime(
   );
 
   return filteredIssues;
+}
+
+export function filterProjectIssuesWithMinimumStatusRestingTime(
+  issues: IssueIF[],
+  filterConfig: FilterConfigIF
+): IssueIF[] {
+  return issues.filter(
+    (issue: IssueIF) =>
+      DurationLikeObjectToDays(issue.statusRestingTime) >=
+      filterConfig.projectFilter.minimumStatusRestingTime
+  );
+}
+
+export function filterProjectIssuesWithMinimalStatusChanges(
+  issues: IssueIF[],
+  filterConfig: FilterConfigIF
+): IssueIF[] {
+  return issues.filter(
+    (issue: IssueIF) =>
+      (issue.statusChanges ? issue.statusChanges.length : 0) >=
+      filterConfig.projectFilter.minimumNumberOfStatusChanges
+  );
+}
+
+export function filterIssuesMinimumStatusChangesAndRestingTime(
+  issues: IssueIF[] | undefined,
+  filterConfig: FilterConfigIF
+): IssueIF[] {
+  if (!issues) return [];
+  return filterProjectIssuesWithMinimumStatusRestingTime(
+    filterProjectIssuesWithMinimalStatusChanges(issues, filterConfig),
+    filterConfig
+  );
 }
