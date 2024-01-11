@@ -1,9 +1,13 @@
 import { describe, expect, test } from 'vitest';
+import { Duration } from 'luxon';
 import getMockData from '../../assets/__mockdata__/mockDataComposer';
-import type { FilterConfigIF } from '../../model/FilterConfigIF';
+import type { FilterConfigIF, ProjectFilterConfigIF } from '../../model/FilterConfigIF';
 import type { IssueIF } from '../../model/Issue/IssueIF';
 import {
   filterIssuesInProjectWithAStatusWhitelist,
+  filterIssuesMinimumStatusChangesAndRestingTime,
+  filterProjectIssuesWithMinimalStatusChanges,
+  filterProjectIssuesWithMinimumStatusRestingTime,
   filterProjectListWithAProjectWhitelist,
 } from '../filter/ProjectsFilter';
 import {
@@ -12,6 +16,7 @@ import {
   planningStatusList,
   testingStatusList,
 } from '../Issue';
+import type { ChangeLogIF } from '../../model/Issue/ChangeLogIF';
 
 describe('Filter Test', () => {
   test('After Applying Filter the Issues without the allowed Status should be deleted from the IssueArray', () => {
@@ -55,6 +60,7 @@ describe('Filter Test', () => {
         minimumAssigneeRestingTime: 0,
         minimumNumberOfStatusChanges: 0,
         issueStateIncludeFilter: [],
+        minimumStatusRestingTime: 0,
       },
     };
 
@@ -87,6 +93,7 @@ describe('Filter Test', () => {
         minimumAssigneeRestingTime: 0,
         minimumNumberOfStatusChanges: 0,
         issueStateIncludeFilter: [],
+        minimumStatusRestingTime: 0,
       },
     };
 
@@ -98,5 +105,182 @@ describe('Filter Test', () => {
 
     // then
     expect(filteredList.includes(project1)).toBeFalsy();
+  });
+});
+
+describe('filterTests', () => {
+  const issuesToFilter: IssueIF[] = [
+    {
+      id: 0,
+      name: '',
+      description: null,
+      assignedTo: null,
+      createdBy: null,
+      createdAt: null,
+      closedAt: null,
+      dueTo: null,
+      status: null,
+      assigneeRestingTime: null,
+      statusRestingTime: Duration.fromMillis(86400000),
+      statusChanges: null,
+      assigneeChanges: null,
+      assignedSlaRule: null,
+      state: null,
+    } as IssueIF,
+    {
+      id: 1,
+      name: '',
+      description: null,
+      assignedTo: null,
+      createdBy: null,
+      createdAt: null,
+      closedAt: null,
+      dueTo: null,
+      status: null,
+      assigneeRestingTime: null,
+      statusRestingTime: Duration.fromMillis(86400000), // 1 Day
+      state: null,
+      statusChanges: [
+        {
+          id: 0,
+          created: null,
+          author: null,
+          changes: null,
+        } as ChangeLogIF,
+        {
+          id: 0,
+          created: null,
+          author: null,
+          changes: null,
+        } as ChangeLogIF,
+        {
+          id: 0,
+          created: null,
+          author: null,
+          changes: null,
+        } as ChangeLogIF,
+      ],
+      assigneeChanges: null,
+      assignedSlaRule: null,
+    } as IssueIF,
+    {
+      id: 2,
+      name: '',
+      description: null,
+      assignedTo: null,
+      createdBy: null,
+      createdAt: null,
+      closedAt: null,
+      dueTo: null,
+      status: null,
+      assigneeRestingTime: null,
+      statusRestingTime: Duration.fromMillis(259200000), // 3 days
+      state: null,
+      statusChanges: [
+        {
+          id: 0,
+          created: null,
+          author: null,
+          changes: null,
+        } as ChangeLogIF,
+      ],
+      assigneeChanges: null,
+      assignedSlaRule: null,
+    } as IssueIF,
+    {
+      id: 3,
+      name: '',
+      description: null,
+      assignedTo: null,
+      createdBy: null,
+      createdAt: null,
+      closedAt: null,
+      dueTo: null,
+      status: null,
+      assigneeRestingTime: null,
+      statusRestingTime: Duration.fromMillis(259200000), // 3 Days
+      state: null,
+      statusChanges: [
+        {
+          id: 0,
+          created: null,
+          author: null,
+          changes: null,
+        } as ChangeLogIF,
+        {
+          id: 0,
+          created: null,
+          author: null,
+          changes: null,
+        } as ChangeLogIF,
+        {
+          id: 0,
+          created: null,
+          author: null,
+          changes: null,
+        } as ChangeLogIF,
+      ],
+      assigneeChanges: null,
+      assignedSlaRule: null,
+    } as IssueIF,
+  ];
+  test('minimumStatusChangesFilter', () => {
+    const filter: FilterConfigIF = {
+      id: 0,
+      projectFilter: {
+        projectsWhiteList: [],
+        issueStatusIncludeFilter: [],
+        minimumAssigneeRestingTime: 0,
+        minimumNumberOfStatusChanges: 2,
+        minimumStatusRestingTime: 2,
+        issueStateIncludeFilter: [],
+      } as ProjectFilterConfigIF,
+    } as FilterConfigIF;
+    const filteredIssues: IssueIF[] = filterProjectIssuesWithMinimalStatusChanges(
+      issuesToFilter,
+      filter
+    );
+    expect(filteredIssues.length).toEqual(2);
+    expect(filteredIssues[0].id).toEqual(1);
+    expect(filteredIssues[1].id).toEqual(3);
+  });
+  test('minimumStatusRestingTime', () => {
+    const filter: FilterConfigIF = {
+      id: 0,
+      projectFilter: {
+        projectsWhiteList: [],
+        issueStatusIncludeFilter: [],
+        minimumAssigneeRestingTime: 0,
+        minimumNumberOfStatusChanges: 2,
+        minimumStatusRestingTime: 2,
+        issueStateIncludeFilter: [],
+      } as ProjectFilterConfigIF,
+    } as FilterConfigIF;
+    const filteredIssues: IssueIF[] = filterProjectIssuesWithMinimumStatusRestingTime(
+      issuesToFilter,
+      filter
+    );
+    expect(filteredIssues.length).toEqual(2);
+    expect(filteredIssues[0].id).toEqual(2);
+    expect(filteredIssues[1].id).toEqual(3);
+  });
+  test('minimumRestingTimeAndChanges', () => {
+    const filter: FilterConfigIF = {
+      id: 0,
+      projectFilter: {
+        projectsWhiteList: [],
+        issueStatusIncludeFilter: [],
+        minimumAssigneeRestingTime: 0,
+        minimumNumberOfStatusChanges: 2,
+        minimumStatusRestingTime: 2,
+        issueStateIncludeFilter: [],
+      } as ProjectFilterConfigIF,
+    } as FilterConfigIF;
+    const filteredIssues: IssueIF[] = filterIssuesMinimumStatusChangesAndRestingTime(
+      issuesToFilter,
+      filter
+    );
+    expect(filteredIssues.length).toEqual(1);
+    expect(filteredIssues[0].id).toEqual(3);
   });
 });

@@ -4,7 +4,7 @@ import PrimeVue from 'primevue/config';
 
 import Card from 'primevue/card';
 import Chart from 'primevue/chart';
-import multiselect from 'primevue/multiselect';
+import MultiSelect from 'primevue/multiselect';
 import BarDiagram from '../BarDiagram.vue';
 
 import type { ProjectIF } from '@/model/ProjectIF';
@@ -93,7 +93,7 @@ describe('BarDiagram should load all the Components', () => {
       plugins: [PrimeVue, router],
       components: {
         Card,
-        multiselect,
+        MultiSelect,
         Chart,
       },
     },

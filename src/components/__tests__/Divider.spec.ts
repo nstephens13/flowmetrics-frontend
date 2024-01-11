@@ -17,6 +17,7 @@ import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
 import InputMask from 'primevue/inputmask';
 import Chart from 'primevue/chart';
+import InputNumber from 'primevue/inputnumber';
 import IssueCalculator from '../../views/IssueCalculator.vue';
 import ProjectOverview from '../../views/ProjectOverview.vue';
 import router from '@/router/index';
@@ -48,6 +49,8 @@ describe('ProjectDescriptionPanel Divider component', () => {
         MultiSelect,
         ProgressBar,
         Chart,
+        InputNumber,
+        Button,
       },
     },
   });

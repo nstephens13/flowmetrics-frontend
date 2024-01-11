@@ -164,6 +164,7 @@ describe('filterProjectThatHasTheAllowedStatus', () => {
         minimumAssigneeRestingTime: 0,
         minimumNumberOfStatusChanges: 0,
         issueStateIncludeFilter: ['planning', 'development', 'testing'],
+        minimumStatusRestingTime: 0,
       },
     };
 

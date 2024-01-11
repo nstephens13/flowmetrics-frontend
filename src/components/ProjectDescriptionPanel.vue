@@ -69,6 +69,9 @@
           <div class="flex" style="min-width: 40%">
             <BarDiagram :project="selectedProject"></BarDiagram>
           </div>
+          <div>
+            <ZombieTicketCard :project="selectedProject"></ZombieTicketCard>
+          </div>
           <div class="flex w-full">
             <Card class="issues-table-card" style="width: 100%">
               <template #title>
@@ -175,6 +178,7 @@ import { getIssueStatusList, getIssueStateList, type ProjectIF } from '@/model/P
 import { calculateRemainingReactionTime, calculateStatusChanges } from '@/services/issueCalculator';
 import type { IssueIF } from '@/model/Issue/IssueIF';
 import projectStore from '@/store/projectStore';
+import ZombieTicketCard from '@/components/ZombieTicketCard.vue';
 import KeyFactsCard from '@/components/KeyFactsCard.vue';
 import AssigneeCard from '@/components/AssigneeCard.vue';
 import BarDiagram from '@/components/BarDiagram.vue';
