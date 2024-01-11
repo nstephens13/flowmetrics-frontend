@@ -2,7 +2,7 @@
   <card class="key-facts-card shadow-3">
     <template #title
       ><div class="flex flex-row justify-content-start">
-        <span class="pi pi-key mr-3  text-4xl"></span>
+        <span class="pi pi-key mr-3 text-4xl"></span>
         <span class="text-xl mt-1"> Key Facts </span>
       </div>
     </template>

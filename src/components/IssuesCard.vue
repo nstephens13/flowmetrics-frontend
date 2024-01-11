@@ -2,11 +2,9 @@
   <card class="issues-card shadow-3">
     <template #title>
       <div class="flex flex-row justify-content-start">
-        <span
-          class="mr-3 text-3xl font-semibold"
-          style="width: 32px; height: 32px"
-          >{{ getOpenIssueCount(project) }}</span
-        >
+        <span class="mr-3 text-3xl font-semibold" style="width: 32px; height: 32px">{{
+          getOpenIssueCount(project)
+        }}</span>
         <span class="text-xl mt-1">Open issues </span>
       </div>
     </template>
