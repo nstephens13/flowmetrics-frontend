@@ -219,16 +219,15 @@ const testProject: ProjectIF = {
 
 describe('assigneeCardCalculator', () => {
   test('calculateAverageRestingTime with empty issues', () => {
-    expect(calculateAverageRestingTime(undefined)).toBe('-');
-  });
-  test('calculateAverageRestingTime with empty issues array', () => {
-    expect(calculateAverageRestingTime([])).toBe('-');
+    expect(calculateAverageRestingTime([] as IssueIF[])).toBe(null);
   });
   test('calculateAverageRestingTime', () => {
-    expect(calculateAverageRestingTime(testProject.issues)).toBe('1 days 4 hours');
+    expect(
+      calculateAverageRestingTime(testProject.issues)?.toFormat("d 'days' h 'hours'").toString()
+    ).toBe('1 days 4 hours');
   });
   test('getAssigneeCountFromIssues with empty project', () => {
-    expect(getAssigneeCountFromIssues(undefined)).toBe(0);
+    expect(getAssigneeCountFromIssues({} as ProjectIF)).toBe(0);
   });
   test('getAssigneeCountFromIssues', () => {
     expect(getAssigneeCountFromIssues(testProject)).toBe(6);

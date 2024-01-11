@@ -4,8 +4,14 @@ import type { EmployeeIF } from '@/model/EmployeeIF';
 import type { IssueIF } from '@/model/Issue/IssueIF';
 import type { ProjectIF } from '@/model/ProjectIF';
 
-export function calculateAverageRestingTime(issues: IssueIF[] | undefined): string {
-  if (!issues) return '-';
+/**
+ * Function to calculate the average assignee resting time for the issues
+ * @param issues the issues to calculate the average assignee resting time
+ * @returns the average assignee resting time for the issues in duration format
+ * @author Nived Stephen
+ */
+export function calculateAverageRestingTime(issues: IssueIF[]): Duration | null {
+  if (!issues || issues.length === 0) return null;
   const totalRestingTime = issues.reduce((total, issue) => {
     if (
       issue.assigneeRestingTime !== null &&
@@ -27,16 +33,18 @@ export function calculateAverageRestingTime(issues: IssueIF[] | undefined): stri
     return totalCount;
   }, 0);
 
-  return count > 0
-    ? Duration.fromMillis(totalRestingTime / count)
-        .toFormat("d 'days' h 'hours'")
-        .toString()
-    : '-';
+  return count > 0 ? Duration.fromMillis(totalRestingTime / count) : null;
 }
 
-export function getAssigneeCountFromIssues(project: ProjectIF | undefined): number {
+/**
+ * Function to get the number of assignees in a project
+ * @param project the project to get the number of assignees
+ * @returns the number of assignees in a project in number format
+ * @author Nived Stephen
+ */
+export function getAssigneeCountFromIssues(project: ProjectIF): number {
   // we need to get the number of assignees from the issues and also remove duplicates
-  if (!project) return 0;
+  if (!project || Object.keys(project).length === 0) return 0;
   let assigneeList: EmployeeIF[] = [];
   for (let i = 0; i < project.issues.length; ++i) {
     if (

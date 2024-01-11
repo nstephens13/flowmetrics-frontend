@@ -22,9 +22,7 @@
       <div class="field grid mb-0">
         <label for="sla-rule-complied" class="col-7 mb-2 font-semibold">SLA rule complied</label>
         <div class="col-5">
-          <span id="sla-rule-complied">{{
-            getPercentageSlaRulesComplied(project ?? ({} as ProjectIF))
-          }}</span>
+          <span id="sla-rule-complied">{{ getPercentageSlaRulesComplied(project) }}</span>
         </div>
       </div>
     </template>
@@ -39,6 +37,10 @@ import {
 import type { ProjectIF } from '@/model/ProjectIF';
 
 defineProps({
-  project: Object as () => ProjectIF,
+  project: {
+    type: Object as () => ProjectIF,
+    required: true,
+    default: () => ({} as ProjectIF),
+  },
 });
 </script>

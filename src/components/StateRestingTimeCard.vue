@@ -18,9 +18,9 @@
       <div class="field grid mb-0">
         <label class="col-7 mb-2 font-semibold" for="planning"
           >{{ Category.planning }}
-          <div class="ml-2" :style="{ color: getTextColor(Category.planning) }">
+          <span class="ml-2" :style="{ color: getTextColor(Category.planning) }">
             {{ getPercentOfIncreaseOrDecrease(project?.issues, Category.planning) }}
-          </div>
+          </span>
         </label>
         <div class="col-5">
           <span id="planning">{{
@@ -33,9 +33,9 @@
       <div class="field grid mb-0">
         <label class="col-7 mb-2 font-semibold" for="development"
           >{{ Category.development }}
-          <div class="ml-2" :style="{ color: getTextColor(Category.development) }">
+          <span class="ml-2" :style="{ color: getTextColor(Category.development) }">
             {{ getPercentOfIncreaseOrDecrease(project?.issues, Category.development) }}
-          </div></label
+          </span></label
         >
         <div class="col-5">
           <span id="development">{{
@@ -48,9 +48,9 @@
       <div class="field grid mb-0">
         <label class="col-7 mb-2 font-semibold" for="testing"
           >{{ Category.testing
-          }}<div class="ml-2" :style="{ color: getTextColor(Category.testing) }">
+          }}<span class="ml-2" :style="{ color: getTextColor(Category.testing) }">
             {{ getPercentOfIncreaseOrDecrease(project?.issues, Category.testing) }}
-          </div></label
+          </span></label
         >
         <div class="col-5">
           <span id="testing">{{
@@ -74,7 +74,11 @@ import {
 import { Category } from '@/assets/__mockdata__/StatusLists';
 
 defineProps({
-  project: Object as () => ProjectIF,
+  project: {
+    type: Object as () => ProjectIF,
+    required: true,
+    default: () => ({} as ProjectIF),
+  },
 });
 </script>
 

@@ -22,11 +22,11 @@
               class="planningProgressbar"
               id="planningProgressbar"
               :value="
-                (getIssueCountfromCategory(Category.planning, project) /
+                (getIssueCountFromCategory(Category.planning, project) /
                   getOpenIssueCount(project)) *
                 100
               "
-              >{{ getIssueCountfromCategory(Category.planning, project) }}
+              >{{ getIssueCountFromCategory(Category.planning, project) }}
             </ProgressBar>
           </div>
         </div>
@@ -40,11 +40,11 @@
               class="developmentProgressbar"
               id="developmentProgressbar"
               :value="
-                (getIssueCountfromCategory(Category.development, project) /
+                (getIssueCountFromCategory(Category.development, project) /
                   getOpenIssueCount(project)) *
                 100
               "
-              >{{ getIssueCountfromCategory(Category.development, project) }}
+              >{{ getIssueCountFromCategory(Category.development, project) }}
             </ProgressBar>
           </div>
         </div>
@@ -56,11 +56,11 @@
               class="testingProgressbar"
               id="testingProgressbar"
               :value="
-                (getIssueCountfromCategory(Category.testing, project) /
+                (getIssueCountFromCategory(Category.testing, project) /
                   getOpenIssueCount(project)) *
                 100
               "
-              >{{ getIssueCountfromCategory(Category.testing, project) }}
+              >{{ getIssueCountFromCategory(Category.testing, project) }}
             </ProgressBar>
           </div>
         </div>
@@ -71,11 +71,15 @@
 
 <script setup lang="ts">
 import type { ProjectIF } from '@/model/ProjectIF';
-import { getIssueCountfromCategory, getOpenIssueCount } from '@/services/issuesCardCalculator';
+import { getIssueCountFromCategory, getOpenIssueCount } from '@/services/issuesCardCalculator';
 import { Category } from '@/assets/__mockdata__/StatusLists';
 
 defineProps({
-  project: Object as () => ProjectIF,
+  project: {
+    type: Object as () => ProjectIF,
+    required: true,
+    default: () => ({} as ProjectIF),
+  },
 });
 </script>
 

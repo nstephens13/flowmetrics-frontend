@@ -21,7 +21,9 @@
         >
         <div class="col-5">
           <span id="average-assignee-resting-time">{{
-            calculateAverageRestingTime(project?.issues)
+            calculateAverageRestingTime(project?.issues ?? [])
+              ?.toFormat("d 'days' h 'hours'")
+              .toString() ?? '0 days 0 hours'
           }}</span>
         </div>
       </div>
@@ -37,6 +39,10 @@ import {
 } from '@/services/assigneeCardCalculator';
 
 defineProps({
-  project: Object as () => ProjectIF,
+  project: {
+    type: Object as () => ProjectIF,
+    required: true,
+    default: () => ({} as ProjectIF),
+  },
 });
 </script>

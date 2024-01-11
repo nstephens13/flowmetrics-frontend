@@ -3,7 +3,7 @@ import type { IssueIF } from '../../model/Issue/IssueIF';
 import type { ProjectIF } from '../../model/ProjectIF';
 import type { EmployeeIF } from '../../model/EmployeeIF';
 import { Category } from '../../assets/__mockdata__/StatusLists';
-import { getIssueCountfromCategory, getOpenIssueCount } from '../issuesCardCalculator';
+import { getIssueCountFromCategory, getOpenIssueCount } from '../issuesCardCalculator';
 
 const testProject: ProjectIF = {
   id: 1,
@@ -219,23 +219,23 @@ const testProject: ProjectIF = {
 };
 
 describe('assigneeCardCalculator', () => {
-  test('getIssueCountfromCategory', () => {
-    expect(getIssueCountfromCategory(Category.planning, testProject)).toBe(3);
-    expect(getIssueCountfromCategory(Category.development, testProject)).toBe(1);
-    expect(getIssueCountfromCategory(Category.testing, testProject)).toBe(2);
-    expect(getIssueCountfromCategory(Category.nonDisplayed, testProject)).toBe(0);
+  test('getIssueCountFromCategory', () => {
+    expect(getIssueCountFromCategory(Category.planning, testProject)).toBe(3);
+    expect(getIssueCountFromCategory(Category.development, testProject)).toBe(1);
+    expect(getIssueCountFromCategory(Category.testing, testProject)).toBe(2);
+    expect(getIssueCountFromCategory(Category.nonDisplayed, testProject)).toBe(0);
   });
-  test('getIssueCountfromCategory with empty project', () => {
-    expect(getIssueCountfromCategory(Category.planning, undefined)).toBe(0);
-    expect(getIssueCountfromCategory(Category.development, undefined)).toBe(0);
-    expect(getIssueCountfromCategory(Category.testing, undefined)).toBe(0);
-    expect(getIssueCountfromCategory(Category.nonDisplayed, undefined)).toBe(0);
+  test('getIssueCountFromCategory with empty project', () => {
+    expect(getIssueCountFromCategory(Category.planning, {} as ProjectIF)).toBe(0);
+    expect(getIssueCountFromCategory(Category.development, {} as ProjectIF)).toBe(0);
+    expect(getIssueCountFromCategory(Category.testing, {} as ProjectIF)).toBe(0);
+    expect(getIssueCountFromCategory(Category.nonDisplayed, {} as ProjectIF)).toBe(0);
   });
-  test('getIssueCountfromCategory with empty project issues', () => {
-    expect(getIssueCountfromCategory(Category.planning, { ...testProject, issues: [] })).toBe(0);
-    expect(getIssueCountfromCategory(Category.development, { ...testProject, issues: [] })).toBe(0);
-    expect(getIssueCountfromCategory(Category.testing, { ...testProject, issues: [] })).toBe(0);
-    expect(getIssueCountfromCategory(Category.nonDisplayed, { ...testProject, issues: [] })).toBe(
+  test('getIssueCountFromCategory with empty project issues', () => {
+    expect(getIssueCountFromCategory(Category.planning, { ...testProject, issues: [] })).toBe(0);
+    expect(getIssueCountFromCategory(Category.development, { ...testProject, issues: [] })).toBe(0);
+    expect(getIssueCountFromCategory(Category.testing, { ...testProject, issues: [] })).toBe(0);
+    expect(getIssueCountFromCategory(Category.nonDisplayed, { ...testProject, issues: [] })).toBe(
       0
     );
   });
@@ -243,7 +243,7 @@ describe('assigneeCardCalculator', () => {
     expect(getOpenIssueCount(testProject)).toBe(6);
   });
   test('getOpenIssueCount with empty project', () => {
-    expect(getOpenIssueCount(undefined)).toBe(0);
+    expect(getOpenIssueCount({} as ProjectIF)).toBe(0);
   });
   test('getOpenIssueCount with empty project issues', () => {
     expect(getOpenIssueCount({ ...testProject, issues: [] })).toBe(0);

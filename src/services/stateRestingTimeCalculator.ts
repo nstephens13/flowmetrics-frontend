@@ -2,11 +2,19 @@ import { Duration } from 'luxon';
 import { Category, statusLists } from '@/assets/__mockdata__/StatusLists';
 import type { IssueIF } from '@/model/Issue/IssueIF';
 
+/**
+ * Function to calculate the average resting time for the issues in a category
+ *
+ * @param issues the issues to calculate the average resting time
+ * @param category the category to calculate the average resting time
+ * @returns the average resting time for the issues in a category
+ * @author Nived Stephen
+ */
 export function calculateStateAverageRestingTime(
-  issues: IssueIF[] | undefined,
+  issues: IssueIF[],
   category: Category
 ): Duration | null {
-  if (!issues) return null;
+  if (!issues || issues.length === 0) return null;
   const totalRestingTime = issues.reduce((total, issue) => {
     if (
       issue.statusRestingTime !== null &&
@@ -31,8 +39,15 @@ export function calculateStateAverageRestingTime(
   return count > 0 ? Duration.fromMillis(totalRestingTime / count) : null;
 }
 
-export function calculateAverageRestingTime(issues: IssueIF[] | undefined): Duration | null {
-  if (!issues) return null;
+/**
+ * Function to calculate the average resting time for the issues
+ *
+ * @param issues the issues to calculate the average resting time
+ * @returns the average resting time for the issues
+ * @author Nived Stephen
+ */
+export function calculateAverageRestingTime(issues: IssueIF[]): Duration | null {
+  if (!issues || issues.length === 0) return null;
   const totalRestingTime = issues.reduce((total, issue) => {
     if (
       issue.statusRestingTime !== null &&
@@ -57,12 +72,16 @@ export function calculateAverageRestingTime(issues: IssueIF[] | undefined): Dura
   return count > 0 ? Duration.fromMillis(totalRestingTime / count) : null;
 }
 
-// function to get the percent of increase or decrease of the resting time in a category compared to the average resting time and return the percent with + or - sign in front to indicate the increase or decrease
-export function getPercentOfIncreaseOrDecrease(
-  issues: IssueIF[] | undefined,
-  category: Category
-): string {
-  if (!issues) return '';
+/**
+ * Function to calculate the percent of increase or decrease for the average resting time
+ *
+ * @param issues the issues to calculate the percent of increase or decrease
+ * @param category the category to calculate the percent of increase or decrease
+ * @returns the percent of increase or decrease
+ * @author Nived Stephen
+ */
+export function getPercentOfIncreaseOrDecrease(issues: IssueIF[], category: Category): string {
+  if (!issues || issues.length === 0) return '';
   const averageRestingTime = calculateAverageRestingTime(issues);
   const stateAverageRestingTime = calculateStateAverageRestingTime(issues, category);
   if (averageRestingTime === null || stateAverageRestingTime === null) return '';

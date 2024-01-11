@@ -1,11 +1,15 @@
 import { statusLists, Category } from '@/assets/__mockdata__/StatusLists';
 import type { ProjectIF } from '@/model/ProjectIF';
 
-export function getIssueCountfromCategory(
-  category: Category,
-  project: ProjectIF | undefined
-): number {
-  if (!project) return 0;
+/**
+ * Function to get the number of issues in a category
+ * @param category the category to get the number of issues
+ * @param project the project to get the number of issues
+ * @returns the number of issues in a category
+ * @author Nived Stephen
+ */
+export function getIssueCountFromCategory(category: Category, project: ProjectIF): number {
+  if (!project || Object.keys(project).length === 0) return 0;
   let count = 0;
   for (let i = 0; i < project.issues.length; ++i) {
     if (
@@ -17,8 +21,16 @@ export function getIssueCountfromCategory(
   return count;
 }
 
-export function getOpenIssueCount(project: ProjectIF | undefined): number {
-  return project
-    ? project.issues.length - getIssueCountfromCategory(Category.nonDisplayed, project)
-    : 0;
+/**
+ * Function to get the total number of open issues in a category
+ *
+ * @param project the project to get the number of issues
+ * @returns the total number of open issues
+ * @author Nived Stephen
+ */
+export function getOpenIssueCount(project: ProjectIF): number {
+  if (typeof project !== 'undefined' && Object.keys(project).length !== 0 && project.issues) {
+    return project.issues.length - getIssueCountFromCategory(Category.nonDisplayed, project);
+  }
+  return 0;
 }

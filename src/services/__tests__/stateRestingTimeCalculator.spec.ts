@@ -288,10 +288,10 @@ describe('stateRestingTimeCalculator', () => {
     ).toEqual(undefined);
   });
   test('calculateStateAverageRestingTime with empty issues', () => {
-    expect(calculateStateAverageRestingTime(undefined, Category.planning)).toEqual(null);
-    expect(calculateStateAverageRestingTime(undefined, Category.development)).toEqual(null);
-    expect(calculateStateAverageRestingTime(undefined, Category.testing)).toEqual(null);
-    expect(calculateStateAverageRestingTime(undefined, Category.nonDisplayed)).toEqual(null);
+    expect(calculateStateAverageRestingTime([], Category.planning)).toEqual(null);
+    expect(calculateStateAverageRestingTime([], Category.development)).toEqual(null);
+    expect(calculateStateAverageRestingTime([], Category.testing)).toEqual(null);
+    expect(calculateStateAverageRestingTime([], Category.nonDisplayed)).toEqual(null);
   });
   test('calculateAverageRestingTime', () => {
     expect(
@@ -299,12 +299,12 @@ describe('stateRestingTimeCalculator', () => {
     ).toEqual('1 days 4 hours');
   });
   test('calculateAverageRestingTime with empty issues', () => {
-    expect(calculateAverageRestingTime(undefined)).toEqual(null);
+    expect(calculateAverageRestingTime([])).toEqual(null);
   });
   test('getPercentOfIncreaseOrDecrease', () => {
     expect(getPercentOfIncreaseOrDecrease(testProject.issues, Category.planning)).toEqual(' 0.00%');
   });
   test('getPercentOfIncreaseOrDecrease with empty issues', () => {
-    expect(getPercentOfIncreaseOrDecrease(undefined, Category.planning)).toEqual('');
+    expect(getPercentOfIncreaseOrDecrease([], Category.planning)).toEqual('');
   });
 });
