@@ -2,7 +2,7 @@
   <card class="status-resting-time-card shadow-3">
     <template #title>
       <div class="flex flex-row justify-content-start">
-        <span class="pi pi-clock mr-3" style="font-size: 2rem; font-weight: 100"></span>
+        <span class="pi pi-clock mr-3  text-4xl"></span>
         <span class="text-xl mt-1"> State resting time </span>
       </div>
     </template>

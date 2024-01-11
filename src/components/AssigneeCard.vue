@@ -2,7 +2,7 @@
   <Card class="assignee-card shadow-3">
     <template #title>
       <div class="flex flex-row justify-content-start">
-        <span class="pi pi-users mr-3" style="font-size: 2rem; font-weight: 100"></span>
+        <span class="pi pi-users mr-3 text-4xl"></span>
         <span class="text-xl mt-1"> Assigned employees </span>
       </div>
     </template>

@@ -3,8 +3,8 @@
     <template #title>
       <div class="flex flex-row justify-content-start">
         <span
-          class="mr-3"
-          style="font-size: 1.75rem; font-weight: 400; width: 32px; height: 32px"
+          class="mr-3 text-3xl font-semibold"
+          style="width: 32px; height: 32px"
           >{{ getOpenIssueCount(project) }}</span
         >
         <span class="text-xl mt-1">Open issues </span>
