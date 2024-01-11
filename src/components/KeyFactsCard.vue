@@ -12,13 +12,19 @@
           >Average solving time</label
         >
         <div class="col-5">
-          <span id="average-solving-time">{{ calculateAverageSolvingTime(project?.issues) }}</span>
+          <span id="average-solving-time">{{
+            calculateAverageSolvingTime(project?.issues ?? [])
+              ?.toFormat("d 'days' h 'hours'")
+              .toString()
+          }}</span>
         </div>
       </div>
       <div class="field grid mb-0">
         <label for="sla-rule-complied" class="col-7 mb-2 font-semibold">SLA rule complied</label>
         <div class="col-5">
-          <span id="sla-rule-complied">{{ getPercentageSlaRulesComplied(project) }}</span>
+          <span id="sla-rule-complied">{{
+            getPercentageSlaRulesComplied(project ?? ({} as ProjectIF))
+          }}</span>
         </div>
       </div>
     </template>

@@ -183,9 +183,11 @@ describe('keyFactsTests', () => {
     expect(getPercentageSlaRulesComplied(testProject)).toEqual('33 %');
   });
   test('calculateAverageSolvingTime', () => {
-    expect(calculateAverageSolvingTime(testProject.issues)).toEqual('1 days 4 hours');
+    expect(
+      calculateAverageSolvingTime(testProject.issues)?.toFormat("d 'days' h 'hours'").toString()
+    ).toEqual('1 days 4 hours');
   });
   test('calculateAverageSolvingTime with empty issues', () => {
-    expect(calculateAverageSolvingTime(undefined)).toEqual('-');
+    expect(calculateAverageSolvingTime([])).toEqual(null);
   });
 });

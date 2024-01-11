@@ -47,8 +47,9 @@ function getNumberOfSlaRulesOfProject(project: ProjectIF): number {
  * @param project analyzed project
  * @returns percentile of complied Sla rules, without digits after the comma
  */
-export function getPercentageSlaRulesComplied(project: ProjectIF | undefined): string {
-  if (!project || getNumberOfSlaRulesOfProject(project) === 0) return '0 %';
+export function getPercentageSlaRulesComplied(project: ProjectIF): string {
+  if (!project || Object.keys(project).length === 0 || getNumberOfSlaRulesOfProject(project) === 0)
+    return '0 %';
   let count = 0;
   for (let i = 0; i < project.issues.length; ++i) {
     count += numberOfFulfilledSlaRules(project.issues[i]);
@@ -56,8 +57,15 @@ export function getPercentageSlaRulesComplied(project: ProjectIF | undefined): s
   return `${Math.trunc((count / getNumberOfSlaRulesOfProject(project)) * 100)} %`;
 }
 
-export function calculateAverageSolvingTime(issues: IssueIF[] | undefined): string {
-  if (!issues) return '-';
+/**
+ * @brief calculates the average solving time of issues
+ *
+ * @param issues issues to analyze
+ * @returns average solving time of issues
+ * @author Nived Stephen
+ */
+export function calculateAverageSolvingTime(issues: IssueIF[]): Duration | null {
+  if (issues.length === 0) return null;
   const totalRestingTime = issues.reduce((total, issue) => {
     if (
       statusLists[Category.nonDisplayed].includes(issue.status as string) &&
@@ -78,9 +86,5 @@ export function calculateAverageSolvingTime(issues: IssueIF[] | undefined): stri
     }
     return totalCount;
   }, 0);
-  return count > 0
-    ? Duration.fromMillis(totalRestingTime / count)
-        .toFormat("d 'days' h 'hours'")
-        .toString()
-    : '-';
+  return count > 0 ? Duration.fromMillis(totalRestingTime / count) : null;
 }
