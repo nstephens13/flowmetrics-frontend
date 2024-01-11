@@ -37,7 +37,6 @@
             title="Testing issues"
           />
         </div>
-        <Divider class="p-divider p-divider-horizontal divider-position" />
         <div class="flex-grow-1 flex align-items-center justify-content-center"></div>
       </div>
     </template>
