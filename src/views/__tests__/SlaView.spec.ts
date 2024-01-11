@@ -587,4 +587,88 @@ describe('SlaView Test with Store Data', () => {
     const deletedCategory = wrapper.find('.category-container .category');
     expect(deletedCategory.exists()).toBe(false);
   });
+
 });
+
+describe('SlaView Test for DataTable Content', () => {
+  let wrapper: VueWrapper<any>;
+
+  beforeEach(() => {
+    wrapper = mount(SLAView, {
+      global: {
+        plugins: [
+          PrimeVue,
+          router,
+          createTestingPinia({
+            createSpy: vi.fn,
+            stubActions: false,
+            initialState: {
+              sla: {
+                slaCategories: [
+                  {
+                    id: 1,
+                    name: 'Category 1',
+                    rule: null,
+                    customerProject: {
+                      id: 1,
+                      name: 'Subscriber 1',
+                      description: 'Subscriber 1 description',
+                    },
+                  },
+                ],
+              },
+            },
+          }),
+        ],
+        components: {
+          InputText,
+          InputMask,
+          Dropdown,
+          Card,
+          Button,
+          Column,
+          DataTable,
+          Divider,
+          MultiSelect,
+        },
+      },
+    });
+  });
+
+  afterEach(() => {
+    wrapper.unmount();
+  });
+
+  test('DataTable should contain "rule name" column with field ', () => {
+    const dataTable = wrapper.getComponent(DataTable);
+    const columns = dataTable.findAllComponents(Column);
+    const columnExists = columns.some((column) => column.props('field') === 'rule.name');
+    expect(columnExists).toBe(true);
+  });
+  test('DataTable should contain "remaining Reaction Time in Days" column with field ', () => {
+    const dataTable = wrapper.getComponent(DataTable);
+    const columns = dataTable.findAllComponents(Column);
+    const columnExists = columns.some((column) => column.props('field') === 'rule.reactionTimeInDays');
+    expect(columnExists).toBe(true);
+  });
+  test('DataTable should contain "priority" column with field ', () => {
+    const dataTable = wrapper.getComponent(DataTable);
+    const columns = dataTable.findAllComponents(Column);
+    const columnExists = columns.some((column) => column.props('field') === 'rule.priority');
+    expect(columnExists).toBe(true);
+  });
+  test('DataTable should contain "occuredIn" column with field ', () => {
+    const dataTable = wrapper.getComponent(DataTable);
+    const columns = dataTable.findAllComponents(Column);
+    const columnExists = columns.some((column) => column.props('field') === 'rule.occurredIn');
+    expect(columnExists).toBe(true);
+  });
+  test('DataTable should contain "issueType" column with field ', () => {
+    const dataTable = wrapper.getComponent(DataTable);
+    const columns = dataTable.findAllComponents(Column);
+    const columnExists = columns.some((column) => column.props('field') === 'rule.issueType');
+    expect(columnExists).toBe(true);
+  });
+});
+
+
