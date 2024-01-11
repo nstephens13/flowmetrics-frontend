@@ -590,6 +590,12 @@ describe('SlaView Test with Store Data', () => {
 
 });
 
+
+/**
+ * Tests if the Table contains data input as intendend
+ * Wrapper mounts SLAView und creates Piniastore with fake Sla-Categories
+ * and the Data Table, testing if the column contains the information as intendend
+ */
 describe('SlaView Test for DataTable Content', () => {
   let wrapper: VueWrapper<any>;
 
