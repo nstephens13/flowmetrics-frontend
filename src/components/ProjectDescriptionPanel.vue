@@ -69,7 +69,7 @@
           <div class="flex" style="min-width: 40%">
             <BarDiagram :project="selectedProject"></BarDiagram>
           </div>
-          <div>
+          <div class="flex w-full">
             <ZombieTicketCard :project="selectedProject"></ZombieTicketCard>
           </div>
           <div class="flex w-full">
