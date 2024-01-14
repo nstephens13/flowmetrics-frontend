@@ -18,7 +18,7 @@
       </div>
     </template>
     <template #content>
-      <Chart type="bar" :data="chartData" :options="chartOptions" class="w-100rem h-30rem" />
+      <Chart type="bar" :data="chartData" :options="chartOptions" />
     </template>
   </Card>
 </template>

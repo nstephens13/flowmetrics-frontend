@@ -42,7 +42,7 @@
             <KeyFactsCard :project="selectedProject"></KeyFactsCard>
           </div>
           <div class="w-5">
-            <BarDiagram :project="selectedProject" class="visualisation-card"></BarDiagram>
+            <BarDiagram :project="selectedProject" class="w-16 md:w-32 lg:w-48"></BarDiagram>
           </div>
         </div>
       </template>
