@@ -16,11 +16,18 @@ import Chip from 'primevue/chip';
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
 import InputMask from 'primevue/inputmask';
+import Chart from 'primevue/chart';
+import InputNumber from 'primevue/inputnumber';
 import IssueCalculator from '../../views/IssueCalculator.vue';
 import ProjectOverview from '../../views/ProjectOverview.vue';
 import router from '@/router/index';
 import EmployeeOverview from '../../views/EmployeeOverview.vue';
 import SlaComponent from '../../views/SlaView.vue';
+import BarDiagram from '../BarDiagram.vue';
+import KeyFactsCard from '../KeyFactsCard.vue';
+import AssigneeCard from '../AssigneeCard.vue';
+import IssuesCard from '../IssuesCard.vue';
+import StateRestingTimeCard from '../StateRestingTimeCard.vue';
 
 describe('ProjectDescriptionPanel Divider component', () => {
   const pinia = createTestingPinia({ stubActions: true });
@@ -29,12 +36,21 @@ describe('ProjectDescriptionPanel Divider component', () => {
       plugins: [PrimeVue, router, pinia],
       components: {
         Dropdown,
-        Panel,
         Card,
         DataTable,
         Column,
         Divider,
+        Chip,
+        BarDiagram,
+        KeyFactsCard,
+        AssigneeCard,
+        IssuesCard,
+        StateRestingTimeCard,
         MultiSelect,
+        ProgressBar,
+        Chart,
+        InputNumber,
+        Button,
       },
     },
   });

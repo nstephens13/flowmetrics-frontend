@@ -13,10 +13,18 @@ export const statusLists = {
 };
 
 export const statusListsColors = {
-  [Category.planning]: '#4b8bf2',
-  [Category.development]: '#025ff5',
-  [Category.testing]: '#0448b5',
-  [Category.nonDisplayed]: '#002869',
+  [Category.planning]: getComputedStyle(document.documentElement)
+    .getPropertyValue('--flowMetricsBlue-1')
+    .trim(),
+  [Category.development]: getComputedStyle(document.documentElement)
+    .getPropertyValue('--flowMetricsBlue-2')
+    .trim(),
+  [Category.testing]: getComputedStyle(document.documentElement)
+    .getPropertyValue('--flowMetricsBlue-3')
+    .trim(),
+  [Category.nonDisplayed]: getComputedStyle(document.documentElement)
+    .getPropertyValue('--flowMetricsBlue-4')
+    .trim(),
 };
 
 export function getCategory(status: string): Category | null {

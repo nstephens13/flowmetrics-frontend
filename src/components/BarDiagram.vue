@@ -1,14 +1,14 @@
 <template>
-  <Card>
+  <Card class="visualisation-card" style="width: 100%; height: 100%">
     <template #title>
       <div class="flex flex-row align-content-center align-items-center justify-content-between">
         Issues per status
         <MultiSelect
+          ref="multiselect"
           v-model="selectedCategory"
           :options="categories"
           placeholder="Category"
-          class="w-full md:w-14rem"
-          id="category-select"
+          class="multiselect-container w-full md:w-14rem"
         />
       </div>
     </template>
@@ -18,7 +18,12 @@
       </div>
     </template>
     <template #content>
-      <Chart type="bar" :data="chartData" :options="chartOptions" class="w-100rem h-30rem" />
+      <Chart
+        type="bar"
+        :data="chartData"
+        :options="chartOptions"
+        style="height: 100%; width: 100%"
+      />
     </template>
   </Card>
 </template>
@@ -27,6 +32,7 @@ import { ref, onMounted, computed, type Ref } from 'vue';
 import type { ProjectIF } from '@/model/ProjectIF';
 import { getStatusesFromCategories } from '@/services/issueCalculator';
 import { Category, getColorsforStatuses } from '@/assets/__mockdata__/StatusLists';
+import type { IssueIF } from '@/model/Issue/IssueIF';
 
 const documentStyle = getComputedStyle(document.documentElement);
 const textColor = documentStyle.getPropertyValue('--text-color');
@@ -43,6 +49,14 @@ const props = defineProps({
   project: {
     type: Object as () => ProjectIF,
     required: true,
+    default: () =>
+      ({
+        id: 0 as number,
+        name: '' as string,
+        description: '' as string,
+        issues: [] as IssueIF[],
+        slaSubscriber: null,
+      } as ProjectIF),
   },
 });
 

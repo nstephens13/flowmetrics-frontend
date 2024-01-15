@@ -22,11 +22,35 @@ export function generateStatusChanges(
   const currentStatusIndex = workflow.statuses.findIndex(
     (status: { status: string }) => status.status === currentStatus
   );
-  if (currentStatusIndex === 0) {
-    return null;
-  }
   const changesDates = getDatesBetween(createdDate, new Date(), currentStatusIndex);
-  for (let i = 0; i < currentStatusIndex; i++) {
+  if (currentStatusIndex === 0) {
+    changeLogs.push({
+      id: issueNumber * 100 + 1,
+      created: changesDates[0],
+      author: getRandomEmployee(),
+      changes: [
+        {
+          changeType: ChangeType.statusChange,
+          from: null,
+          to: workflow.statuses[0].status,
+        } as ChangeIF,
+      ],
+    });
+    return changeLogs;
+  }
+  changeLogs.push({
+    id: issueNumber * 100 + 1,
+    created: changesDates[0],
+    author: getRandomEmployee(),
+    changes: [
+      {
+        changeType: ChangeType.statusChange,
+        from: null,
+        to: workflow.statuses[0].status,
+      } as ChangeIF,
+    ],
+  });
+  for (let i = 1; i < currentStatusIndex; i++) {
     const changeLog: ChangeLogIF = {
       id: issueNumber * 100 + i,
       created: changesDates[i],

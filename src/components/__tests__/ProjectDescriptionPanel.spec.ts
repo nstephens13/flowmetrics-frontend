@@ -9,11 +9,17 @@ import Divider from 'primevue/divider';
 import MultiSelect from 'primevue/multiselect';
 import InputNumber from 'primevue/inputnumber';
 import { createTestingPinia } from '@pinia/testing';
+import Chip from 'primevue/chip';
+import ProgressBar from 'primevue/progressbar';
 import Button from 'primevue/button';
 import Chart from 'primevue/chart';
 import router from '@/router/index';
 import ProjectDescriptionPanel from '../ProjectDescriptionPanel.vue';
 import KeyFactsCard from '../KeyFactsCard.vue';
+import AssigneeCard from '../AssigneeCard.vue';
+import IssuesCard from '../IssuesCard.vue';
+import StateRestingTimeCard from '../StateRestingTimeCard.vue';
+import BarDiagram from '../BarDiagram.vue';
 
 // Describe block for the test suite
 describe('Project Overview should load all the Components', () => {
@@ -60,8 +66,14 @@ describe('Project Overview should load all the Components', () => {
         DataTable,
         Column,
         Divider,
-        MultiSelect,
+        Chip,
         KeyFactsCard,
+        AssigneeCard,
+        IssuesCard,
+        StateRestingTimeCard,
+        MultiSelect,
+        BarDiagram,
+        ProgressBar,
         InputNumber,
         Button,
         Chart,

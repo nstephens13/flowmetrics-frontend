@@ -6,7 +6,7 @@ stages:
   - Deploy
 
 .frontendJob:
-    image: node:20.2.0-alpine3.18
+    image: nikolaik/python-nodejs:python3.12-nodejs21
     rules:
       - if: '$SCHEDULED == "true"'
         when: never

@@ -17,128 +17,153 @@
         <Divider class="p-divider p-divider-horizontal divider-position" />
       </template>
       <template #content>
-        <div class="flex flex-row justify-content-start flex-wrap h-30rem">
-          <div class="w-4">
-            <card style="background-color: var(--flowMetricsBlue); color: #ffffffff">
+        <div class="flex flex-wrap overflow-hidden" style="min-width: 100%">
+          <div class="flex" style="width: 60%">
+            <Card class="project-info-card" style="width: 100%">
               <template #title>
-                <div v-if="selectedProject.name"> {{ selectedProject.name }} </div>
+                <div class="ml-2" v-if="selectedProject.name">
+                  {{ selectedProject.name }}
+                  <Chip class="ml-2 pl-0 pr-3">
+                    <span
+                      class="bg-blue-600 text-white font-bold border-circle w-2rem h-2rem flex align-items-center justify-content-center"
+                      >ID</span
+                    >
+                    <span class="ml-2 font-medium">{{ selectedProject.id }}</span>
+                  </Chip>
+                </div>
                 <div v-else> Project </div>
               </template>
+              <template #subtitle
+                ><span class="ml-2">{{ selectedProject?.description }}</span></template
+              >
               <template #content>
-                <div class="flex flex-row justify-center">
-                  <div class="flex flex-column mr-2">
-                    <div>Project ID: </div>
-                    <div>Description: </div>
+                <div class="flex flex-wrap" style="min-width: 100%">
+                  <div class="flex m-2" style="min-width: 48%">
+                    <KeyFactsCard
+                      :project="selectedProject"
+                      style="width: 100%; height: 100%"
+                    ></KeyFactsCard>
                   </div>
-                  <div class="flex flex-column">
-                    <div class="font-bold">{{ selectedProject.id }}</div>
-                    <div class="font-bold">{{ selectedProject.description }}</div>
+                  <div class="flex m-2" style="min-width: 48%">
+                    <AssigneeCard
+                      :project="selectedProject"
+                      style="width: 100%; height: 100%"
+                    ></AssigneeCard>
+                  </div>
+                  <div class="flex m-2" style="min-width: 48%">
+                    <IssuesCard
+                      :project="selectedProject"
+                      style="width: 100%; height: 100%"
+                    ></IssuesCard>
+                  </div>
+                  <div class="flex m-2" style="min-width: 48%">
+                    <StateRestingTimeCard
+                      :project="selectedProject"
+                      style="width: 100%; height: 100%"
+                    ></StateRestingTimeCard>
                   </div>
                 </div>
               </template>
-            </card>
+            </Card>
           </div>
-          <div class="w-3">
-            <KeyFactsCard :project="selectedProject"></KeyFactsCard>
+          <div class="flex" style="min-width: 40%">
+            <BarDiagram :project="selectedProject"></BarDiagram>
           </div>
-          <div class="w-5">
-            <BarDiagram :project="selectedProject" class="visualisation-card"></BarDiagram>
+          <div class="flex w-full">
+            <ZombieTicketCard :project="selectedProject"></ZombieTicketCard>
+          </div>
+          <div class="flex w-full">
+            <Card class="issues-table-card" style="width: 100%">
+              <template #title>
+                <p>Issues</p>
+              </template>
+              <template #content>
+                <DataTable
+                  v-model:filters="filters"
+                  :globalFilterFields="['name']"
+                  paginator
+                  :rows="5"
+                  filterDisplay="menu"
+                  :rowsPerPageOptions="[10, 20, 50, 100]"
+                  :value="selectedProject ? selectedProject.issues : []"
+                  showGridlines
+                  stripedRows
+                >
+                  <Column field="id" header="Issue-ID"></Column>
+                  <template #empty> No issues found.</template>
+                  <template #loading> Loading issues. Please wait.</template>
+                  <Column field="name" header="Name"></Column>
+                  <Column field="assignedTo" header="Assigned to">
+                    <template #body="slotProps">
+                      {{ printAssignedTo(slotProps.data.assignedTo) }}
+                    </template>
+                  </Column>
+                  <Column field="createdAt" header="Created on"></Column>
+                  <Column
+                    header="Status"
+                    filterField="status"
+                    :showFilterMatchModes="false"
+                    :filterMenuStyle="{ width: '7rem' }"
+                    style="min-width: 10rem"
+                    :show-apply-button="false"
+                  >
+                    <template #body="data">
+                      <div class="flex align-items-center gap-2">
+                        <span>{{ data.data.status }}</span>
+                      </div>
+                    </template>
+                    <template #filter="{ filterModel, filterCallback }">
+                      <MultiSelect
+                        v-model="filterModel.value"
+                        display="chip"
+                        :options="statuses"
+                        @change="filterCallback()"
+                        placeholder="Select Status"
+                        :maxSelectedLabels="3"
+                        class="w-full md:w-10rem"
+                      />
+                    </template>
+                  </Column>
+                  <Column header="Remaining Reaction Time">
+                    <template #body="slotProps">
+                      {{ calculateRemainingTime(slotProps.data) }}
+                    </template>
+                  </Column>
+                  <Column field="statusChanges" header="Status changes" style="width: 150px">
+                    <template #body="slotProps">
+                      {{ calculateStatusChanges(slotProps.data) }}
+                    </template>
+                  </Column>
+                  <Column
+                    header="State"
+                    filterField="state"
+                    :showFilterMatchModes="false"
+                    :filterMenuStyle="{ width: '7rem' }"
+                    style="min-width: 10rem"
+                    :show-apply-button="false"
+                  >
+                    <template #body="data">
+                      <div class="flex align-items-center gap-2">
+                        <span>{{ data.data.state }}</span>
+                      </div>
+                    </template>
+                    <template #filter="{ filterModel, filterCallback }">
+                      <MultiSelect
+                        v-model="filterModel.value"
+                        display="chip"
+                        :options="states"
+                        @change="filterCallback()"
+                        placeholder="Select State"
+                        :maxSelectedLabels="3"
+                        class="w-full md:w-10rem"
+                      />
+                    </template>
+                  </Column>
+                </DataTable>
+              </template>
+            </Card>
           </div>
         </div>
-      </template>
-    </Card>
-  </div>
-  <div>
-    <ZombieTicketCard :project="selectedProject"></ZombieTicketCard>
-  </div>
-  <div class="flex flex-row">
-    <Card style="width: 100%" class="issues-card">
-      <template #title>
-        <p>Issues</p>
-      </template>
-      <template #content>
-        <DataTable
-          v-model:filters="filters"
-          :globalFilterFields="['name']"
-          paginator
-          :rows="5"
-          filterDisplay="menu"
-          :rowsPerPageOptions="[10, 20, 50, 100]"
-          :value="selectedProject ? selectedProject.issues : []"
-          showGridlines
-          stripedRows
-        >
-          <Column field="id" header="Issue-ID"></Column>
-          <template #empty> No issues found.</template>
-          <template #loading> Loading issues. Please wait.</template>
-          <Column field="name" header="Name"></Column>
-          <Column field="assignedTo" header="Assigned to">
-            <template #body="slotProps">
-              {{ printAssignedTo(slotProps.data.assignedTo) }}
-            </template>
-          </Column>
-          <Column field="createdAt" header="Created on"></Column>
-          <Column
-            header="Status"
-            filterField="status"
-            :showFilterMatchModes="false"
-            :filterMenuStyle="{ width: '7rem' }"
-            style="min-width: 10rem"
-            :show-apply-button="false"
-          >
-            <template #body="data">
-              <div class="flex align-items-center gap-2">
-                <span>{{ data.data.status }}</span>
-              </div>
-            </template>
-            <template #filter="{ filterModel, filterCallback }">
-              <MultiSelect
-                v-model="filterModel.value"
-                display="chip"
-                :options="statuses"
-                @change="filterCallback()"
-                placeholder="Select Status"
-                :maxSelectedLabels="3"
-                class="w-full md:w-10rem"
-              />
-            </template>
-          </Column>
-          <Column header="Remaining Reaction Time">
-            <template #body="slotProps">
-              {{ calculateRemainingTime(slotProps.data) }}
-            </template>
-          </Column>
-          <Column field="statusChanges" header="Status changes" style="width: 150px">
-            <template #body="slotProps">
-              {{ calculateStatusChanges(slotProps.data) }}
-            </template>
-          </Column>
-          <Column
-            header="State"
-            filterField="state"
-            :showFilterMatchModes="false"
-            :filterMenuStyle="{ width: '7rem' }"
-            style="min-width: 10rem"
-            :show-apply-button="false"
-          >
-            <template #body="data">
-              <div class="flex align-items-center gap-2">
-                <span>{{ data.data.state }}</span>
-              </div>
-            </template>
-            <template #filter="{ filterModel, filterCallback }">
-              <MultiSelect
-                v-model="filterModel.value"
-                display="chip"
-                :options="states"
-                @change="filterCallback()"
-                placeholder="Select State"
-                :maxSelectedLabels="3"
-                class="w-full md:w-10rem"
-              />
-            </template>
-          </Column>
-        </DataTable>
       </template>
     </Card>
   </div>
@@ -155,11 +180,21 @@ import type { IssueIF } from '@/model/Issue/IssueIF';
 import projectStore from '@/store/projectStore';
 import ZombieTicketCard from '@/components/ZombieTicketCard.vue';
 import KeyFactsCard from '@/components/KeyFactsCard.vue';
+import AssigneeCard from '@/components/AssigneeCard.vue';
 import BarDiagram from '@/components/BarDiagram.vue';
-import { getProject } from '@/assets/__mockdata__/mockdata';
+import StateRestingTimeCard from './StateRestingTimeCard.vue';
+import IssuesCard from './IssuesCard.vue';
 
+// Create a reference for the projects array with mock data
+const projects: Ref<ProjectIF[]> = ref(projectStore().getProjects);
 // Create a reference for the selectedProject with initial data
-const selectedProject = ref(getProject(11) as ProjectIF);
+const selectedProject: Ref<ProjectIF> = ref({
+  id: 0,
+  name: 'Project',
+  description: 'This is the project',
+  issues: [] as IssueIF[],
+  slaSubscriber: null,
+} as ProjectIF);
 
 // Create a reference for the filters object with initial configuration
 const filters = ref({
@@ -200,14 +235,14 @@ const statuses = computed(() => getIssueStatusList(selectedProject.value.issues)
 const states = computed(
   () => getIssueStateList(selectedProject.value.issues) ?? ['planning', 'development', 'testing']
 );
-// Create a reference for the projects array with mock data
-const projects: Ref<ProjectIF[]> = ref(projectStore().getProjects);
 </script>
 
 <style scoped>
 .p-card {
-  margin: 15px 15px 0 15px;
   box-shadow: none;
+}
+.project-card {
+  margin: 15px 15px 0 15px;
 }
 :deep(.project-card > .p-card-body) {
   padding-bottom: 0;
@@ -215,13 +250,36 @@ const projects: Ref<ProjectIF[]> = ref(projectStore().getProjects);
 :deep(.project-card > .p-card-body > .p-card-content) {
   padding: 0;
 }
-:deep(.visualisation-card > .p-card-body) {
+:deep(.project-info-card > .p-card-body) {
   padding: 0;
 }
-:deep(.issues-card .p-card-body) {
+:deep(.visualisation-card > .p-card-body) {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+:deep(.visualisation-card > .p-card-body > .p-card-content) {
+  padding-bottom: 0;
+}
+:deep(.issues-card > .p-card-body) {
+  padding-right: 0;
+  padding-bottom: 0;
+}
+:deep(.assignee-card > .p-card-body) {
+  padding-right: 0;
+  padding-bottom: 0;
+}
+:deep(.key-facts-card > .p-card-body) {
+  padding-right: 0;
+  padding-bottom: 0;
+}
+:deep(.status-resting-time-card > .p-card-body) {
+  padding-right: 0;
+  padding-bottom: 0;
+}
+:deep(.issues-table-card > .p-card-body) {
   padding-top: 0;
 }
-:deep(.issues-card .p-card-content) {
+:deep(.issues-table-card > .p-card-body > .p-card-content) {
   padding-top: 0;
 }
 .divider-position {
