@@ -587,9 +587,7 @@ describe('SlaView Test with Store Data', () => {
     const deletedCategory = wrapper.find('.category-container .category');
     expect(deletedCategory.exists()).toBe(false);
   });
-
 });
-
 
 /**
  * Tests if the Table contains data input as intendend
@@ -654,7 +652,9 @@ describe('SlaView Test for DataTable Content', () => {
   test('DataTable should contain "remaining Reaction Time in Days" column with field ', () => {
     const dataTable = wrapper.getComponent(DataTable);
     const columns = dataTable.findAllComponents(Column);
-    const columnExists = columns.some((column) => column.props('field') === 'rule.reactionTimeInDays');
+    const columnExists = columns.some(
+      (column) => column.props('field') === 'rule.reactionTimeInDays'
+    );
     expect(columnExists).toBe(true);
   });
   test('DataTable should contain "priority" column with field ', () => {
@@ -676,5 +676,3 @@ describe('SlaView Test for DataTable Content', () => {
     expect(columnExists).toBe(true);
   });
 });
-
-
