@@ -14,7 +14,7 @@
         <div class="flex-wrap flex align-items-center justify-content-center">
           <CircularProgressBar
             class="flex align-items-center justify-content-center m-2"
-            :value="countIssuesByState(selectedProject.issues, 'planning')"
+            :value="countIssuesByState(selectedProject.issues, 'Planning')"
             :max="getIssueCountMax(selectedProject.issues)"
             percentage
             rounded
@@ -22,7 +22,7 @@
           />
           <CircularProgressBar
             class="flex align-items-center justify-content-center m-2"
-            :value="countIssuesByState(selectedProject.issues, 'development')"
+            :value="countIssuesByState(selectedProject.issues, 'Development')"
             :max="getIssueCountMax(selectedProject.issues)"
             percentage
             rounded
@@ -30,7 +30,7 @@
           />
           <CircularProgressBar
             class="flex align-items-center justify-content-center m-2"
-            :value="countIssuesByState(selectedProject.issues, 'testing')"
+            :value="countIssuesByState(selectedProject.issues, 'Testing')"
             :max="getIssueCountMax(selectedProject.issues)"
             percentage
             rounded
