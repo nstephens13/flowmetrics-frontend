@@ -1,5 +1,5 @@
 <template>
-  <Card>
+  <Card class="employee-overview-card">
     <template #title>
       <div class="grid">
         <div class="col-12">
@@ -14,18 +14,18 @@
           <div class="grid gap-3">
             <MultiSelect
               v-model="filterConfigStore.filter.projectFilter.projectsWhiteList"
-              :maxSelectedLabels="1"
               :options="allProjects"
               class="w-full md:w-14rem"
               option-label="name"
               placeholder="Select project"
+              :maxSelectedLabels="1"
             />
             <MultiSelect
               v-model="filterConfigStore.filter.projectFilter.issueStatusIncludeFilter"
-              :maxSelectedLabels="1"
               :options="allStatuses"
               class="w-full md:w-14rem"
               placeholder="Select status"
+              :maxSelectedLabels="1"
             />
           </div>
         </template>
@@ -54,8 +54,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref } from 'vue';
-import type { ComputedRef } from 'vue';
+import { watch, computed, ref, type Ref, type ComputedRef } from 'vue';
 import EmployeeCard from '@/components/EmployeeCard.vue';
 import type { EmployeeIF } from '@/model/EmployeeIF';
 import type { ProjectIF } from '@/model/ProjectIF';
@@ -71,10 +70,17 @@ const filterConfigStore = useFilterConfigStore();
 const projectStore = useProjectsStore();
 
 // Create a reference to all the issue statuses from the projects in the filterConfig
-const allStatuses: ComputedRef<string[]> = computed(() =>
-  getIssueStatusList(
-    filterConfigStore.filter.projectFilter.projectsWhiteList.flatMap((project) => project.issues)
-  )
+const allStatuses: Ref<string[]> = ref([]);
+
+watch(
+  () => filterConfigStore.filter.projectFilter.projectsWhiteList,
+  (newProjectsWhiteList) => {
+    allStatuses.value = getIssueStatusList(
+      newProjectsWhiteList.flatMap((project) => project.issues)
+    );
+    filterConfigStore.filter.projectFilter.issueStatusIncludeFilter = allStatuses.value;
+  },
+  { immediate: true }
 );
 
 // Create a reference to all the projects from the ProjectStore
@@ -123,6 +129,9 @@ const categoryNames = ref<{
 .p-card {
   margin: 15px;
   box-shadow: none;
+}
+:deep(.employee-overview-card > .p-card-content) {
+  padding-top: 0;
 }
 .divider-position {
   width: 100%;

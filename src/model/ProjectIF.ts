@@ -28,7 +28,7 @@ export function getIssueStatusList(issues: IssueIF[]): string[] {
         .filter((status): status is string => status !== null)
     )
   );
-  return statusList;
+  return statusList || ([] as string[]);
 }
 
 export function getIssueStateList(issues: IssueIF[]): string[] {
