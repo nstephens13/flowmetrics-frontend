@@ -33,6 +33,9 @@ const useFilterConfigStore = defineStore('filterConfig', {
     setMinimumNumberOfStatusChanges(minimumNumberOfStatusChanges: number) {
       this.filter.projectFilter.minimumNumberOfStatusChanges = minimumNumberOfStatusChanges;
     },
+    setIssueStatusIncludeFilter(issueStatusIncludeFilter: string[]) {
+      this.filter.projectFilter.issueStatusIncludeFilter = issueStatusIncludeFilter;
+    },
   },
 });
 

@@ -54,7 +54,7 @@
 </template>
 
 <script lang="ts" setup>
-import { watch, computed, ref, type Ref, type ComputedRef } from 'vue';
+import { watch, computed, ref, type ComputedRef } from 'vue';
 import EmployeeCard from '@/components/EmployeeCard.vue';
 import type { EmployeeIF } from '@/model/EmployeeIF';
 import type { ProjectIF } from '@/model/ProjectIF';
@@ -70,15 +70,18 @@ const filterConfigStore = useFilterConfigStore();
 const projectStore = useProjectsStore();
 
 // Create a reference to all the issue statuses from the projects in the filterConfig
-const allStatuses: Ref<string[]> = ref([]);
+const allStatuses: ComputedRef<string[]> = computed(() =>
+  getIssueStatusList(
+    filterConfigStore.filter.projectFilter.projectsWhiteList.flatMap((project) => project.issues)
+  )
+);
 
 watch(
   () => filterConfigStore.filter.projectFilter.projectsWhiteList,
   (newProjectsWhiteList) => {
-    allStatuses.value = getIssueStatusList(
-      newProjectsWhiteList.flatMap((project) => project.issues)
+    filterConfigStore.setIssueStatusIncludeFilter(
+      getIssueStatusList(newProjectsWhiteList.flatMap((project) => project.issues))
     );
-    filterConfigStore.filter.projectFilter.issueStatusIncludeFilter = allStatuses.value;
   },
   { immediate: true }
 );
