@@ -169,10 +169,12 @@
             </Column>
             <Column header="Delete">
               <template #body="rowData">
+                <Toast position="bottom-right" />
+                <ConfirmPopup></ConfirmPopup>
                 <Button
                   class="p-button-danger trash-size m-1"
                   icon="pi pi-trash"
-                  @click="slaStore.deleteSlaCategory(rowData.data)"
+                  @click="deleteEvent($event, rowData.data)"
                 ></Button>
               </template>
             </Column>
@@ -186,6 +188,8 @@
 <script lang="ts" setup>
 import type { ComputedRef, Ref } from 'vue';
 import { computed, ref } from 'vue';
+import { useConfirm } from 'primevue/useconfirm';
+import { useToast } from 'primevue/usetoast';
 import type { SlaCustomerProject } from '@/model/Sla/SlaCustomerProject';
 import type { SlaRule } from '@/model/Sla/SlaRule';
 import type { SlaCategory } from '@/model/Sla/SlaCategory';
@@ -350,6 +354,33 @@ const categoryErrorMessage = computed(() =>
 const reactionTimeErrorMessage = computed(() =>
   !isReactionTimeValid.value ? 'Reaction time must be in format 01w 23d 00h' : ''
 );
+
+const confirm = useConfirm();
+const toast = useToast();
+
+const deleteEvent = (event: any, slaCategory: SlaCategory) => {
+  confirm.require({
+    target: event.currentTarget,
+    message: 'Do you want to delete this rule?',
+    icon: 'pi pi-exclamation-triangle',
+    acceptClass: 'p-button-danger p-button-sm',
+    accept: () => {
+      slaStore.deleteSlaCategory(slaCategory);
+      toast.add({
+        severity: 'success',
+        summary: 'Rule deleted',
+        life: 4000,
+      });
+    },
+    reject: () => {
+      toast.add({
+        severity: 'info',
+        summary: 'Canceled',
+        life: 4000,
+      });
+    },
+  });
+};
 </script>
 
 <style scoped>
