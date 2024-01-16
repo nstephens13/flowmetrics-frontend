@@ -143,8 +143,13 @@
         </div>
         <Divider layout="vertical" />
         <div class="w-9">
-          <h3>SLA Categories</h3>
-          <DataTable :value="slaCategories">
+          <h2 class="mt-0 text-2xl">SLA rules</h2>
+          <DataTable
+            :value="slaCategories"
+            paginator
+            :rows="7"
+            :rowsPerPageOptions="[5, 10, 20, 50]"
+          >
             <Column field="name" header="Category" />
             <Column field="rule.name" header="Rule" />
             <Column header="Customer project">
@@ -350,5 +355,8 @@ const reactionTimeErrorMessage = computed(() =>
 <style scoped>
 .p-card {
   box-shadow: none;
+}
+.sla-rule-card {
+  margin: 15px 15px 0 15px;
 }
 </style>

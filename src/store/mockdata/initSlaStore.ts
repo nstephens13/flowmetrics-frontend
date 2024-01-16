@@ -47,7 +47,7 @@ export default function initSlaStore() {
   });
 
   // Add 5 SLA Categories
-  for (let i = 1; i < 6; i++) {
+  for (let i = 1; i < 21; i++) {
     const amountSubscribers = i % slaStore.customer.length;
     const rulesIndex = i % slaStore.rules.length;
     const category: SlaCategory = {
