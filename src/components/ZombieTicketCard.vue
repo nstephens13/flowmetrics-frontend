@@ -74,7 +74,11 @@ import type { FilterConfigIF, ProjectFilterConfigIF } from '@/model/FilterConfig
 import type { EmployeeIF } from '@/model/EmployeeIF';
 
 const props = defineProps({
-  project: Object as () => ProjectIF,
+  project: {
+    type: Object as () => ProjectIF,
+    required: true,
+    default: () => ({} as ProjectIF),
+  },
 });
 
 const minimalRestingTime = ref(0);

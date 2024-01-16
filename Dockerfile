@@ -1,4 +1,4 @@
-FROM node:lts-alpine as build-stage
+FROM nikolaik/python-nodejs:python3.12-nodejs21 as build-stage
 WORKDIR /app
 COPY package*.json ./
 RUN npm install

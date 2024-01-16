@@ -141,6 +141,7 @@
           </Column>
           <Column field="rule.reactionTimeInDays" header="Reaction time (Days)" />
           <Column field="rule.occurredIn" header="Occurred in" />
+          <Column field="rule.priority" header="Priority" />
           <Column field="rule.issueType" header="Issue type">
             <template #body="slotProps">
               <span>
