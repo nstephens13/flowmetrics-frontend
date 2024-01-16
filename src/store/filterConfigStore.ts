@@ -24,15 +24,38 @@ const useFilterConfigStore = defineStore('filterConfig', {
   },
 
   actions: {
+    /**
+     * Sets the filter configuration.
+     *
+     * @param {FilterConfigIF} config - The new filter configuration.
+     */
     setFilterConfig(config: FilterConfigIF) {
       this.filter = config;
     },
+
+    /**
+     * Sets the minimum assignee resting time.
+     *
+     * @param {number | null} minimumAssigneeRestingTime - The minimum assignee resting time.
+     */
     setMinimumAssigneeRestingTime(minimumAssigneeRestingTime: number | null) {
       this.filter.projectFilter.minimumAssigneeRestingTime = minimumAssigneeRestingTime as number;
     },
+
+    /**
+     * Sets the minimum number of status changes.
+     *
+     * @param {number} minimumNumberOfStatusChanges - The minimum number of status changes.
+     */
     setMinimumNumberOfStatusChanges(minimumNumberOfStatusChanges: number) {
       this.filter.projectFilter.minimumNumberOfStatusChanges = minimumNumberOfStatusChanges;
     },
+
+    /**
+     * Sets the issue status include filter.
+     *
+     * @param {string[]} issueStatusIncludeFilter - The issue status include filter.
+     */
     setIssueStatusIncludeFilter(issueStatusIncludeFilter: string[]) {
       this.filter.projectFilter.issueStatusIncludeFilter = issueStatusIncludeFilter;
     },
