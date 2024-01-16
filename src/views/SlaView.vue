@@ -64,7 +64,7 @@
                 />
                 <Dropdown
                   v-model="selectedRule"
-                  :options="slaStore.rules"
+                  :options="slaStore?.rules"
                   class="select-rule m-1"
                   optionLabel="name"
                   placeholder="Select rule"
@@ -91,7 +91,7 @@
               <div class="flex flex-column">
                 <Dropdown
                   v-model="selectedRuleForReactionTime"
-                  :options="slaStore.rules"
+                  :options="slaStore?.rules"
                   class="select-rule-for-reaction-time m-1"
                   optionLabel="name"
                   placeholder="Select rule"
@@ -141,7 +141,7 @@
             </AccordionTab>
           </Accordion>
         </div>
-        <Divider layout="vertical" />
+        <Divider class="vertical-divider" layout="vertical" />
         <div class="w-9">
           <h2 class="mt-0 text-2xl">SLA rules</h2>
           <DataTable
