@@ -1,168 +1,179 @@
 <template>
-  <Card>
+  <Card class="sla-rule-card">
     <template #title>
-      <div>
-        <p>SLA Management View</p>
-        <Divider class="p-divider p-divider-horizontal divider-position" />
+      <div class="flex flex-row align-content-center align-items-center justify-content-between">
+        <p>Create SLA Rules</p>
+        <GeneratePDF></GeneratePDF>
       </div>
+      <Divider class="p-divider p-divider-horizontal divider-position mt-0 mb-0" />
     </template>
     <template #content>
-      <div>
-        <h3>Add SLA Customer</h3>
-        <div class="subscriber-container">
-          <InputText
-            v-model="newCustomer"
-            class="enter-subscriber m-1"
-            placeholder="Enter customer project"
-          />
-          <Button
-            class="add-subscriber m-1"
-            icon="pi pi-plus"
-            style="background-color: var(--flowMetricsBlue)"
-            @click="addSubscriber"
-          ></Button>
-          <div v-if="!isSubscriberNameValid" class="error-message m-1 text-red-500">
-            {{ SubscriberErrorMessage }}
-          </div>
+      <div class="flex flex-row">
+        <div class="flex-column w-3">
+          <Accordion :activeIndex="0">
+            <AccordionTab header="Add SLA rule">
+              <div class="flex flex-column">
+                <InputText
+                  v-model="newRuleName"
+                  class="enter-rule m-1"
+                  placeholder="Enter rule name"
+                />
+                <Dropdown
+                  v-model="newOccurredIn"
+                  :options="occurredInOptions"
+                  class="select-occurred-in m-1"
+                  placeholder="Occurred in"
+                />
+                <MultiSelect
+                  v-model="selectedIssueTypes"
+                  :options="preparedIssueTypeOptions"
+                  class="select-issueType-in m-1"
+                  placeholder="Select issue types"
+                  optionLabel="label"
+                  optionValue="value"
+                  multiple
+                />
+                <Dropdown
+                  v-model="newPriority"
+                  :options="priorityOptions"
+                  class="select-priority-in m-1"
+                  placeholder="Priority"
+                />
+                <div v-if="!isRuleNameValid" class="error-message m-1 text-red-500">{{
+                  ruleErrorMessage
+                }}</div>
+                <div class="flex justify-content-start m-1">
+                  <Button
+                    class="add-rule"
+                    label="add rule"
+                    style="background-color: var(--flowMetricsBlue)"
+                    @click="addRule"
+                  ></Button>
+                </div>
+              </div>
+            </AccordionTab>
+            <AccordionTab header="Add SLA category">
+              <div class="flex flex-column">
+                <MultiSelect
+                  v-model="selectedCustomerProject"
+                  :options="customerProjectOptions"
+                  class="select-customer-in m-1"
+                  placeholder="Select Customer Project"
+                  optionLabel="name"
+                  multiple
+                />
+                <Dropdown
+                  v-model="selectedRule"
+                  :options="slaStore.rules"
+                  class="select-rule m-1"
+                  optionLabel="name"
+                  placeholder="Select rule"
+                />
+                <InputText
+                  v-model="categoryName"
+                  class="enter-category m-1"
+                  placeholder="Enter category name"
+                />
+                <div v-if="!isSlaCategoryNameValid" class="error-message m-1 text-red-500 ml-3">
+                  {{ categoryErrorMessage }}
+                </div>
+                <div class="flex justify-content-start">
+                  <Button
+                    class="add-category m-1"
+                    label="add category"
+                    style="background-color: var(--flowMetricsBlue)"
+                    @click="createCategory"
+                  ></Button>
+                </div>
+              </div>
+            </AccordionTab>
+            <AccordionTab header="Add reaction time">
+              <div class="flex flex-column">
+                <Dropdown
+                  v-model="selectedRuleForReactionTime"
+                  :options="slaStore.rules"
+                  class="select-rule-for-reaction-time m-1"
+                  optionLabel="name"
+                  placeholder="Select rule"
+                />
+                <InputMask
+                  id="reactionTime"
+                  v-model="newReactionTime"
+                  class="enter-reaction-time m-1"
+                  placeholder="Enter reaction time"
+                  mask="99w 99d 99h"
+                />
+                <div
+                  v-if="!isReactionTimeValid"
+                  class="error-message-reaction-time m-1 text-red-500 ml-3"
+                >
+                  {{ reactionTimeErrorMessage }}
+                </div>
+                <div class="flex justify-content-start">
+                  <Button
+                    class="add-reaction-time m-1"
+                    label="add reaction time"
+                    style="background-color: var(--flowMetricsBlue)"
+                    @click="addReactionTime"
+                  ></Button>
+                </div>
+              </div>
+            </AccordionTab>
+            <AccordionTab header="Add SLA customer">
+              <div class="flex flex-column">
+                <InputText
+                  v-model="newCustomer"
+                  class="enter-subscriber m-1"
+                  placeholder="Enter customer project"
+                />
+                <div v-if="!isSubscriberNameValid" class="error-message m-1 text-red-500">
+                  {{ SubscriberErrorMessage }}
+                </div>
+                <div class="flex justify-content-start">
+                  <Button
+                    class="add-subscriber m-1"
+                    label="add customer"
+                    style="background-color: var(--flowMetricsBlue)"
+                    @click="addSubscriber"
+                  ></Button>
+                </div>
+              </div>
+            </AccordionTab>
+          </Accordion>
+        </div>
+        <Divider layout="vertical" />
+        <div class="w-9">
+          <h3>SLA Categories</h3>
+          <DataTable :value="slaCategories">
+            <Column field="name" header="Category" />
+            <Column field="rule.name" header="Rule" />
+            <Column header="Customer project">
+              <template #body="slotProps">
+                {{ slotProps.data.customerProject?.name }}
+              </template>
+            </Column>
+            <Column field="rule.reactionTimeInDays" header="Reaction time (Days)" />
+            <Column field="rule.occurredIn" header="Occurred in" />
+            <Column field="rule.priority" header="Priority" />
+            <Column field="rule.issueType" header="Issue type">
+              <template #body="slotProps">
+                <span>
+                  {{ slotProps.data.rule?.issueType?.join(', ') }}
+                </span>
+              </template>
+            </Column>
+            <Column header="Delete">
+              <template #body="rowData">
+                <Button
+                  class="p-button-danger trash-size m-1"
+                  icon="pi pi-trash"
+                  @click="slaStore.deleteSlaCategory(rowData.data)"
+                ></Button>
+              </template>
+            </Column>
+          </DataTable>
         </div>
       </div>
-      <div>
-        <h3>Add SLA Rule</h3>
-        <div class="rule-container m-1">
-          <InputText v-model="newRuleName" class="enter-rule m-1" placeholder="Enter rule name" />
-          <Dropdown
-            v-model="newOccurredIn"
-            :options="occurredInOptions"
-            class="select-occurred-in m-1"
-            placeholder="Occurred in"
-          />
-          <MultiSelect
-            v-model="selectedIssueTypes"
-            :options="preparedIssueTypeOptions"
-            class="select-issueType-in m-1"
-            placeholder="Select issue types"
-            optionLabel="label"
-            optionValue="value"
-            multiple
-          />
-          <Dropdown
-            v-model="newPriority"
-            :options="priorityOptions"
-            class="select-priority-in m-1"
-            placeholder="Priority"
-          />
-          <Button
-            class="add-rule m-1"
-            icon="pi pi-plus"
-            style="background-color: var(--flowMetricsBlue)"
-            @click="addRule"
-          ></Button>
-          <div v-if="!isRuleNameValid" class="error-message m-1 text-red-500">{{
-            ruleErrorMessage
-          }}</div>
-        </div>
-      </div>
-      <div>
-        <h3>Add new SLA Category</h3>
-        <div class="category-container m-1">
-          <MultiSelect
-            v-model="selectedCustomerProject"
-            :options="customerProjectOptions"
-            class="select-customer-in m-1"
-            placeholder="Select Customer Project"
-            optionLabel="name"
-            multiple
-          />
-          <Dropdown
-            v-model="selectedRule"
-            :options="slaStore.rules"
-            class="select-rule m-1"
-            optionLabel="name"
-            placeholder="Select rule"
-          />
-          <InputText
-            v-model="categoryName"
-            class="enter-category m-1"
-            placeholder="Enter category name"
-          />
-          <Button
-            class="add-category m-1"
-            icon="pi pi-plus"
-            style="background-color: var(--flowMetricsBlue)"
-            @click="createCategory"
-          ></Button>
-        </div>
-        <div v-if="!isSlaCategoryNameValid" class="error-message m-1 text-red-500 ml-3">
-          {{ categoryErrorMessage }}
-        </div>
-      </div>
-      <div>
-        <div class="m-2 mb-4">
-          <h3>Add Reaction Time</h3>
-        </div>
-        <h3></h3>
-        <div class="flex category-container m-1">
-          <Dropdown
-            v-model="selectedRuleForReactionTime"
-            :options="slaStore.rules"
-            class="select-rule-for-reaction-time m-1"
-            optionLabel="name"
-            placeholder="Select rule"
-          />
-          <div class="p-float-label">
-            <InputMask
-              id="reactionTime"
-              v-model="newReactionTime"
-              class="enter-reaction-time m-1"
-              mask="99w 99d 99h"
-            />
-            <label for="reactionTime">Reaction time</label>
-          </div>
-          <Button
-            class="add-reaction-time m-1"
-            icon="pi pi-plus"
-            style="background-color: var(--flowMetricsBlue)"
-            @click="addReactionTime"
-          ></Button>
-        </div>
-        <div v-if="!isReactionTimeValid" class="error-message-reaction-time m-1 text-red-500 ml-3">
-          {{ reactionTimeErrorMessage }}
-        </div>
-      </div>
-      <div class="mt-4">
-        <h3>SLA Categories</h3>
-        <DataTable :value="slaCategories">
-          <Column field="name" header="Category" />
-          <Column field="rule.name" header="Rule" />
-          <Column header="Customer project">
-            <template #body="slotProps">
-              {{ slotProps.data.customerProject?.name }}
-            </template>
-          </Column>
-          <Column field="rule.reactionTimeInDays" header="Reaction time (Days)" />
-          <Column field="rule.occurredIn" header="Occurred in" />
-          <Column field="rule.priority" header="Priority" />
-          <Column field="rule.issueType" header="Issue type">
-            <template #body="slotProps">
-              <span>
-                {{ slotProps.data.rule?.issueType?.join(', ') }}
-              </span>
-            </template>
-          </Column>
-          <Column header="Delete">
-            <template #body="rowData">
-              <Button
-                class="p-button-danger trash-size m-1"
-                icon="pi pi-trash"
-                @click="slaStore.deleteSlaCategory(rowData.data)"
-              ></Button>
-            </template>
-          </Column>
-        </DataTable>
-      </div>
-    </template>
-    <template #footer>
-      <GeneratePDF></GeneratePDF>
     </template>
   </Card>
 </template>
@@ -335,3 +346,9 @@ const reactionTimeErrorMessage = computed(() =>
   !isReactionTimeValid.value ? 'Reaction time must be in format 01w 23d 00h' : ''
 );
 </script>
+
+<style scoped>
+.p-card {
+  box-shadow: none;
+}
+</style>
