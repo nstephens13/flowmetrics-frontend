@@ -14,15 +14,15 @@
         <div class="flex-wrap flex align-items-center justify-content-center">
           <CircularProgressBar
             class="flex align-items-center justify-content-center m-2"
-            :value="countIssuesByState(selectedProject.issues, 'Planning')"
+            :value="countIssuesByState(selectedProject.issues, Category.planning)"
             :max="getIssueCountMax(selectedProject.issues)"
             percentage
             rounded
-            title="Planning issues" 
+            title="Planning issues"
           />
           <CircularProgressBar
             class="flex align-items-center justify-content-center m-2"
-            :value="countIssuesByState(selectedProject.issues, 'Development')"
+            :value="countIssuesByState(selectedProject.issues, Category.development)"
             :max="getIssueCountMax(selectedProject.issues)"
             percentage
             rounded
@@ -30,7 +30,7 @@
           />
           <CircularProgressBar
             class="flex align-items-center justify-content-center m-2"
-            :value="countIssuesByState(selectedProject.issues, 'Testing')"
+            :value="countIssuesByState(selectedProject.issues, Category.testing)"
             :max="getIssueCountMax(selectedProject.issues)"
             percentage
             rounded
@@ -154,6 +154,7 @@ import type { IssueIF } from '@/model/Issue/IssueIF';
 import { getIssueStateList, getIssueStatusList } from '@/model/ProjectIF';
 import { calculateRemainingReactionTime } from '@/services/issueCalculator';
 import projectStore from '@/store/projectStore';
+import { Category } from '@/assets/__mockdata__/StatusLists';
 
 // Create a reference for the selectedProject with initial data
 

@@ -86,13 +86,13 @@ function assignStateToIssue(issue: Issue): string | null {
   const status = issue.status || '';
 
   if (planningStatusList.includes(status)) {
-    return 'Planning';
+    return Category.planning;
   }
   if (devStatusList.includes(status)) {
-    return 'Development';
+    return Category.development;
   }
   if (testingStatusList.includes(status)) {
-    return 'Testing';
+    return Category.testing;
   }
   if (nonDisplayedStatusList.includes(status)) {
     return null;
