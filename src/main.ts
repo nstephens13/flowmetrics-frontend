@@ -31,10 +31,6 @@ import InputNumber from 'primevue/inputnumber';
 import Chart from 'primevue/chart';
 import Accordion from 'primevue/accordion';
 import AccordionTab from 'primevue/accordiontab';
-import ConfirmPopup from 'primevue/confirmpopup';
-import ConfirmationService from 'primevue/confirmationservice';
-import Toast from 'primevue/toast';
-import ToastService from 'primevue/toastservice';
 
 import router from './router';
 import App from './App.vue';
@@ -52,8 +48,6 @@ const pinia = createPinia();
 app.use(pinia);
 app.use(PrimeVue);
 app.use(router);
-app.use(ConfirmationService);
-app.use(ToastService);
 
 app.component('Calendar', Calendar);
 app.component('Card', Card);
@@ -83,8 +77,6 @@ app.directive('tooltip', Tooltip);
 app.component('Chart', Chart);
 app.component('Accordion', Accordion);
 app.component('AccordionTab', AccordionTab);
-app.component('ConfirmPopup', ConfirmPopup);
-app.component('Toast', Toast);
 
 app.mount('#app');
 

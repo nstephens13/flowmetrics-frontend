@@ -288,10 +288,12 @@ describe('SlaComponent', () => {
     expect(wrapper.exists()).toBe(true);
     expect(wrapper.isVisible()).toBe(true);
     expect(wrapper.findAllComponents(AccordionTab).length).toBe(4);
-    expect(wrapper.findAllComponents(AccordionTab).at(0).props('header')).toBe('Add SLA rule');
-    expect(wrapper.findAllComponents(AccordionTab).at(1).props('header')).toBe('Add SLA category');
-    expect(wrapper.findAllComponents(AccordionTab).at(2).props('header')).toBe('Add reaction time');
-    expect(wrapper.findAllComponents(AccordionTab).at(3).props('header')).toBe('Add SLA customer');
+    expect(wrapper.findAllComponents(AccordionTab).at(0)?.props('header')).toBe('Add SLA rule');
+    expect(wrapper.findAllComponents(AccordionTab).at(1)?.props('header')).toBe('Add SLA category');
+    expect(wrapper.findAllComponents(AccordionTab).at(2)?.props('header')).toBe(
+      'Add reaction time'
+    );
+    expect(wrapper.findAllComponents(AccordionTab).at(3)?.props('header')).toBe('Add SLA customer');
     expect(wrapper.findAllComponents(DataTable).length).toBe(1);
   });
 
