@@ -4,7 +4,7 @@
       <div class="grid">
         <div class="col-12">
           <p>Employee Overview</p>
-          <Divider class="p-divider p-divider-horizontal divider-position" />
+          <Divider class="p-divider p-divider-horizontal divider-position mb-0" />
         </div>
       </div>
     </template>
@@ -129,13 +129,6 @@ const categoryNames = ref<{
 </script>
 
 <style scoped>
-.p-card {
-  margin: 15px;
-  box-shadow: none;
-}
-:deep(.employee-overview-card > .p-card-content) {
-  padding-top: 0;
-}
 .divider-position {
   width: 100%;
 }
