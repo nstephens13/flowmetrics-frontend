@@ -11,6 +11,41 @@
       <div class="flex flex-row">
         <div class="flex-column w-3">
           <Accordion :activeIndex="0">
+            <AccordionTab header="Add SLA category">
+              <div class="category-container flex flex-column">
+                <MultiSelect
+                  v-model="selectedCustomerProject"
+                  :options="customerProjectOptions"
+                  class="select-customer-in m-1"
+                  placeholder="Select Customer Project"
+                  optionLabel="name"
+                  multiple
+                />
+                <Dropdown
+                  v-model="selectedRule"
+                  :options="slaStore?.rules"
+                  class="select-rule m-1"
+                  optionLabel="name"
+                  placeholder="Select rule"
+                />
+                <InputText
+                  v-model="categoryName"
+                  class="enter-category m-1"
+                  placeholder="Enter category name"
+                />
+                <div v-if="!isSlaCategoryNameValid" class="error-message m-1 text-red-500 ml-3">
+                  {{ categoryErrorMessage }}
+                </div>
+                <div class="flex justify-content-start">
+                  <Button
+                    class="add-category m-1"
+                    label="add category"
+                    style="background-color: var(--flowMetricsBlue)"
+                    @click="createCategory"
+                  ></Button>
+                </div>
+              </div>
+            </AccordionTab>
             <AccordionTab header="Add SLA rule">
               <div class="rule-container flex flex-column">
                 <InputText
@@ -48,41 +83,6 @@
                     label="add rule"
                     style="background-color: var(--flowMetricsBlue)"
                     @click="addRule"
-                  ></Button>
-                </div>
-              </div>
-            </AccordionTab>
-            <AccordionTab header="Add SLA category">
-              <div class="category-container flex flex-column">
-                <MultiSelect
-                  v-model="selectedCustomerProject"
-                  :options="customerProjectOptions"
-                  class="select-customer-in m-1"
-                  placeholder="Select Customer Project"
-                  optionLabel="name"
-                  multiple
-                />
-                <Dropdown
-                  v-model="selectedRule"
-                  :options="slaStore?.rules"
-                  class="select-rule m-1"
-                  optionLabel="name"
-                  placeholder="Select rule"
-                />
-                <InputText
-                  v-model="categoryName"
-                  class="enter-category m-1"
-                  placeholder="Enter category name"
-                />
-                <div v-if="!isSlaCategoryNameValid" class="error-message m-1 text-red-500 ml-3">
-                  {{ categoryErrorMessage }}
-                </div>
-                <div class="flex justify-content-start">
-                  <Button
-                    class="add-category m-1"
-                    label="add category"
-                    style="background-color: var(--flowMetricsBlue)"
-                    @click="createCategory"
                   ></Button>
                 </div>
               </div>
@@ -143,7 +143,7 @@
         </div>
         <Divider class="vertical-divider" layout="vertical" />
         <div class="w-9">
-          <h2 class="mt-0 text-2xl">SLA rules</h2>
+          <h2 class="mt-0 text-2xl">{{ slaCategories.length }} SLA Categories</h2>
           <DataTable
             :value="slaCategories"
             paginator
