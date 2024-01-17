@@ -12,7 +12,7 @@
         <div class="flex-column w-3">
           <Accordion :activeIndex="0">
             <AccordionTab header="Add SLA rule">
-              <div class="flex flex-column">
+              <div class="rule-container flex flex-column">
                 <InputText
                   v-model="newRuleName"
                   class="enter-rule m-1"
@@ -53,7 +53,7 @@
               </div>
             </AccordionTab>
             <AccordionTab header="Add SLA category">
-              <div class="flex flex-column">
+              <div class="category-container flex flex-column">
                 <MultiSelect
                   v-model="selectedCustomerProject"
                   :options="customerProjectOptions"
@@ -88,7 +88,7 @@
               </div>
             </AccordionTab>
             <AccordionTab header="Add reaction time">
-              <div class="flex flex-column">
+              <div class="reaction-time-container flex flex-column">
                 <Dropdown
                   v-model="selectedRuleForReactionTime"
                   :options="slaStore?.rules"
@@ -120,7 +120,7 @@
               </div>
             </AccordionTab>
             <AccordionTab header="Add SLA customer">
-              <div class="flex flex-column">
+              <div class="customer-container flex flex-column">
                 <InputText
                   v-model="newCustomer"
                   class="enter-subscriber m-1"
@@ -169,12 +169,10 @@
             </Column>
             <Column header="Delete">
               <template #body="rowData">
-                <Toast position="bottom-right" />
-                <ConfirmPopup></ConfirmPopup>
                 <Button
                   class="p-button-danger trash-size m-1"
                   icon="pi pi-trash"
-                  @click="deleteEvent($event, rowData.data)"
+                  @click="slaStore.deleteSlaCategory(rowData.data)"
                 ></Button>
               </template>
             </Column>
@@ -188,8 +186,6 @@
 <script lang="ts" setup>
 import type { ComputedRef, Ref } from 'vue';
 import { computed, ref } from 'vue';
-import { useConfirm } from 'primevue/useconfirm';
-import { useToast } from 'primevue/usetoast';
 import type { SlaCustomerProject } from '@/model/Sla/SlaCustomerProject';
 import type { SlaRule } from '@/model/Sla/SlaRule';
 import type { SlaCategory } from '@/model/Sla/SlaCategory';
@@ -354,33 +350,6 @@ const categoryErrorMessage = computed(() =>
 const reactionTimeErrorMessage = computed(() =>
   !isReactionTimeValid.value ? 'Reaction time must be in format 01w 23d 00h' : ''
 );
-
-const confirm = useConfirm();
-const toast = useToast();
-
-const deleteEvent = (event: any, slaCategory: SlaCategory) => {
-  confirm.require({
-    target: event.currentTarget,
-    message: 'Do you want to delete this rule?',
-    icon: 'pi pi-exclamation-triangle',
-    acceptClass: 'p-button-danger p-button-sm',
-    accept: () => {
-      slaStore.deleteSlaCategory(slaCategory);
-      toast.add({
-        severity: 'success',
-        summary: 'Rule deleted',
-        life: 4000,
-      });
-    },
-    reject: () => {
-      toast.add({
-        severity: 'info',
-        summary: 'Canceled',
-        life: 4000,
-      });
-    },
-  });
-};
 </script>
 
 <style scoped>

@@ -11,6 +11,8 @@ import Column from 'primevue/column';
 import DataTable from 'primevue/datatable';
 import Divider from 'primevue/divider';
 import MultiSelect from 'primevue/multiselect';
+import Accordion from 'primevue/accordion';
+import AccordionTab from 'primevue/accordiontab';
 import router from '@/router';
 import SLAView from '../SlaView.vue';
 import useSlaStore from '../../store/slaStore';
@@ -69,6 +71,8 @@ describe('SlaView Test with Store Data', () => {
           DataTable,
           Divider,
           MultiSelect,
+          Accordion,
+          AccordionTab,
         },
       },
     });
@@ -165,6 +169,8 @@ describe('SlaComponent', () => {
           DataTable,
           Divider,
           MultiSelect,
+          Accordion,
+          AccordionTab,
         },
       },
     });
@@ -281,10 +287,12 @@ describe('SlaComponent', () => {
   test('it mounts', () => {
     expect(wrapper.exists()).toBe(true);
     expect(wrapper.isVisible()).toBe(true);
-    expect(wrapper.find('.subscriber-container').isVisible()).toBe(true);
-    expect(wrapper.find('.rule-container').isVisible()).toBe(true);
-    expect(wrapper.find('.category-container').isVisible()).toBe(true);
-    expect(wrapper.getComponent(DataTable).isVisible()).toBe(true);
+    expect(wrapper.findAllComponents(AccordionTab).length).toBe(4);
+    expect(wrapper.findAllComponents(AccordionTab).at(0).props('header')).toBe('Add SLA rule');
+    expect(wrapper.findAllComponents(AccordionTab).at(1).props('header')).toBe('Add SLA category');
+    expect(wrapper.findAllComponents(AccordionTab).at(2).props('header')).toBe('Add reaction time');
+    expect(wrapper.findAllComponents(AccordionTab).at(3).props('header')).toBe('Add SLA customer');
+    expect(wrapper.findAllComponents(DataTable).length).toBe(1);
   });
 
   // Test to add a new rule using addRule method
@@ -347,7 +355,7 @@ describe('SlaComponent', () => {
   });
 });
 
-describe('SlaView Test with Store Data', () => {
+describe('SlaView Test with Store Data 1', () => {
   let wrapper: VueWrapper<any>;
 
   beforeEach(() => {
@@ -387,6 +395,8 @@ describe('SlaView Test with Store Data', () => {
           DataTable,
           Divider,
           MultiSelect,
+          Accordion,
+          AccordionTab,
         },
       },
     });
@@ -459,7 +469,7 @@ describe('SlaView Test with Store Data', () => {
   });
 });
 
-describe('SlaView Test with Store Data', () => {
+describe('SlaView Test with Store Data 2', () => {
   let wrapper: VueWrapper<any>;
 
   beforeEach(() => {
@@ -494,6 +504,8 @@ describe('SlaView Test with Store Data', () => {
           DataTable,
           Divider,
           MultiSelect,
+          Accordion,
+          AccordionTab,
         },
       },
     });
@@ -531,7 +543,7 @@ describe('SlaView Test with Store Data', () => {
   });
 });
 
-describe('SlaView Test with Store Data', () => {
+describe('SlaView Test with Store Data 3', () => {
   let wrapper: VueWrapper<any>;
 
   beforeEach(() => {
@@ -571,6 +583,8 @@ describe('SlaView Test with Store Data', () => {
           DataTable,
           Divider,
           MultiSelect,
+          Accordion,
+          AccordionTab,
         },
       },
     });
@@ -634,6 +648,8 @@ describe('SlaView Test for DataTable Content', () => {
           DataTable,
           Divider,
           MultiSelect,
+          Accordion,
+          AccordionTab,
         },
       },
     });
