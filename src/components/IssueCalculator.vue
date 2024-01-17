@@ -14,27 +14,27 @@
         <div class="flex-wrap flex align-items-center justify-content-center">
           <CircularProgressBar
             class="flex align-items-center justify-content-center m-2"
-            :value="countIssuesByStatus(selectedProject.issues, 'open')"
+            :value="countIssuesByState(selectedProject.issues, Category.planning)"
             :max="getIssueCountMax(selectedProject.issues)"
             percentage
             rounded
-            title="open issues"
+            title="Planning issues"
           />
           <CircularProgressBar
             class="flex align-items-center justify-content-center m-2"
-            :value="countIssuesByStatus(selectedProject.issues, 'closed')"
+            :value="countIssuesByState(selectedProject.issues, Category.development)"
             :max="getIssueCountMax(selectedProject.issues)"
             percentage
             rounded
-            title="Closed issues"
+            title="Development issues"
           />
           <CircularProgressBar
             class="flex align-items-center justify-content-center m-2"
-            :value="countIssuesByStatus(selectedProject.issues, 'in progress')"
+            :value="countIssuesByState(selectedProject.issues, Category.testing)"
             :max="getIssueCountMax(selectedProject.issues)"
             percentage
             rounded
-            title="in progress"
+            title="Testing issues"
           />
         </div>
         <div class="flex-grow-1 flex align-items-center justify-content-center"></div>
@@ -147,12 +147,13 @@ import { Duration } from 'luxon';
 import { FilterMatchMode } from 'primevue/api';
 import CircularProgressBar from '@/components/CircularProgressBar.vue';
 import type { ProjectIF } from '@/model/ProjectIF';
-import { countIssuesByStatus, Issue } from '@/services/Issue';
+import { countIssuesByState, Issue } from '@/services/Issue';
 import type { EmployeeIF } from '@/model/EmployeeIF';
 import type { IssueIF } from '@/model/Issue/IssueIF';
 import { getIssueStateList, getIssueStatusList } from '@/model/ProjectIF';
 import { calculateRemainingReactionTime, calculateStatusChanges } from '@/services/issueCalculator';
 import projectStore from '@/store/projectStore';
+import { Category } from '@/assets/__mockdata__/StatusLists';
 
 // Create a reference for the selectedProject with initial data
 

@@ -86,18 +86,18 @@ function assignStateToIssue(issue: Issue): string | null {
   const status = issue.status || '';
 
   if (planningStatusList.includes(status)) {
-    return 'planning';
+    return Category.planning;
   }
   if (devStatusList.includes(status)) {
-    return 'development';
+    return Category.development;
   }
   if (testingStatusList.includes(status)) {
-    return 'testing';
+    return Category.testing;
   }
   if (nonDisplayedStatusList.includes(status)) {
     return null;
   }
-  return 'undefined';
+  return 'Undefined';
 }
 /**
  * Returns the name of the employee assigned to the issue.
@@ -149,6 +149,18 @@ function countIssuesByStatus(issueList: Issue[], status: string | null): number 
 }
 
 /**
+ * Counts the number of issues in the given issue list with the specified state.
+ * If the state is null, counts all the issues in the list.
+ * @param issueList - The list of issues.
+ * @param status - The states of the issues to count.
+ * @returns The count of issues.
+ */
+function countIssuesByState(issueList: Issue[], state: string | null): number {
+  return (state ? issueList.filter((issue) => assignStateToIssue(issue) === state) : issueList)
+    .length;
+}
+
+/**
  * Returns SLA-Rules assigned to an Issue
  * @returns The Array of SLARules assigned to an Issue, can be null
  */
@@ -163,6 +175,7 @@ export {
   getFormattedDate,
   getAssignedToName,
   countIssuesByStatus,
+  countIssuesByState,
   getSlaRules,
   assignStateToIssue,
   planningStatusList,
