@@ -39,7 +39,7 @@
                 <div class="flex justify-content-start">
                   <Button
                     class="add-category m-1"
-                    label="add category"
+                    label="Add category"
                     style="background-color: var(--flowMetricsBlue)"
                     @click="createCategory"
                   ></Button>
@@ -80,7 +80,7 @@
                 <div class="flex justify-content-start m-1">
                   <Button
                     class="add-rule"
-                    label="add rule"
+                    label="Add rule"
                     style="background-color: var(--flowMetricsBlue)"
                     @click="addRule"
                   ></Button>
@@ -112,7 +112,7 @@
                 <div class="flex justify-content-start">
                   <Button
                     class="add-reaction-time m-1"
-                    label="add reaction time"
+                    label="Add reaction time"
                     style="background-color: var(--flowMetricsBlue)"
                     @click="addReactionTime"
                   ></Button>
@@ -132,7 +132,7 @@
                 <div class="flex justify-content-start">
                   <Button
                     class="add-subscriber m-1"
-                    label="add customer"
+                    label="Add customer"
                     style="background-color: var(--flowMetricsBlue)"
                     @click="addSubscriber"
                   ></Button>
