@@ -23,8 +23,8 @@ const router = createRouter({
       component: IssueCalculator,
     },
     {
-      path: '/sla-management',
-      name: 'sla-management',
+      path: '/create-sla-rules',
+      name: 'create-sla-rules',
       component: SlaComponent,
     },
     {

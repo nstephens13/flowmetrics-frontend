@@ -68,7 +68,7 @@ const items = ref([
   {
     label: 'Create SLA Rules',
     icon: 'pi pi-fw pi-filter',
-    to: '/sla-management',
+    to: '/create-sla-rules',
   },
   {
     label: 'Issue Calculator',
