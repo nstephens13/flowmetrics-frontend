@@ -4,27 +4,28 @@ import {
   getWorkflow,
   getRandomEmployee,
   getRandomInt,
-  issueTypes,
   getDateAndTimeInPast,
   getRandomIntBetween,
 } from '@/assets/__mockdata__/generator/HelperFunctions';
 import { generateAssigneeChanges, generateStatusChanges } from './ChangeLogGenerator';
 import type { EmployeeIF } from '@/model/EmployeeIF';
-import { Category, getCategory, statusLists } from '../StatusLists';
+import { Category, getCategory, statusLists } from '../IssueProps/statusLists';
 import getTimeDifference from '@/services/timeCalculator';
+import IssueTypes from '../IssueProps/issueTypes';
+import Priority from '../IssueProps/priority';
 
 function getIssue(issueNumber: number, issueTypeNumber: number): IssueIF {
-  const issueType = issueTypes[issueTypeNumber];
+  const issueType = Object.keys(IssueTypes)[issueTypeNumber];
   const workflow = getWorkflow(issueType);
   const issueStatus: string =
-    issueType === 'zombie'
+    issueType === IssueTypes.zombie
       ? workflow.statuses[getRandomIntBetween(9, 14)].status
       : workflow.statuses[getRandomInt(workflow.statuses.length)].status;
   const createdDate: Date =
-    issueType === 'zombie'
+    issueType === IssueTypes.zombie
       ? faker.date.past({ refDate: getDateAndTimeInPast(30) })
       : faker.date.past({ refDate: getDateAndTimeInPast(4) });
-  const assigneedEmployee: EmployeeIF = getRandomEmployee();
+  const assignedEmployee: EmployeeIF = getRandomEmployee();
   const generatedStatusChanges = generateStatusChanges(
     issueType,
     issueNumber,
@@ -34,7 +35,7 @@ function getIssue(issueNumber: number, issueTypeNumber: number): IssueIF {
   const generatedAssigneeChanges = generateAssigneeChanges(
     issueType,
     issueNumber,
-    assigneedEmployee,
+    assignedEmployee,
     createdDate
   );
   const statusRestingTime =
@@ -52,9 +53,11 @@ function getIssue(issueNumber: number, issueTypeNumber: number): IssueIF {
   const state = getCategory(issueStatus);
   return {
     id: issueNumber,
-    name: `${issueTypes[issueTypeNumber]} : ${faker.hacker.adjective()}`,
+    name: `${faker.hacker.adjective()}`,
     description: `${faker.hacker.phrase()}`,
-    assignedTo: assigneedEmployee,
+    assignedTo: assignedEmployee,
+    issueType,
+    priority: faker.helpers.arrayElement(Object.keys(Priority)),
     createdBy: getRandomEmployee(),
     createdAt: createdDate,
     closedAt: closedDate,
@@ -73,7 +76,7 @@ export default function generateIssues(projectId: number, numberOfIssues: number
   const issues: IssueIF[] = [];
   for (let i = 1; i <= numberOfIssues; i++) {
     const issueId = projectId * 100 + i;
-    issues.push(getIssue(issueId, getRandomInt(issueTypes.length)));
+    issues.push(getIssue(issueId, getRandomInt(Object.keys(IssueTypes).length)));
   }
   return issues;
 }

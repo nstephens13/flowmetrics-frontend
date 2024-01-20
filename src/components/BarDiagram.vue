@@ -31,7 +31,7 @@
 import { ref, onMounted, computed, type Ref } from 'vue';
 import type { ProjectIF } from '@/model/ProjectIF';
 import { getStatusesFromCategories } from '@/services/issueCalculator';
-import { Category, getColorsforStatuses } from '@/assets/__mockdata__/StatusLists';
+import { Category, getColorsforStatuses } from '@/assets/__mockdata__/IssueProps/statusLists';
 import type { IssueIF } from '@/model/Issue/IssueIF';
 
 const documentStyle = getComputedStyle(document.documentElement);

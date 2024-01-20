@@ -2,7 +2,7 @@ import type { ProjectIF } from '@/model/ProjectIF';
 import type { EmployeeIF } from '@/model/EmployeeIF';
 import type { IssueIF } from '@/model/Issue/IssueIF';
 import getMockData from '../assets/__mockdata__/mockDataComposer';
-import { Category, statusLists } from '@/assets/__mockdata__/StatusLists';
+import { Category, statusLists } from '@/assets/__mockdata__/IssueProps/statusLists';
 
 /**
  * @brief: The Function map the issues to the Employees.

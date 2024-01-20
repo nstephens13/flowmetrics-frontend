@@ -2,7 +2,7 @@ import { describe, expect, test } from 'vitest';
 import type { IssueIF } from '../../model/Issue/IssueIF';
 import type { ProjectIF } from '../../model/ProjectIF';
 import type { EmployeeIF } from '../../model/EmployeeIF';
-import { Category } from '../../assets/__mockdata__/StatusLists';
+import { Category } from '../../assets/__mockdata__/IssueProps/statusLists';
 import {
   calculateStateAverageRestingTime,
   calculateAverageRestingTime,

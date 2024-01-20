@@ -2,7 +2,7 @@ import type { DurationLikeObject } from 'luxon';
 import type { EmployeeIF } from '../EmployeeIF';
 import type { SlaRule } from '@/model/Sla/SlaRule';
 import type { ChangeLogIF } from '@/model/Issue/ChangeLogIF';
-import type { Category } from '@/assets/__mockdata__/StatusLists';
+import type { Category } from '@/assets/__mockdata__/IssueProps/statusLists';
 
 /**
  *

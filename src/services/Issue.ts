@@ -3,7 +3,7 @@ import type { EmployeeIF } from '@/model/EmployeeIF';
 import type { IssueIF } from '@/model/Issue/IssueIF';
 import type { SlaRule } from '@/model/Sla/SlaRule';
 import type { ChangeLogIF } from '@/model/Issue/ChangeLogIF';
-import { Category, statusLists } from '@/assets/__mockdata__/StatusLists';
+import { Category, statusLists } from '@/assets/__mockdata__/IssueProps/statusLists';
 
 // Issue Class implements IssueIF
 class Issue implements IssueIF {

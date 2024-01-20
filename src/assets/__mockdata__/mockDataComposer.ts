@@ -7,7 +7,7 @@ import issueJson2 from '@/assets/__mockdata__/json/Issues_2.json';
 import issueJson from '@/assets/__mockdata__/json/Issues.json';
 import { Issue } from '@/services/Issue';
 import type { SlaRule } from '@/model/Sla/SlaRule';
-import { Category, statusLists } from './StatusLists';
+import { Category, statusLists } from './IssueProps/statusLists';
 
 // Define lists of different category with statuses
 export const planningStatusList: string[] = statusLists[Category.planning];

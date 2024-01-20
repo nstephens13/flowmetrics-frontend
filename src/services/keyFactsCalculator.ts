@@ -1,7 +1,7 @@
 import { DateTime, Duration } from 'luxon';
 import type { ProjectIF } from '@/model/ProjectIF';
 import type { IssueIF } from '@/model/Issue/IssueIF';
-import { Category, statusLists } from '@/assets/__mockdata__/StatusLists';
+import { Category, statusLists } from '@/assets/__mockdata__/IssueProps/statusLists';
 
 /**
  * @brief calculates the amount of fulfilled sla rules of one issue

@@ -153,7 +153,7 @@ import type { IssueIF } from '@/model/Issue/IssueIF';
 import { getIssueStateList, getIssueStatusList } from '@/model/ProjectIF';
 import { calculateRemainingReactionTime, calculateStatusChanges } from '@/services/issueCalculator';
 import projectStore from '@/store/projectStore';
-import { Category } from '@/assets/__mockdata__/StatusLists';
+import { Category } from '@/assets/__mockdata__/IssueProps/statusLists';
 
 // Create a reference for the selectedProject with initial data
 

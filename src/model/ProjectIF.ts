@@ -1,6 +1,5 @@
 import { nonDisplayedStatusList, nonDisplayedStateList } from '@/services/Issue';
 import type { IssueIF } from './Issue/IssueIF';
-import type { SlaCustomerProject } from '@/model/Sla/SlaCustomerProject';
 
 /**
  *
@@ -16,7 +15,6 @@ export interface ProjectIF {
   name: string;
   description: string;
   issues: IssueIF[];
-  slaSubscriber: SlaCustomerProject | null;
 }
 
 export function getIssueStatusList(issues: IssueIF[]): string[] {

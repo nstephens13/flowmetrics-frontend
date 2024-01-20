@@ -10,6 +10,5 @@ export default function generateProject(projectNumber: number, numberOfIssues: n
     name: projects[projectNumber - 1].name,
     description: projects[projectNumber - 1].description,
     issues: generateIssues(projects[projectNumber - 1].id, numberOfIssues) as IssueIF[],
-    slaSubscriber: null,
   } as ProjectIF;
 }

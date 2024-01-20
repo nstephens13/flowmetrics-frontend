@@ -3,20 +3,6 @@ import type { EmployeeIF } from '@/model/EmployeeIF';
 import EmployeesJsonData from '@/assets/__mockdata__/json/Employees.json';
 import IssuesWorkflowsJsonData from '@/assets/__mockdata__/json/IssuesWorkflows.json';
 
-export const issueTypes = [
-  'bug',
-  'incident',
-  'coverage',
-  'enhancement',
-  'task',
-  'feature',
-  'support',
-  'documentation',
-  'review',
-  'refactor',
-  'zombie',
-];
-
 export function getRandomInt(max: number) {
   return Math.floor(Math.random() * max);
 }
