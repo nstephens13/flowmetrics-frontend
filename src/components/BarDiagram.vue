@@ -28,7 +28,7 @@
   </Card>
 </template>
 <script setup lang="ts">
-import { ref, onMounted, computed, type Ref } from 'vue';
+import { ref, onMounted, computed, defineProps, type Ref } from 'vue';
 import type { ProjectIF } from '@/model/ProjectIF';
 import { getStatusesFromCategories } from '@/services/issueCalculator';
 import { Category, getColorsforStatuses } from '@/assets/__mockdata__/StatusLists';
@@ -44,6 +44,7 @@ const categories: string[] = [
   Category.testing,
   Category.nonDisplayed,
 ];
+
 const selectedCategory: Ref<Category[] | undefined> = ref();
 const props = defineProps({
   project: {
@@ -66,16 +67,56 @@ const totalNumberOfIssues = computed(() =>
   ).reduce((accumulator, currentValue) => accumulator + currentValue, 0)
 );
 
-const chartData = computed(() => {
+const chartData = ref({
+  labels: [] as string[],
+  datasets: [
+    {
+      label: '',
+      backgroundColor: [] as string[],
+      data: [] as string[],
+    },
+  ],
+});
+
+const chartOptions = ref({
+  plugins: {
+    legend: {
+      labels: {
+        color: textColor,
+      },
+    },
+  },
+  scales: {
+    x: {
+      ticks: {
+        color: textColorSecondary,
+      },
+      grid: {
+        color: surfaceBorder,
+      },
+    },
+    y: {
+      beginAtZero: true,
+      ticks: {
+        color: textColorSecondary,
+      },
+      grid: {
+        color: surfaceBorder,
+      },
+    },
+  },
+  animation: false,
+});
+
+const updateChartData = () => {
   const labels = Array.from(
     getStatusesFromCategories(props.project.issues, selectedCategory.value).keys()
   );
   const AllNumberOfIssues = Array.from(
     getStatusesFromCategories(props.project.issues, selectedCategory.value).values()
   ).map(String);
-  console.log('Value:', AllNumberOfIssues);
 
-  return {
+  chartData.value = {
     labels,
     datasets: [
       {
@@ -88,38 +129,10 @@ const chartData = computed(() => {
       },
     ],
   };
-});
-
-const chartOptions = ref({});
+};
 
 onMounted(() => {
-  chartOptions.value = {
-    plugins: {
-      legend: {
-        labels: {
-          color: textColor,
-        },
-      },
-    },
-    scales: {
-      x: {
-        ticks: {
-          color: textColorSecondary,
-        },
-        grid: {
-          color: surfaceBorder,
-        },
-      },
-      y: {
-        beginAtZero: true,
-        ticks: {
-          color: textColorSecondary,
-        },
-        grid: {
-          color: surfaceBorder,
-        },
-      },
-    },
-  };
+  // Refresh data every second
+  setInterval(updateChartData, 1000);
 });
 </script>
