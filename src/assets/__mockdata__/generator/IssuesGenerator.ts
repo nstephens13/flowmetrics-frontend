@@ -15,7 +15,7 @@ import IssueTypes from '../IssueProps/issueTypes';
 import Priority from '../IssueProps/priority';
 
 function getIssue(issueNumber: number, issueTypeNumber: number): IssueIF {
-  const issueType = Object.keys(IssueTypes)[issueTypeNumber];
+  const issueType = Object.values(IssueTypes)[issueTypeNumber];
   const workflow = getWorkflow(issueType);
   const issueStatus: string =
     issueType === IssueTypes.zombie
@@ -57,7 +57,7 @@ function getIssue(issueNumber: number, issueTypeNumber: number): IssueIF {
     description: `${faker.hacker.phrase()}`,
     assignedTo: assignedEmployee,
     issueType,
-    priority: faker.helpers.arrayElement(Object.keys(Priority)),
+    priority: faker.helpers.arrayElement(Object.values(Priority)),
     createdBy: getRandomEmployee(),
     createdAt: createdDate,
     closedAt: closedDate,

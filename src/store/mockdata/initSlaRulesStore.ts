@@ -11,7 +11,7 @@ const rules: RuleIF[] = [
     reactionTime: { weeks: 1, days: 2, hours: 0 },
     expirationDate: null,
     occurredIn: 'Test',
-    priority: Object.keys(Priority) as string[],
+    priority: Object.values(Priority) as string[],
     issueType: [IssueTypes.bug] as string[],
   },
   {
@@ -20,7 +20,7 @@ const rules: RuleIF[] = [
     reactionTime: { weeks: 1, days: 2, hours: 0 },
     expirationDate: new Date('2023-07-17'),
     occurredIn: 'Pre-production',
-    priority: Object.keys(Priority) as string[],
+    priority: Object.values(Priority) as string[],
     issueType: [IssueTypes.incident] as string[],
   },
   {
@@ -29,7 +29,7 @@ const rules: RuleIF[] = [
     reactionTime: { weeks: 1, days: 2, hours: 0 },
     expirationDate: new Date('2023-12-19'),
     occurredIn: 'Production',
-    priority: Object.keys(Priority) as string[],
+    priority: Object.values(Priority) as string[],
     issueType: [IssueTypes.coverage] as string[],
   },
   {
@@ -38,7 +38,7 @@ const rules: RuleIF[] = [
     reactionTime: { weeks: 1, days: 2, hours: 0 },
     expirationDate: new Date('2023-12-19'),
     occurredIn: 'Production',
-    priority: Object.keys(Priority) as string[],
+    priority: Object.values(Priority) as string[],
     issueType: [IssueTypes.enhancement] as string[],
   },
   {
@@ -47,7 +47,7 @@ const rules: RuleIF[] = [
     reactionTime: { weeks: 1, days: 2, hours: 0 },
     expirationDate: new Date('2023-12-19'),
     occurredIn: 'Production',
-    priority: Object.keys(Priority) as string[],
+    priority: Object.values(Priority) as string[],
     issueType: [IssueTypes.task] as string[],
   },
   {
@@ -56,7 +56,7 @@ const rules: RuleIF[] = [
     reactionTime: { weeks: 1, days: 2, hours: 0 },
     expirationDate: new Date('2023-12-19'),
     occurredIn: 'Production',
-    priority: Object.keys(Priority) as string[],
+    priority: Object.values(Priority) as string[],
     issueType: [IssueTypes.feature] as string[],
   },
   {
@@ -65,7 +65,7 @@ const rules: RuleIF[] = [
     reactionTime: { weeks: 1, days: 2, hours: 0 },
     expirationDate: new Date('2023-12-19'),
     occurredIn: 'Production',
-    priority: Object.keys(Priority) as string[],
+    priority: Object.values(Priority) as string[],
     issueType: [IssueTypes.support] as string[],
   },
   {
@@ -74,7 +74,7 @@ const rules: RuleIF[] = [
     reactionTime: { weeks: 1, days: 2, hours: 0 },
     expirationDate: new Date('2023-12-19'),
     occurredIn: 'Production',
-    priority: Object.keys(Priority) as string[],
+    priority: Object.values(Priority) as string[],
     issueType: [IssueTypes.documentation] as string[],
   },
   {
@@ -83,7 +83,7 @@ const rules: RuleIF[] = [
     reactionTime: { weeks: 1, days: 2, hours: 0 },
     expirationDate: new Date('2023-12-19'),
     occurredIn: 'Production',
-    priority: Object.keys(Priority) as string[],
+    priority: Object.values(Priority) as string[],
     issueType: [IssueTypes.review] as string[],
   },
   {
@@ -92,7 +92,7 @@ const rules: RuleIF[] = [
     reactionTime: { weeks: 1, days: 2, hours: 0 },
     expirationDate: new Date('2023-12-19'),
     occurredIn: 'Production',
-    priority: Object.keys(Priority) as string[],
+    priority: Object.values(Priority) as string[],
     issueType: [IssueTypes.refactor] as string[],
   },
 ];

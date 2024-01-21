@@ -268,8 +268,8 @@ const expandedRows = ref([]);
 const projectOptions: ComputedRef<ProjectIF[]> = computed(() => projectStore.getProjects);
 const categories: ComputedRef<CategoryIF[]> = computed(() => slaRulesStore.categories);
 const occurredInOptions = ['Test', 'Pre-production', 'Production'];
-const priorityOptions = Object.keys(Priority);
-const issueTypeOptions = Object.keys(IssueTypes);
+const priorityOptions = Object.values(Priority);
+const issueTypeOptions = Object.values(IssueTypes);
 const rules: ComputedRef<RuleIF[]> = computed(
   () => selectedCategoryForReactionTime.value?.rules || []
 );

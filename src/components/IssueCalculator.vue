@@ -55,6 +55,8 @@
     <Column field="id" header="Issue ID"></Column>
     <Column field="name" header="Name"></Column>
     <Column field="description" header="Description"></Column>
+    <Column field="priority" header="Priority"></Column>
+    <Column field="issueType" header="Issue type"></Column>
     <Column field="createdAt" header="Created on"></Column>
     <Column field="createdBy" header="Created by">
       <template #body="slotProps">
