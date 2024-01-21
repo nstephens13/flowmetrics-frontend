@@ -163,7 +163,6 @@ function countIssuesByState(issueList: Issue[], state: string | null): number {
     .length;
 }
 
-
 // export of data array and remain time for ticket calculation
 export {
   Issue,

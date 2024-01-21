@@ -41,6 +41,7 @@ import 'primeflex/primeflex.css';
 import initSlaStore from '@/store/mockdata/initSlaStore';
 import initProjectStore from '@/store/mockdata/initProjectStore';
 import { initFilterConfigStore } from '@/store/mockdata/initFilterConfigStore';
+import initSlaRulesStore from '@/store/mockdata/initSlaRulesStore';
 
 const app = createApp(App);
 const pinia = createPinia();
@@ -84,3 +85,4 @@ app.mount('#app');
 initProjectStore();
 initFilterConfigStore();
 initSlaStore();
+initSlaRulesStore();

@@ -3,19 +3,16 @@ import type { DurationLikeObject } from 'luxon';
 import type { CategoryIF } from '@/model/Sla/CategoryIF';
 import type { RuleIF } from '@/model/Sla/RuleIF';
 
-const useSlaRulesStore = defineStore('sla', {
+const useSlaRulesStore = defineStore('SLA rules store', {
   state: () => ({
     categories: [] as CategoryIF[],
   }),
-
   actions: {
     addRule(category: CategoryIF, rule: RuleIF) {
       if (category.id != null && category.id >= 1) {
         const index = this.categories.findIndex((c) => c.id === category?.id);
         if (index !== -1) {
-          const ruleToAdd = rule;
-          ruleToAdd.id = this.categories[index].rules.length + 1;
-          this.categories[index].rules.push(ruleToAdd);
+          this.categories[index].rules.push(rule);
         }
       }
     },
@@ -31,9 +28,7 @@ const useSlaRulesStore = defineStore('sla', {
       }
     },
     addCategory(category: CategoryIF) {
-      const categoryToAdd = category;
-      categoryToAdd.id = this.categories.length + 1;
-      this.categories.push(categoryToAdd);
+      this.categories.push(category);
     },
     deleteCategory(category: CategoryIF) {
       if (category.id != null && category.id >= 1) {
@@ -57,4 +52,4 @@ const useSlaRulesStore = defineStore('sla', {
   },
 });
 
-export default useSlaStore;
+export default useSlaRulesStore;
