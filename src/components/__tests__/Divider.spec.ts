@@ -18,6 +18,8 @@ import Button from 'primevue/button';
 import InputMask from 'primevue/inputmask';
 import Chart from 'primevue/chart';
 import InputNumber from 'primevue/inputnumber';
+import Accordion from 'primevue/accordion';
+import AccordionTab from 'primevue/accordiontab';
 import IssueCalculator from '../../views/IssueCalculator.vue';
 import ProjectOverview from '../../views/ProjectOverview.vue';
 import router from '@/router/index';
@@ -143,6 +145,8 @@ describe('Sla Rules view', () => {
         DataTable,
         Divider,
         InputMask,
+        Accordion,
+        AccordionTab,
       },
     },
   });
