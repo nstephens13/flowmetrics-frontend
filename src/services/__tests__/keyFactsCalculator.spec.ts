@@ -2,7 +2,7 @@ import { describe, expect, test } from 'vitest';
 import type { IssueIF } from '../../model/Issue/IssueIF';
 import type { ProjectIF } from '../../model/ProjectIF';
 import type { SlaRule } from '../../model/Sla/SlaRule';
-import { getPercentageSlaRulesComplied, calculateAverageSolvingTime } from '../keyFactsCalculator';
+import { calculateAverageSolvingTime } from '../keyFactsCalculator';
 import type { ChangeLogIF } from '../../model/Issue/ChangeLogIF';
 // Pair 1
 const date1 = new Date('2024-01-08T12:00:00');
@@ -17,12 +17,13 @@ describe('keyFactsTests', () => {
     id: 0,
     name: '0',
     description: '0',
-    slaSubscriber: null,
     issues: [
       {
         id: 1,
         name: '1',
         description: null,
+        priority: null,
+        issueType: null,
         assignedTo: null,
         createdBy: null,
         createdAt: date1,
@@ -67,6 +68,8 @@ describe('keyFactsTests', () => {
         id: 2,
         name: '2',
         description: null,
+        priority: null,
+        issueType: null,
         assignedTo: null,
         createdBy: null,
         createdAt: date3,
@@ -86,31 +89,13 @@ describe('keyFactsTests', () => {
         assigneeChanges: null,
         statusRestingTime: null,
         state: null,
-        assignedSlaRule: [
-          {
-            id: null,
-            name: null,
-            reactionTimeInDays: null,
-            expirationDate: new Date(new Date().valueOf() + 1000000),
-            occurredIn: null,
-            priority: null,
-            issueType: null,
-          } as SlaRule,
-          {
-            id: null,
-            name: null,
-            reactionTimeInDays: null,
-            expirationDate: new Date(0),
-            occurredIn: null,
-            priority: null,
-            issueType: null,
-          } as SlaRule,
-        ],
       } as IssueIF,
       {
         id: 3,
         name: '3',
         description: null,
+        priority: null,
+        issueType: null,
         assignedTo: null,
         createdBy: null,
         createdAt: date1,
@@ -130,31 +115,13 @@ describe('keyFactsTests', () => {
         assigneeChanges: null,
         statusRestingTime: null,
         state: null,
-        assignedSlaRule: [
-          {
-            id: null,
-            name: null,
-            reactionTimeInDays: null,
-            expirationDate: null,
-            occurredIn: null,
-            priority: null,
-            issueType: null,
-          } as SlaRule,
-          {
-            id: null,
-            name: null,
-            reactionTimeInDays: null,
-            expirationDate: new Date(0),
-            occurredIn: null,
-            priority: null,
-            issueType: null,
-          } as SlaRule,
-        ],
       } as IssueIF,
       {
         id: 4,
         name: '4',
         description: null,
+        priority: null,
+        issueType: null,
         assignedTo: null,
         createdBy: null,
         createdAt: date3,
@@ -170,7 +137,6 @@ describe('keyFactsTests', () => {
           } as ChangeLogIF,
         ],
         lastStatusChange: null,
-        assignedSlaRule: [],
         assigneeRestingTime: null,
         assigneeChanges: null,
         statusRestingTime: null,
@@ -179,9 +145,6 @@ describe('keyFactsTests', () => {
     ],
   } as ProjectIF;
 
-  test('getPercentageSlaRulesComplied', () => {
-    expect(getPercentageSlaRulesComplied(testProject)).toEqual('33 %');
-  });
   test('calculateAverageSolvingTime', () => {
     expect(
       calculateAverageSolvingTime(testProject.issues)?.toFormat("d 'days' h 'hours'").toString()

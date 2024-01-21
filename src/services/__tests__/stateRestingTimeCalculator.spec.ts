@@ -13,12 +13,13 @@ const testProject: ProjectIF = {
   id: 1,
   name: 'testProject',
   description: 'testProject',
-  slaSubscriber: null,
   issues: [
     {
       id: 1,
       name: '1',
       description: null,
+      priority: null,
+      issueType: null,
       assignedTo: {
         id: 1,
         firstName: 'firstName_1',
@@ -53,13 +54,13 @@ const testProject: ProjectIF = {
         milliseconds: 0,
       },
       state: null,
-      assignedSlaRule: null,
-      changelog: null,
     } as IssueIF,
     {
       id: 2,
       name: '2',
       description: null,
+      priority: null,
+      issueType: null,
       assignedTo: {
         id: 2,
         firstName: 'firstName_2',
@@ -94,13 +95,13 @@ const testProject: ProjectIF = {
         milliseconds: 0,
       },
       state: null,
-      assignedSlaRule: null,
-      changelog: null,
     } as IssueIF,
     {
       id: 3,
       name: '3',
       description: null,
+      priority: null,
+      issueType: null,
       assignedTo: {
         id: 3,
         firstName: 'firstName_3',
@@ -135,13 +136,13 @@ const testProject: ProjectIF = {
         milliseconds: 0,
       },
       state: null,
-      assignedSlaRule: null,
-      changelog: null,
     } as IssueIF,
     {
       id: 4,
       name: '4',
       description: null,
+      priority: null,
+      issueType: null,
       assignedTo: {
         id: 4,
         firstName: 'firstName_4',
@@ -176,13 +177,13 @@ const testProject: ProjectIF = {
         milliseconds: 0,
       },
       state: null,
-      assignedSlaRule: null,
-      changelog: null,
     } as IssueIF,
     {
       id: 5,
       name: '5',
       description: null,
+      priority: null,
+      issueType: null,
       assignedTo: {
         id: 5,
         firstName: 'firstName_5',
@@ -217,13 +218,13 @@ const testProject: ProjectIF = {
         milliseconds: 0,
       },
       state: null,
-      assignedSlaRule: null,
-      changelog: null,
     } as IssueIF,
     {
       id: 6,
       name: '6',
       description: null,
+      priority: null,
+      issueType: null,
       assignedTo: {
         id: 6,
         firstName: 'firstName_6',
@@ -258,8 +259,6 @@ const testProject: ProjectIF = {
         milliseconds: 0,
       },
       state: null,
-      assignedSlaRule: null,
-      changelog: null,
     } as IssueIF,
   ],
 };

@@ -8,13 +8,13 @@ import MultiSelect from 'primevue/multiselect';
 import BarDiagram from '../BarDiagram.vue';
 
 import type { ProjectIF } from '@/model/ProjectIF';
+import type { IssueIF } from '@/model/Issue/IssueIF';
 import router from '@/router/index';
 
 const project1: ProjectIF = {
   id: 123456,
   name: 'Test Project 1',
   description: 'Description of Test Project 1',
-  slaSubscriber: null,
   issues: [
     {
       id: 1,
@@ -30,9 +30,10 @@ const project1: ProjectIF = {
       statusRestingTime: null,
       statusChanges: null,
       assigneeChanges: null,
-      assignedSlaRule: null,
+      priority: null,
+      issueType: null,
       state: 'planning',
-    },
+    } as IssueIF,
     {
       id: 234567,
       name: 'Issue 2',
@@ -47,9 +48,10 @@ const project1: ProjectIF = {
       statusRestingTime: null,
       statusChanges: null,
       assigneeChanges: null,
-      assignedSlaRule: null,
+      priority: null,
+      issueType: null,
       state: 'development',
-    },
+    } as IssueIF,
     {
       id: 345678,
       name: 'Issue 3',
@@ -64,9 +66,10 @@ const project1: ProjectIF = {
       statusRestingTime: null,
       statusChanges: null,
       assigneeChanges: null,
-      assignedSlaRule: null,
+      priority: null,
+      issueType: null,
       state: 'testing',
-    },
+    } as IssueIF,
     {
       id: 456789,
       name: 'Issue 4',
@@ -81,9 +84,10 @@ const project1: ProjectIF = {
       statusRestingTime: null,
       statusChanges: null,
       assigneeChanges: null,
-      assignedSlaRule: null,
+      priority: null,
+      issueType: null,
       state: 'testing',
-    },
+    } as IssueIF,
   ],
 };
 
