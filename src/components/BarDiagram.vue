@@ -72,7 +72,9 @@ const chartData = computed(() => {
   );
   const AllNumberOfIssues = Array.from(
     getStatusesFromCategories(props.project.issues, selectedCategory.value).values()
-  );
+  ).map(String);
+  console.log('Value:', AllNumberOfIssues);
+
   return {
     labels,
     datasets: [
