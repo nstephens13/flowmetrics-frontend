@@ -81,6 +81,6 @@ app.component('AccordionTab', AccordionTab);
 app.mount('#app');
 
 // initialize the stores
-initSlaStore();
 initProjectStore();
 initFilterConfigStore();
+initSlaStore();

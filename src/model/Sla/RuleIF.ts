@@ -11,11 +11,11 @@ import type { DurationLikeObject } from 'luxon';
  * @prop {string[]} issueType the issue types of the rule
  */
 export interface RuleIF {
-  id: number | null;
+  id: number;
   name: string | null;
   reactionTime: DurationLikeObject | null;
   expirationDate: Date | null;
   occurredIn: string | null;
-  priority: string | null;
+  priority: string[] | null;
   issueType: string[] | null;
 }

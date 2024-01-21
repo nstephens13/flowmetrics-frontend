@@ -15,7 +15,7 @@
               <div class="category-container flex flex-column">
                 <MultiSelect
                   v-model="selectedCustomerProject"
-                  :options="customerProjectOptions"
+                  :options="projectOptions"
                   class="select-customer-in m-1"
                   placeholder="Select Customer Project"
                   optionLabel="name"
@@ -119,26 +119,6 @@
                 </div>
               </div>
             </AccordionTab>
-            <AccordionTab header="Add SLA customer">
-              <div class="customer-container flex flex-column">
-                <InputText
-                  v-model="newCustomer"
-                  class="enter-subscriber m-1"
-                  placeholder="Enter customer project"
-                />
-                <div v-if="!isSubscriberNameValid" class="error-message m-1 text-red-500">
-                  {{ SubscriberErrorMessage }}
-                </div>
-                <div class="flex justify-content-start">
-                  <Button
-                    class="add-subscriber m-1"
-                    label="Add customer"
-                    style="background-color: var(--flowMetricsBlue)"
-                    @click="addSubscriber"
-                  ></Button>
-                </div>
-              </div>
-            </AccordionTab>
           </Accordion>
         </div>
         <Divider class="vertical-divider" layout="vertical" />
@@ -191,8 +171,10 @@ import type { SlaRule } from '@/model/Sla/SlaRule';
 import type { SlaCategory } from '@/model/Sla/SlaCategory';
 import GeneratePDF from '@/components/GeneratePDF.vue';
 import useSlaStore from '@/store/slaStore';
+import useProjectStore from '@/store/projectStore';
 
 const slaStore = useSlaStore();
+const projectStore = useProjectStore();
 
 const slaCategories = computed(() => slaStore.slaCategories);
 
@@ -201,8 +183,6 @@ const selectedRuleForReactionTime: Ref<SlaRule | null> = ref(null);
 const newReactionTime = ref('');
 const isReactionTimeValid = ref(true);
 
-const newCustomer = ref('');
-const isSubscriberNameValid = ref(true);
 const newRuleName = ref('');
 const newRuleMaxAssignedEmployees = ref();
 const isRuleNameValid = ref(true);
@@ -210,7 +190,7 @@ const newOccurredIn = ref(null);
 const selectedRule = ref(null);
 const categoryName = ref('');
 const occurredInOptions = ['Test', 'Pre-production', 'Production'];
-const customerProjectOptions: ComputedRef<SlaCustomerProject[]> = computed(() => slaStore.customer);
+const projectOptions: ComputedRef<SlaCustomerProject[]> = computed(() => projectStore.getProjects);
 const selectedCustomerProject: Ref<SlaCustomerProject[]> = ref([]);
 const newPriority = ref('');
 const priorityOptions = ['schwerwiegend', 'behindernd', 'leicht umgehbar', 'Kosmetik', ''];
@@ -228,21 +208,6 @@ const issueTypeOptions = [
   '',
 ];
 const selectedIssueTypes: Ref<string[]> = ref([]);
-
-function addSubscriber() {
-  if (newCustomer.value.trim().length < 3) {
-    isSubscriberNameValid.value = false;
-    return;
-  }
-  isSubscriberNameValid.value = true;
-  const subscriber: SlaCustomerProject = {
-    id: 0,
-    name: newCustomer.value.trim(),
-    description: null,
-  };
-  slaStore.addSubscriber(subscriber);
-  newCustomer.value = '';
-}
 
 function parseReactionTime(input: string): number | null {
   const parts = input.match(/(\d+)w (\d+)d (\d+)h/);
@@ -333,10 +298,6 @@ function createCategory() {
 
 const preparedIssueTypeOptions = computed(() =>
   issueTypeOptions.map((option) => ({ label: option, value: option }))
-);
-
-const SubscriberErrorMessage = computed(() =>
-  !isSubscriberNameValid.value ? 'Subscriber name must be at least 3 characters.' : ''
 );
 
 const ruleErrorMessage = computed(() =>

@@ -9,8 +9,8 @@ import type { RuleIF } from '@/model/Sla/RuleIF';
  * @prop {RuleIF[]} rules the rules of the category
  */
 export interface CategoryIF {
-  id: number | null;
+  id: number;
   name: string | null;
   project: ProjectIF;
-  rules: RuleIF[] | null;
+  rules: RuleIF[];
 }
