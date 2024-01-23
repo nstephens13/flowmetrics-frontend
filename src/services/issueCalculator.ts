@@ -97,6 +97,32 @@ export function calculateRemainingReactionTime(issue: IssueIF): [boolean, number
 
   return [true, remainingTimeInSeconds];
 }
+/**
+ * Returns the remaining time in hours and days
+  Returns string 'expired' , when remaining time = 0 returns empty string, when issue has no Sla Rule
+ * @param issue An instance of IssueIF or null
+*  @function calls calculateRemainingReactionTime and computes time
+ * @returns The formatted reaction time in hours and days
+ */
+
+export function calculateRemainingTime(issue: IssueIF): string {
+  const [hasSlaRule, remainingTimeInSeconds] = calculateRemainingReactionTime(issue);
+
+  if (!hasSlaRule) {
+    return ''; // Return an empty string if there's no SLA rule or the time has expired
+  }
+  if (hasSlaRule && remainingTimeInSeconds <= 0) {
+    return 'Expired';
+  }
+
+  const remainingDays = Math.floor(remainingTimeInSeconds / (60 * 60 * 24));
+  const remainingHours = Math.floor((remainingTimeInSeconds % (60 * 60 * 24)) / (60 * 60));
+
+  if (remainingDays > 1) {
+    return `${remainingDays} days`;
+  }
+  return `${remainingHours} hours`;
+}
 
 // function to check if issue has an assigned SLA rule
 export function hasSlaRule(issue: IssueIF): boolean {
@@ -191,4 +217,70 @@ export function getStatusesFromCategories(
   });
 
   return mapToReturn;
+}
+
+/**
+ * Returns the maximum issue count from the given array of issues.
+ * If the issues array is empty, the function returns 100.
+ * @param issues An array of issues
+ * @returns The maximum issue count
+ */
+export function getIssueCountMax(issues: IssueIF[]): number {
+  if (issues.length === 0) {
+    return 100;
+  }
+  return issues.length;
+}
+
+/**
+ * if time since last status change is null, return 0
+ * @param issue an instance of an IssueIF
+ * @return returns resting time in hours or if more than 24 hours returns in days
+ */
+export function printRestingTime(issue: IssueIF): string {
+  if (issue.statusChanges == null) {
+    return '0';
+  }
+  const currentTime: Date = new Date();
+  const difference: number =
+    currentTime.valueOf() -
+    (issue.statusChanges[issue.statusChanges.length - 1].created?.valueOf() ?? 0);
+  if (difference >= 86400000) {
+    return `${(difference / 86400000).toFixed(0).toString()}d`; // returns time in days (86400000 ms = 1 day)
+  }
+  return `${(difference / 3600000).toFixed(0).toString()}h`; // returns the time in hours (3600000 ms = 1 hour)
+}
+
+/**
+ * returns resting Time (status) as number in days. returns 0 when days less than 1
+ * returns 0, when there are no status changes
+ * @param issue an instance of an IssueIF
+ * @return returns resting time days as number
+ */
+
+export function printRestingDays(issue: IssueIF): number {
+  if (issue.statusChanges == null) {
+    return 0;
+  }
+  const currentTime: Date = new Date();
+  const difference: number =
+    currentTime.valueOf() -
+    (issue.statusChanges[issue.statusChanges.length - 1].created?.valueOf() ?? 0);
+  if (difference >= 86400000) {
+    const days: number = difference / 86400000;
+    return Number(days.toFixed(0));
+  }
+  return 0;
+}
+
+/**
+ * Returns the full name of the assigned employee.
+ * If the employee is null, it returns an empty string.
+ * @param employee An instance of EmployeeIF or null
+ * @returns The formatted full name of the employee
+ */
+export function printAssignedTo(employee: EmployeeIF | null): string {
+  const firstName = employee?.firstName ?? '';
+  const lastName = employee?.lastName ?? '';
+  return `${firstName} ${lastName}`;
 }

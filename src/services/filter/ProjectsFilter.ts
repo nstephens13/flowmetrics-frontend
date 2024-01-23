@@ -2,6 +2,7 @@ import { Duration, type DurationLikeObject } from 'luxon';
 import type { ProjectIF } from '@/model/ProjectIF';
 import type { IssueIF } from '@/model/Issue/IssueIF';
 import type { FilterConfigIF } from '@/model/FilterConfigIF';
+import { printRestingDays } from '../issueCalculator';
 
 /**
  * Filters the issues in a project based on the allowed status whitelist specified in the filter configuration.
@@ -97,8 +98,7 @@ export function filterProjectIssuesWithMinimumStatusRestingTime(
 ): IssueIF[] {
   return issues.filter(
     (issue: IssueIF) =>
-      DurationLikeObjectToDays(issue.statusRestingTime) >=
-      filterConfig.projectFilter.minimumStatusRestingTime
+      printRestingDays(issue) >= filterConfig.projectFilter.minimumStatusRestingTime
   );
 }
 
