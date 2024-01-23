@@ -11,40 +11,8 @@
       <div class="flex flex-row">
         <div class="flex-column w-3">
           <Accordion :activeIndex="0">
-            <AccordionTab header="Add SLA category">
-              <div class="category-container flex flex-column">
-                <InputText
-                  v-model="newCategoryName"
-                  class="enter-category m-1"
-                  placeholder="Enter category name"
-                />
-                <Dropdown
-                  v-model="selectedProject"
-                  :options="projectOptions"
-                  class="select-customer-in m-1"
-                  placeholder="Select Customer Project"
-                  optionLabel="name"
-                />
-                <div v-if="!isSlaCategoryNameValid" class="error-message m-1 text-red-500 ml-3">
-                  {{ categoryErrorMessage }}
-                </div>
-                <div class="flex justify-content-start">
-                  <Button
-                    class="add-category m-1"
-                    label="Add category"
-                    style="background-color: var(--flowMetricsBlue)"
-                    @click="createCategory"
-                  ></Button>
-                </div>
-              </div>
-            </AccordionTab>
             <AccordionTab header="Add SLA rule">
               <div class="rule-container flex flex-column">
-                <InputText
-                  v-model="newRuleName"
-                  class="enter-rule m-1"
-                  placeholder="Enter rule name"
-                />
                 <Dropdown
                   v-model="selectedCategoryForAddRule"
                   :options="categories"
@@ -57,6 +25,11 @@
                   :options="occurredInOptions"
                   class="select-occurred-in m-1"
                   placeholder="Occurred in"
+                />
+                <InputText
+                  v-model="newRuleName"
+                  class="enter-rule m-1"
+                  placeholder="Enter rule name"
                 />
                 <MultiSelect
                   v-model="selectedIssueTypes"
@@ -75,6 +48,12 @@
                   optionValue="value"
                   multiple
                 />
+                <Calendar
+                  v-model="newExpirationDate"
+                  dateFormat="dd/mm/yy"
+                  class="select-expiration-date m-1"
+                  placeholder="Expiration Date"
+                />
                 <div v-if="!isRuleNameValid" class="error-message m-1 text-red-500">{{
                   ruleErrorMessage
                 }}</div>
@@ -84,6 +63,33 @@
                     label="Add rule"
                     style="background-color: var(--flowMetricsBlue)"
                     @click="addRule"
+                  ></Button>
+                </div>
+              </div>
+            </AccordionTab>
+            <AccordionTab header="Add SLA category">
+              <div class="category-container flex flex-column">
+                <Dropdown
+                  v-model="selectedProject"
+                  :options="projectOptions"
+                  class="select-customer-in m-1"
+                  placeholder="Select Customer Project"
+                  optionLabel="name"
+                />
+                <InputText
+                  v-model="newCategoryName"
+                  class="enter-category m-1"
+                  placeholder="Enter category name"
+                />
+                <div v-if="!isSlaCategoryNameValid" class="error-message m-1 text-red-500 ml-3">
+                  {{ categoryErrorMessage }}
+                </div>
+                <div class="flex justify-content-start">
+                  <Button
+                    class="add-category m-1"
+                    label="Add category"
+                    style="background-color: var(--flowMetricsBlue)"
+                    @click="createCategory"
                   ></Button>
                 </div>
               </div>
@@ -277,6 +283,7 @@ const newPriority: Ref<string[]> = ref([]);
 const newRuleName = ref('');
 const newReactionTime = ref('');
 const newCategoryName = ref('');
+const newExpirationDate = ref();
 
 const isReactionTimeValid = ref(true);
 const isSlaCategoryNameValid = ref(true);
@@ -346,7 +353,7 @@ function addRule() {
   const rule: RuleIF = {
     id: selectedCategoryForAddRule.value.rules.length + 1,
     name: newRuleName.value.trim(),
-    expirationDate: null,
+    expirationDate: newExpirationDate.value as Date,
     reactionTime: { weeks: 0, days: 0, hours: 0 },
     occurredIn: newOccurredIn.value,
     priority: newPriority.value,
@@ -357,6 +364,7 @@ function addRule() {
   newOccurredIn.value = '';
   newPriority.value = [];
   selectedIssueTypes.value = [];
+  newExpirationDate.value = null;
 }
 
 function createCategory() {
