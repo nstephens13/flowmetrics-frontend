@@ -42,9 +42,10 @@
                 />
                 <MultiSelect
                   v-model="newPriority"
-                  :options="priorityOptions"
+                  :options="preparedPriorityOptions"
                   class="select-priority-in m-1"
                   placeholder="Priority"
+                  optionLabel="label"
                   optionValue="value"
                   multiple
                 />
@@ -101,6 +102,7 @@
                   :options="categories"
                   class="select-category-for-reaction-time m-1"
                   placeholder="Select category"
+                  optionLabel="name"
                 />
                 <Dropdown
                   v-model="selectedRule"
@@ -147,7 +149,7 @@
             <Column field="id" header="Id" />
             <Column field="name" header="Category name" />
             <Column field="project.name" header="Project" />
-            <Column field="rules.length" header="Number of Rules" />
+            <Column field="rules.length" header="Number of rules" />
             <Column>
               <template #body="rowData">
                 <Button
@@ -281,13 +283,7 @@ const expandedRows = ref([]);
 const projectOptions: ComputedRef<ProjectIF[]> = computed(() => projectStore.getProjects);
 const categories: ComputedRef<CategoryIF[]> = computed(() => slaRulesStore.categories);
 const occurredInOptions = ['Test', 'Pre-production', 'Production'];
-const priorityOptions = [
-  Priority.none,
-  Priority.low,
-  Priority.medium,
-  Priority.high,
-  Priority.critical,
-];
+const priorityOptions = Object.values(Priority);
 const issueTypeOptions = Object.values(IssueTypes);
 const rules: ComputedRef<RuleIF[]> = computed(
   () => selectedCategoryForReactionTime.value?.rules || []
@@ -411,11 +407,14 @@ function printRestingTime(restingTime: any): string {
   if (restingTime == null) {
     return '0d 0h 0m';
   }
-  return Duration.fromObject(restingTime).toFormat("d'd 'h'h 'm'm'").toString();
+  return Duration.fromObject(restingTime).toFormat("d' days 'h' hours ").toString();
 }
 
 const preparedIssueTypeOptions = computed(() =>
   issueTypeOptions.map((option) => ({ label: option, value: option }))
+);
+const preparedPriorityOptions = computed(() =>
+  priorityOptions.map((option) => ({ label: option, value: option }))
 );
 
 const ruleErrorMessage = computed(() =>
