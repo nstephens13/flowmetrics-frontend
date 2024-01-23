@@ -148,13 +148,14 @@
             <Column field="name" header="Category name" />
             <Column field="project.name" header="Project" />
             <Column field="rules.length" header="Number of Rules" />
-            <Column header="Delete">
+            <Column>
               <template #body="rowData">
                 <Button
                   class="p-button-danger trash-size m-1"
                   icon="pi pi-trash"
                   @click="slaRulesStore.deleteCategory(rowData.data)"
                   rounded
+                  outlined
                 ></Button>
               </template>
             </Column>
@@ -199,13 +200,14 @@
                       </span>
                     </template>
                   </Column>
-                  <Column header="Delete">
+                  <Column>
                     <template #body="rowData">
                       <Button
                         class="p-button-danger trash-size m-1"
                         icon="pi pi-trash"
                         @click="slaRulesStore.deleteRule(slotProps.data, rowData.data)"
                         rounded
+                        outlined
                       ></Button>
                     </template>
                   </Column>
