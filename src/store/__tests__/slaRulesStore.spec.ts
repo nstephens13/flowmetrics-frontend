@@ -31,6 +31,13 @@ const Project1: ProjectIF = {
   description: 'New Project Description',
   issues: [],
 };
+const Project2: ProjectIF = {
+  id: 2,
+  name: 'New Project',
+  description: 'New Project Description',
+  issues: [],
+};
+
 const Category1: CategoryIF = {
   id: 1,
   name: 'New Category',
@@ -40,7 +47,7 @@ const Category1: CategoryIF = {
 const Category2: CategoryIF = {
   id: 2,
   name: 'New Category',
-  project: Project1,
+  project: Project2,
   rules: [],
 };
 

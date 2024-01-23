@@ -38,7 +38,6 @@ import 'primevue/resources/themes/lara-light-indigo/theme.css';
 import 'primevue/resources/primevue.min.css';
 import 'primeicons/primeicons.css';
 import 'primeflex/primeflex.css';
-import initSlaStore from '@/store/mockdata/initSlaStore';
 import initProjectStore from '@/store/mockdata/initProjectStore';
 import { initFilterConfigStore } from '@/store/mockdata/initFilterConfigStore';
 import initSlaRulesStore from '@/store/mockdata/initSlaRulesStore';
@@ -84,5 +83,4 @@ app.mount('#app');
 // initialize the stores
 initProjectStore();
 initFilterConfigStore();
-initSlaStore();
 initSlaRulesStore();
