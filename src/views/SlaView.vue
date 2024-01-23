@@ -161,30 +161,28 @@
                   <Column field="priority" header="Priority">
                     <template #body="slotProps">
                       <span>
-                        {{ slotProps.data.rule?.priority?.join(', ') }}
+                        {{ slotProps.data.priority.join(', ') }}
                       </span>
                     </template>
                   </Column>
                   <Column field="issueType" header="Issue type">
                     <template #body="slotProps">
                       <span>
-                        {{ slotProps.data.rule?.issueType?.join(', ') }}
+                        {{ slotProps.data.issueType.join(', ') }}
                       </span>
                     </template>
                   </Column>
                   <Column field="reactionTime" header="Reaction time">
                     <template #body="slotProps">
                       <span>
-                        {{ slotProps.data.rule?.reactionTime?.weeks }}w
-                        {{ slotProps.data.rule?.reactionTime?.days }}d
-                        {{ slotProps.data.rule?.reactionTime?.hours }}h
+                        {{ printRestingTime(slotProps.data.reactionTime) }}
                       </span>
                     </template>
                   </Column>
                   <Column field="expirationDate" header="Expiration date">
                     <template #body="slotProps">
                       <span>
-                        {{ slotProps.data.rule?.expirationDate }}
+                        {{ slotProps.data.expirationDate }}
                       </span>
                     </template>
                   </Column>
@@ -209,7 +207,7 @@
 </template>
 
 <script lang="ts" setup>
-import { type DurationLikeObject } from 'luxon';
+import { Duration, type DurationLikeObject } from 'luxon';
 import type { ComputedRef, Ref } from 'vue';
 import { computed, ref } from 'vue';
 import type Column from 'primevue/column';
@@ -384,6 +382,13 @@ function createCategory() {
     issues: [],
   } as ProjectIF;
   newCategoryName.value = '';
+}
+
+function printRestingTime(restingTime: any): string {
+  if (restingTime == null) {
+    return '0d 0h 0m';
+  }
+  return Duration.fromObject(restingTime).toFormat("d'd 'h'h 'm'm'").toString();
 }
 
 const preparedIssueTypeOptions = computed(() =>

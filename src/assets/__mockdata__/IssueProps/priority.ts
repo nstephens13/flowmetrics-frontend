@@ -1,5 +1,5 @@
 enum Priority {
-  none = '',
+  none = 'No Priority',
   low = 'Kosmetik',
   medium = 'leicht umgehbar',
   high = 'behindernd',
