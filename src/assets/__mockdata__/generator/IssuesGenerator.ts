@@ -24,7 +24,7 @@ function getIssue(issueNumber: number, issueTypeNumber: number): IssueIF {
   const createdDate: Date =
     issueType === IssueTypes.zombie
       ? faker.date.past({ refDate: getDateAndTimeInPast(30) })
-      : faker.date.past({ refDate: getDateAndTimeInPast(4) });
+      : faker.date.recent({ refDate: getDateAndTimeInPast(4) });
   const assignedEmployee: EmployeeIF = getRandomEmployee();
   const generatedStatusChanges = generateStatusChanges(
     issueType,
@@ -56,7 +56,10 @@ function getIssue(issueNumber: number, issueTypeNumber: number): IssueIF {
     name: `${faker.hacker.adjective()}`,
     description: `${faker.hacker.phrase()}`,
     assignedTo: assignedEmployee,
-    issueType,
+    issueType:
+      issueType === IssueTypes.zombie
+        ? Object.values(IssueTypes)[getRandomInt(Object.keys(IssueTypes).length - 1)]
+        : issueType,
     priority: faker.helpers.arrayElement(Object.values(Priority)),
     createdBy: getRandomEmployee(),
     createdAt: createdDate,

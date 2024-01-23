@@ -166,9 +166,12 @@
                   <Column field="occurredIn" header="Occurred in" />
                   <Column field="priority" header="Priority">
                     <template #body="slotProps">
-                      <span>
-                        {{ slotProps.data.priority.join(', ') }}
-                      </span>
+                      <div v-if="slotProps.data.priority.length === 5">
+                        <span> All priorities selected </span>
+                      </div>
+                      <div v-else>
+                        <span>{{ slotProps.data.priority.join(', ') }}</span>
+                      </div>
                     </template>
                   </Column>
                   <Column field="issueType" header="Issue type">
@@ -188,7 +191,11 @@
                   <Column field="expirationDate" header="Expiration date">
                     <template #body="slotProps">
                       <span>
-                        {{ slotProps.data.expirationDate }}
+                        {{
+                          DateTime.fromJSDate(slotProps.data.expirationDate).toLocaleString(
+                            DateTime.DATETIME_FULL
+                          )
+                        }}
                       </span>
                     </template>
                   </Column>
@@ -213,7 +220,7 @@
 </template>
 
 <script lang="ts" setup>
-import { Duration, type DurationLikeObject } from 'luxon';
+import { DateTime, Duration, type DurationLikeObject } from 'luxon';
 import type { ComputedRef, Ref } from 'vue';
 import { computed, ref } from 'vue';
 import type Column from 'primevue/column';
@@ -272,7 +279,13 @@ const expandedRows = ref([]);
 const projectOptions: ComputedRef<ProjectIF[]> = computed(() => projectStore.getProjects);
 const categories: ComputedRef<CategoryIF[]> = computed(() => slaRulesStore.categories);
 const occurredInOptions = ['Test', 'Pre-production', 'Production'];
-const priorityOptions = Object.values(Priority);
+const priorityOptions = [
+  Priority.none,
+  Priority.low,
+  Priority.medium,
+  Priority.high,
+  Priority.critical,
+];
 const issueTypeOptions = Object.values(IssueTypes);
 const rules: ComputedRef<RuleIF[]> = computed(
   () => selectedCategoryForReactionTime.value?.rules || []

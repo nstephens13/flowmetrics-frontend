@@ -57,7 +57,11 @@
     <Column field="description" header="Description"></Column>
     <Column field="priority" header="Priority"></Column>
     <Column field="issueType" header="Issue type"></Column>
-    <Column field="createdAt" header="Created on"></Column>
+    <Column field="createdAt" header="Created on">
+      <template #body="slotProps">
+        {{ DateTime.fromJSDate(slotProps.data.createdAt).toLocaleString(DateTime.DATETIME_FULL) }}
+      </template>
+    </Column>
     <Column field="createdBy" header="Created by">
       <template #body="slotProps">
         {{ printAssignedTo(slotProps.data.createdBy) }}
@@ -133,7 +137,11 @@
         {{ printRestingTime(slotProps.data.statusRestingTime) }}
       </template>
     </Column>
-    <Column field="dueTo" header="Due date"></Column>
+    <Column field="dueTo" header="Due date">
+      <template #body="slotProps">
+        {{ DateTime.fromJSDate(slotProps.data.dueTo).toLocaleString(DateTime.DATETIME_FULL) }}
+      </template>
+    </Column>
     <Column header="Remaining reaction time">
       <template #body="slotProps">
         {{ calculateRemainingTime(slotProps.data) }}
@@ -145,7 +153,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import type { Ref } from 'vue';
-import { Duration } from 'luxon';
+import { DateTime, Duration } from 'luxon';
 import { FilterMatchMode } from 'primevue/api';
 import CircularProgressBar from '@/components/CircularProgressBar.vue';
 import type { ProjectIF } from '@/model/ProjectIF';
