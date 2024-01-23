@@ -1,0 +1,24 @@
+import { Duration } from 'luxon';
+import { faker } from '@faker-js/faker';
+import type { RuleIF } from '@/model/Sla/RuleIF';
+import Priority from '@/assets/__mockdata__/IssueProps/priority';
+import IssueTypes from '@/assets/__mockdata__/IssueProps/issueTypes';
+
+export default function generateRules(): RuleIF[] {
+  const rules: RuleIF[] = [];
+  const numberOfRules = Math.floor(Math.random() * 12) + 1;
+  for (let i = 0; i < numberOfRules; i++) {
+    rules.push({
+      id: i,
+      name: `SLA Rule ${i}`,
+      reactionTime: Duration.fromObject({
+        days: Math.floor(Math.floor(Math.random() * (30 - 7 + 1)) + 7),
+      }).toObject(),
+      expirationDate: faker.date.soon({ days: Math.floor(Math.random() * 21) + 1 }) as Date,
+      occurredIn: faker.helpers.arrayElement(['Test', 'Pre-production', 'Production']),
+      priority: Object.values(Priority),
+      issueType: [Object.values(IssueTypes)[i]] as string[],
+    });
+  }
+  return rules;
+}
