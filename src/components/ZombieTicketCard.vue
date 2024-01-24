@@ -29,7 +29,15 @@
             </template>
           </Column>
           <Column field="status" header="Status"></Column>
-          <Column field="statusRestingTime" header="Resting time (Status)"></Column>
+          <Column field="statusRestingTime" header="Resting time (Status)">
+            <template #body="slotProps">
+              {{
+                Duration.fromObject(slotProps.data.statusRestingTime)
+                  .toFormat("d' days 'h' hours ")
+                  .toString()
+              }}
+            </template>
+          </Column>
         </DataTable>
       </template>
     </Card>
@@ -67,6 +75,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import { Duration } from 'luxon';
 import { calculateStatusChanges } from '@/services/issueCalculator';
 import { filterIssuesMinimumStatusChangesAndRestingTime } from '@/services/filter/ProjectsFilter';
 import type { ProjectIF } from '@/model/ProjectIF';

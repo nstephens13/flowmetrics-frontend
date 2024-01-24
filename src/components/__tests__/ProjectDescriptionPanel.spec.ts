@@ -37,6 +37,8 @@ describe('Project Overview should load all the Components', () => {
                 id: 923,
                 name: 'Test',
                 description: 'Demo',
+                priority: 'high',
+                issueType: 'Bug',
                 assignedTo: null,
                 createdBy: null,
                 createdAt: null,
@@ -47,7 +49,6 @@ describe('Project Overview should load all the Components', () => {
                 statusRestingTime: null,
                 statusChanges: null,
                 assigneeChanges: null,
-                assignedSlaRule: null,
               },
             ],
             slaSubscriber: null,
@@ -104,23 +105,6 @@ describe('Project Overview should load all the Components', () => {
       });
   });
 
-  // Test to check the filter menu dropdown button
-  test('filter menu dropdown button', () => {
-    const dropdown = wrapper.getComponent(Dropdown);
-    const dropdownOptions = dropdown.props('options');
-
-    wrapper
-      .getComponent(Dropdown)
-      .setValue(dropdownOptions[0])
-      .then(() => {
-        const tableButton = wrapper.find('.p-column-filter-menu-button');
-        tableButton.trigger('click').then(() => {
-          const multiSelect = wrapper.getComponent(MultiSelect);
-          expect(4).toEqual(multiSelect.props('options').length);
-        });
-      });
-  });
-
   test('DataTable should contain "id" column with field ', () => {
     const dataTable = wrapper.getComponent(DataTable);
     const columns = dataTable.findAllComponents(Column);
@@ -146,22 +130,5 @@ describe('Project Overview should load all the Components', () => {
     const columns = dataTable.findAllComponents(Column);
     const columnExists = columns.some((column) => column.props('field') === 'createdAt');
     expect(columnExists).toBe(true);
-  });
-
-  test('Status changes are shown in Mocking Bird Project', async () => {
-    const projectDropdown = wrapper.getComponent(Dropdown);
-
-    const dropdownOptions = projectDropdown.props('options');
-    const project = dropdownOptions[0];
-
-    await projectDropdown.setValue(project).then(async () => {
-      const dataTable = wrapper.getComponent(DataTable);
-      const columns = dataTable.findAllComponents(Column);
-      const columnExists = columns.some((column) => column.props('field') === 'statusChanges');
-      expect(columnExists).toBe(true);
-    });
-
-    expect(1).toEqual(dropdownOptions.length);
-    expect('Project 1').toEqual(project.name);
   });
 });

@@ -5,14 +5,12 @@ import { Category, statusLists } from '@/assets/__mockdata__/IssueProps/statusLi
 import slaRulesStore from '@/store/slaRulesStore';
 
 /**
- * @brief calculates the amount of fulfilled sla rules of one issue
+ * @brief function to calculate the amount of issues that fulfills sla rules
  *
- * @param issue issue to analyze
- * @var compareTime if  a ticket is already closed use that time to compare, otherwise use current time
- *
+ * @param project project to analyze
  * @returns number of complied sla rules of one issue
  */
-function numberOfIssueThatFullFillsSlaRules(project: ProjectIF): number {
+function numberOfIssueThatFulfillsSlaRules(project: ProjectIF): number {
   const category = slaRulesStore().getCategoriesContainingProject(project.id as number);
   const { rules } = category;
   const { issues } = project;
@@ -44,7 +42,7 @@ export function getPercentageSlaRulesComplied(project: ProjectIF): string {
   if (!project || Object.keys(project).length === 0 || getNumberOfSlaRulesOfProject(project) === 0)
     return '0 %';
   return `${Math.trunc(
-    (numberOfIssueThatFullFillsSlaRules(project) / getNumberOfSlaRulesOfProject(project)) * 100
+    (numberOfIssueThatFulfillsSlaRules(project) / getNumberOfSlaRulesOfProject(project)) * 100
   )} %`;
 }
 

@@ -18,4 +18,3 @@ export default function getTimeDifference(
     .diff(startDateTime, ['weeks', 'days', 'hours', 'minutes', 'seconds', 'milliseconds'])
     .toObject();
 }
-

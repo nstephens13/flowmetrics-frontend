@@ -6,7 +6,7 @@ import IssueTypes from '@/assets/__mockdata__/IssueProps/issueTypes';
 
 export default function generateRules(): RuleIF[] {
   const rules: RuleIF[] = [];
-  const numberOfRules = Math.floor(Math.random() * 10) + 1;
+  const numberOfRules = Math.floor(Math.random() * 6) + 5;
   for (let i = 0; i < numberOfRules; i++) {
     rules.push({
       id: i + 1,

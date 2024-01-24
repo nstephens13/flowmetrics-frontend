@@ -164,13 +164,12 @@ import CircularProgressBar from '@/components/CircularProgressBar.vue';
 import type { ProjectIF } from '@/model/ProjectIF';
 import { countIssuesByState, Issue } from '@/services/Issue';
 import type { EmployeeIF } from '@/model/EmployeeIF';
-import type { IssueIF } from '@/model/Issue/IssueIF';
 import { getIssueStateList, getIssueStatusList } from '@/model/ProjectIF';
 import { calculateStatusChanges } from '@/services/issueCalculator';
 import projectStore from '@/store/projectStore';
 import slaRulesStore from '@/store/slaRulesStore';
 import { Category } from '@/assets/__mockdata__/IssueProps/statusLists';
-import getReactionTimeForIssue from '@/services/ReactionTimeCalculator';
+import getReactionTimeForIssue from '@/services/reactionTimeCalculator';
 
 // Create a reference for the selectedProject with initial data
 
@@ -225,33 +224,14 @@ function printAssignedTo(employee: EmployeeIF | null): string {
 
 /**
  * if time since last status change is null, return 0
- * @param issue an instance of an IssueIF
  * @return returns resting time in hours or if more than 24 hours returns in days
+ * @param restingTime
  */
 function printRestingTime(restingTime: any): string {
   if (restingTime == null) {
     return '0';
   }
   return Duration.fromObject(restingTime).toFormat("d'd 'h'h 'm'm'").toString();
-}
-
-function calculateRemainingTime(issue: IssueIF): string {
-  const [hasSlaRule, remainingTimeInSeconds] = calculateRemainingReactionTime(issue);
-
-  if (!hasSlaRule) {
-    return ''; // Return an empty string if there's no SLA rule or the time has expired
-  }
-  if (hasSlaRule && remainingTimeInSeconds <= 0) {
-    return 'Expired';
-  }
-
-  const remainingDays = Math.floor(remainingTimeInSeconds / (60 * 60 * 24));
-  const remainingHours = Math.floor((remainingTimeInSeconds % (60 * 60 * 24)) / (60 * 60));
-
-  if (remainingDays > 1) {
-    return `${remainingDays} days`;
-  }
-  return `${remainingHours} hours`;
 }
 </script>
 

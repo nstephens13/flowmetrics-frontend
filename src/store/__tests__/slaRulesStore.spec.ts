@@ -1,9 +1,9 @@
 import { describe, expect, test } from 'vitest';
 import { createPinia, setActivePinia } from 'pinia';
 import useSlaRulesStore from '../slaRulesStore';
-import { RuleIF } from '../../model/Sla/RuleIF';
-import { CategoryIF } from '../../model/Sla/CategoryIF';
-import { ProjectIF } from '../../model/ProjectIF';
+import type { RuleIF } from '../../model/Sla/RuleIF';
+import type { CategoryIF } from '../../model/Sla/CategoryIF';
+import type { ProjectIF } from '../../model/ProjectIF';
 
 const Rule1: RuleIF = {
   id: 1,
