@@ -70,8 +70,12 @@
             <BarDiagram :project="selectedProject"></BarDiagram>
           </div>
           <div class="flex w-full" style="width: 100%">
-            <ZombieTicketCard :project="selectedProject"></ZombieTicketCard>
-            <Divider class="p-divider p-divider-horizontal divider-position" />
+            <div class="flex flex-wrap" style="min-width: 100%">
+              <div class="flex m-2" style="min-width: 100%, margin-left=30px">
+                <ZombieTicketCard :project="selectedProject"></ZombieTicketCard>
+              </div>
+              <Divider class="p-divider p-divider-horizontal divider-position" />
+            </div>
           </div>
         </div>
       </template>
@@ -107,11 +111,11 @@ const selectedProject: Ref<ProjectIF> = ref({
 
 <style scoped>
 .p-card {
-  margin: 15px 15px 0 50px;
+  margin: 15px 0px 0 15px;
   box-shadow: none;
 }
 .project-card {
-  margin: 15px 15px 0 15px;
+  margin: 15px 0px 0 15px;
 }
 :deep(.project-card > .p-card-body) {
   padding-bottom: 0;

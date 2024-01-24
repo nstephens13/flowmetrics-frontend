@@ -199,15 +199,18 @@ const applyOnEnter = () => {
 .flex-container {
   display: flex;
   justify-content: space-between;
+  margin: 30px 30px 0 0px;
 }
 
 .flex-item {
   flex: 1;
   min-width: 0;
+  margin: 15px 15px 0 15px;
 }
 .flex-double {
   flex: 4;
   width: 100%;
+  margin: 15px 15px 0 15px;
 }
 
 .flex-container {
