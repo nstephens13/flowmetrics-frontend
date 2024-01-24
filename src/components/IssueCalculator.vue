@@ -161,7 +161,7 @@ import { countIssuesByState, Issue } from '@/services/Issue';
 import type { EmployeeIF } from '@/model/EmployeeIF';
 import type { IssueIF } from '@/model/Issue/IssueIF';
 import { getIssueStateList, getIssueStatusList } from '@/model/ProjectIF';
-import { calculateRemainingReactionTime, calculateStatusChanges } from '@/services/issueCalculator';
+import { calculateStatusChanges } from '@/services/issueCalculator';
 import projectStore from '@/store/projectStore';
 import { Category } from '@/assets/__mockdata__/IssueProps/statusLists';
 

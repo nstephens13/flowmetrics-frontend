@@ -124,11 +124,7 @@
                       />
                     </template>
                   </Column>
-                  <Column header="Remaining Reaction Time">
-                    <template #body="slotProps">
-                      {{ calculateRemainingTime(slotProps.data) }}
-                    </template>
-                  </Column>
+                  <Column header="Remaining Reaction Time" />
                   <Column field="statusChanges" header="Status changes" style="width: 150px">
                     <template #body="slotProps">
                       {{ calculateStatusChanges(slotProps.data) }}
@@ -207,25 +203,6 @@ function printAssignedTo(employee: EmployeeIF | null): string {
   const firstName = employee?.firstName ?? '';
   const lastName = employee?.lastName ?? '';
   return `${firstName} ${lastName}`;
-}
-
-function calculateRemainingTime(issue: IssueIF): string {
-  const [hasSlaRule, remainingTimeInSeconds] = calculateRemainingReactionTime(issue);
-
-  if (!hasSlaRule) {
-    return ''; // Return an empty string if there's no SLA rule or the time has expired
-  }
-  if (hasSlaRule && remainingTimeInSeconds <= 0) {
-    return 'Expired';
-  }
-
-  const remainingDays = Math.floor(remainingTimeInSeconds / (60 * 60 * 24));
-  const remainingHours = Math.floor((remainingTimeInSeconds % (60 * 60 * 24)) / (60 * 60));
-
-  if (remainingDays > 1) {
-    return `${remainingDays} days`;
-  }
-  return `${remainingHours} hours`;
 }
 
 // Create a reference for the statuses array

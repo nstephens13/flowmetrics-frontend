@@ -12,7 +12,7 @@ const Rule1: RuleIF = {
   expirationDate: new Date(),
   occurredIn: 'Test',
   priority: ['behindernd'],
-  issueType: ['bug', 'test'],
+  issueType: 'bug',
 };
 
 const Rule2: RuleIF = {
@@ -22,7 +22,7 @@ const Rule2: RuleIF = {
   expirationDate: new Date(),
   occurredIn: 'Test',
   priority: ['behindernd'],
-  issueType: ['bug', 'test'],
+  issueType: 'test',
 };
 
 const Project1: ProjectIF = {

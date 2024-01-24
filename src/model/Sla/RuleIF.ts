@@ -17,5 +17,5 @@ export interface RuleIF {
   expirationDate: Date | null;
   occurredIn: string | null;
   priority: string[] | null;
-  issueType: string[] | null;
+  issueType: string;
 }

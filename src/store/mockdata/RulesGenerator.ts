@@ -6,7 +6,7 @@ import IssueTypes from '@/assets/__mockdata__/IssueProps/issueTypes';
 
 export default function generateRules(): RuleIF[] {
   const rules: RuleIF[] = [];
-  const numberOfRules = Math.floor(Math.random() * 12) + 1;
+  const numberOfRules = Math.floor(Math.random() * 10) + 1;
   for (let i = 0; i < numberOfRules; i++) {
     rules.push({
       id: i + 1,
@@ -17,7 +17,7 @@ export default function generateRules(): RuleIF[] {
       expirationDate: faker.date.soon({ days: Math.floor(Math.random() * 21) + 1 }) as Date,
       occurredIn: faker.helpers.arrayElement(['Test', 'Pre-production', 'Production']),
       priority: Object.values(Priority),
-      issueType: [Object.values(IssueTypes)[i]] as string[],
+      issueType: Object.values(IssueTypes)[i],
     });
   }
   return rules;

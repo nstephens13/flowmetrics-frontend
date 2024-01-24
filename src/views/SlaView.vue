@@ -31,14 +31,13 @@
                   class="enter-rule m-1"
                   placeholder="Enter rule name"
                 />
-                <MultiSelect
+                <Dropdown
                   v-model="selectedIssueTypes"
                   :options="preparedIssueTypeOptions"
                   class="select-issueType-in m-1"
-                  placeholder="Select issue types"
+                  placeholder="Select issue type"
                   optionLabel="label"
                   optionValue="value"
-                  multiple
                 />
                 <MultiSelect
                   v-model="newPriority"
@@ -48,6 +47,7 @@
                   optionLabel="label"
                   optionValue="value"
                   multiple
+                  :maxSelectedLabels="2"
                 />
                 <Calendar
                   v-model="newExpirationDate"
@@ -177,13 +177,7 @@
                       </div>
                     </template>
                   </Column>
-                  <Column field="issueType" header="Issue type">
-                    <template #body="slotProps">
-                      <span>
-                        {{ slotProps.data.issueType.join(', ') }}
-                      </span>
-                    </template>
-                  </Column>
+                  <Column field="issueType" header="Issue type" />
                   <Column field="reactionTime" header="Reaction time">
                     <template #body="slotProps">
                       <span>
@@ -275,9 +269,9 @@ const selectedRule: Ref<RuleIF> = ref({
   reactionTime: 0,
   occurredIn: null,
   priority: null,
-  issueType: null,
+  issueType: '',
 } as RuleIF);
-const selectedIssueTypes: Ref<string[]> = ref([]);
+const selectedIssueTypes: Ref<string> = ref('');
 const expandedRows = ref([]);
 
 const projectOptions: ComputedRef<ProjectIF[]> = computed(() => projectStore.getProjects);
@@ -338,7 +332,7 @@ function addReactionTime() {
       reactionTime: 0,
       occurredIn: null,
       priority: null,
-      issueType: null,
+      issueType: '',
     } as RuleIF;
     selectedCategoryForReactionTime.value = {
       id: 0,
@@ -374,8 +368,19 @@ function addRule() {
   newRuleName.value = '';
   newOccurredIn.value = '';
   newPriority.value = [];
-  selectedIssueTypes.value = [];
+  selectedIssueTypes.value = '';
   newExpirationDate.value = null;
+  selectedCategoryForAddRule.value = {
+    id: 0,
+    name: '',
+    project: {
+      id: 0,
+      name: '',
+      description: '',
+      issues: [],
+    },
+    rules: [],
+  } as CategoryIF;
 }
 
 function createCategory() {

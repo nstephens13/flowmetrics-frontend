@@ -58,61 +58,10 @@ export function mapIssuesToEmployees(projects: ProjectIF[] | null): Map<Employee
 }
 
 /**
- * Calculate the remaining reaction time for an issue.
- *
- * @param issue - The issue for which to calculate the remaining reaction time.
- * @returns [boolean, number] - A tuple containing a boolean indicating whether the issue has an SLA rule,
- * and the remaining reaction time in seconds.
+ * function to calculate the number of status changes
+ * @param issue
+ * @returns number of status changes
  */
-export function calculateRemainingReactionTime(issue: IssueIF): [boolean, number] {
-  if (!issue.createdAt || !issue.assignedSlaRule) {
-    return [false, 0];
-  }
-
-  // Find the shortest reaction time in the SLA rules
-  const shortestReactionTime = issue.assignedSlaRule.reduce((minTime: number | null, rule) => {
-    if (
-      rule.reactionTimeInDays !== null &&
-      (minTime === null || rule.reactionTimeInDays < minTime)
-    ) {
-      return rule.reactionTimeInDays;
-    }
-    return minTime;
-  }, null);
-
-  // If no reaction time is found, return 0
-  if (shortestReactionTime === null) {
-    return [false, 0];
-  }
-
-  // Calculate the expiration date based on the shortest reaction time
-  const expirationDate = new Date(issue.createdAt);
-  expirationDate.setDate(expirationDate.getDate() + shortestReactionTime);
-
-  // Calculate the remaining time in seconds
-  const currentDate = new Date();
-  const remainingTimeInSeconds = Math.floor(
-    (expirationDate.getTime() - currentDate.getTime()) / 1000
-  );
-
-  return [true, remainingTimeInSeconds];
-}
-
-// function to check if issue has an assigned SLA rule
-export function hasSlaRule(issue: IssueIF): boolean {
-  return issue.assignedSlaRule !== null;
-}
-
-// print assigned SLA rule names of issue
-export function printSlaRuleNames(issue: IssueIF): string {
-  if (issue.assignedSlaRule === null) {
-    return '';
-  }
-  return issue.assignedSlaRule.map((rule) => rule.name).join(', ');
-}
-
-// function to calculate the status changes of an issue from the changeLog
-// the status changes are calculated by the switch between the statuses
 export function calculateStatusChanges(issue: IssueIF): number {
   if (issue.statusChanges === null) {
     return 0;
@@ -139,30 +88,9 @@ export function calculateStatusChanges(issue: IssueIF): number {
 /**
  *
  * @param Issues array of issues
- * @returns Map with the status and the number of issues
- */
-export function getStatusesfromIssues(Issues: IssueIF[]): Map<string, number> {
-  const mapToReturn: Map<string, number> = new Map([]);
-  // write code to get all the statuses from the issue status and return a map with the status and the number of issues
-  Issues.forEach((issue) => {
-    const numberOfIssues =
-      mapToReturn.get(issue.status as string) === undefined
-        ? 0
-        : mapToReturn.get(issue.status as string);
-    if (numberOfIssues !== undefined) {
-      mapToReturn.set(issue.status as string, numberOfIssues + 1);
-    } else {
-      mapToReturn.set(issue.status as string, 1);
-    }
-  });
-  return mapToReturn;
-}
-
-/**
- *
- * @param Issues array of issues
  * @param categories array of categories
  * @returns Map with the status and the number of issues
+ * @author Nived Stephen
  */
 export function getStatusesFromCategories(
   Issues: IssueIF[],
