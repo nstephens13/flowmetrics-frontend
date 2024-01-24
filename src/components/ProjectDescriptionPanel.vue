@@ -171,7 +171,7 @@ import type { Ref } from 'vue';
 import { FilterMatchMode } from 'primevue/api';
 import type { EmployeeIF } from '@/model/EmployeeIF';
 import { getIssueStatusList, getIssueStateList, type ProjectIF } from '@/model/ProjectIF';
-import { calculateRemainingReactionTime, calculateStatusChanges } from '@/services/issueCalculator';
+import { calculateStatusChanges } from '@/services/issueCalculator';
 import type { IssueIF } from '@/model/Issue/IssueIF';
 import projectStore from '@/store/projectStore';
 import ZombieTicketCard from '@/components/ZombieTicketCard.vue';

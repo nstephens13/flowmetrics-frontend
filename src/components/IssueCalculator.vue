@@ -144,7 +144,12 @@
     </Column>
     <Column header="Remaining reaction time">
       <template #body="slotProps">
-        {{ calculateRemainingTime(slotProps.data) }}
+        {{
+          getReactionTimeForIssue(
+            slaRulesStore().getCategoriesContainingProject(selectedProject.id),
+            slotProps.data
+          )
+        }}
       </template>
     </Column>
   </DataTable>
@@ -163,7 +168,9 @@ import type { IssueIF } from '@/model/Issue/IssueIF';
 import { getIssueStateList, getIssueStatusList } from '@/model/ProjectIF';
 import { calculateStatusChanges } from '@/services/issueCalculator';
 import projectStore from '@/store/projectStore';
+import slaRulesStore from '@/store/slaRulesStore';
 import { Category } from '@/assets/__mockdata__/IssueProps/statusLists';
+import getReactionTimeForIssue from '@/services/ReactionTimeCalculator';
 
 // Create a reference for the selectedProject with initial data
 

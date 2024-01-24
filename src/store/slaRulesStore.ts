@@ -49,22 +49,8 @@ const useSlaRulesStore = defineStore('SLA rules store', {
         }
       }
     },
-    getCategoriesContainingProject(projectId: number): CategoryIF[] {
-      return this.categories.filter((category) => category.project.id === projectId);
-    },
-    getRulesFromCategoryWithIssueType(category: CategoryIF, issueType: string): RuleIF[] {
-      const rules: RuleIF[] = [];
-      if (category.id != null && category.id >= 1) {
-        const index = this.categories.findIndex((c) => c.id === category?.id);
-        if (index !== -1) {
-          this.categories[index].rules.forEach((rule) => {
-            if (rule.issueType === issueType) {
-              rules.push(rule);
-            }
-          });
-        }
-      }
-      return rules;
+    getCategoriesContainingProject(projectId: number): CategoryIF {
+      return this.categories.find((c) => c.project.id === projectId) as CategoryIF;
     },
   },
 });

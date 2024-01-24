@@ -12,7 +12,7 @@ export default function generateRules(): RuleIF[] {
       id: i + 1,
       name: `SLA Rule ${i + 1}`,
       reactionTime: Duration.fromObject({
-        days: Math.floor(Math.floor(Math.random() * 7) + 1),
+        days: Math.floor(Math.floor(Math.random() * 30) + 1),
       }).toObject(),
       expirationDate: faker.date.soon({ days: Math.floor(Math.random() * 21) + 1 }) as Date,
       occurredIn: faker.helpers.arrayElement(['Test', 'Pre-production', 'Production']),
