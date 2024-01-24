@@ -24,7 +24,7 @@ function calculateReactionTimeFromCreationDate(
  * @author Nived Stephen
  */
 export default function getReactionTimeForIssue(category: CategoryIF, issue: IssueIF): string {
-  if (issue.issueType !== null && category.rules.length > 0) {
+  if (category !== undefined && issue.issueType !== null && category.rules.length > 0) {
     const ruleToBeAssigned = category.rules.find((rule) =>
       rule.issueType.includes(issue.issueType as string)
     );
@@ -36,5 +36,5 @@ export default function getReactionTimeForIssue(category: CategoryIF, issue: Iss
     }
     return 'No rule found/No reaction time';
   }
-  return 'No rule found/Issue type is null';
+  return 'No rule found';
 }
