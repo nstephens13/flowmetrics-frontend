@@ -19,6 +19,8 @@
     </template>
     <template #content>
       <Chart
+        ref="issueChart"
+        id="issueChart"
         type="bar"
         :data="chartData"
         :options="chartOptions"
@@ -28,7 +30,7 @@
   </Card>
 </template>
 <script setup lang="ts">
-import { ref, onMounted, computed, defineProps, type Ref } from 'vue';
+import { ref, computed, defineProps, type Ref, type ComputedRef } from 'vue';
 import type { ProjectIF } from '@/model/ProjectIF';
 import { getStatusesFromCategories } from '@/services/issueCalculator';
 import { Category, getColorsforStatuses } from '@/assets/__mockdata__/StatusLists';
@@ -67,17 +69,6 @@ const totalNumberOfIssues = computed(() =>
   ).reduce((accumulator, currentValue) => accumulator + currentValue, 0)
 );
 
-const chartData = ref({
-  labels: [] as string[],
-  datasets: [
-    {
-      label: '',
-      backgroundColor: [] as string[],
-      data: [] as string[],
-    },
-  ],
-});
-
 const chartOptions = ref({
   plugins: {
     legend: {
@@ -108,31 +99,33 @@ const chartOptions = ref({
   animation: false,
 });
 
-const updateChartData = () => {
-  const labels = Array.from(
-    getStatusesFromCategories(props.project.issues, selectedCategory.value).keys()
-  );
-  const AllNumberOfIssues = Array.from(
-    getStatusesFromCategories(props.project.issues, selectedCategory.value).values()
-  ).map(String);
+const labels: ComputedRef<string[]> = computed(() =>
+  Array.from(getStatusesFromCategories(props.project.issues, selectedCategory.value).keys())
+);
 
-  chartData.value = {
-    labels,
-    datasets: [
-      {
-        label:
-          selectedCategory.value === undefined || selectedCategory.value?.length === 0
-            ? 'Issues'
-            : selectedCategory.value?.join(', '),
-        backgroundColor: getColorsforStatuses(labels),
-        data: AllNumberOfIssues,
-      },
-    ],
-  };
-};
+const AllNumberOfIssues = computed(() =>
+  Array.from(getStatusesFromCategories(props.project.issues, selectedCategory.value).values()).map(
+    String
+  )
+);
 
-onMounted(() => {
-  // Refresh data every second
-  setInterval(updateChartData, 1000);
+const chartData = computed(() => ({
+  labels: labels.value,
+  datasets: [
+    {
+      label:
+        selectedCategory.value === undefined || selectedCategory.value?.length === 0
+          ? 'Issues'
+          : selectedCategory.value?.join(', '),
+      backgroundColor: getColorsforStatuses(labels.value),
+      data: AllNumberOfIssues.value,
+    },
+  ],
+}));
+
+// re-render chart on window resize
+window.visualViewport?.addEventListener('resize', () => {
+  // re-render chart
+  chartOptions.value = { ...chartOptions.value };
 });
 </script>
