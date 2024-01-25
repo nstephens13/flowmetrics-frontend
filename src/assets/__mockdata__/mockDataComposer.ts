@@ -6,8 +6,7 @@ import employeeJson from '@/assets/__mockdata__/json/Employees.json';
 import issueJson2 from '@/assets/__mockdata__/json/Issues_2.json';
 import issueJson from '@/assets/__mockdata__/json/Issues.json';
 import { Issue } from '@/services/Issue';
-import type { SlaRule } from '@/model/Sla/SlaRule';
-import { Category, statusLists } from './StatusLists';
+import { Category, statusLists } from './IssueProps/statusLists';
 
 // Define lists of different category with statuses
 export const planningStatusList: string[] = statusLists[Category.planning];
@@ -36,6 +35,8 @@ function loadIssueDataFromFile(issues: any): Issue[] {
       id: issue.id as number,
       name: issue.name as string,
       description: issue.description as string,
+      priority: null,
+      issueType: null,
       assignedTo: issue.assignedTo as EmployeeIF,
       createdBy: issue.createdBy as EmployeeIF,
       closedAt: issue.closedAt ? new Date(issue.closedAt) : null,
@@ -45,7 +46,6 @@ function loadIssueDataFromFile(issues: any): Issue[] {
       assigneeRestingTime: null,
       statusRestingTime: null,
       assigneeChanges: null,
-      assignedSlaRule: issue.assignedSlaRule ? issue.assignedSlaRule : null,
       statusChanges: issue.statusChanges ? issue.statusChanges : [],
       state: issue.state as string,
     });
@@ -217,7 +217,6 @@ function getMockData(dataset: number): ProjectIF {
         name: faker.science.chemicalElement().name,
         description: faker.company.catchPhrase(),
         issues: issuesForProject,
-        slaSubscriber: null,
       };
     }
 
@@ -306,7 +305,6 @@ function getMockData(dataset: number): ProjectIF {
         name: faker.science.chemicalElement().name,
         description: faker.company.catchPhrase(),
         issues: issuesForProject,
-        slaSubscriber: null,
       };
     }
 
@@ -323,27 +321,18 @@ function getMockData(dataset: number): ProjectIF {
           closedAt = faker.date.recent();
         }
 
-        const slaRule1: SlaRule = {
-          id: 1,
-          name: 'SLA Rule 1',
-          reactionTimeInDays: 3,
-          expirationDate: new Date('2023-12-24T00:00:00.000Z'),
-          occurredIn: null,
-          priority: 'Kosmetik',
-          issueType: ['documentation', 'coverage'],
-        };
-
         issuesForProject.push({
           id: iterator + 1,
           name: faker.company.catchPhrase(),
           description: faker.hacker.phrase(),
+          priority: null,
+          issueType: null,
           closedAt,
           status,
           assignedTo: employeesArrayFromFile[getRandomInt(employeesForProject.length)],
           createdAt: faker.date.past(),
           createdBy: employeesArrayFromFile[getRandomInt(employeesForProject.length)],
           dueTo: faker.date.future(),
-          assignedSlaRule: [slaRule1],
           assigneeRestingTime: null,
           statusRestingTime: null,
           assigneeChanges: null,
@@ -370,7 +359,6 @@ function getMockData(dataset: number): ProjectIF {
         name: 'Mocking Bird Project',
         description: 'third mock dataset with a big number of random issues',
         issues: issuesForProject,
-        slaSubscriber: null,
       };
     }
 
@@ -401,17 +389,8 @@ function getMockData(dataset: number): ProjectIF {
           createdAt: faker.date.past(),
           createdBy: employeesArrayFromFile[getRandomInt(employeesForProject.length)],
           dueTo: faker.date.future(),
-          assignedSlaRule: [
-            {
-              id: 1,
-              name: 'SLA Rule 2',
-              reactionTimeInDays: 5,
-              expirationDate: new Date('2024-01-17T00:00:00.000Z'),
-              occurredIn: null,
-              priority: 'Kosmetik',
-              issueType: ['documentation', 'coverage'],
-            },
-          ],
+          priority: null,
+          issueType: null,
           assigneeChanges: null,
           assigneeRestingTime: null,
           statusChanges: null,
@@ -435,7 +414,6 @@ function getMockData(dataset: number): ProjectIF {
         name: 'Mocking Bird Project',
         description: 'third mock dataset with a big number of random issues',
         issues: issuesForProject,
-        slaSubscriber: null,
       };
     }
 
@@ -490,7 +468,6 @@ function getMockData(dataset: number): ProjectIF {
         name: 'Mocking Bird 2',
         description: 'second mock dataset',
         issues: issuesForProject,
-        slaSubscriber: null,
       };
     }
 
@@ -507,17 +484,8 @@ function getMockData(dataset: number): ProjectIF {
           createdBy: employeesArrayFromFile[getRandomInt(employeesForProject.length)],
           dueTo: faker.date.future(),
           status: '',
-          assignedSlaRule: [
-            {
-              id: 1,
-              name: 'SLA Rule 1',
-              reactionTimeInDays: 3,
-              expirationDate: new Date('2024-02-17T00:00:00.000Z'),
-              occurredIn: null,
-              priority: 'Kosmetik',
-              issueType: ['documentation', 'coverage'],
-            },
-          ],
+          priority: null,
+          issueType: null,
           statusChanges: [],
           state: '',
           assigneeRestingTime: null,
@@ -567,7 +535,6 @@ function getMockData(dataset: number): ProjectIF {
         name: faker.science.chemicalElement().name,
         description: 'Sixth mock dataset',
         issues: issuesForProject,
-        slaSubscriber: null,
       };
     }
 
@@ -580,13 +547,14 @@ function getMockData(dataset: number): ProjectIF {
           id: i + 1,
           name: faker.company.catchPhrase(),
           description: faker.hacker.phrase(),
+          priority: null,
+          issueType: null,
           closedAt: null,
           assignedTo: employeesArrayFromFile[getRandomInt(employeesForProject.length)],
           createdAt: faker.date.past(),
           createdBy: employeesArrayFromFile[getRandomInt(employeesForProject.length)],
           dueTo: faker.date.future(),
           status: '',
-          assignedSlaRule: [],
           assigneeRestingTime: null,
           statusRestingTime: null,
           assigneeChanges: null,
@@ -630,47 +598,11 @@ function getMockData(dataset: number): ProjectIF {
           employeesArrayFromFile
         );
       }
-
-      const slaRule1: SlaRule = {
-        id: 1,
-        name: 'SLA Rule 1',
-        reactionTimeInDays: 3,
-        expirationDate: new Date('2023-08-17T00:00:00.000Z'),
-        occurredIn: null,
-        priority: 'Kosmetik',
-        issueType: ['documentation', 'coverage'],
-      };
-      const slaRule2: SlaRule = {
-        id: 2,
-        name: 'SLA Rule 2',
-        reactionTimeInDays: 5,
-        expirationDate: new Date('2023-08-20T00:00:00.000Z'),
-        occurredIn: null,
-        priority: 'leicht umgehbar',
-        issueType: ['support'],
-      };
-      const slaRule3: SlaRule = {
-        id: 3,
-        name: 'SLA Rule 3',
-        reactionTimeInDays: 2,
-        expirationDate: new Date('2023-08-16T00:00:00.000Z'),
-        occurredIn: null,
-        priority: 'behindernd',
-        issueType: ['bug', 'test'],
-      };
-
-      const slaRuleArray: SlaRule[] = [slaRule1, slaRule2, slaRule3];
-
-      for (let i = 0; i < numberOfIssues; i++) {
-        const randomSlaRule = getRandomInt(3); // 0: SLA Rule 1, 1: SLA Rule 2, 2: SLA Rule 3
-        issues[i].assignedSlaRule?.push(slaRuleArray[randomSlaRule]);
-      }
       return {
         id: 7,
         name: 'Mocking Bird 7',
         description: 'seventh mock dataset',
         issues: issuesForProject,
-        slaSubscriber: null,
       };
     }
 
@@ -681,7 +613,6 @@ function getMockData(dataset: number): ProjectIF {
         name: faker.science.chemicalElement().name,
         description: faker.company.catchPhrase(),
         issues: [],
-        slaSubscriber: null,
       };
     }
     case 54: {
@@ -690,7 +621,6 @@ function getMockData(dataset: number): ProjectIF {
         name: faker.science.chemicalElement().name,
         description: faker.company.catchPhrase(),
         issues: [],
-        slaSubscriber: null,
       };
     }
 
@@ -738,40 +668,11 @@ function getMockData(dataset: number): ProjectIF {
         employeesForProject
       );
 
-      const slaRule1: SlaRule = {
-        id: 1,
-        name: 'SLA Rule 1',
-        reactionTimeInDays: 1,
-        expirationDate: new Date('2023-08-17T00:00:00.000Z'),
-        occurredIn: null,
-        priority: 'behindernd',
-        issueType: ['bug', 'test'],
-      };
-      const slaRule2: SlaRule = {
-        id: 2,
-        name: 'SLA Rule 2',
-        reactionTimeInDays: 5,
-        expirationDate: new Date('2023-08-20T00:00:00.000Z'),
-        occurredIn: null,
-        priority: 'behindernd',
-        issueType: ['bug', 'test'],
-      };
-      const slaRule3: SlaRule = {
-        id: 3,
-        name: 'SLA Rule 3',
-        reactionTimeInDays: 20,
-        expirationDate: new Date('2023-08-16T00:00:00.000Z'),
-        occurredIn: null,
-        priority: 'behindernd',
-        issueType: ['bug', 'test'],
-      };
-
       const date = new Date(2018, 0o5, 0o5, 17, 23, 42, 11);
       issuesForProject[0].status = 'In progress';
       issuesForProject[0].status = 'e2e';
       issuesForProject[0].state = Category.testing;
       issuesForProject[0].createdAt = new Date();
-      issuesForProject[0].assignedSlaRule = [slaRule1];
       issuesForProject[2].status = 'Closed';
       issuesForProject[2].status = 'In progress';
       issuesForProject[0].state = Category.development;
@@ -788,13 +689,11 @@ function getMockData(dataset: number): ProjectIF {
       issuesForProject[5].status = 'e2e';
       issuesForProject[0].state = Category.testing;
       issuesForProject[5].createdAt = new Date();
-      issuesForProject[5].assignedSlaRule = [slaRule2, slaRule3];
       issuesForProject[6].status = 'Closed';
       issuesForProject[6].status = 'Design';
       issuesForProject[0].state = Category.planning;
       issuesForProject[6].createdAt = date;
       issuesForProject[6].closedAt = date; // Set the specific closedAt date
-      issuesForProject[6].assignedSlaRule = [slaRule2, slaRule3];
 
       [issuesForProject[0].status, issuesForProject[0].status] = ['In progress', devStatusList[0]];
       [issuesForProject[0].state, issuesForProject[0].state] = Category.development;
@@ -828,7 +727,6 @@ function getMockData(dataset: number): ProjectIF {
         name: faker.science.chemicalElement().name,
         description: faker.company.catchPhrase(),
         issues: issuesForProject,
-        slaSubscriber: null,
       };
     }
 
@@ -838,7 +736,6 @@ function getMockData(dataset: number): ProjectIF {
         name: 'Default',
         description: 'An empty project',
         issues: [],
-        slaSubscriber: null,
       };
     }
   }

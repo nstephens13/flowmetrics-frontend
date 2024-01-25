@@ -1,5 +1,5 @@
 import { Duration } from 'luxon';
-import { Category, statusLists } from '@/assets/__mockdata__/StatusLists';
+import { Category, statusLists } from '@/assets/__mockdata__/IssueProps/statusLists';
 import type { IssueIF } from '@/model/Issue/IssueIF';
 
 /**

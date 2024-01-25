@@ -20,6 +20,7 @@ import Chart from 'primevue/chart';
 import InputNumber from 'primevue/inputnumber';
 import Accordion from 'primevue/accordion';
 import AccordionTab from 'primevue/accordiontab';
+import Calendar from 'primevue/calendar';
 import IssueCalculator from '../../views/IssueCalculator.vue';
 import ProjectOverview from '../../views/ProjectOverview.vue';
 import router from '@/router/index';
@@ -139,6 +140,7 @@ describe('Sla Rules view', () => {
         InputText,
         Dropdown,
         MultiSelect,
+        Calendar,
         Card,
         Button,
         Column,

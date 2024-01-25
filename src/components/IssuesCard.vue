@@ -70,7 +70,7 @@
 <script setup lang="ts">
 import type { ProjectIF } from '@/model/ProjectIF';
 import { getIssueCountFromCategory, getOpenIssueCount } from '@/services/issuesCardCalculator';
-import { Category } from '@/assets/__mockdata__/StatusLists';
+import { Category } from '@/assets/__mockdata__/IssueProps/statusLists';
 
 defineProps({
   project: {

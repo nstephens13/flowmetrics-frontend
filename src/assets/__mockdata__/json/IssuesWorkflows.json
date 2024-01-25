@@ -140,7 +140,7 @@
   },
   {
     "name": "Zombie Workflow",
-    "issueType": "zombie",
+    "issueType": "",
     "statuses": [
       { "category": "Planning", "status": "Design" },
       { "category": "Planning", "status": "Open" },

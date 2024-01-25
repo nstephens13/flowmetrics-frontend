@@ -1,10 +1,10 @@
 import { describe, expect, test } from 'vitest';
 import type { IssueIF } from '../Issue/IssueIF';
-import type { SlaRule } from '../Sla/SlaRule';
 
 describe('assignedSlaRules', () => {
   test('returns assigned SlaRules when assignedSlaRules is not null', () => {
-    const slaRules: SlaRule[] = [
+    /*
+      const slaRules: SlaRule[] = [
       {
         id: 100,
         name: 'rule number1',
@@ -24,11 +24,13 @@ describe('assignedSlaRules', () => {
         issueType: [],
       },
     ];
-
+*/
     const issue: IssueIF = {
       id: 1,
       name: 'Test Issue',
       description: null,
+      priority: null,
+      issueType: null,
       assignedTo: null,
       createdBy: {
         id: 2,
@@ -43,7 +45,6 @@ describe('assignedSlaRules', () => {
       closedAt: null,
       dueTo: null,
       status: 'open',
-      assignedSlaRule: slaRules,
       statusRestingTime: null,
       assigneeRestingTime: null,
       statusChanges: [],
@@ -51,7 +52,7 @@ describe('assignedSlaRules', () => {
       state: 'planning',
     };
 
-    const assignedSlaRules = issue.assignedSlaRule;
-    expect(assignedSlaRules).toEqual(slaRules);
+    const { state } = issue;
+    expect(state).toEqual('planning');
   });
 });

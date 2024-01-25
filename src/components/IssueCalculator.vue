@@ -55,7 +55,13 @@
     <Column field="id" header="Issue ID"></Column>
     <Column field="name" header="Name"></Column>
     <Column field="description" header="Description"></Column>
-    <Column field="createdAt" header="Created on"></Column>
+    <Column field="priority" header="Priority"></Column>
+    <Column field="issueType" header="Issue type"></Column>
+    <Column field="createdAt" header="Created on">
+      <template #body="slotProps">
+        {{ DateTime.fromJSDate(slotProps.data.createdAt).toLocaleString(DateTime.DATETIME_FULL) }}
+      </template>
+    </Column>
     <Column field="createdBy" header="Created by">
       <template #body="slotProps">
         {{ printAssignedTo(slotProps.data.createdBy) }}
@@ -131,10 +137,19 @@
         {{ printRestingTime(slotProps.data.statusRestingTime) }}
       </template>
     </Column>
-    <Column field="dueTo" header="Due date"></Column>
+    <Column field="dueTo" header="Due date">
+      <template #body="slotProps">
+        {{ DateTime.fromJSDate(slotProps.data.dueTo).toLocaleString(DateTime.DATETIME_FULL) }}
+      </template>
+    </Column>
     <Column header="Remaining reaction time">
       <template #body="slotProps">
-        {{ calculateRemainingTime(slotProps.data) }}
+        {{
+          getReactionTimeForIssue(
+            slaRulesStore().getCategoriesContainingProject(selectedProject.id),
+            slotProps.data
+          )
+        }}
       </template>
     </Column>
   </DataTable>
@@ -143,17 +158,18 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import type { Ref } from 'vue';
-import { Duration } from 'luxon';
+import { DateTime, Duration } from 'luxon';
 import { FilterMatchMode } from 'primevue/api';
 import CircularProgressBar from '@/components/CircularProgressBar.vue';
 import type { ProjectIF } from '@/model/ProjectIF';
 import { countIssuesByState, Issue } from '@/services/Issue';
 import type { EmployeeIF } from '@/model/EmployeeIF';
-import type { IssueIF } from '@/model/Issue/IssueIF';
 import { getIssueStateList, getIssueStatusList } from '@/model/ProjectIF';
-import { calculateRemainingReactionTime, calculateStatusChanges } from '@/services/issueCalculator';
+import { calculateStatusChanges } from '@/services/issueCalculator';
 import projectStore from '@/store/projectStore';
-import { Category } from '@/assets/__mockdata__/StatusLists';
+import slaRulesStore from '@/store/slaRulesStore';
+import { Category } from '@/assets/__mockdata__/IssueProps/statusLists';
+import getReactionTimeForIssue from '@/services/reactionTimeCalculator';
 
 // Create a reference for the selectedProject with initial data
 
@@ -208,33 +224,14 @@ function printAssignedTo(employee: EmployeeIF | null): string {
 
 /**
  * if time since last status change is null, return 0
- * @param issue an instance of an IssueIF
  * @return returns resting time in hours or if more than 24 hours returns in days
+ * @param restingTime
  */
 function printRestingTime(restingTime: any): string {
   if (restingTime == null) {
     return '0';
   }
   return Duration.fromObject(restingTime).toFormat("d'd 'h'h 'm'm'").toString();
-}
-
-function calculateRemainingTime(issue: IssueIF): string {
-  const [hasSlaRule, remainingTimeInSeconds] = calculateRemainingReactionTime(issue);
-
-  if (!hasSlaRule) {
-    return ''; // Return an empty string if there's no SLA rule or the time has expired
-  }
-  if (hasSlaRule && remainingTimeInSeconds <= 0) {
-    return 'Expired';
-  }
-
-  const remainingDays = Math.floor(remainingTimeInSeconds / (60 * 60 * 24));
-  const remainingHours = Math.floor((remainingTimeInSeconds % (60 * 60 * 24)) / (60 * 60));
-
-  if (remainingDays > 1) {
-    return `${remainingDays} days`;
-  }
-  return `${remainingHours} hours`;
 }
 </script>
 

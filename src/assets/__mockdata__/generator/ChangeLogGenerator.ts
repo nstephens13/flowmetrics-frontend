@@ -9,7 +9,17 @@ import {
   getRandomInt,
   getDateAndTimeInPast,
 } from './HelperFunctions';
+import IssueTypes from '@/assets/__mockdata__/IssueProps/issueTypes';
 
+/**
+ * Function to generate an array of status changes for a given issue
+ * @param issueType issue type of the issue
+ * @param issueNumber issue number
+ * @param currentStatus current status of the issue
+ * @param createdDate date the issue was created
+ * @returns an array of change logs
+ * @author Nived Stephen
+ */
 export function generateStatusChanges(
   issueType: string,
   issueNumber: number,
@@ -68,6 +78,15 @@ export function generateStatusChanges(
   return changeLogs;
 }
 
+/**
+ * Function to generate an array of assignee changes for a given issue
+ * @param issueType issue type of the issue
+ * @param issueNumber issue number
+ * @param currentPriority current priority of the issue
+ * @param createdDate date the issue was created
+ * @returns an array of change logs
+ * @author Nived Stephen
+ */
 export function generateAssigneeChanges(
   issueType: string,
   issueNumber: number,
@@ -77,7 +96,7 @@ export function generateAssigneeChanges(
   const changeLogs: ChangeLogIF[] = [];
   const numberofAssigneeChanges = getRandomInt(10);
   const assigneeChangesDates =
-    issueType === 'zombie'
+    issueType === IssueTypes.zombie
       ? getDatesBetween(createdDate, getDateAndTimeInPast(7), numberofAssigneeChanges)
       : getDatesBetween(createdDate, new Date(), numberofAssigneeChanges);
   let bufferEmployee1: EmployeeIF = getRandomEmployee(currentAssignee);
