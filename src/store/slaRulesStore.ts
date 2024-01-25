@@ -49,8 +49,9 @@ const useSlaRulesStore = defineStore('SLA rules store', {
         }
       }
     },
-    getCategoriesContainingProject(projectId: number): CategoryIF {
-      return this.categories.find((c) => c.project.id === projectId) as CategoryIF;
+    // get all categories containing a project with id projectId
+    getCategoriesContainingProject(projectId: number): CategoryIF[] {
+      return this.categories.filter((c) => c.project.id === projectId) as CategoryIF[];
     },
   },
 });

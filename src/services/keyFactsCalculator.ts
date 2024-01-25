@@ -11,8 +11,8 @@ import slaRulesStore from '@/store/slaRulesStore';
  * @returns number of complied sla rules of one issue
  */
 function numberOfIssueThatFulfillsSlaRules(project: ProjectIF): number {
-  const category = slaRulesStore().getCategoriesContainingProject(project.id as number);
-  const { rules } = category;
+  const categories = slaRulesStore().getCategoriesContainingProject(project.id as number);
+  const rules = categories.flatMap((category) => category.rules);
   const { issues } = project;
   return issues.filter((issue) =>
     rules.some((rule) => rule.issueType.includes(issue.issueType as string))
@@ -27,7 +27,8 @@ function numberOfIssueThatFulfillsSlaRules(project: ProjectIF): number {
  */
 function getNumberOfSlaRulesOfProject(project: ProjectIF): number {
   if (!project || Object.keys(project).length === 0) {
-    return slaRulesStore().getCategoriesContainingProject(project.id as number).rules.length;
+    const categories = slaRulesStore().getCategoriesContainingProject(project.id);
+    return categories.flatMap((category) => category.rules).length;
   }
   return 0;
 }

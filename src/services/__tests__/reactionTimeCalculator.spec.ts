@@ -69,7 +69,7 @@ const category: CategoryIF = {
 
 describe('reactionTimeCalculator', () => {
   test('should return the reaction time for the issue', () => {
-    const response = getReactionTimeForIssue(category, category.project.issues[0]);
+    const response = getReactionTimeForIssue([category], category.project.issues[0]);
     const creationDate = category.project.issues[0].createdAt;
     const { reactionTime } = category.rules[0];
     const expectedResponse = DateTime.fromJSDate(creationDate as Date)
@@ -78,7 +78,7 @@ describe('reactionTimeCalculator', () => {
     expect(response).toBe(expectedResponse);
   });
   test('should return "No rule found/No reaction time" if the rule is not found', () => {
-    const response = getReactionTimeForIssue(category, category.project.issues[1]);
+    const response = getReactionTimeForIssue([category], category.project.issues[1]);
     const expectedResponse = 'No rule found/No reaction time';
     expect(response).toBe(expectedResponse);
   });

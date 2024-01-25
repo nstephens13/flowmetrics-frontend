@@ -18,14 +18,15 @@ function calculateReactionTimeFromCreationDate(
 
 /**
  * Function to get the reaction time for an issue based on the category rules
- * @param category Category to be checked
+ * @param categories
  * @param issue Issue to be checked
  * @returns The reaction time for the issue based on the category rules, or a message if no rule is found or the issue type is null
  * @author Nived Stephen
  */
-export default function getReactionTimeForIssue(category: CategoryIF, issue: IssueIF): string {
-  if (category !== undefined && issue.issueType !== null && category.rules.length > 0) {
-    const ruleToBeAssigned = category.rules.find((rule) =>
+export default function getReactionTimeForIssue(categories: CategoryIF[], issue: IssueIF): string {
+  const rules = categories.flatMap((category) => category.rules);
+  if (issue.issueType !== null && rules.length > 0) {
+    const ruleToBeAssigned = rules.find((rule) =>
       rule.issueType.includes(issue.issueType as string)
     );
     if (ruleToBeAssigned !== undefined && ruleToBeAssigned.reactionTime !== null) {

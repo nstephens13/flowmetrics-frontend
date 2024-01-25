@@ -3,7 +3,19 @@
     <template #title>
       <div class="flex flex-row align-content-center align-items-center justify-content-between">
         <p>Create SLA Rules</p>
-        <GeneratePDF></GeneratePDF>
+        <div class="flex gap-2">
+          <Dropdown
+            v-model="selectedProjectPDF"
+            :options="projectOptions"
+            placeholder="Select Customer Project"
+            optionLabel="name"
+          />
+          <Button
+            label="Generate PDF"
+            @click="GeneratePdf(selectedProjectPDF)"
+            style="background-color: var(--flowMetricsBlue)"
+          ></Button>
+        </div>
       </div>
       <Divider class="p-divider p-divider-horizontal divider-position mt-0 mb-0" />
     </template>
@@ -222,7 +234,7 @@ import { DateTime, Duration, type DurationLikeObject } from 'luxon';
 import type { ComputedRef, Ref } from 'vue';
 import { computed, ref } from 'vue';
 import type Column from 'primevue/column';
-import GeneratePDF from '@/components/GeneratePDF.vue';
+import Button from 'primevue/button';
 import useSlaRulesStore from '@/store/slaRulesStore';
 import useProjectStore from '@/store/projectStore';
 import IssueTypes from '@/assets/__mockdata__/IssueProps/issueTypes';
@@ -230,9 +242,17 @@ import Priority from '@/assets/__mockdata__/IssueProps/priority';
 import type { RuleIF } from '@/model/Sla/RuleIF';
 import type { ProjectIF } from '@/model/ProjectIF';
 import type { CategoryIF } from '@/model/Sla/CategoryIF';
+import GeneratePdf from '@/services/pdf/generatePdf';
 
 const slaRulesStore = useSlaRulesStore();
 const projectStore = useProjectStore();
+
+const selectedProjectPDF: Ref<ProjectIF> = ref({
+  id: 0,
+  name: '',
+  description: '',
+  issues: [],
+} as ProjectIF);
 
 const selectedProject: Ref<ProjectIF> = ref({
   id: 0,

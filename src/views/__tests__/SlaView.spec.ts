@@ -13,6 +13,7 @@ import Button from 'primevue/button';
 import InputMask from 'primevue/inputmask';
 import DataTable from 'primevue/datatable';
 import { createPinia, setActivePinia } from 'pinia';
+import Column from 'primevue/column';
 import SlaView from '../SlaView.vue';
 import router from '../../router';
 import type { CategoryIF } from '../../model/Sla/CategoryIF';
@@ -83,6 +84,7 @@ describe('SLA View Tests', () => {
         Button,
         InputMask,
         DataTable,
+        Column,
       },
     },
   });
@@ -125,5 +127,53 @@ describe('SLA View Tests', () => {
   test('Data table has the correct number of rows', () => {
     const rows = wrapper.findAll('.p-datatable-tbody > tr');
     expect(rows.length).toBe(2);
+  });
+});
+
+describe('GeneratePDF', () => {
+  // Mounting the ProjectDescriptionPanel component with necessary configuration
+  const wrapper = mount(SlaView, {
+    global: {
+      plugins: [PrimeVue, router, setActivePinia(createPinia())],
+      components: {
+        Card,
+        Divider,
+        Accordion,
+        AccordionTab,
+        Dropdown,
+        InputText,
+        MultiSelect,
+        Calendar,
+        Button,
+        InputMask,
+        DataTable,
+        Column,
+      },
+    },
+  });
+  // initialize the stores
+  const slaRulesStore = useSlaRulesStore();
+  slaRulesStore.addCategory(Category1);
+  slaRulesStore.addCategory(Category2);
+  // define individual test case
+  test('Generates a PDF when the button is clicked', async () => {
+    // Click the "Generate PDF" button
+    const button = wrapper.findComponent(Button).element;
+    const clickEvent = new Event('click', {
+      bubbles: true,
+      cancelable: true,
+    });
+    button.dispatchEvent(clickEvent);
+
+    // Verify that the button is not immediately disabled
+    expect(button.getAttribute('disabled')).toBe(null);
+
+    // Wait for 2 seconds (2000 milliseconds)
+    await new Promise((resolve) => {
+      setTimeout(resolve, 2000);
+    });
+
+    // Verify that the button is still not disabled after 2 seconds
+    expect(button.getAttribute('disabled')).toBe(null);
   });
 });

@@ -1,8 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import ProjectOverview from '@/views/ProjectOverview.vue';
-import IssueCalculator from '@/views/IssueCalculator.vue';
-import SlaComponent from '@/views/SlaView.vue';
-import EmployeeOverview from '@/views/EmployeeOverview.vue';
+
+const ProjectOverview = () => import('@/views/ProjectOverview.vue');
+const IssueCalculator = () => import('@/views/IssueCalculator.vue');
+const SlaComponent = () => import('@/views/SlaView.vue');
+const EmployeeOverview = () => import('@/views/EmployeeOverview.vue');
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
