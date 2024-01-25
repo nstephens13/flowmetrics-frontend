@@ -55,12 +55,14 @@ export function getPercentageSlaRulesComplied(project: ProjectIF): string {
  */
 export function calculateAverageSolvingTime(issues: IssueIF[]): Duration | null {
   if (issues.length === 0) return null;
-  const totalRestingTime = issues.reduce((total, issue) => {
+  const totalRestingTime = issues.reduce((total: number, issue: IssueIF) => {
     if (
       statusLists[Category.nonDisplayed].includes(issue.status as string) &&
       issue.statusChanges !== null
     ) {
       const createdAt = DateTime.fromJSDate(issue.createdAt as Date);
+
+      if (issue.statusChanges === null || issue.statusChanges.length === 0) return total;
       const statusRestingTime = DateTime.fromJSDate(
         issue.statusChanges[issue.statusChanges.length - 1].created as Date
       );
