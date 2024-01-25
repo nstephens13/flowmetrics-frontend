@@ -14,6 +14,13 @@ import getTimeDifference from '@/services/timeCalculator';
 import IssueTypes from '../IssueProps/issueTypes';
 import Priority from '../IssueProps/priority';
 
+/**
+ * Function to generate a random issue
+ * @param issueNumber issue number
+ * @param issueTypeNumber issue type number
+ * @returns an issue object with random values for each property
+ * @author Nived Stephen
+ */
 function getIssue(issueNumber: number, issueTypeNumber: number): IssueIF {
   const issueType = Object.values(IssueTypes)[issueTypeNumber];
   const workflow = getWorkflow(issueType);
@@ -75,6 +82,13 @@ function getIssue(issueNumber: number, issueTypeNumber: number): IssueIF {
   } as IssueIF;
 }
 
+/**
+ * Function to generate an array of issues
+ * @param projectId id of the project
+ * @param numberOfIssues number of issues to generate
+ * @returns an array of issues with random values for each property
+ * @author Nived Stephen
+ */
 export default function generateIssues(projectId: number, numberOfIssues: number): IssueIF[] {
   const issues: IssueIF[] = [];
   for (let i = 1; i <= numberOfIssues; i++) {
