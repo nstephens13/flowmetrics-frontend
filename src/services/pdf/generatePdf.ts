@@ -47,13 +47,13 @@ const GeneratePdf = (project: ProjectIF) => {
     issue.description,
     getListOfSlaRulesThatApplyToIssue(issue, project.id),
   ]);
-
+  const documentTitle = `Sla Rule Report - ${project.name}`;
   const current = new Date();
   const date = `${current.getDate()}/${current.getMonth() + 1}/${current.getFullYear()}`;
   // Document title
   doc.setFont('Helvetica', '', 'bold');
   doc.setFontSize(14);
-  doc.text('Sla Rule Report', 10, 10);
+  doc.text(documentTitle, 10, 10);
   doc.text(date, 265, 10);
   // doc.line(10, 20, 287, 20);
   // Document content
