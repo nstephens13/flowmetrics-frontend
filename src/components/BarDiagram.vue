@@ -30,7 +30,7 @@
   </Card>
 </template>
 <script setup lang="ts">
-import { ref, computed, defineProps, type Ref, type ComputedRef } from 'vue';
+import { ref, computed, type Ref, type ComputedRef } from 'vue';
 import type { ProjectIF } from '@/model/ProjectIF';
 import { getStatusesFromCategories } from '@/services/issueCalculator';
 import { Category, getColorsforStatuses } from '@/assets/__mockdata__/StatusLists';
