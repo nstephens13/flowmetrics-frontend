@@ -38,9 +38,7 @@ import 'primevue/resources/themes/lara-light-indigo/theme.css';
 import 'primevue/resources/primevue.min.css';
 import 'primeicons/primeicons.css';
 import 'primeflex/primeflex.css';
-import initProjectStore from '@/store/mockdata/initProjectStore';
-import { initFilterConfigStore } from '@/store/mockdata/initFilterConfigStore';
-import initSlaRulesStore from '@/store/mockdata/initSlaRulesStore';
+import initializeStores from '@/store/mockdata/initializeStores';
 
 const app = createApp(App);
 const pinia = createPinia();
@@ -80,7 +78,4 @@ app.component('AccordionTab', AccordionTab);
 
 app.mount('#app');
 
-// initialize the stores
-await initProjectStore();
-initFilterConfigStore();
-initSlaRulesStore();
+initializeStores();
