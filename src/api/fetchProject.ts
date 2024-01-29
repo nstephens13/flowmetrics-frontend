@@ -25,7 +25,6 @@ export default async function fetchProject(projectId: number): Promise<ProjectIF
       issues: data.issues.json() as IssueIF[],
     } as ProjectIF;
   } catch (err) {
-    // console.log('response unsuccessful, using mock data', err);
     return getProject(projectIdToBeFetched);
   }
 }
