@@ -4,11 +4,6 @@ import useProjectsStore from '@/store/projectStore';
 
 export default function initProjectStore() {
   const projectStore = useProjectsStore();
-  projectStore.addProject(getMockData(1));
-  projectStore.addProject(getMockData(3));
-  projectStore.addProject(getMockData(4));
-  projectStore.addProject(getMockData(5));
-  projectStore.addProject(getMockData(6));
   projectStore.addProject(getProject(1));
   projectStore.addProject(getProject(2));
   projectStore.addProject(getProject(3));
@@ -29,4 +24,9 @@ export default function initProjectStore() {
   projectStore.addProject(getProject(18));
   projectStore.addProject(getProject(19));
   projectStore.addProject(getProject(20));
+  projectStore.addProject(getMockData(1));
+  projectStore.addProject(getMockData(3));
+  projectStore.addProject(getMockData(4));
+  projectStore.addProject(getMockData(5));
+  projectStore.addProject(getMockData(6));
 }

@@ -5,10 +5,8 @@ import {
   getAssignedToName,
   getFormattedDate,
   getTimeLeft,
-  getSlaRules,
 } from '../../services/Issue';
 import type { EmployeeIF } from '../EmployeeIF';
-import { type SlaRule } from '../Sla/SlaRule';
 
 describe('Issue Class', () => {
   test('creates an instance of Issue with the provided properties', () => {
@@ -29,13 +27,14 @@ describe('Issue Class', () => {
     const closedAt = null;
     const dueTo = new Date();
     const status = 'open';
-    const assignedSlaRule: SlaRule[] = [];
     const state = '';
 
     const issue = new Issue(
       id,
       name,
       description,
+      null,
+      null,
       assignedTo,
       createdBy,
       createdAt,
@@ -46,7 +45,6 @@ describe('Issue Class', () => {
       {},
       [],
       [],
-      assignedSlaRule,
       ''
     );
 
@@ -59,7 +57,6 @@ describe('Issue Class', () => {
     expect(issue.closedAt).toBe(closedAt);
     expect(issue.dueTo).toBe(dueTo);
     expect(issue.status).toBe(status);
-    expect(issue.assignedSlaRule).toBe(assignedSlaRule);
     expect(issue.state).toBe(state);
   });
 });
@@ -69,6 +66,8 @@ describe('getAssignedToName', () => {
     const issue = new Issue(
       1,
       'Test Issue',
+      null,
+      null,
       null,
       {
         id: 34,
@@ -96,7 +95,6 @@ describe('getAssignedToName', () => {
       null,
       [],
       [],
-      [],
       ''
     );
     const assignedToName = getAssignedToName(issue);
@@ -107,6 +105,8 @@ describe('getAssignedToName', () => {
     const issue = new Issue(
       1,
       'Test Issue',
+      null,
+      null,
       null,
       null,
       {
@@ -121,10 +121,9 @@ describe('getAssignedToName', () => {
       new Date(),
       null,
       null,
-      '',
       null,
       null,
-      [],
+      null,
       [],
       [],
       ''
@@ -142,6 +141,16 @@ describe('getFormattedDate', () => {
       'Test Issue',
       null,
       null,
+      null,
+      {
+        id: 4245,
+        firstName: 'Jane',
+        lastName: 'Smith',
+        emailAddress: 'jane.smith@email.com',
+        status: 'active',
+        avatarUrl: 'none',
+        key: 'jsmith',
+      },
       {
         id: 4245,
         firstName: 'Jane',
@@ -159,7 +168,6 @@ describe('getFormattedDate', () => {
       null,
       [],
       [],
-      [],
       ''
     );
     const formattedDate = getFormattedDate(issue);
@@ -172,6 +180,16 @@ describe('getFormattedDate', () => {
       'Test Issue',
       null,
       null,
+      null,
+      {
+        id: 4245,
+        firstName: 'Jane',
+        lastName: 'Smith',
+        emailAddress: 'jane.smith@email.com',
+        status: 'active',
+        avatarUrl: 'none',
+        key: 'jsmith',
+      },
       {
         id: 4245,
         firstName: 'Jane',
@@ -187,7 +205,6 @@ describe('getFormattedDate', () => {
       '',
       null,
       null,
-      [],
       [],
       [],
       ''
@@ -206,6 +223,16 @@ describe('getTimeLeft', () => {
       'Test Issue',
       null,
       null,
+      null,
+      {
+        id: 4245,
+        firstName: 'Jane',
+        lastName: 'Smith',
+        emailAddress: 'jane.smith@email.com',
+        status: 'active',
+        avatarUrl: 'none',
+        key: 'jsmith',
+      },
       {
         id: 4245,
         firstName: 'Jane',
@@ -221,7 +248,6 @@ describe('getTimeLeft', () => {
       '',
       null,
       null,
-      [],
       [],
       [],
       ''
@@ -240,6 +266,16 @@ describe('getTimeLeft', () => {
       'Test Issue',
       null,
       null,
+      null,
+      {
+        id: 4245,
+        firstName: 'Jane',
+        lastName: 'Smith',
+        emailAddress: 'jane.smith@email.com',
+        status: 'active',
+        avatarUrl: 'none',
+        key: 'jsmith',
+      },
       {
         id: 4245,
         firstName: 'Jane',
@@ -257,7 +293,6 @@ describe('getTimeLeft', () => {
       null,
       [],
       [],
-      [],
       ''
     );
     const timeLeft = getTimeLeft(issue);
@@ -270,6 +305,16 @@ describe('getTimeLeft', () => {
       'Test Issue',
       null,
       null,
+      null,
+      {
+        id: 4245,
+        firstName: 'Jane',
+        lastName: 'Smith',
+        emailAddress: 'jane.smith@email.com',
+        status: 'active',
+        avatarUrl: 'none',
+        key: 'jsmith',
+      },
       {
         id: 4245,
         firstName: 'Jane',
@@ -287,7 +332,6 @@ describe('getTimeLeft', () => {
       null,
       [],
       [],
-      [],
       ''
     );
     const timeLeft = getTimeLeft(issue);
@@ -302,6 +346,16 @@ describe('countIssuesByStatus', () => {
       'Issue 1',
       null,
       null,
+      null,
+      {
+        id: 4245,
+        firstName: 'Jane',
+        lastName: 'Smith',
+        emailAddress: 'jane.smith@email.com',
+        status: 'active',
+        avatarUrl: 'none',
+        key: 'jsmith',
+      },
       {
         id: 4245,
         firstName: 'Jane',
@@ -319,7 +373,6 @@ describe('countIssuesByStatus', () => {
       null,
       [],
       [],
-      [],
       'development'
     ),
     new Issue(
@@ -327,6 +380,16 @@ describe('countIssuesByStatus', () => {
       'Issue 2',
       null,
       null,
+      null,
+      {
+        id: 4245,
+        firstName: 'Jane',
+        lastName: 'Smith',
+        emailAddress: 'jane.smith@email.com',
+        status: 'active',
+        avatarUrl: 'none',
+        key: 'jsmith',
+      },
       {
         id: 34,
         firstName: 'John',
@@ -344,7 +407,6 @@ describe('countIssuesByStatus', () => {
       null,
       [],
       [],
-      [],
       'testing'
     ),
     new Issue(
@@ -352,6 +414,16 @@ describe('countIssuesByStatus', () => {
       'Issue 3',
       null,
       null,
+      null,
+      {
+        id: 4245,
+        firstName: 'Jane',
+        lastName: 'Smith',
+        emailAddress: 'jane.smith@email.com',
+        status: 'active',
+        avatarUrl: 'none',
+        key: 'jsmith',
+      },
       {
         id: 4245,
         firstName: 'Jane',
@@ -369,7 +441,6 @@ describe('countIssuesByStatus', () => {
       null,
       [],
       [],
-      [],
       'development'
     ),
     new Issue(
@@ -377,6 +448,16 @@ describe('countIssuesByStatus', () => {
       'Issue 4',
       null,
       null,
+      null,
+      {
+        id: 4245,
+        firstName: 'Jane',
+        lastName: 'Smith',
+        emailAddress: 'jane.smith@email.com',
+        status: 'active',
+        avatarUrl: 'none',
+        key: 'jsmith',
+      },
       {
         id: 34,
         firstName: 'John',
@@ -394,7 +475,6 @@ describe('countIssuesByStatus', () => {
       {},
       [],
       [],
-      [],
       'planning'
     ),
     new Issue(
@@ -402,6 +482,16 @@ describe('countIssuesByStatus', () => {
       'Issue 5',
       null,
       null,
+      null,
+      {
+        id: 4245,
+        firstName: 'Jane',
+        lastName: 'Smith',
+        emailAddress: 'jane.smith@email.com',
+        status: 'active',
+        avatarUrl: 'none',
+        key: 'jsmith',
+      },
       {
         id: 4245,
         firstName: 'Jane',
@@ -415,9 +505,8 @@ describe('countIssuesByStatus', () => {
       null,
       null,
       'closed',
-      {},
-      {},
-      [],
+      null,
+      null,
       [],
       [],
       'planning'
@@ -437,38 +526,5 @@ describe('countIssuesByStatus', () => {
   test('returns the count of all issues when status is null', () => {
     const totalIssuesCount = countIssuesByStatus(issueList, null);
     expect(totalIssuesCount).toBe(issueList.length);
-  });
-});
-
-describe('getSlaRules', () => {
-  test('getSlaRules returns an empty array when assignedSlaRule is null', () => {
-    const issue = new Issue(
-      1,
-      'Test Issue',
-      null,
-      null,
-      {
-        id: 1,
-        firstName: 'Anna',
-        lastName: 'John',
-        emailAddress: 'anna.john@email.com',
-        status: 'active',
-        avatarUrl: 'none',
-        key: 'ajohn',
-      },
-      new Date(),
-      null,
-      null,
-      'open',
-      {},
-      {},
-      [],
-      [],
-      [],
-      ''
-    );
-
-    const slaRules = getSlaRules(issue);
-    expect(slaRules).toEqual([]);
   });
 });

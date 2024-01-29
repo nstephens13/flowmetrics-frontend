@@ -130,6 +130,9 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import { FilterMatchMode } from 'primevue/api';
+import { ref } from 'vue';
+import { Duration } from 'luxon';
+import { calculateStatusChanges } from '@/services/issueCalculator';
 import { filterIssuesMinimumStatusChangesAndRestingTime } from '@/services/filter/ProjectsFilter';
 import {
   printRestingDays,

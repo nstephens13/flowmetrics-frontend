@@ -1,4 +1,4 @@
-import { statusLists, Category } from '@/assets/__mockdata__/StatusLists';
+import { statusLists, Category } from '@/assets/__mockdata__/IssueProps/statusLists';
 import type { ProjectIF } from '@/model/ProjectIF';
 
 /**

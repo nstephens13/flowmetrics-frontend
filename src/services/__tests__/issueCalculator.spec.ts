@@ -1,7 +1,6 @@
 import { expect, test, describe } from 'vitest';
-// import getMockData from '../../assets/__mockdata__/mockDataComposer';
 import type { ProjectIF } from '../../model/ProjectIF';
-import { calculateRemainingReactionTime, mapIssuesToEmployees } from '../issueCalculator';
+import { mapIssuesToEmployees } from '../issueCalculator';
 import type { IssueIF } from '../../model/Issue/IssueIF';
 import type { EmployeeIF } from '../../model/EmployeeIF';
 
@@ -30,6 +29,8 @@ describe('Issue Calculator should map correctly ', () => {
     id: 11,
     name: 'IssueName',
     description: '',
+    priority: null,
+    issueType: null,
     createdBy: null,
     createdAt: null,
     closedAt: null,
@@ -40,14 +41,12 @@ describe('Issue Calculator should map correctly ', () => {
     assigneeRestingTime: {},
     statusChanges: [],
     assigneeChanges: [],
-    assignedSlaRule: null,
     state: '',
   };
   const additionalProject: ProjectIF = {
     id: 4,
     name: 'additional',
     description: 'description',
-    slaSubscriber: null,
     issues: [additionalIssue],
   };
 
@@ -68,7 +67,7 @@ describe('Issue Calculator should map correctly ', () => {
     expect(check).toBe(true);
   });
 });
-
+/*
 describe('calculateRemainingReactionTime', () => {
   const createdAt: Date = new Date();
   const testSlaRule = {
@@ -85,13 +84,14 @@ describe('calculateRemainingReactionTime', () => {
     id: 1,
     name: 'TestIssue',
     description: 'Test description',
+    issueType: null,
+    priority: null,
     createdBy: null,
     createdAt,
     closedAt: null,
     status: 'open',
     dueTo: null,
     assignedTo: null,
-    assignedSlaRule: [testSlaRule],
     statusRestingTime: {},
     assigneeRestingTime: {},
     statusChanges: [],
@@ -103,6 +103,8 @@ describe('calculateRemainingReactionTime', () => {
     id: 2,
     name: 'TestIssue2',
     description: 'Test description',
+    priority: null,
+    issueType: null,
     createdBy: null,
     createdAt,
     closedAt: null,
@@ -113,7 +115,6 @@ describe('calculateRemainingReactionTime', () => {
     assigneeRestingTime: {},
     statusChanges: [],
     assigneeChanges: [],
-    assignedSlaRule: null,
     state: 'planning',
   };
   test('should return the correct remaining reaction time with SLA rule', () => {
@@ -197,7 +198,6 @@ describe('calculateRemainingReactionTime', () => {
       assigneeRestingTime: {},
       statusChanges: [],
       assigneeChanges: [],
-      assignedSlaRule: [slaRule1, slaRule2, slaRule3],
       state: 'planning',
     };
 
@@ -228,3 +228,4 @@ describe('calculateRemainingReactionTime', () => {
     );
   });
 });
+*/

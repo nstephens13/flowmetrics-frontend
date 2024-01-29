@@ -19,6 +19,8 @@
     </template>
     <template #content>
       <Chart
+        ref="issueChart"
+        id="issueChart"
         type="bar"
         :data="chartData"
         :options="chartOptions"
@@ -28,10 +30,10 @@
   </Card>
 </template>
 <script setup lang="ts">
-import { ref, onMounted, computed, type Ref } from 'vue';
+import { ref, computed, type Ref, type ComputedRef } from 'vue';
 import type { ProjectIF } from '@/model/ProjectIF';
 import { getStatusesFromCategories } from '@/services/issueCalculator';
-import { Category, getColorsforStatuses } from '@/assets/__mockdata__/StatusLists';
+import { Category, getColorsforStatuses } from '@/assets/__mockdata__/IssueProps/statusLists';
 import type { IssueIF } from '@/model/Issue/IssueIF';
 
 const documentStyle = getComputedStyle(document.documentElement);
@@ -44,6 +46,7 @@ const categories: string[] = [
   Category.testing,
   Category.nonDisplayed,
 ];
+
 const selectedCategory: Ref<Category[] | undefined> = ref();
 const props = defineProps({
   project: {
@@ -66,58 +69,63 @@ const totalNumberOfIssues = computed(() =>
   ).reduce((accumulator, currentValue) => accumulator + currentValue, 0)
 );
 
-const chartData = computed(() => {
-  const labels = Array.from(
-    getStatusesFromCategories(props.project.issues, selectedCategory.value).keys()
-  );
-  const AllNumberOfIssues = Array.from(
-    getStatusesFromCategories(props.project.issues, selectedCategory.value).values()
-  );
-  return {
-    labels,
-    datasets: [
-      {
-        label:
-          selectedCategory.value === undefined || selectedCategory.value?.length === 0
-            ? 'Issues'
-            : selectedCategory.value?.join(', '),
-        backgroundColor: getColorsforStatuses(labels),
-        data: AllNumberOfIssues,
+const chartOptions = ref({
+  plugins: {
+    legend: {
+      labels: {
+        color: textColor,
       },
-    ],
-  };
+    },
+  },
+  scales: {
+    x: {
+      ticks: {
+        color: textColorSecondary,
+      },
+      grid: {
+        color: surfaceBorder,
+      },
+    },
+    y: {
+      beginAtZero: true,
+      ticks: {
+        color: textColorSecondary,
+      },
+      grid: {
+        color: surfaceBorder,
+      },
+    },
+  },
+  animation: false,
 });
 
-const chartOptions = ref({});
+const labels: ComputedRef<string[]> = computed(() =>
+  Array.from(getStatusesFromCategories(props.project.issues, selectedCategory.value).keys())
+);
 
-onMounted(() => {
-  chartOptions.value = {
-    plugins: {
-      legend: {
-        labels: {
-          color: textColor,
-        },
-      },
+const AllNumberOfIssues = computed(() =>
+  Array.from(getStatusesFromCategories(props.project.issues, selectedCategory.value).values()).map(
+    String
+  )
+);
+
+const chartData = computed(() => ({
+  labels: labels.value,
+  datasets: [
+    {
+      label:
+        selectedCategory.value === undefined || selectedCategory.value?.length === 0
+          ? 'Issues'
+          : selectedCategory.value?.join(', '),
+      backgroundColor: getColorsforStatuses(labels.value),
+      data: AllNumberOfIssues.value,
     },
-    scales: {
-      x: {
-        ticks: {
-          color: textColorSecondary,
-        },
-        grid: {
-          color: surfaceBorder,
-        },
-      },
-      y: {
-        beginAtZero: true,
-        ticks: {
-          color: textColorSecondary,
-        },
-        grid: {
-          color: surfaceBorder,
-        },
-      },
-    },
-  };
+  ],
+}));
+
+// re-render chart on window resize
+window.visualViewport?.addEventListener('resize', () => {
+  // re-render chart
+  chartOptions.value = { ...chartOptions.value };
 });
 </script>

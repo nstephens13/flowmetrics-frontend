@@ -71,7 +71,7 @@ import {
   calculateAverageRestingTime,
   getPercentOfIncreaseOrDecrease,
 } from '@/services/stateRestingTimeCalculator';
-import { Category } from '@/assets/__mockdata__/StatusLists';
+import { Category } from '@/assets/__mockdata__/IssueProps/statusLists';
 
 defineProps({
   project: {

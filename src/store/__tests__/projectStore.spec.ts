@@ -8,13 +8,14 @@ const project1: ProjectIF = {
   id: 1,
   name: 'Project 1',
   description: 'Project 1 description',
-  slaSubscriber: null,
   issues: [
     {
       id: 1,
       status: 'open',
       name: 'Issue 1',
       description: 'Issue 1 description',
+      priority: 'Priority 1',
+      issueType: 'type1',
       assignedTo: {
         id: 4,
         firstName: 'Bernd',
@@ -36,7 +37,6 @@ const project1: ProjectIF = {
       dueTo: new Date('2021-01-01'),
       createdAt: new Date('2021-01-01'),
       closedAt: new Date('2021-01-02'),
-      assignedSlaRule: null,
       assigneeRestingTime: null,
       statusRestingTime: null,
       assigneeChanges: null,
@@ -48,6 +48,8 @@ const project1: ProjectIF = {
       status: 'in progress',
       name: 'Issue 3',
       description: 'Issue 3 description',
+      priority: 'Priority 3',
+      issueType: 'type3',
       assignedTo: {
         id: 6,
         firstName: 'Gabi',
@@ -69,7 +71,6 @@ const project1: ProjectIF = {
       dueTo: new Date('2021-01-01'),
       createdAt: new Date('2021-01-01'),
       closedAt: new Date('2021-01-02'),
-      assignedSlaRule: null,
       assigneeRestingTime: null,
       statusRestingTime: null,
       assigneeChanges: null,
@@ -82,13 +83,14 @@ const project2: ProjectIF = {
   id: 2,
   name: 'Project 2',
   description: 'Project 2 description',
-  slaSubscriber: null,
   issues: [
     {
       id: 5,
       status: 'open',
       name: 'Issue 5',
       description: 'Issue 5 description',
+      priority: 'Priority 5',
+      issueType: 'type5',
       assignedTo: {
         id: 7,
         firstName: 'Franzi',
@@ -110,7 +112,6 @@ const project2: ProjectIF = {
       dueTo: new Date('2021-01-01'),
       createdAt: new Date('2021-01-01'),
       closedAt: new Date('2021-01-02'),
-      assignedSlaRule: null,
       assigneeRestingTime: null,
       statusRestingTime: null,
       assigneeChanges: null,
@@ -122,6 +123,8 @@ const project2: ProjectIF = {
       status: 'in progress',
       name: 'Issue 3',
       description: 'Issue 3 description',
+      priority: 'Priority 3',
+      issueType: 'type3',
       assignedTo: {
         id: 6,
         firstName: 'Gabi',
@@ -143,7 +146,6 @@ const project2: ProjectIF = {
       dueTo: new Date('2021-01-01'),
       createdAt: new Date('2021-01-01'),
       closedAt: new Date('2021-01-02'),
-      assignedSlaRule: null,
       assigneeRestingTime: null,
       statusRestingTime: null,
       assigneeChanges: null,

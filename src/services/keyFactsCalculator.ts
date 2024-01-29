@@ -1,30 +1,22 @@
 import { DateTime, Duration } from 'luxon';
 import type { ProjectIF } from '@/model/ProjectIF';
 import type { IssueIF } from '@/model/Issue/IssueIF';
-import { Category, statusLists } from '@/assets/__mockdata__/StatusLists';
+import { Category, statusLists } from '@/assets/__mockdata__/IssueProps/statusLists';
+import slaRulesStore from '@/store/slaRulesStore';
 
 /**
- * @brief calculates the amount of fulfilled sla rules of one issue
+ * @brief function to calculate the amount of issues that fulfills sla rules
  *
- * @param issue issue to analyze
- * @var compareTime if  a ticket is already closed use that time to compare, otherwise use current time
- *
+ * @param project project to analyze
  * @returns number of complied sla rules of one issue
  */
-function numberOfFulfilledSlaRules(issue: IssueIF): number {
-  if (!issue.assignedSlaRule) return 0;
-  let count = 0;
-  for (let i = 0; i < issue.assignedSlaRule.length; ++i) {
-    let compareTime;
-    if (issue.closedAt == null) compareTime = new Date();
-    else compareTime = issue.closedAt;
-    if (
-      (issue.assignedSlaRule[i].expirationDate ?? new Date(0)).valueOf() > compareTime.valueOf()
-    ) {
-      count += 1;
-    }
-  }
-  return count;
+function numberOfIssueThatFulfillsSlaRules(project: ProjectIF): number {
+  const categories = slaRulesStore().getCategoriesContainingProject(project.id as number);
+  const rules = categories.flatMap((category) => category.rules);
+  const { issues } = project;
+  return issues.filter((issue) =>
+    rules.some((rule) => rule.issueType.includes(issue.issueType as string))
+  ).length;
 }
 
 /**
@@ -34,11 +26,11 @@ function numberOfFulfilledSlaRules(issue: IssueIF): number {
  * @returns number of sla rules
  */
 function getNumberOfSlaRulesOfProject(project: ProjectIF): number {
-  let count = 0;
-  for (let i = 0; i < project.issues.length; ++i) {
-    count += project.issues[i]?.assignedSlaRule?.length ?? 0;
+  if (!project || Object.keys(project).length === 0) {
+    const categories = slaRulesStore().getCategoriesContainingProject(project.id);
+    return categories.flatMap((category) => category.rules).length;
   }
-  return count;
+  return 0;
 }
 
 /**
@@ -50,11 +42,9 @@ function getNumberOfSlaRulesOfProject(project: ProjectIF): number {
 export function getPercentageSlaRulesComplied(project: ProjectIF): string {
   if (!project || Object.keys(project).length === 0 || getNumberOfSlaRulesOfProject(project) === 0)
     return '0 %';
-  let count = 0;
-  for (let i = 0; i < project.issues.length; ++i) {
-    count += numberOfFulfilledSlaRules(project.issues[i]);
-  }
-  return `${Math.trunc((count / getNumberOfSlaRulesOfProject(project)) * 100)} %`;
+  return `${Math.trunc(
+    (numberOfIssueThatFulfillsSlaRules(project) / getNumberOfSlaRulesOfProject(project)) * 100
+  )} %`;
 }
 
 /**
@@ -66,12 +56,14 @@ export function getPercentageSlaRulesComplied(project: ProjectIF): string {
  */
 export function calculateAverageSolvingTime(issues: IssueIF[]): Duration | null {
   if (issues.length === 0) return null;
-  const totalRestingTime = issues.reduce((total, issue) => {
+  const totalRestingTime = issues.reduce((total: number, issue: IssueIF) => {
     if (
       statusLists[Category.nonDisplayed].includes(issue.status as string) &&
       issue.statusChanges !== null
     ) {
       const createdAt = DateTime.fromJSDate(issue.createdAt as Date);
+
+      if (issue.statusChanges === null || issue.statusChanges.length === 0) return total;
       const statusRestingTime = DateTime.fromJSDate(
         issue.statusChanges[issue.statusChanges.length - 1].created as Date
       );

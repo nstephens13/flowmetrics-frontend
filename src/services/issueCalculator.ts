@@ -2,7 +2,7 @@ import type { ProjectIF } from '@/model/ProjectIF';
 import type { EmployeeIF } from '@/model/EmployeeIF';
 import type { IssueIF } from '@/model/Issue/IssueIF';
 import getMockData from '../assets/__mockdata__/mockDataComposer';
-import { Category, statusLists } from '@/assets/__mockdata__/StatusLists';
+import { Category, statusLists } from '@/assets/__mockdata__/IssueProps/statusLists';
 
 /**
  * @brief: The Function map the issues to the Employees.
@@ -58,11 +58,9 @@ export function mapIssuesToEmployees(projects: ProjectIF[] | null): Map<Employee
 }
 
 /**
- * Calculate the remaining reaction time for an issue.
- *
- * @param issue - The issue for which to calculate the remaining reaction time.
- * @returns [boolean, number] - A tuple containing a boolean indicating whether the issue has an SLA rule,
- * and the remaining reaction time in seconds.
+ * function to calculate the number of status changes
+ * @param issue
+ * @returns number of status changes
  */
 export function calculateRemainingReactionTime(issue: IssueIF): [boolean, number] {
   if (!issue.createdAt || !issue.assignedSlaRule) {
@@ -165,30 +163,9 @@ export function calculateStatusChanges(issue: IssueIF): number {
 /**
  *
  * @param Issues array of issues
- * @returns Map with the status and the number of issues
- */
-export function getStatusesfromIssues(Issues: IssueIF[]): Map<string, number> {
-  const mapToReturn: Map<string, number> = new Map([]);
-  // write code to get all the statuses from the issue status and return a map with the status and the number of issues
-  Issues.forEach((issue) => {
-    const numberOfIssues =
-      mapToReturn.get(issue.status as string) === undefined
-        ? 0
-        : mapToReturn.get(issue.status as string);
-    if (numberOfIssues !== undefined) {
-      mapToReturn.set(issue.status as string, numberOfIssues + 1);
-    } else {
-      mapToReturn.set(issue.status as string, 1);
-    }
-  });
-  return mapToReturn;
-}
-
-/**
- *
- * @param Issues array of issues
  * @param categories array of categories
  * @returns Map with the status and the number of issues
+ * @author Nived Stephen
  */
 export function getStatusesFromCategories(
   Issues: IssueIF[],
