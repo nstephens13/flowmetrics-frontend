@@ -1,32 +1,27 @@
-import getMockData from '@/assets/__mockdata__/mockDataComposer';
-import { getProject } from '@/assets/__mockdata__/mockdata';
 import useProjectsStore from '@/store/projectStore';
+import fetchProject from '@/api/fetchProject';
+import type { ProjectIF } from '@/model/ProjectIF';
 
-export default function initProjectStore() {
+export default async function initProjectStore() {
   const projectStore = useProjectsStore();
-  projectStore.addProject(getProject(1));
-  projectStore.addProject(getProject(2));
-  projectStore.addProject(getProject(3));
-  projectStore.addProject(getProject(4));
-  projectStore.addProject(getProject(5));
-  projectStore.addProject(getProject(6));
-  projectStore.addProject(getProject(7));
-  projectStore.addProject(getProject(8));
-  projectStore.addProject(getProject(9));
-  projectStore.addProject(getProject(10));
-  projectStore.addProject(getProject(11));
-  projectStore.addProject(getProject(12));
-  projectStore.addProject(getProject(13));
-  projectStore.addProject(getProject(14));
-  projectStore.addProject(getProject(15));
-  projectStore.addProject(getProject(16));
-  projectStore.addProject(getProject(17));
-  projectStore.addProject(getProject(18));
-  projectStore.addProject(getProject(19));
-  projectStore.addProject(getProject(20));
-  projectStore.addProject(getMockData(1));
-  projectStore.addProject(getMockData(3));
-  projectStore.addProject(getMockData(4));
-  projectStore.addProject(getMockData(5));
-  projectStore.addProject(getMockData(6));
+  projectStore.addProject((await fetchProject(1)) as ProjectIF);
+  projectStore.addProject((await fetchProject(2)) as ProjectIF);
+  projectStore.addProject((await fetchProject(3)) as ProjectIF);
+  projectStore.addProject((await fetchProject(4)) as ProjectIF);
+  projectStore.addProject((await fetchProject(5)) as ProjectIF);
+  projectStore.addProject((await fetchProject(6)) as ProjectIF);
+  projectStore.addProject((await fetchProject(7)) as ProjectIF);
+  projectStore.addProject((await fetchProject(8)) as ProjectIF);
+  projectStore.addProject((await fetchProject(9)) as ProjectIF);
+  projectStore.addProject((await fetchProject(10)) as ProjectIF);
+  projectStore.addProject((await fetchProject(11)) as ProjectIF);
+  projectStore.addProject((await fetchProject(12)) as ProjectIF);
+  projectStore.addProject((await fetchProject(13)) as ProjectIF);
+  projectStore.addProject((await fetchProject(14)) as ProjectIF);
+  projectStore.addProject((await fetchProject(15)) as ProjectIF);
+  projectStore.addProject((await fetchProject(16)) as ProjectIF);
+  projectStore.addProject((await fetchProject(17)) as ProjectIF);
+  projectStore.addProject((await fetchProject(18)) as ProjectIF);
+  projectStore.addProject((await fetchProject(19)) as ProjectIF);
+  projectStore.addProject((await fetchProject(20)) as ProjectIF);
 }

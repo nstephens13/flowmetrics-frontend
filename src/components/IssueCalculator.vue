@@ -74,7 +74,11 @@
     </Column>
     <Column header="Resting time (Assignee)">
       <template #body="slotProps">
-        {{ printRestingTime(slotProps.data.assigneeRestingTime) }}
+        {{
+          Duration.fromObject(slotProps.data.assigneeRestingTime ?? ({} as DurationLikeObject))
+            .toFormat("d' days 'h' hours ")
+            .toString()
+        }}
       </template>
     </Column>
     <Column
@@ -134,7 +138,11 @@
     </Column>
     <Column header="Resting time (Status)">
       <template #body="slotProps">
-        {{ printRestingTime(slotProps.data.statusRestingTime) }}
+        {{
+          Duration.fromObject(slotProps.data.statusRestingTime ?? ({} as DurationLikeObject))
+            .toFormat("d' days 'h' hours ")
+            .toString()
+        }}
       </template>
     </Column>
     <Column field="dueTo" header="Due date">
@@ -158,7 +166,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import type { Ref } from 'vue';
-import { DateTime } from 'luxon';
+import { DateTime, Duration, type DurationLikeObject } from 'luxon';
 import { FilterMatchMode } from 'primevue/api';
 import CircularProgressBar from '@/components/CircularProgressBar.vue';
 import type { ProjectIF } from '@/model/ProjectIF';
@@ -168,7 +176,6 @@ import {
   calculateStatusChanges,
   getIssueCountMax,
   printAssignedTo,
-  printRestingTime,
 } from '@/services/issueCalculator';
 import projectStore from '@/store/projectStore';
 import slaRulesStore from '@/store/slaRulesStore';

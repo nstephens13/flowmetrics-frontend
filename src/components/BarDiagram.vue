@@ -96,7 +96,6 @@ const chartOptions = ref({
       },
     },
   },
-  animation: false,
 });
 
 const labels: ComputedRef<string[]> = computed(() =>
