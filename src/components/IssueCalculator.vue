@@ -158,14 +158,18 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import type { Ref } from 'vue';
-import { DateTime, Duration } from 'luxon';
+import { DateTime } from 'luxon';
 import { FilterMatchMode } from 'primevue/api';
 import CircularProgressBar from '@/components/CircularProgressBar.vue';
 import type { ProjectIF } from '@/model/ProjectIF';
-import { countIssuesByState, Issue } from '@/services/Issue';
-import type { EmployeeIF } from '@/model/EmployeeIF';
+import { countIssuesByState } from '@/services/Issue';
 import { getIssueStateList, getIssueStatusList } from '@/model/ProjectIF';
-import { calculateStatusChanges } from '@/services/issueCalculator';
+import {
+  calculateStatusChanges,
+  getIssueCountMax,
+  printAssignedTo,
+  printRestingTime,
+} from '@/services/issueCalculator';
 import projectStore from '@/store/projectStore';
 import slaRulesStore from '@/store/slaRulesStore';
 import { Category } from '@/assets/__mockdata__/IssueProps/statusLists';
@@ -196,43 +200,6 @@ const filters = ref({
 
 // Create a reference for the projects array with mock data
 const projects: Ref<ProjectIF[]> = computed(() => projectStore().getProjects);
-
-/**
- * Returns the maximum issue count from the given array of issues.
- * If the issues array is empty, the function returns 100.
- * @param issues An array of issues
- * @returns The maximum issue count
- */
-function getIssueCountMax(issues: Issue[]): number {
-  if (issues.length === 0) {
-    return 100;
-  }
-  return issues.length;
-}
-
-/**
- * Returns the full name of the assigned employee.
- * If the employee is null, it returns an empty string.
- * @param employee An instance of EmployeeIF or null
- * @returns The formatted full name of the employee
- */
-function printAssignedTo(employee: EmployeeIF | null): string {
-  const firstName = employee?.firstName ?? '';
-  const lastName = employee?.lastName ?? '';
-  return `${firstName} ${lastName}`;
-}
-
-/**
- * if time since last status change is null, return 0
- * @return returns resting time in hours or if more than 24 hours returns in days
- * @param restingTime
- */
-function printRestingTime(restingTime: any): string {
-  if (restingTime == null) {
-    return '0';
-  }
-  return Duration.fromObject(restingTime).toFormat("d'd 'h'h 'm'm'").toString();
-}
 </script>
 
 <style scoped>

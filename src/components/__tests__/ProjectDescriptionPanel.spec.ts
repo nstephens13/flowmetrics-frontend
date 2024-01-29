@@ -20,7 +20,7 @@ import AssigneeCard from '../AssigneeCard.vue';
 import IssuesCard from '../IssuesCard.vue';
 import StateRestingTimeCard from '../StateRestingTimeCard.vue';
 import BarDiagram from '../BarDiagram.vue';
-import ZombieTicketCard from '../ZombieTicketCard.vue';
+import ZombieTicketCard from '../IssuesTable.vue';
 
 // Describe block for the test suite
 describe('Project Overview should load all the Components', () => {

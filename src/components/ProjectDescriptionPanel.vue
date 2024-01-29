@@ -69,18 +69,12 @@
           <div class="flex" style="min-width: 40%">
             <BarDiagram :project="selectedProject"></BarDiagram>
           </div>
-          <div class="flex w-full" style="width: 100%">
-            <div class="flex flex-wrap" style="min-width: 100%">
-              <div class="flex m-2" style="min-width: 100%, margin-left=30px">
-                <ZombieTicketCard :project="selectedProject"></ZombieTicketCard>
-              </div>
-              <Divider class="p-divider p-divider-horizontal divider-position" />
-            </div>
+          <div class="flex-wrap w-full">
+            <IssuesTable :project="selectedProject"></IssuesTable>
           </div>
         </div>
       </template>
     </Card>
-    <Divider class="p-divider p-divider-horizontal divider-position" />
   </div>
 </template>
 
@@ -90,7 +84,7 @@ import type { Ref } from 'vue';
 import type { ProjectIF } from '@/model/ProjectIF';
 import type { IssueIF } from '@/model/Issue/IssueIF';
 import projectStore from '@/store/projectStore';
-import ZombieTicketCard from '@/components/ZombieTicketCard.vue';
+import IssuesTable from '@/components/IssuesTable.vue';
 import KeyFactsCard from '@/components/KeyFactsCard.vue';
 import AssigneeCard from '@/components/AssigneeCard.vue';
 import BarDiagram from '@/components/BarDiagram.vue';
