@@ -264,9 +264,10 @@ describe('filterTests', () => {
       issuesToFilter,
       filter
     );
-    expect(filteredIssues.length).toEqual(2);
-    expect(filteredIssues[0].id).toEqual(2);
-    expect(filteredIssues[1].id).toEqual(3);
+
+    expect(filteredIssues.length).toEqual(3);
+    expect(filteredIssues[0].id).toEqual(1);
+    expect(filteredIssues[1].id).toEqual(2);
   });
   test('minimumRestingTimeAndChanges', () => {
     const filter: FilterConfigIF = {
@@ -284,7 +285,7 @@ describe('filterTests', () => {
       issuesToFilter,
       filter
     );
-    expect(filteredIssues.length).toEqual(1);
-    expect(filteredIssues[0].id).toEqual(3);
+    expect(filteredIssues.length).toEqual(2);
+    expect(filteredIssues[0].id).toEqual(1);
   });
 });

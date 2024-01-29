@@ -20,6 +20,7 @@ import AssigneeCard from '../AssigneeCard.vue';
 import IssuesCard from '../IssuesCard.vue';
 import StateRestingTimeCard from '../StateRestingTimeCard.vue';
 import BarDiagram from '../BarDiagram.vue';
+import ZombieTicketCard from '../IssuesTable.vue';
 
 // Describe block for the test suite
 describe('Project Overview should load all the Components', () => {
@@ -57,6 +58,7 @@ describe('Project Overview should load all the Components', () => {
       },
     },
   });
+
   // Mounting the ProjectDescriptionPanel component with necessary configuration
   const wrapper = mount(ProjectDescriptionPanel, {
     global: {
@@ -70,6 +72,7 @@ describe('Project Overview should load all the Components', () => {
         Chip,
         KeyFactsCard,
         AssigneeCard,
+        ZombieTicketCard,
         IssuesCard,
         StateRestingTimeCard,
         MultiSelect,
@@ -87,6 +90,7 @@ describe('Project Overview should load all the Components', () => {
     expect(wrapper.getComponent(Dropdown).isVisible()).toBe(true);
     expect(wrapper.getComponent(Card).isVisible()).toBe(true);
     expect(wrapper.getComponent(KeyFactsCard).isVisible()).toBe(true);
+    expect(wrapper.getComponent(ZombieTicketCard).isVisible()).toBe(true);
   });
 
   // Test to check the placeholder text of the dropdown select

@@ -69,95 +69,8 @@
           <div class="flex" style="min-width: 40%">
             <BarDiagram :project="selectedProject"></BarDiagram>
           </div>
-          <div class="flex w-full">
-            <ZombieTicketCard :project="selectedProject"></ZombieTicketCard>
-          </div>
-          <div class="flex w-full">
-            <Card class="issues-table-card" style="width: 100%">
-              <template #title>
-                <p>Issues</p>
-              </template>
-              <template #content>
-                <DataTable
-                  v-model:filters="filters"
-                  :globalFilterFields="['name']"
-                  paginator
-                  :rows="5"
-                  filterDisplay="menu"
-                  :rowsPerPageOptions="[10, 20, 50, 100]"
-                  :value="selectedProject ? selectedProject.issues : []"
-                  showGridlines
-                  stripedRows
-                >
-                  <Column field="id" header="Issue-ID"></Column>
-                  <template #empty> No issues found.</template>
-                  <template #loading> Loading issues. Please wait.</template>
-                  <Column field="name" header="Name"></Column>
-                  <Column field="assignedTo" header="Assigned to">
-                    <template #body="slotProps">
-                      {{ printAssignedTo(slotProps.data.assignedTo) }}
-                    </template>
-                  </Column>
-                  <Column field="createdAt" header="Created on"></Column>
-                  <Column
-                    header="Status"
-                    filterField="status"
-                    :showFilterMatchModes="false"
-                    :filterMenuStyle="{ width: '7rem' }"
-                    style="min-width: 10rem"
-                    :show-apply-button="false"
-                  >
-                    <template #body="data">
-                      <div class="flex align-items-center gap-2">
-                        <span>{{ data.data.status }}</span>
-                      </div>
-                    </template>
-                    <template #filter="{ filterModel, filterCallback }">
-                      <MultiSelect
-                        v-model="filterModel.value"
-                        display="chip"
-                        :options="statuses"
-                        @change="filterCallback()"
-                        placeholder="Select Status"
-                        :maxSelectedLabels="3"
-                        class="w-full md:w-10rem"
-                      />
-                    </template>
-                  </Column>
-                  <Column header="Remaining Reaction Time" />
-                  <Column field="statusChanges" header="Status changes" style="width: 150px">
-                    <template #body="slotProps">
-                      {{ calculateStatusChanges(slotProps.data) }}
-                    </template>
-                  </Column>
-                  <Column
-                    header="State"
-                    filterField="state"
-                    :showFilterMatchModes="false"
-                    :filterMenuStyle="{ width: '7rem' }"
-                    style="min-width: 10rem"
-                    :show-apply-button="false"
-                  >
-                    <template #body="data">
-                      <div class="flex align-items-center gap-2">
-                        <span>{{ data.data.state }}</span>
-                      </div>
-                    </template>
-                    <template #filter="{ filterModel, filterCallback }">
-                      <MultiSelect
-                        v-model="filterModel.value"
-                        display="chip"
-                        :options="states"
-                        @change="filterCallback()"
-                        placeholder="Select State"
-                        :maxSelectedLabels="3"
-                        class="w-full md:w-10rem"
-                      />
-                    </template>
-                  </Column>
-                </DataTable>
-              </template>
-            </Card>
+          <div class="flex-wrap w-full">
+            <IssuesTable :project="selectedProject"></IssuesTable>
           </div>
         </div>
       </template>
@@ -166,15 +79,12 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { ref } from 'vue';
 import type { Ref } from 'vue';
-import { FilterMatchMode } from 'primevue/api';
-import type { EmployeeIF } from '@/model/EmployeeIF';
-import { getIssueStatusList, getIssueStateList, type ProjectIF } from '@/model/ProjectIF';
-import { calculateStatusChanges } from '@/services/issueCalculator';
+import type { ProjectIF } from '@/model/ProjectIF';
 import type { IssueIF } from '@/model/Issue/IssueIF';
 import projectStore from '@/store/projectStore';
-import ZombieTicketCard from '@/components/ZombieTicketCard.vue';
+import IssuesTable from '@/components/IssuesTable.vue';
 import KeyFactsCard from '@/components/KeyFactsCard.vue';
 import AssigneeCard from '@/components/AssigneeCard.vue';
 import BarDiagram from '@/components/BarDiagram.vue';
@@ -191,35 +101,15 @@ const selectedProject: Ref<ProjectIF> = ref({
   issues: [] as IssueIF[],
   slaSubscriber: null,
 } as ProjectIF);
-
-// Create a reference for the filters object with initial configuration
-const filters = ref({
-  status: { value: null, matchMode: FilterMatchMode.IN },
-  state: { value: null, matchMode: FilterMatchMode.IN },
-});
-
-// Function to print the assigned employee's full name
-function printAssignedTo(employee: EmployeeIF | null): string {
-  const firstName = employee?.firstName ?? '';
-  const lastName = employee?.lastName ?? '';
-  return `${firstName} ${lastName}`;
-}
-
-// Create a reference for the statuses array
-const statuses = computed(() => getIssueStatusList(selectedProject.value.issues));
-
-// get computed states
-const states = computed(
-  () => getIssueStateList(selectedProject.value.issues) ?? ['planning', 'development', 'testing']
-);
 </script>
 
 <style scoped>
 .p-card {
+  margin: 15px 0px 0 15px;
   box-shadow: none;
 }
 .project-card {
-  margin: 15px 15px 0 15px;
+  margin: 15px 0px 0 15px;
 }
 :deep(.project-card > .p-card-body) {
   padding-bottom: 0;
