@@ -10,7 +10,7 @@ export default function generateRules(): RuleIF[] {
   for (let i = 0; i < numberOfRules; i++) {
     rules.push({
       id: i + 1,
-      name: `SLA Rule ${i + 1}`,
+      name: `Sla rule ${i + 1}`,
       reactionTime: Duration.fromObject({
         days: Math.floor(Math.floor(Math.random() * 30) + 1),
       }).toObject(),

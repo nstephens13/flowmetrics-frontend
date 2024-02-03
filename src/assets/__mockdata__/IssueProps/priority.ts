@@ -1,9 +1,9 @@
 enum Priority {
-  none = 'No Priority',
+  none = 'No priority',
   low = 'Kosmetik',
-  medium = 'leicht umgehbar',
-  high = 'behindernd',
-  critical = 'schwerwiegend',
+  medium = 'Leicht umgehbar',
+  high = 'Behindernd',
+  critical = 'Schwerwiegend',
 }
 
 export default Priority;

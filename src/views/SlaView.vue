@@ -2,12 +2,12 @@
   <Card class="sla-rule-card">
     <template #title>
       <div class="flex flex-row align-content-center align-items-center justify-content-between">
-        <p>Create SLA Rules</p>
+        <p>Create sla rules</p>
         <div class="flex gap-2">
           <Dropdown
             v-model="selectedProjectPDF"
             :options="projectOptions"
-            placeholder="Select Customer Project"
+            placeholder="Select customer project"
             optionLabel="name"
           />
           <Button
@@ -23,7 +23,7 @@
       <div class="flex flex-row">
         <div class="flex-column w-3">
           <Accordion :activeIndex="0">
-            <AccordionTab header="Add SLA rule">
+            <AccordionTab header="Add sla rule">
               <div class="rule-container flex flex-column">
                 <Dropdown
                   v-model="selectedCategoryForAddRule"
@@ -80,13 +80,13 @@
                 </div>
               </div>
             </AccordionTab>
-            <AccordionTab header="Add SLA category">
+            <AccordionTab header="Add sla category">
               <div class="category-container flex flex-column">
                 <Dropdown
                   v-model="selectedProject"
                   :options="projectOptions"
                   class="select-customer-in m-1"
-                  placeholder="Select Customer Project"
+                  placeholder="Select customer project"
                   optionLabel="name"
                 />
                 <InputText
@@ -150,7 +150,7 @@
         </div>
         <Divider class="vertical-divider" layout="vertical" />
         <div class="w-9">
-          <h2 class="mt-0 text-2xl">{{ categories.length }} SLA categories</h2>
+          <h2 class="mt-0 text-2xl">{{ categories.length }} Sla categories</h2>
           <DataTable
             v-model:expandedRows="expandedRows"
             :value="categories"
