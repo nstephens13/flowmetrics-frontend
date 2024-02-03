@@ -7,7 +7,7 @@ describe('RulesGenerator', () => {
     expect(rules.length).toBeGreaterThan(0);
     expect(rules.length).toBeLessThan(13);
     expect(rules[0].id).toBe(1);
-    expect(rules[0].name).toBe('SLA Rule 1');
+    expect(rules[0].name).toBe('Sla rule 1');
     expect(rules[0].reactionTime).toBeDefined();
     expect(rules[0].expirationDate).toBeDefined();
     expect(rules[0].occurredIn).toBeDefined();
