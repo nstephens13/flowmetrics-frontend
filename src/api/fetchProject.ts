@@ -22,7 +22,7 @@ export default async function fetchProject(projectId: number): Promise<ProjectIF
       id: data.id,
       name: data.name,
       description: data.description,
-      issues: data.issues.json() as IssueIF[],
+      issues: data.issues as IssueIF[],
     } as ProjectIF;
   } catch (err) {
     return getProject(projectIdToBeFetched);
