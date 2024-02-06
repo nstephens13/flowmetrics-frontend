@@ -56,27 +56,21 @@ export function getPercentageSlaRulesComplied(project: ProjectIF): string {
  */
 export function calculateAverageSolvingTime(issues: IssueIF[]): Duration | null {
   if (issues.length === 0) return null;
-  const totalRestingTime = issues.reduce((total: number, issue: IssueIF) => {
-    if (
-      statusLists[Category.nonDisplayed].includes(issue.status as string) &&
-      issue.statusChanges !== null
-    ) {
-      const createdAt = DateTime.fromJSDate(issue.createdAt as Date);
-
-      if (issue.statusChanges === null || issue.statusChanges.length === 0) return total;
-      const statusRestingTime = DateTime.fromJSDate(
-        issue.statusChanges[issue.statusChanges.length - 1].created as Date
+  const issuesClosed = issues.filter(
+    (issue) => issue.status !== null && statusLists[Category.nonDisplayed].includes(issue.status)
+  );
+  const totalSolvingTime = issuesClosed.reduce((acc, issue) => {
+    if (issue.createdAt && issue.statusChanges) {
+      const lastStatusChangeElement = issue.statusChanges[issue.statusChanges.length - 1];
+      if (lastStatusChangeElement.created === null) return acc;
+      const solvingTime = DateTime.fromISO(lastStatusChangeElement.created?.toString()).diff(
+        DateTime.fromISO(issue.createdAt?.toString())
       );
-      return total + statusRestingTime.diff(createdAt).as('milliseconds');
+      return acc.plus(solvingTime);
     }
-    return total;
-  }, 0);
-
-  const count = issues.reduce((totalCount, issue) => {
-    if (statusLists[Category.nonDisplayed].includes(issue.status as string)) {
-      return totalCount + 1;
-    }
-    return totalCount;
-  }, 0);
-  return count > 0 ? Duration.fromMillis(totalRestingTime / count) : null;
+    return acc;
+  }, Duration.fromMillis(0));
+  return issuesClosed.length > 0
+    ? Duration.fromMillis(totalSolvingTime.as('millisecond') / issuesClosed.length)
+    : null; // Fix: Use dividedBy() method
 }
