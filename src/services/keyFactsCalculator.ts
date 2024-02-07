@@ -47,6 +47,29 @@ export function getPercentageSlaRulesComplied(project: ProjectIF): string {
   )} %`;
 }
 
+function calculateTotalSolvingTime(issues: IssueIF[]): Duration {
+  return issues.reduce((acc: Duration<true>, issue) => {
+    if (issue.createdAt && issue.statusChanges) {
+      const lastStatusChangeElement = issue.statusChanges[issue.statusChanges.length - 1];
+      if (lastStatusChangeElement.created === null) return acc;
+
+      const createdDateString = issue.createdAt as unknown as string;
+      const lastStatusChangeDateString = lastStatusChangeElement.created as unknown as string;
+
+      if (createdDateString === '' || lastStatusChangeDateString === '') return acc;
+
+      const createdDate = DateTime.fromISO(createdDateString);
+      const lastStatusChangeDate = DateTime.fromISO(lastStatusChangeDateString);
+
+      const solvingTime = lastStatusChangeDate.diff(createdDate);
+
+      return acc.plus(solvingTime);
+    }
+
+    return acc;
+  }, Duration.fromMillis(0));
+}
+
 /**
  * @brief calculates the average solving time of issues
  *
@@ -59,17 +82,7 @@ export function calculateAverageSolvingTime(issues: IssueIF[]): Duration | null 
   const issuesClosed = issues.filter(
     (issue) => issue.status !== null && statusLists[Category.nonDisplayed].includes(issue.status)
   );
-  const totalSolvingTime = issuesClosed.reduce((acc, issue) => {
-    if (issue.createdAt && issue.statusChanges) {
-      const lastStatusChangeElement = issue.statusChanges[issue.statusChanges.length - 1];
-      if (lastStatusChangeElement.created === null) return acc;
-      const solvingTime = DateTime.fromISO(lastStatusChangeElement.created?.toString()).diff(
-        DateTime.fromISO(issue.createdAt?.toString())
-      );
-      return acc.plus(solvingTime);
-    }
-    return acc;
-  }, Duration.fromMillis(0));
+  const totalSolvingTime = calculateTotalSolvingTime(issuesClosed);
   return issuesClosed.length > 0
     ? Duration.fromMillis(totalSolvingTime.as('millisecond') / issuesClosed.length)
     : null; // Fix: Use dividedBy() method
