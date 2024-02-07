@@ -45,7 +45,7 @@ function loadIssueDataFromFile(issues: any): Issue[] {
       status: issue.status as string,
       assigneeRestingTime: null,
       statusRestingTime: null,
-      assigneeChanges: null,
+      assigneeChanges: [],
       statusChanges: issue.statusChanges ? issue.statusChanges : [],
       state: issue.state as string,
     });
@@ -335,8 +335,8 @@ function getMockData(dataset: number): ProjectIF {
           dueTo: faker.date.future(),
           assigneeRestingTime: null,
           statusRestingTime: null,
-          assigneeChanges: null,
-          statusChanges: null,
+          assigneeChanges: [],
+          statusChanges: [],
           state: '',
         });
       }
@@ -391,9 +391,9 @@ function getMockData(dataset: number): ProjectIF {
           dueTo: faker.date.future(),
           priority: null,
           issueType: null,
-          assigneeChanges: null,
+          assigneeChanges: [],
           assigneeRestingTime: null,
-          statusChanges: null,
+          statusChanges: [],
           statusRestingTime: null,
           state,
         });
@@ -490,7 +490,7 @@ function getMockData(dataset: number): ProjectIF {
           state: '',
           assigneeRestingTime: null,
           statusRestingTime: null,
-          assigneeChanges: null,
+          assigneeChanges: [],
         });
       }
 
@@ -557,7 +557,7 @@ function getMockData(dataset: number): ProjectIF {
           status: '',
           assigneeRestingTime: null,
           statusRestingTime: null,
-          assigneeChanges: null,
+          assigneeChanges: [],
           statusChanges: [],
           state: '',
         });

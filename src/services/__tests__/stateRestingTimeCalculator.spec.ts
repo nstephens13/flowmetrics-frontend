@@ -44,7 +44,7 @@ const testProject: ProjectIF = {
         seconds: 0,
         milliseconds: 0,
       },
-      assigneeChanges: null,
+      assigneeChanges: [],
       statusRestingTime: {
         weeks: 0,
         days: 1,
@@ -85,7 +85,7 @@ const testProject: ProjectIF = {
         seconds: 0,
         milliseconds: 0,
       },
-      assigneeChanges: null,
+      assigneeChanges: [],
       statusRestingTime: {
         weeks: 0,
         days: 1,
@@ -126,7 +126,7 @@ const testProject: ProjectIF = {
         seconds: 0,
         milliseconds: 0,
       },
-      assigneeChanges: null,
+      assigneeChanges: [],
       statusRestingTime: {
         weeks: 0,
         days: 1,
@@ -167,7 +167,7 @@ const testProject: ProjectIF = {
         seconds: 0,
         milliseconds: 0,
       },
-      assigneeChanges: null,
+      assigneeChanges: [],
       statusRestingTime: {
         weeks: 0,
         days: 1,
@@ -208,7 +208,7 @@ const testProject: ProjectIF = {
         seconds: 0,
         milliseconds: 0,
       },
-      assigneeChanges: null,
+      assigneeChanges: [],
       statusRestingTime: {
         weeks: 0,
         days: 1,
@@ -249,7 +249,7 @@ const testProject: ProjectIF = {
         seconds: 0,
         milliseconds: 0,
       },
-      assigneeChanges: null,
+      assigneeChanges: [],
       statusRestingTime: {
         weeks: 0,
         days: 1,

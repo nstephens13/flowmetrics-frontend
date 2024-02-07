@@ -165,12 +165,18 @@ export function printRestingDays(issue: IssueIF): number {
     return 0;
   }
   const currentTime: Date = new Date();
-  const difference: number =
-    currentTime.valueOf() -
-    (issue.statusChanges[issue.statusChanges.length - 1].created?.valueOf() ?? 0);
-  if (difference >= 86400000) {
-    const days: number = difference / 86400000;
-    return Number(days.toFixed(0));
+
+  if (issue.statusChanges.length > 0) {
+    const lastStatusChangeDate = issue.statusChanges[issue.statusChanges.length - 1].created;
+
+    if (lastStatusChangeDate !== null) {
+      const difference: number = currentTime.valueOf() - lastStatusChangeDate.valueOf();
+      if (difference >= 86400000) {
+        const days: number = difference / 86400000;
+        return Number(days.toFixed(0));
+      }
+    }
+    return currentTime.valueOf();
   }
   return 0;
 }

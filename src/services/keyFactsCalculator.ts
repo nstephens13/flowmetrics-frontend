@@ -48,22 +48,21 @@ export function getPercentageSlaRulesComplied(project: ProjectIF): string {
 }
 
 function calculateTotalSolvingTime(issues: IssueIF[]): Duration {
-  return issues.reduce((acc: Duration<true>, issue) => {
+  return issues.reduce((acc, issue) => {
     if (issue.createdAt && issue.statusChanges) {
       const lastStatusChangeElement = issue.statusChanges[issue.statusChanges.length - 1];
-      if (lastStatusChangeElement.created === null) return acc;
 
-      const createdDateString = issue.createdAt as unknown as string;
-      const lastStatusChangeDateString = lastStatusChangeElement.created as unknown as string;
+      // check if lastStatusChangeElement is undefined
+      if (lastStatusChangeElement !== undefined) {
+        if (lastStatusChangeElement?.created === null) return acc;
 
-      if (createdDateString === '' || lastStatusChangeDateString === '') return acc;
+        const createdDate = DateTime.fromJSDate(issue.createdAt);
+        const lastStatusChangeDate = DateTime.fromJSDate(lastStatusChangeElement.created);
+        const solvingTime = lastStatusChangeDate.diff(createdDate);
 
-      const createdDate = DateTime.fromISO(createdDateString);
-      const lastStatusChangeDate = DateTime.fromISO(lastStatusChangeDateString);
-
-      const solvingTime = lastStatusChangeDate.diff(createdDate);
-
-      return acc.plus(solvingTime);
+        return acc.plus(solvingTime);
+      }
+      return acc;
     }
 
     return acc;
@@ -85,5 +84,5 @@ export function calculateAverageSolvingTime(issues: IssueIF[]): Duration | null 
   const totalSolvingTime = calculateTotalSolvingTime(issuesClosed);
   return issuesClosed.length > 0
     ? Duration.fromMillis(totalSolvingTime.as('millisecond') / issuesClosed.length)
-    : null; // Fix: Use dividedBy() method
+    : null;
 }
