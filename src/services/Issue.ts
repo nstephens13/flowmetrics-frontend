@@ -32,9 +32,9 @@ class Issue implements IssueIF {
 
   statusRestingTime: DurationLikeObject | null;
 
-  statusChanges: ChangeLogIF[] | null;
+  statusChanges: ChangeLogIF[];
 
-  assigneeChanges: ChangeLogIF[] | null;
+  assigneeChanges: ChangeLogIF[];
 
   state: string | null;
 

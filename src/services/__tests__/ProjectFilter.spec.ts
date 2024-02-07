@@ -124,8 +124,8 @@ describe('filterTests', () => {
       status: null,
       assigneeRestingTime: null,
       statusRestingTime: Duration.fromMillis(86400000),
-      statusChanges: null,
-      assigneeChanges: null,
+      statusChanges: [],
+      assigneeChanges: [],
       state: null,
     } as IssueIF,
     {
@@ -163,7 +163,7 @@ describe('filterTests', () => {
           changes: null,
         } as ChangeLogIF,
       ],
-      assigneeChanges: null,
+      assigneeChanges: [],
     } as IssueIF,
     {
       id: 2,
@@ -188,7 +188,7 @@ describe('filterTests', () => {
           changes: null,
         } as ChangeLogIF,
       ],
-      assigneeChanges: null,
+      assigneeChanges: [],
     } as IssueIF,
     {
       id: 3,
@@ -225,7 +225,7 @@ describe('filterTests', () => {
           changes: null,
         } as ChangeLogIF,
       ],
-      assigneeChanges: null,
+      assigneeChanges: [],
     } as IssueIF,
   ];
   test('minimumStatusChangesFilter', () => {

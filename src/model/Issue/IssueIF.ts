@@ -38,7 +38,7 @@ export interface IssueIF {
   status: string | null;
   assigneeRestingTime: DurationLikeObject | null;
   statusRestingTime: DurationLikeObject | null;
-  statusChanges: ChangeLogIF[] | null;
-  assigneeChanges: ChangeLogIF[] | null;
+  statusChanges: ChangeLogIF[];
+  assigneeChanges: ChangeLogIF[];
   state: string | Category | null;
 }
