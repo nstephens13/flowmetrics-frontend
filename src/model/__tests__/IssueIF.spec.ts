@@ -5,9 +5,8 @@ import {
   getAssignedToName,
   getFormattedDate,
   getTimeLeft,
-} from '../Issue/Issue';
+} from '../../services/Issue';
 import type { EmployeeIF } from '../EmployeeIF';
-import type { StatusChangesIF } from '../Issue/StatusChangesIF';
 
 describe('Issue Class', () => {
   test('creates an instance of Issue with the provided properties', () => {
@@ -27,24 +26,26 @@ describe('Issue Class', () => {
     const createdAt = new Date();
     const closedAt = null;
     const dueTo = new Date();
-    const status = 'Open';
-    const assignedSlaRule = null;
-    const statusChanges: StatusChangesIF[] = [];
+    const status = 'open';
+    const state = '';
 
     const issue = new Issue(
       id,
       name,
       description,
+      null,
+      null,
       assignedTo,
       createdBy,
       createdAt,
       closedAt,
       dueTo,
       status,
-      statusChanges,
-      assignedSlaRule,
-      null,
-      null
+      {},
+      {},
+      [],
+      [],
+      ''
     );
 
     expect(issue.id).toBe(id);
@@ -56,8 +57,7 @@ describe('Issue Class', () => {
     expect(issue.closedAt).toBe(closedAt);
     expect(issue.dueTo).toBe(dueTo);
     expect(issue.status).toBe(status);
-    expect(issue.assignedSlaRule).toBe(assignedSlaRule);
-    expect(issue.statusChanges).toBe(statusChanges);
+    expect(issue.state).toBe(state);
   });
 });
 
@@ -66,6 +66,8 @@ describe('getAssignedToName', () => {
     const issue = new Issue(
       1,
       'Test Issue',
+      null,
+      null,
       null,
       {
         id: 34,
@@ -88,11 +90,12 @@ describe('getAssignedToName', () => {
       new Date(),
       null,
       null,
+      '',
+      null,
       null,
       [],
-      null,
-      null,
-      null
+      [],
+      ''
     );
     const assignedToName = getAssignedToName(issue);
     expect(assignedToName).toBe('John Doe');
@@ -102,6 +105,8 @@ describe('getAssignedToName', () => {
     const issue = new Issue(
       1,
       'Test Issue',
+      null,
+      null,
       null,
       null,
       {
@@ -117,10 +122,11 @@ describe('getAssignedToName', () => {
       null,
       null,
       null,
+      null,
+      null,
       [],
-      null,
-      null,
-      null
+      [],
+      ''
     );
     const assignedToName = getAssignedToName(issue);
     expect(assignedToName).toBe('');
@@ -135,6 +141,16 @@ describe('getFormattedDate', () => {
       'Test Issue',
       null,
       null,
+      null,
+      {
+        id: 4245,
+        firstName: 'Jane',
+        lastName: 'Smith',
+        emailAddress: 'jane.smith@email.com',
+        status: 'active',
+        avatarUrl: 'none',
+        key: 'jsmith',
+      },
       {
         id: 4245,
         firstName: 'Jane',
@@ -147,11 +163,12 @@ describe('getFormattedDate', () => {
       new Date(),
       null,
       dueTo,
+      '',
+      null,
       null,
       [],
-      null,
-      null,
-      null
+      [],
+      ''
     );
     const formattedDate = getFormattedDate(issue);
     expect(formattedDate).toBe('July 1, 2023');
@@ -163,6 +180,16 @@ describe('getFormattedDate', () => {
       'Test Issue',
       null,
       null,
+      null,
+      {
+        id: 4245,
+        firstName: 'Jane',
+        lastName: 'Smith',
+        emailAddress: 'jane.smith@email.com',
+        status: 'active',
+        avatarUrl: 'none',
+        key: 'jsmith',
+      },
       {
         id: 4245,
         firstName: 'Jane',
@@ -175,11 +202,12 @@ describe('getFormattedDate', () => {
       new Date(),
       null,
       null,
+      '',
+      null,
       null,
       [],
-      null,
-      null,
-      null
+      [],
+      ''
     );
     const formattedDate = getFormattedDate(issue);
     expect(formattedDate).toBe('');
@@ -195,6 +223,16 @@ describe('getTimeLeft', () => {
       'Test Issue',
       null,
       null,
+      null,
+      {
+        id: 4245,
+        firstName: 'Jane',
+        lastName: 'Smith',
+        emailAddress: 'jane.smith@email.com',
+        status: 'active',
+        avatarUrl: 'none',
+        key: 'jsmith',
+      },
       {
         id: 4245,
         firstName: 'Jane',
@@ -207,11 +245,12 @@ describe('getTimeLeft', () => {
       new Date(),
       null,
       dueTo,
+      '',
+      null,
       null,
       [],
-      null,
-      null,
-      null
+      [],
+      ''
     );
     const timeLeft = getTimeLeft(issue);
     const expectedTimeLeft = Math.ceil(
@@ -227,6 +266,16 @@ describe('getTimeLeft', () => {
       'Test Issue',
       null,
       null,
+      null,
+      {
+        id: 4245,
+        firstName: 'Jane',
+        lastName: 'Smith',
+        emailAddress: 'jane.smith@email.com',
+        status: 'active',
+        avatarUrl: 'none',
+        key: 'jsmith',
+      },
       {
         id: 4245,
         firstName: 'Jane',
@@ -239,11 +288,12 @@ describe('getTimeLeft', () => {
       new Date(),
       null,
       dueTo,
+      '',
+      null,
       null,
       [],
-      null,
-      null,
-      null
+      [],
+      ''
     );
     const timeLeft = getTimeLeft(issue);
     expect(timeLeft).toBe(0);
@@ -255,6 +305,16 @@ describe('getTimeLeft', () => {
       'Test Issue',
       null,
       null,
+      null,
+      {
+        id: 4245,
+        firstName: 'Jane',
+        lastName: 'Smith',
+        emailAddress: 'jane.smith@email.com',
+        status: 'active',
+        avatarUrl: 'none',
+        key: 'jsmith',
+      },
       {
         id: 4245,
         firstName: 'Jane',
@@ -267,11 +327,12 @@ describe('getTimeLeft', () => {
       new Date(),
       null,
       null,
+      '',
+      null,
       null,
       [],
-      null,
-      null,
-      null
+      [],
+      ''
     );
     const timeLeft = getTimeLeft(issue);
     expect(timeLeft).toBeNull();
@@ -285,6 +346,16 @@ describe('countIssuesByStatus', () => {
       'Issue 1',
       null,
       null,
+      null,
+      {
+        id: 4245,
+        firstName: 'Jane',
+        lastName: 'Smith',
+        emailAddress: 'jane.smith@email.com',
+        status: 'active',
+        avatarUrl: 'none',
+        key: 'jsmith',
+      },
       {
         id: 4245,
         firstName: 'Jane',
@@ -297,17 +368,28 @@ describe('countIssuesByStatus', () => {
       new Date(),
       null,
       null,
-      'Open',
+      'open',
+      null,
+      null,
       [],
-      null,
-      null,
-      null
+      [],
+      'development'
     ),
     new Issue(
       2,
       'Issue 2',
       null,
       null,
+      null,
+      {
+        id: 4245,
+        firstName: 'Jane',
+        lastName: 'Smith',
+        emailAddress: 'jane.smith@email.com',
+        status: 'active',
+        avatarUrl: 'none',
+        key: 'jsmith',
+      },
       {
         id: 34,
         firstName: 'John',
@@ -320,17 +402,28 @@ describe('countIssuesByStatus', () => {
       new Date(),
       null,
       null,
-      'Closed',
+      'closed',
+      null,
+      null,
       [],
-      null,
-      null,
-      null
+      [],
+      'testing'
     ),
     new Issue(
       3,
       'Issue 3',
       null,
       null,
+      null,
+      {
+        id: 4245,
+        firstName: 'Jane',
+        lastName: 'Smith',
+        emailAddress: 'jane.smith@email.com',
+        status: 'active',
+        avatarUrl: 'none',
+        key: 'jsmith',
+      },
       {
         id: 4245,
         firstName: 'Jane',
@@ -343,17 +436,28 @@ describe('countIssuesByStatus', () => {
       new Date(),
       null,
       null,
-      'In Progress',
+      'in progress',
+      null,
+      null,
       [],
-      null,
-      null,
-      null
+      [],
+      'development'
     ),
     new Issue(
       4,
       'Issue 4',
       null,
       null,
+      null,
+      {
+        id: 4245,
+        firstName: 'Jane',
+        lastName: 'Smith',
+        emailAddress: 'jane.smith@email.com',
+        status: 'active',
+        avatarUrl: 'none',
+        key: 'jsmith',
+      },
       {
         id: 34,
         firstName: 'John',
@@ -366,17 +470,28 @@ describe('countIssuesByStatus', () => {
       new Date(),
       null,
       null,
-      'Open',
+      'open',
+      {},
+      {},
       [],
-      null,
-      null,
-      null
+      [],
+      'planning'
     ),
     new Issue(
       5,
       'Issue 5',
       null,
       null,
+      null,
+      {
+        id: 4245,
+        firstName: 'Jane',
+        lastName: 'Smith',
+        emailAddress: 'jane.smith@email.com',
+        status: 'active',
+        avatarUrl: 'none',
+        key: 'jsmith',
+      },
       {
         id: 4245,
         firstName: 'Jane',
@@ -389,18 +504,19 @@ describe('countIssuesByStatus', () => {
       new Date(),
       null,
       null,
-      'Closed',
+      'closed',
+      null,
+      null,
       [],
-      null,
-      null,
-      null
+      [],
+      'planning'
     ),
   ];
 
   test('returns the count of issues with the specified status', () => {
-    const openIssuesCount = countIssuesByStatus(issueList, 'Open');
-    const closedIssuesCount = countIssuesByStatus(issueList, 'Closed');
-    const inProgressIssuesCount = countIssuesByStatus(issueList, 'In Progress');
+    const openIssuesCount = countIssuesByStatus(issueList, 'open');
+    const closedIssuesCount = countIssuesByStatus(issueList, 'closed');
+    const inProgressIssuesCount = countIssuesByStatus(issueList, 'in progress');
 
     expect(openIssuesCount).toBe(2);
     expect(closedIssuesCount).toBe(2);

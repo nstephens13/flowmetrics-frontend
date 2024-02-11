@@ -2,7 +2,7 @@
   <div class="card" style="position: relative">
     <Card>
       <template #title>
-        <p>Issue Calculator</p>
+        <p>Issue calculator</p>
         <Divider class="p-divider p-divider-horizontal divider-position" />
       </template>
       <template #content>

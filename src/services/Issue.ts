@@ -1,8 +1,8 @@
-import type { EmployeeIF } from '../EmployeeIF';
-import type { IssueIF } from './IssueIF';
-import type { SlaRule } from '@/model/Sla/SlaRule';
-import type { ChangeEventIF } from '@/model/ChangeEventIF';
-import type { StatusChangesIF } from '@/model/Issue/StatusChangesIF';
+import type { DurationLikeObject } from 'luxon';
+import type { EmployeeIF } from '@/model/EmployeeIF';
+import type { IssueIF } from '@/model/Issue/IssueIF';
+import type { ChangeLogIF } from '@/model/Issue/ChangeLogIF';
+import { Category, statusLists } from '@/assets/__mockdata__/IssueProps/statusLists';
 
 // Issue Class implements IssueIF
 class Issue implements IssueIF {
@@ -11,6 +11,10 @@ class Issue implements IssueIF {
   name: string;
 
   description: string | null;
+
+  priority: string | null;
+
+  issueType: string | null;
 
   assignedTo: EmployeeIF | null;
 
@@ -24,50 +28,86 @@ class Issue implements IssueIF {
 
   status: string | null;
 
-  statusChanges: StatusChangesIF[];
+  assigneeRestingTime: DurationLikeObject | null;
 
-  assignedSlaRule: SlaRule[] | null;
+  statusRestingTime: DurationLikeObject | null;
 
-  lastStatusChange: Date | null;
+  statusChanges: ChangeLogIF[];
 
-  changelog: ChangeEventIF[] | null;
+  assigneeChanges: ChangeLogIF[];
+
+  state: string | null;
+
+  static planningStatusList: any;
 
   constructor(
     id: number,
     name: string,
     description: string | null,
+    priority: string | null,
+    issueType: string | null,
     assignedTo: EmployeeIF | null,
     createdBy: EmployeeIF,
     createdAt: Date,
     closedAt: Date | null,
     dueTo: Date | null,
     status: string | null,
-    statusChanges: StatusChangesIF[],
-    assignedSlaRule: SlaRule[] | null,
-    lastStatusChange: Date | null,
-    changelog: ChangeEventIF[] | null
+    assigneeRestingTime: DurationLikeObject | null,
+    statusRestingTime: DurationLikeObject | null,
+    statusChanges: ChangeLogIF[],
+    assigneeChanges: ChangeLogIF[],
+    state: string | null
   ) {
     this.id = id;
     this.name = name;
     this.description = description;
+    this.priority = priority;
+    this.issueType = issueType;
     this.assignedTo = assignedTo;
     this.createdBy = createdBy;
     this.createdAt = createdAt;
     this.closedAt = closedAt;
     this.dueTo = dueTo;
     this.status = status;
-    this.assignedSlaRule = assignedSlaRule;
+    this.assigneeRestingTime = assigneeRestingTime;
+    this.statusRestingTime = statusRestingTime;
     this.statusChanges = statusChanges;
-    this.lastStatusChange = lastStatusChange;
-    this.changelog = changelog;
+    this.assigneeChanges = assigneeChanges;
+    this.state = state;
   }
 }
 
+// Define lists of different category with statuses
+const planningStatusList: string[] = statusLists[Category.planning];
+const devStatusList: string[] = statusLists[Category.development];
+const testingStatusList: string[] = statusLists[Category.testing];
+const nonDisplayedStatusList: string[] = statusLists[Category.nonDisplayed];
+const nonDisplayedStateList: string[] = [''];
+
+// Function sets State using Issue-Status
+function assignStateToIssue(issue: Issue): string | null {
+  const status = issue.status || '';
+
+  if (planningStatusList.includes(status)) {
+    return Category.planning;
+  }
+  if (devStatusList.includes(status)) {
+    return Category.development;
+  }
+  if (testingStatusList.includes(status)) {
+    return Category.testing;
+  }
+  if (nonDisplayedStatusList.includes(status)) {
+    return null;
+  }
+  return 'Undefined';
+}
 /**
  * Returns the name of the employee assigned to the issue.
  * @param issue - The Issue object.
  * @returns The assigned employee's name.
  */
+
 function getAssignedToName(issue: Issue): string {
   if (issue.assignedTo) {
     return `${issue.assignedTo.firstName} ${issue.assignedTo.lastName}`;
@@ -112,11 +152,15 @@ function countIssuesByStatus(issueList: Issue[], status: string | null): number 
 }
 
 /**
- * Returns SLA-Rules assigned to an Issue
- * @returns The Array of SLARules assigned to an Issue, can be null
+ * Counts the number of issues in the given issue list with the specified state.
+ * If the state is null, counts all the issues in the list.
+ * @param issueList - The list of issues.
+ * @param status - The states of the issues to count.
+ * @returns The count of issues.
  */
-function getSlaRules(issue: Issue) {
-  return issue.assignedSlaRule ?? [];
+function countIssuesByState(issueList: Issue[], state: string | null): number {
+  return (state ? issueList.filter((issue) => assignStateToIssue(issue) === state) : issueList)
+    .length;
 }
 
 // export of data array and remain time for ticket calculation
@@ -126,5 +170,11 @@ export {
   getFormattedDate,
   getAssignedToName,
   countIssuesByStatus,
-  getSlaRules,
+  countIssuesByState,
+  assignStateToIssue,
+  planningStatusList,
+  devStatusList,
+  testingStatusList,
+  nonDisplayedStatusList,
+  nonDisplayedStateList,
 };

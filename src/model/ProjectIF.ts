@@ -1,14 +1,13 @@
-import { nonDisplayedStatusList } from '@/assets/__mockdata__/mockDataComposer';
+import { nonDisplayedStatusList, nonDisplayedStateList } from '@/services/Issue';
 import type { IssueIF } from './Issue/IssueIF';
-import type { SlaCustomerProject } from '@/model/Sla/SlaCustomerProject';
 
 /**
  *
  * @prop {number} id project id
  * @prop {string} name the name of the project
  * @prop {string} description the description of the project
- * @prop {Milestone[]} milestones a array of Milestone - objects assigned to the project
  * @prop {Issue[]} issues a array of Issues - objects that are assigned to the project
+ * @prop {SlaCustomerProject} slaSubscriber the slaSubscriber of the project
  * but not to a milestone
  */
 export interface ProjectIF {
@@ -16,10 +15,9 @@ export interface ProjectIF {
   name: string;
   description: string;
   issues: IssueIF[];
-  slaSubscriber: SlaCustomerProject | null;
 }
 
-function getIssueStatusList(issues: IssueIF[]): string[] {
+export function getIssueStatusList(issues: IssueIF[]): string[] {
   const statusList: string[] = Array.from(
     new Set(
       issues
@@ -28,7 +26,17 @@ function getIssueStatusList(issues: IssueIF[]): string[] {
         .filter((status): status is string => status !== null)
     )
   );
-  return statusList;
+  return statusList || ([] as string[]);
 }
 
-export { getIssueStatusList };
+export function getIssueStateList(issues: IssueIF[]): string[] {
+  const stateList: string[] = Array.from(
+    new Set(
+      issues
+        .map((issue) => issue.state)
+        .filter((state) => state && !nonDisplayedStateList.includes(state))
+        .filter((state): state is string => state !== null)
+    )
+  );
+  return stateList;
+}

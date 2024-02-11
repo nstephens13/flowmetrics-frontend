@@ -27,6 +27,10 @@ import Chip from 'primevue/chip';
 import Tooltip from 'primevue/tooltip';
 import InputMask from 'primevue/inputmask';
 import OverlayPanel from 'primevue/overlaypanel';
+import InputNumber from 'primevue/inputnumber';
+import Chart from 'primevue/chart';
+import Accordion from 'primevue/accordion';
+import AccordionTab from 'primevue/accordiontab';
 
 import router from './router';
 import App from './App.vue';
@@ -34,9 +38,7 @@ import 'primevue/resources/themes/lara-light-indigo/theme.css';
 import 'primevue/resources/primevue.min.css';
 import 'primeicons/primeicons.css';
 import 'primeflex/primeflex.css';
-import initSlaStore from '@/store/mockdata/initSlaStore';
-import initProjectStore from '@/store/mockdata/initProjectStore';
-import initFilterConfigStore from '@/store/mockdata/initFilterConfigStore';
+import initializeStores from '@/store/mockdata/initializeStores';
 
 const app = createApp(App);
 const pinia = createPinia();
@@ -68,11 +70,12 @@ app.component('AutoComplete', AutoComplete);
 app.component('Chip', Chip);
 app.component('InputMask', InputMask);
 app.component('OverlayPanel', OverlayPanel);
+app.component('InputNumber', InputNumber);
 app.directive('tooltip', Tooltip);
+app.component('Chart', Chart);
+app.component('Accordion', Accordion);
+app.component('AccordionTab', AccordionTab);
 
 app.mount('#app');
 
-// initialize the stores
-initSlaStore();
-initProjectStore();
-initFilterConfigStore();
+initializeStores();

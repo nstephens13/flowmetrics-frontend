@@ -65,7 +65,7 @@ describe('Employee Overview should load all the Components', () => {
   });
 });
 
-describe('Employee Overview should load all the Components', () => {
+describe('Employee Overview should load all the Components 2', () => {
   // Mounting the EmployeeOverview component with necessary configuration
   const wrapper = mount(EmployeeOverview, {
     global: {
@@ -94,13 +94,15 @@ describe('Employee Overview should load all the Components', () => {
                         emailAddress: 'email@email.com',
                         status: 'active',
                         key: 'jdoe',
-                        assignedIssues: [],
                       },
                       createdAt: '2023-06-01T00:00:00.000Z',
                       closedAt: null,
                       dueTo: '2023-06-30T00:00:00.000Z',
                       status: 'Open',
-                      userStatus: 'Open',
+                      assigneeRestingTime: null,
+                      statusRestingTime: null,
+                      statusChanges: null,
+                      assigneeChanges: null,
                     },
                     {
                       id: 14898,
@@ -114,13 +116,15 @@ describe('Employee Overview should load all the Components', () => {
                         emailAddress: 'email@email.com',
                         status: 'active',
                         key: 'jdoe',
-                        assignedIssues: [],
                       },
                       createdAt: '2023-06-01T00:00:00.000Z',
                       closedAt: null,
                       dueTo: '2023-06-30T00:00:00.000Z',
                       status: 'Open',
-                      userStatus: 'Open',
+                      assigneeRestingTime: null,
+                      statusRestingTime: null,
+                      statusChanges: null,
+                      assigneeChanges: null,
                     },
                     {
                       id: 14898,
@@ -134,13 +138,15 @@ describe('Employee Overview should load all the Components', () => {
                         emailAddress: 'email@email.com',
                         status: 'active',
                         key: 'jdoe',
-                        assignedIssues: [],
                       },
                       createdAt: '2023-06-01T00:00:00.000Z',
                       closedAt: null,
                       dueTo: '2023-06-30T00:00:00.000Z',
                       status: 'Open',
-                      userStatus: 'Open',
+                      assigneeRestingTime: null,
+                      statusRestingTime: null,
+                      statusChanges: null,
+                      assigneeChanges: null,
                     },
                   ],
                   slaSubscriber: null,
@@ -152,7 +158,7 @@ describe('Employee Overview should load all the Components', () => {
                 id: 1,
                 projectFilter: {
                   projectsWhiteList: [],
-                  issueStatusIncludeFilter: 'Open',
+                  issueStatusIncludeFilter: 'open',
                 },
               },
             },

@@ -1,234 +1,323 @@
 <template>
-  <Card>
+  <Card class="sla-rule-card">
     <template #title>
-      <h4>SLA Management View</h4>
-      <Divider class="p-divider p-divider-horizontal divider-position" />
+      <div class="flex flex-row align-content-center align-items-center justify-content-between">
+        <p>Create sla rules</p>
+        <div class="flex gap-2">
+          <Dropdown
+            v-model="selectedProjectPDF"
+            :options="projectOptions"
+            placeholder="Select customer project"
+            optionLabel="name"
+          />
+          <Button
+            label="Generate PDF"
+            @click="GeneratePdf(selectedProjectPDF)"
+            style="background-color: var(--flowMetricsBlue)"
+          ></Button>
+        </div>
+      </div>
+      <Divider class="p-divider p-divider-horizontal divider-position mt-0 mb-0" />
     </template>
     <template #content>
-      <div>
-        <h3>Add SLA Customer</h3>
-        <div class="subscriber-container">
-          <InputText
-            v-model="newCustomer"
-            class="enter-subscriber m-1"
-            placeholder="Enter customer project"
-          />
-          <Button
-            class="add-subscriber m-1"
-            icon="pi pi-plus"
-            style="background-color: var(--flowMetricsBlue)"
-            @click="addSubscriber"
-          ></Button>
-          <div v-if="!isSubscriberNameValid" class="error-message m-1 text-red-500">
-            {{ SubscriberErrorMessage }}
-          </div>
+      <div class="flex flex-row">
+        <div class="flex-column w-3">
+          <Accordion :activeIndex="0">
+            <AccordionTab header="Add sla rule">
+              <div class="rule-container flex flex-column">
+                <Dropdown
+                  v-model="selectedCategoryForAddRule"
+                  :options="categories"
+                  class="select-category-in m-1"
+                  placeholder="Select category"
+                  optionLabel="name"
+                />
+                <Dropdown
+                  v-model="newOccurredIn"
+                  :options="occurredInOptions"
+                  class="select-occurred-in m-1"
+                  placeholder="Occurred in"
+                />
+                <InputText
+                  v-model="newRuleName"
+                  class="enter-rule m-1"
+                  placeholder="Enter rule name"
+                />
+                <Dropdown
+                  v-model="selectedIssueTypes"
+                  :options="preparedIssueTypeOptions"
+                  class="select-issueType-in m-1"
+                  placeholder="Select issue type"
+                  optionLabel="label"
+                  optionValue="value"
+                />
+                <MultiSelect
+                  v-model="newPriority"
+                  :options="preparedPriorityOptions"
+                  class="select-priority-in m-1"
+                  placeholder="Priority"
+                  optionLabel="label"
+                  optionValue="value"
+                  multiple
+                  :maxSelectedLabels="2"
+                />
+                <Calendar
+                  v-model="newExpirationDate"
+                  dateFormat="dd/mm/yy"
+                  class="select-expiration-date m-1"
+                  placeholder="Expiration Date"
+                />
+                <div v-if="!isRuleNameValid" class="error-message m-1 text-red-500">{{
+                  ruleErrorMessage
+                }}</div>
+                <div class="flex justify-content-start m-1">
+                  <Button
+                    class="add-rule"
+                    label="Add rule"
+                    style="background-color: var(--flowMetricsBlue)"
+                    @click="addRule"
+                  ></Button>
+                </div>
+              </div>
+            </AccordionTab>
+            <AccordionTab header="Add sla category">
+              <div class="category-container flex flex-column">
+                <Dropdown
+                  v-model="selectedProject"
+                  :options="projectOptions"
+                  class="select-customer-in m-1"
+                  placeholder="Select customer project"
+                  optionLabel="name"
+                />
+                <InputText
+                  v-model="newCategoryName"
+                  class="enter-category m-1"
+                  placeholder="Enter category name"
+                />
+                <div v-if="!isSlaCategoryNameValid" class="error-message m-1 text-red-500 ml-3">
+                  {{ categoryErrorMessage }}
+                </div>
+                <div class="flex justify-content-start">
+                  <Button
+                    class="add-category m-1"
+                    label="Add category"
+                    style="background-color: var(--flowMetricsBlue)"
+                    @click="createCategory"
+                  ></Button>
+                </div>
+              </div>
+            </AccordionTab>
+            <AccordionTab header="Add reaction time">
+              <div class="reaction-time-container flex flex-column">
+                <Dropdown
+                  v-model="selectedCategoryForReactionTime"
+                  :options="categories"
+                  class="select-category-for-reaction-time m-1"
+                  placeholder="Select category"
+                  optionLabel="name"
+                />
+                <Dropdown
+                  v-model="selectedRule"
+                  :options="rules"
+                  class="select-rule-for-reaction-time m-1"
+                  optionLabel="name"
+                  placeholder="Select rule"
+                />
+                <InputMask
+                  id="reactionTime"
+                  v-model="newReactionTime"
+                  class="enter-reaction-time m-1"
+                  placeholder="Enter reaction time"
+                  mask="99w 99d 99h"
+                />
+                <div
+                  v-if="!isReactionTimeValid"
+                  class="error-message-reaction-time m-1 text-red-500 ml-3"
+                >
+                  {{ reactionTimeErrorMessage }}
+                </div>
+                <div class="flex justify-content-start">
+                  <Button
+                    class="add-reaction-time m-1"
+                    label="Add reaction time"
+                    style="background-color: var(--flowMetricsBlue)"
+                    @click="addReactionTime"
+                  ></Button>
+                </div>
+              </div>
+            </AccordionTab>
+          </Accordion>
         </div>
-      </div>
-      <div>
-        <h3>Add SLA Rule</h3>
-        <div class="rule-container m-1">
-          <InputText v-model="newRuleName" class="enter-rule m-1" placeholder="Enter rule name" />
-          <Dropdown
-            v-model="newOccurredIn"
-            :options="occurredInOptions"
-            class="select-occurred-in m-1"
-            placeholder="Occurred in"
-          />
-          <MultiSelect
-            v-model="selectedIssueTypes"
-            :options="preparedIssueTypeOptions"
-            class="select-issueType-in m-1"
-            placeholder="Select issue types"
-            optionLabel="label"
-            optionValue="value"
-            multiple
-          />
-          <Dropdown
-            v-model="newPriority"
-            :options="priorityOptions"
-            class="select-priority-in m-1"
-            placeholder="Priority"
-          />
-          <Button
-            class="add-rule m-1"
-            icon="pi pi-plus"
-            style="background-color: var(--flowMetricsBlue)"
-            @click="addRule"
-          ></Button>
-          <div v-if="!isRuleNameValid" class="error-message m-1 text-red-500">{{
-            ruleErrorMessage
-          }}</div>
-        </div>
-      </div>
-      <div>
-        <h3>Add new SLA Category</h3>
-        <div class="category-container m-1">
-          <MultiSelect
-            v-model="selectedCustomerProject"
-            :options="customerProjectOptions"
-            class="select-customer-in m-1"
-            placeholder="Select Customer Project"
-            optionLabel="name"
-            multiple
-          />
-          <Dropdown
-            v-model="selectedRule"
-            :options="slaStore.rules"
-            class="select-rule m-1"
-            optionLabel="name"
-            placeholder="Select rule"
-          />
-          <InputText
-            v-model="categoryName"
-            class="enter-category m-1"
-            placeholder="Enter category name"
-          />
-          <Button
-            class="add-category m-1"
-            icon="pi pi-plus"
-            style="background-color: var(--flowMetricsBlue)"
-            @click="createCategory"
-          ></Button>
-        </div>
-        <div v-if="!isSlaCategoryNameValid" class="error-message m-1 text-red-500 ml-3">
-          {{ categoryErrorMessage }}
-        </div>
-      </div>
-      <div>
-        <div class="m-2 mb-4">
-          <h3>Add Reaction Time</h3>
-        </div>
-        <h3></h3>
-        <div class="flex category-container m-1">
-          <Dropdown
-            v-model="selectedRuleForReactionTime"
-            :options="slaStore.rules"
-            class="select-rule-for-reaction-time m-1"
-            optionLabel="name"
-            placeholder="Select rule"
-          />
-          <div class="p-float-label">
-            <InputMask
-              id="reactionTime"
-              v-model="newReactionTime"
-              class="enter-reaction-time m-1"
-              mask="99w 99d 99h"
-            />
-            <label for="reactionTime">Reaction time</label>
-          </div>
-          <Button
-            class="add-reaction-time m-1"
-            icon="pi pi-plus"
-            style="background-color: var(--flowMetricsBlue)"
-            @click="addReactionTime"
-          ></Button>
-        </div>
-        <div v-if="!isReactionTimeValid" class="error-message-reaction-time m-1 text-red-500 ml-3">
-          {{ reactionTimeErrorMessage }}
-        </div>
-      </div>
-      <div class="mt-4">
-        <h3>SLA Categories</h3>
-        <DataTable :value="slaCategories">
-          <Column field="name" header="Category" />
-          <Column field="rule.name" header="Rule" />
-          <Column header="Customer project">
-            <template #body="slotProps">
-              {{ slotProps.data.customerProject?.name }}
+        <Divider class="vertical-divider" layout="vertical" />
+        <div class="w-9">
+          <h2 class="mt-0 text-2xl">{{ categories.length }} Sla categories</h2>
+          <DataTable
+            v-model:expandedRows="expandedRows"
+            :value="categories"
+            dataKey="id"
+            class="category-table"
+          >
+            <Column expander style="width: 5rem" />
+            <Column field="id" header="Id" />
+            <Column field="name" header="Category name" />
+            <Column field="project.name" header="Project" />
+            <Column field="rules.length" header="Number of rules" />
+            <Column>
+              <template #body="rowData">
+                <Button
+                  class="p-button-danger trash-size m-1"
+                  icon="pi pi-trash"
+                  @click="slaRulesStore.deleteCategory(rowData.data)"
+                  rounded
+                  outlined
+                ></Button>
+              </template>
+            </Column>
+            <template #expansion="slotProps">
+              <div class="p-3">
+                <DataTable :value="slotProps.data.rules">
+                  <Column field="id" header="Id" />
+                  <Column field="name" header="Rule name" />
+                  <Column field="occurredIn" header="Occurred in" />
+                  <Column field="priority" header="Priority">
+                    <template #body="slotProps">
+                      <div v-if="slotProps.data.priority.length === 5">
+                        <span> All priorities selected </span>
+                      </div>
+                      <div v-else>
+                        <span>{{ slotProps.data.priority.join(', ') }}</span>
+                      </div>
+                    </template>
+                  </Column>
+                  <Column field="issueType" header="Issue type" />
+                  <Column field="reactionTime" header="Reaction time">
+                    <template #body="slotProps">
+                      <span>
+                        {{ printRestingTime(slotProps.data.reactionTime) }}
+                      </span>
+                    </template>
+                  </Column>
+                  <Column field="expirationDate" header="Expiration date">
+                    <template #body="slotProps">
+                      <span>
+                        {{
+                          DateTime.fromJSDate(slotProps.data.expirationDate).toLocaleString(
+                            DateTime.DATETIME_FULL
+                          )
+                        }}
+                      </span>
+                    </template>
+                  </Column>
+                  <Column>
+                    <template #body="rowData">
+                      <Button
+                        class="p-button-danger trash-size m-1"
+                        icon="pi pi-trash"
+                        @click="slaRulesStore.deleteRule(slotProps.data, rowData.data)"
+                        rounded
+                        outlined
+                      ></Button>
+                    </template>
+                  </Column>
+                </DataTable>
+              </div>
             </template>
-          </Column>
-          <Column field="rule.reactionTimeInDays" header="Reaction time (Days)" />
-          <Column field="rule.occurredIn" header="Occurred in" />
-          <Column field="rule.issueType" header="Issue type">
-            <template #body="slotProps">
-              <span>
-                {{ slotProps.data.rule?.issueType?.join(', ') }}
-              </span>
-            </template>
-          </Column>
-          <Column header="Delete">
-            <template #body="rowData">
-              <Button
-                class="p-button-danger trash-size m-1"
-                icon="pi pi-trash"
-                @click="slaStore.deleteSlaCategory(rowData.data)"
-              ></Button>
-            </template>
-          </Column>
-        </DataTable>
+          </DataTable>
+        </div>
       </div>
-    </template>
-    <template #footer>
-      <GeneratePDF></GeneratePDF>
     </template>
   </Card>
 </template>
 
 <script lang="ts" setup>
+import { DateTime, Duration, type DurationLikeObject } from 'luxon';
 import type { ComputedRef, Ref } from 'vue';
 import { computed, ref } from 'vue';
-import type { SlaCustomerProject } from '@/model/Sla/SlaCustomerProject';
-import type { SlaRule } from '@/model/Sla/SlaRule';
-import type { SlaCategory } from '@/model/Sla/SlaCategory';
-import GeneratePDF from '@/components/GeneratePDF.vue';
-import useSlaStore from '@/store/slaStore';
+import type Column from 'primevue/column';
+import Button from 'primevue/button';
+import useSlaRulesStore from '@/store/slaRulesStore';
+import useProjectStore from '@/store/projectStore';
+import IssueTypes from '@/assets/__mockdata__/IssueProps/issueTypes';
+import Priority from '@/assets/__mockdata__/IssueProps/priority';
+import type { RuleIF } from '@/model/Sla/RuleIF';
+import type { ProjectIF } from '@/model/ProjectIF';
+import type { CategoryIF } from '@/model/Sla/CategoryIF';
+import GeneratePdf from '@/services/pdf/generatePdf';
 
-const slaStore = useSlaStore();
+const slaRulesStore = useSlaRulesStore();
+const projectStore = useProjectStore();
 
-const slaCategories = computed(() => slaStore.slaCategories);
+const selectedProjectPDF: Ref<ProjectIF> = ref({
+  id: 0,
+  name: '',
+  description: '',
+  issues: [],
+} as ProjectIF);
 
-const isSlaCategoryNameValid = ref(true);
-const selectedRuleForReactionTime: Ref<SlaRule | null> = ref(null);
-const newReactionTime = ref('');
-const isReactionTimeValid = ref(true);
-
-const newCustomer = ref('');
-const isSubscriberNameValid = ref(true);
-const newRuleName = ref('');
-const newRuleMaxAssignedEmployees = ref();
-const isRuleNameValid = ref(true);
-const newOccurredIn = ref(null);
-const selectedRule = ref(null);
-const categoryName = ref('');
-const occurredInOptions = ['Test', 'Pre-production', 'Production'];
-const customerProjectOptions: ComputedRef<SlaCustomerProject[]> = computed(() => slaStore.customer);
-const selectedCustomerProject: Ref<SlaCustomerProject[]> = ref([]);
-const newPriority = ref('');
-const priorityOptions = ['schwerwiegend', 'behindernd', 'leicht umgehbar', 'Kosmetik', ''];
-const issueTypeOptions = [
-  'bug',
-  'incident',
-  'coverage',
-  'enhancement',
-  'task',
-  'feature',
-  'support',
-  'documentation',
-  'review',
-  'refactor',
-  '',
-];
-const selectedIssueTypes: Ref<string[]> = ref([]);
-
-function addSubscriber() {
-  if (newCustomer.value.trim().length < 3) {
-    isSubscriberNameValid.value = false;
-    return;
-  }
-  isSubscriberNameValid.value = true;
-  const subscriber: SlaCustomerProject = {
+const selectedProject: Ref<ProjectIF> = ref({
+  id: 0,
+  name: '',
+  description: '',
+  issues: [],
+} as ProjectIF);
+const selectedCategoryForAddRule: Ref<CategoryIF> = ref({
+  id: 0,
+  name: '',
+  project: {
     id: 0,
-    name: newCustomer.value.trim(),
-    description: null,
-  };
-  slaStore.addSubscriber(subscriber);
-  newCustomer.value = '';
-}
+    name: '',
+    description: '',
+    issues: [],
+  },
+  rules: [],
+} as CategoryIF);
+const selectedCategoryForReactionTime: Ref<CategoryIF> = ref({
+  id: 0,
+  name: '',
+  project: {
+    id: 0,
+    name: '',
+    description: '',
+    issues: [],
+  },
+  rules: [],
+} as CategoryIF);
+const selectedRule: Ref<RuleIF> = ref({
+  id: 0,
+  name: '',
+  expirationDate: null,
+  reactionTime: 0,
+  occurredIn: null,
+  priority: null,
+  issueType: '',
+} as RuleIF);
+const selectedIssueTypes: Ref<string> = ref('');
+const expandedRows = ref([]);
 
-function parseReactionTime(input: string): number | null {
+const projectOptions: ComputedRef<ProjectIF[]> = computed(() => projectStore.getProjects);
+const categories: ComputedRef<CategoryIF[]> = computed(() => slaRulesStore.categories);
+const occurredInOptions = ['Test', 'Pre-production', 'Production'];
+const priorityOptions = Object.values(Priority);
+const issueTypeOptions = Object.values(IssueTypes);
+const rules: ComputedRef<RuleIF[]> = computed(
+  () => selectedCategoryForReactionTime.value?.rules || []
+);
+
+const newOccurredIn: Ref<string> = ref('');
+const newPriority: Ref<string[]> = ref([]);
+const newRuleName = ref('');
+const newReactionTime = ref('');
+const newCategoryName = ref('');
+const newExpirationDate = ref();
+
+const isReactionTimeValid = ref(true);
+const isSlaCategoryNameValid = ref(true);
+const isRuleNameValid = ref(true);
+
+function parseReactionTime(input: string): DurationLikeObject {
   const parts = input.match(/(\d+)w (\d+)d (\d+)h/);
   if (!parts) {
-    return null;
+    return { weeks: 0, days: 0, hours: 0 };
   }
 
   const weeks = parseInt(parts[1], 10);
@@ -236,7 +325,7 @@ function parseReactionTime(input: string): number | null {
   const hours = parseInt(parts[3], 10);
 
   // Convert to days (you may adjust this conversion based on your specific logic)
-  return weeks * 7 + days + hours / 24;
+  return { weeks, days, hours } as DurationLikeObject;
 }
 
 // Add a reaction time to a rule
@@ -245,23 +334,37 @@ function addReactionTime() {
     isReactionTimeValid.value = false;
     return;
   }
-  if (selectedRuleForReactionTime.value === null || newReactionTime.value === '00w 00d 00h') {
+  if (newReactionTime.value === '00w 00d 00h') {
     return;
   }
-  const reactionTimeInDays = parseReactionTime(newReactionTime.value.trim());
-  const rule: SlaRule = {
-    id: selectedRuleForReactionTime.value?.id || null,
-    name: selectedRuleForReactionTime.value?.name || null,
-    reactionTimeInDays: reactionTimeInDays || null,
-    expirationDate: selectedRuleForReactionTime.value?.expirationDate || null,
-    occurredIn: selectedRuleForReactionTime.value?.occurredIn || null,
-    priority: selectedRuleForReactionTime.value?.priority || null,
-    issueType: selectedRuleForReactionTime.value?.issueType || null,
-  };
-  if (reactionTimeInDays) {
-    slaStore.addReactionTime(rule, reactionTimeInDays);
+  const reactionTime = parseReactionTime(newReactionTime.value.trim());
+  if (reactionTime) {
+    slaRulesStore.addReactionTime(
+      selectedCategoryForReactionTime.value,
+      selectedRule.value,
+      reactionTime
+    );
     newReactionTime.value = '';
-    selectedRuleForReactionTime.value = null;
+    selectedRule.value = {
+      id: 0,
+      name: '',
+      expirationDate: null,
+      reactionTime: 0,
+      occurredIn: null,
+      priority: null,
+      issueType: '',
+    } as RuleIF;
+    selectedCategoryForReactionTime.value = {
+      id: 0,
+      name: '',
+      project: {
+        id: 0,
+        name: '',
+        description: '',
+        issues: [],
+      },
+      rules: [],
+    } as CategoryIF;
     isReactionTimeValid.value = true;
   }
 }
@@ -272,52 +375,71 @@ function addRule() {
     return;
   }
   isRuleNameValid.value = true;
-  const rule: SlaRule = {
-    id: null,
+  const rule: RuleIF = {
+    id: selectedCategoryForAddRule.value.rules.length + 1,
     name: newRuleName.value.trim(),
-    expirationDate: null,
-    reactionTimeInDays: 0,
+    expirationDate: newExpirationDate.value as Date,
+    reactionTime: { weeks: 0, days: 0, hours: 0 },
     occurredIn: newOccurredIn.value,
     priority: newPriority.value,
     issueType: selectedIssueTypes.value,
   };
-  slaStore.addRule(rule);
+  slaRulesStore.addRule(selectedCategoryForAddRule.value, rule);
   newRuleName.value = '';
-  newRuleMaxAssignedEmployees.value = null;
-  newOccurredIn.value = null;
-  newPriority.value = '';
-  selectedIssueTypes.value = [];
+  newOccurredIn.value = '';
+  newPriority.value = [];
+  selectedIssueTypes.value = '';
+  newExpirationDate.value = null;
+  selectedCategoryForAddRule.value = {
+    id: 0,
+    name: '',
+    project: {
+      id: 0,
+      name: '',
+      description: '',
+      issues: [],
+    },
+    rules: [],
+  } as CategoryIF;
 }
 
 function createCategory() {
-  if (categoryName.value.trim().length < 3) {
+  if (newCategoryName.value.trim().length < 3) {
     isSlaCategoryNameValid.value = false;
     return;
   }
   isSlaCategoryNameValid.value = true;
 
-  if (selectedCustomerProject.value && selectedRule.value) {
-    selectedCustomerProject.value.forEach((customerProject) => {
-      const category: SlaCategory = {
-        id: null,
-        name: categoryName.value.trim() || null,
-        customerProject,
-        rule: selectedRule.value,
-      };
-      slaStore.addSlaCategory(category);
-    });
+  if (selectedProject.value.id !== 0) {
+    const category: CategoryIF = {
+      id: slaRulesStore.categories.length + 1,
+      name: newCategoryName.value.trim() || null,
+      project: selectedProject.value,
+      rules: [],
+    };
+    slaRulesStore.addCategory(category);
   }
-  selectedCustomerProject.value = [];
-  selectedRule.value = null;
-  categoryName.value = '';
+  selectedProject.value = {
+    id: 0,
+    name: '',
+    description: '',
+    issues: [],
+  } as ProjectIF;
+  newCategoryName.value = '';
+}
+
+function printRestingTime(restingTime: any): string {
+  if (restingTime == null) {
+    return '0d 0h 0m';
+  }
+  return Duration.fromObject(restingTime).toFormat("d' days 'h' hours ").toString();
 }
 
 const preparedIssueTypeOptions = computed(() =>
   issueTypeOptions.map((option) => ({ label: option, value: option }))
 );
-
-const SubscriberErrorMessage = computed(() =>
-  !isSubscriberNameValid.value ? 'Subscriber name must be at least 3 characters.' : ''
+const preparedPriorityOptions = computed(() =>
+  priorityOptions.map((option) => ({ label: option, value: option }))
 );
 
 const ruleErrorMessage = computed(() =>
@@ -332,3 +454,12 @@ const reactionTimeErrorMessage = computed(() =>
   !isReactionTimeValid.value ? 'Reaction time must be in format 01w 23d 00h' : ''
 );
 </script>
+
+<style scoped>
+.p-card {
+  box-shadow: none;
+}
+.sla-rule-card {
+  margin: 15px 15px 0 15px;
+}
+</style>

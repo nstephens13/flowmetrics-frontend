@@ -1,10 +1,10 @@
 <template>
-  <Card>
+  <Card class="employee-overview-card">
     <template #title>
       <div class="grid">
         <div class="col-12">
           <p>Employee Overview</p>
-          <Divider class="p-divider p-divider-horizontal divider-position" />
+          <Divider class="p-divider p-divider-horizontal divider-position mb-0" />
         </div>
       </div>
     </template>
@@ -14,18 +14,18 @@
           <div class="grid gap-3">
             <MultiSelect
               v-model="filterConfigStore.filter.projectFilter.projectsWhiteList"
-              :maxSelectedLabels="1"
               :options="allProjects"
               class="w-full md:w-14rem"
               option-label="name"
               placeholder="Select project"
+              :maxSelectedLabels="1"
             />
             <MultiSelect
               v-model="filterConfigStore.filter.projectFilter.issueStatusIncludeFilter"
-              :maxSelectedLabels="1"
               :options="allStatuses"
               class="w-full md:w-14rem"
               placeholder="Select status"
+              :maxSelectedLabels="1"
             />
           </div>
         </template>
@@ -54,15 +54,14 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref } from 'vue';
-import type { ComputedRef } from 'vue';
+import { watch, computed, ref, type ComputedRef } from 'vue';
 import EmployeeCard from '@/components/EmployeeCard.vue';
 import type { EmployeeIF } from '@/model/EmployeeIF';
 import type { ProjectIF } from '@/model/ProjectIF';
 import type { IssueDataIF } from '@/model/Issue/IssueDataIF';
 import { getIssueStatusList } from '@/model/ProjectIF';
 import { calculateWorkload, mergeEmployees } from '@/services/workloadCalculator';
-import filterProjectThatHasTheAllowedStatus from '@/services/filter/IssuesStateFilter';
+import { filterProjectThatHasTheAllowedStatus } from '@/services/filter/IssuesStateFilter';
 import useProjectsStore from '@/store/projectStore';
 import useFilterConfigStore from '@/store/filterConfigStore';
 
@@ -75,6 +74,16 @@ const allStatuses: ComputedRef<string[]> = computed(() =>
   getIssueStatusList(
     filterConfigStore.filter.projectFilter.projectsWhiteList.flatMap((project) => project.issues)
   )
+);
+
+watch(
+  () => filterConfigStore.filter.projectFilter.projectsWhiteList,
+  (newProjectsWhiteList) => {
+    filterConfigStore.setIssueStatusIncludeFilter(
+      getIssueStatusList(newProjectsWhiteList.flatMap((project) => project.issues))
+    );
+  },
+  { immediate: true }
 );
 
 // Create a reference to all the projects from the ProjectStore
@@ -120,10 +129,6 @@ const categoryNames = ref<{
 </script>
 
 <style scoped>
-.p-card {
-  margin: 15px;
-  box-shadow: none;
-}
 .divider-position {
   width: 100%;
 }

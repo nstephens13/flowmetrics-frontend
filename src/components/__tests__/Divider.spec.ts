@@ -16,24 +16,44 @@ import Chip from 'primevue/chip';
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
 import InputMask from 'primevue/inputmask';
+import Chart from 'primevue/chart';
+import InputNumber from 'primevue/inputnumber';
+import Accordion from 'primevue/accordion';
+import AccordionTab from 'primevue/accordiontab';
+import Calendar from 'primevue/calendar';
 import IssueCalculator from '../../views/IssueCalculator.vue';
 import ProjectOverview from '../../views/ProjectOverview.vue';
 import router from '@/router/index';
 import EmployeeOverview from '../../views/EmployeeOverview.vue';
 import SlaComponent from '../../views/SlaView.vue';
+import BarDiagram from '../BarDiagram.vue';
+import KeyFactsCard from '../KeyFactsCard.vue';
+import AssigneeCard from '../AssigneeCard.vue';
+import IssuesCard from '../IssuesCard.vue';
+import StateRestingTimeCard from '../StateRestingTimeCard.vue';
 
 describe('ProjectDescriptionPanel Divider component', () => {
+  const pinia = createTestingPinia({ stubActions: true });
   const wrapper = mount(ProjectOverview, {
     global: {
-      plugins: [PrimeVue, router],
+      plugins: [PrimeVue, router, pinia],
       components: {
         Dropdown,
-        Panel,
         Card,
         DataTable,
         Column,
         Divider,
+        Chip,
+        BarDiagram,
+        KeyFactsCard,
+        AssigneeCard,
+        IssuesCard,
+        StateRestingTimeCard,
         MultiSelect,
+        ProgressBar,
+        Chart,
+        InputNumber,
+        Button,
       },
     },
   });
@@ -94,6 +114,7 @@ describe('Issue Calculator view', () => {
         Dropdown,
         Panel,
         Card,
+        MultiSelect,
         DataTable,
         Column,
         Divider,
@@ -111,19 +132,23 @@ describe('Issue Calculator view', () => {
 });
 
 describe('Sla Rules view', () => {
-  const pinia = createTestingPinia({ stubActions: false });
+  const pinia = createTestingPinia({ stubActions: true });
   const wrapper = mount(SlaComponent, {
     global: {
       plugins: [PrimeVue, router, pinia],
       components: {
         InputText,
         Dropdown,
+        MultiSelect,
+        Calendar,
         Card,
         Button,
         Column,
         DataTable,
         Divider,
         InputMask,
+        Accordion,
+        AccordionTab,
       },
     },
   });
