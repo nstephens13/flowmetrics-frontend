@@ -98,7 +98,7 @@
     </Card>
     <Card class="flex-none m-2">
       <template #title>
-        <div class="flex flex-column align-items-center">Filter Zombie Issues</div>
+        <div class="flex flex-column align-items-center">Filter zombie issues</div>
       </template>
       <template #content>
         <div class="flex flex-column align-items-start gap-2">

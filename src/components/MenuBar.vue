@@ -56,22 +56,22 @@ onBeforeUnmount(() => {
 // Items to be listed in Sidebar
 const items = ref([
   {
-    label: 'Project Overview',
+    label: 'Project overview',
     icon: 'pi pi-fw pi-book',
     to: '/project-overview',
   },
   {
-    label: 'Employee Overview',
+    label: 'Employee overview',
     icon: 'pi pi-fw pi-users',
     to: '/employee-overview',
   },
   {
-    label: 'Create SLA Rules',
+    label: 'Create sla rules',
     icon: 'pi pi-fw pi-filter',
     to: '/create-sla-rules',
   },
   {
-    label: 'Issue Calculator',
+    label: 'Issue calculator',
     icon: 'pi pi-fw pi-ticket',
     to: '/issue-calculator',
   },

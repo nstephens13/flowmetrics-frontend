@@ -3,7 +3,7 @@
     <template #title
       ><div class="flex flex-row justify-content-start">
         <span class="pi pi-key mr-3 text-4xl"></span>
-        <span class="text-xl mt-1"> Key Facts </span>
+        <span class="text-xl mt-1"> Key facts </span>
       </div>
     </template>
     <template #content>
@@ -20,7 +20,7 @@
         </div>
       </div>
       <div class="field grid mb-0">
-        <label for="sla-rule-complied" class="col-7 mb-2 font-semibold">SLA rule complied</label>
+        <label for="sla-rule-complied" class="col-7 mb-2 font-semibold">Sla rule complied</label>
         <div class="col-5">
           <span id="sla-rule-complied">{{ getPercentageSlaRulesComplied(project) }}</span>
         </div>

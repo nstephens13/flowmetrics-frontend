@@ -108,7 +108,7 @@ describe('SLA View Tests', () => {
   test('h2 has the correct text', () => {
     const h2 = wrapper.find('h2');
     expect(h2.exists()).toBe(true);
-    expect(h2.text()).toBe('2 SLA categories');
+    expect(h2.text()).toBe('2 Sla categories');
   });
   test('does not add a rule with less than 3 characters', async () => {
     const ruleInput = wrapper.find('.enter-rule');

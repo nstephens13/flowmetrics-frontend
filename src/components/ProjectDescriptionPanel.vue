@@ -5,7 +5,7 @@
         <div
           class="flex flex-row align-content-center align-items-center justify-content-start mt-3"
         >
-          Project Overview
+          Project overview
           <Dropdown
             v-model="selectedProject"
             :options="projects"
